@@ -32,31 +32,31 @@ namespace BinEditor
         public short lv;
         public short series;
         public short job;
-        public short _1;
-        public short _2;
-        public short _3;
-        public short _4;
-        public short _5;
-        public short _6;
-        public short _7;
-        public short _8;
-        public short _9;
-        public short _10;
-        public short _11;
-        public short _12;
-        public short _13;
-        public short _14;
-        public short _15;
-        public short _16;
-        public short _17;
-        public short _18;
-        public short _19;
-        public short _20;
-        public short _21;
-        public short _22;
-        public short _23;
-        public short _24;
-        public short _25;
+        public short styleNo;
+        public short phyDef;
+        public short slashDefRate;
+        public short strikeDefRate;
+        public short magicDef;
+        public short fireDef;
+        public short fireRes;
+        public short iceDef;
+        public short iceRes;
+        public short thunderDef;
+        public short thunderRes;
+        public short lightDef;
+        public short darkDef;
+        public short shakeResRate;
+        public short blowResRate;
+        public short posionRes;
+        public short sleepRes;
+        public short silentRes;
+        public short stoneRes;
+        public short waterRes;
+        public short oilRes;
+        public short special_ext;//actually byte and placeholder
+        public short specialValue1;
+        public short specialValue2;
+        public short specialValue3;
     }
     public class ItemArmorData : ReadableItem
     {
