@@ -96,19 +96,19 @@ if(false)
 }
 
 //drop ferrystone
-if(false)
+if(true)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
         string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
-        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\DropFerryStone2\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\DropFerryStone3\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
         var data = new userdata();
         data.Read(original_filename);
 
         var newItem = new ItemDropParamTableItem();
         newItem.Id = 80;
         newItem.Num = 1;
-        newItem.Rate = 17;
+        newItem.Rate = 2;
         newItem.Attr = 0;
         data.instances.Insert(0, newItem);
         data.instanceinfos.Insert(0, InstanceTypeEnum.appItemDropParamTableItem);
@@ -126,6 +126,7 @@ if(false)
 
 
 //random drop
+if(false)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
@@ -151,6 +152,7 @@ if(false)
 
         List<int> stdlist=new List<int>();
         foreach(var itemId in itemId2Name.Keys)
+           // if(Int32.Parse(itemId)<2000)
         {
             var newItem = new ItemDropParamTableItem();
             newItem.Id = Int32.Parse(itemId);
@@ -159,9 +161,9 @@ if(false)
             newItem.Attr = 0;
             data.instances.Insert(0, newItem);
             data.instanceinfos.Insert(0, InstanceTypeEnum.appItemDropParamTableItem);
-            stdlist.Add(stdlist.Count);
+            stdlist.Add(stdlist.Count+1);
         }
-        data.IncreaseAllIdx(itemId2Name.Count);
+        data.IncreaseAllIdx(stdlist.Count);
         foreach (var instance in data.instances)
             if (instance as ItemDropParamTable is not null)
             {
