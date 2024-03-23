@@ -18,6 +18,10 @@ namespace BinEditor
         appItemDropParamTable = 0x8fcd056d,
         appItemDropParam = 0xd4dd21f2,
         appItemDropData = 0x1428e659,
+        appItemData = 0xC24AA782,
+        appItemDataParam = 0x6111A04D,
+        appItemArmorData = 0xA111A467,
+        appItemArmorDataParam = 0xFA962830,
     };
     public class userdata
     {

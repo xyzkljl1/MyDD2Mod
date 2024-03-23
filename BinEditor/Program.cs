@@ -24,6 +24,7 @@ if (false)
 
 Dictionary<string, string> itemId2Name = new Dictionary<string, string>();
 
+if(false)
 {
     var text = File.ReadAllText("E:\\OtherGame\\DragonDogma2\\ITEM_NAME_LOOKUP.json");
     var doc = JsonConvert.DeserializeObject(text)! as JObject;
@@ -31,6 +32,8 @@ Dictionary<string, string> itemId2Name = new Dictionary<string, string>();
     {
         itemId2Name[pair.Name] = pair.Value.ToString();
     }
+    //dlc2593210 宠爱吊坠;其它dlc物品有同款在游戏本体，不需要管
+    itemId2Name.Add("606","宠爱吊坠");
 }
 if (false)
 {
@@ -96,7 +99,7 @@ if(false)
 }
 
 //drop ferrystone
-if(true)
+if(false)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
@@ -152,7 +155,7 @@ if(false)
 
         List<int> stdlist=new List<int>();
         foreach(var itemId in itemId2Name.Keys)
-           // if(Int32.Parse(itemId)<2000)
+            //if(Int32.Parse(itemId)!=606)
         {
             var newItem = new ItemDropParamTableItem();
             newItem.Id = Int32.Parse(itemId);
@@ -176,6 +179,66 @@ if(false)
 }
 
 
+//item detail
+{
+    List<int> itemIdByOrder = new List<int>();
+    {
+        var text = File.ReadAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\ItemLookUpForMsg.json");
+        var doc = JsonConvert.DeserializeObject(text)! as JToken;
+        foreach (JProperty pair in doc)
+            itemIdByOrder.Add(Int32.Parse(pair.Name));
+    }
+
+    var itemdata = new userdata();
+    itemdata.Read("E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdata\\itemdata.user.2");
+    var armordata = new userdata();
+    armordata.Read("E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdata\\itemarmordata.user.2");
+
+    foreach (bool isCN in new[]{ true,false})
+    {
+        string msgFileName = "itemdetail.msg.22.en.txt";
+        if(isCN)
+            msgFileName= "itemdetail.msg.22.zhCN.txt";
+        //带_的为原版
+        var filename = $"E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\BetterItemDescription\\_{msgFileName}";
+        var MsgLines=File.ReadAllLines(filename);
+        if (MsgLines.Length != itemIdByOrder.Count)
+            throw new Exception();
+        List<string> newMsgLines= new List<string>();
+        for(int i=0;i<itemIdByOrder.Count;++i)
+        {
+            string additionalMsg = "";
+            var id = itemIdByOrder[i];
+            if (id < 1000)//item
+            {
+                foreach(var _item in itemdata.instances)
+                {
+                    var item = _item as ItemDataParam;
+                    if (item is not null)
+                        if (item.Id == id)
+                        {
+                            if (item.healWhiteHP > 0)
+                                additionalMsg += isCN ? $"治疗{item.healWhiteHP}生命。" : $"Heal {item.healWhiteHP}.";
+                            if (item.healBlackHP > 0)
+                                additionalMsg += isCN ? $"恢复{item.healBlackHP}生命上限。" : $"Heal {item.healBlackHP} MaxHP.";
+                            if (item.healStam > 0)
+                                additionalMsg += isCN ? $"恢复{item.healStam}体力。" : $"Restore {item.healStam} Stamina.";
+
+                        }
+
+                }
+            }
+            if(additionalMsg!="")
+            {
+                newMsgLines.Add($"{MsgLines[i]}<lf>{additionalMsg}");
+            }
+            else
+                newMsgLines.Add(MsgLines[i]);
+        }
+
+        File.WriteAllLines($"E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\BetterItemDescription\\{msgFileName}",newMsgLines);
+    }
+}
 
 
 string readIdList(byte[] bytes, ref int offset)
