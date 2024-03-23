@@ -9,11 +9,7 @@ using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-Dictionary<InstanceTypeEnum, Type> Enum2Class = new Dictionary<InstanceTypeEnum, Type>();
-Dictionary<Type, InstanceTypeEnum> Class2Enum = new Dictionary<Type, InstanceTypeEnum>();
-
-Init();
+using BinEditor;
 
 if (false)
 {
@@ -27,7 +23,7 @@ if (false)
 }
 
 Dictionary<string, string> itemId2Name = new Dictionary<string, string>();
-if (false)
+
 {
     var text = File.ReadAllText("E:\\OtherGame\\DragonDogma2\\ITEM_NAME_LOOKUP.json");
     var doc = JsonConvert.DeserializeObject(text)! as JObject;
@@ -61,68 +57,29 @@ if (false)
     }
 }
 
-
+if(false)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
         string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
-        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\HigherDropRate\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
-        var bytes = File.ReadAllBytes(original_filename);
-        var header = getHeader(bytes, 0x30);
-        if (header.magic != 0x5a5352)
-            return;
-        int offset = 0x30 + (int)header.instanceOffset + 0x8;
-        var instanceInfos = ReadInstanceInfos(bytes, ref offset);
-
-        offset = (int)header.userdataOffset + 0x30;
-        var instances = ReadInstances(bytes, instanceInfos, ref offset);
-
-        /*
-        List<int> goblintables = new List<int>();
-        for (int i = 0; i < instances.Count; ++i)
+        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\HigherDropRate2\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        var data = new userdata();
+        data.Read(original_filename);
+        for (int i = 0; i < data.instances.Count; ++i)
         {
-            var instance = instances[i];
-            var table = instance as ItemDropParamTable;
-            if (table != null)
-            {
-                bool isGoblin = false;
-                foreach (var idx in table.itemList)
-                {
-                    var item = instances[idx - 1] as ItemDropParamTableItem;
-                    if (item is not null)
-                    {
-                        if (item.Id == 208)
-                            isGoblin |= true;
-                    }
-                    else
-                        throw new Exception();
-                }
-                if (isGoblin)
-                    goblintables.Add(i);
-            }
-        }*/
-        for (int i = 0; i < instances.Count; ++i)
-        {
-            var instance = instances[i];
+            var instance = data.instances[i];
             var param = instance as ItemDropParam;
             if (param != null)
             {
-                /*
-                bool isgoblin = false;
-                foreach (var tableId in param.tableList)
-                {
-                    if (goblintables.Contains(tableId - 1))
-                        isgoblin |= true;
-                }*/
                 if (param.lotList.Count > 1)
                 {
                     foreach (var lotid in param.lotList)
                     {
-                        var lot = instances[lotid - 1] as ItemDropParamLot;
+                        var lot = data.instances[lotid - 1] as ItemDropParamLot;
                         if (lot is null) throw new Exception();
                         if (lot.Num > 0)
                         {
-                            //lot.Num = 10;
+                            lot.Num = lot.Num*2;
                             lot.Rate = 100;
                         }
                         else
@@ -132,97 +89,90 @@ if (false)
                     }
 
                 }
-                /*
-                 * if (isgoblin)
-                    foreach (var lotid in param.lotList)
-                    {
-                        var lot = instances[lotid - 1] as ItemDropParamLot;
-                        if (lot is null) throw new Exception();
-                        if (lot.Num > 0)
-                        {
-                            lot.Num = 10;
-                            lot.Rate = 100;
-                        }
-                        else
-                        {
-                            lot.Rate = 0;
-                        }
-                    }
-                */
             }
         }
+        data.Write(filename);
+    }
+}
 
-        offset = (int)header.userdataOffset + 0x30;
-        WriteInstances(bytes, instances, ref offset);
-        File.WriteAllBytes(filename, bytes);
+//drop ferrystone
+if(false)
+{
+    foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
+    {
+        string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\DropFerryStone2\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        var data = new userdata();
+        data.Read(original_filename);
 
-        if (false)
-        {
-            var newbytes = new byte[bytes.Length];
-            offset = (int)header.userdataOffset + 0x30;
-            WriteInstances(newbytes, instances, ref offset);
-            int end = offset;
-
-
-            offset = (int)header.userdataOffset + 0x30;
-            for (int i = offset; i < end; ++i)
+        var newItem = new ItemDropParamTableItem();
+        newItem.Id = 80;
+        newItem.Num = 1;
+        newItem.Rate = 17;
+        newItem.Attr = 0;
+        data.instances.Insert(0, newItem);
+        data.instanceinfos.Insert(0, InstanceTypeEnum.appItemDropParamTableItem);
+        data.IncreaseAllIdx(1);
+        foreach (var instance in data.instances)
+            if(instance as ItemDropParamTable is not null)
             {
-                if (bytes[i] != newbytes[i])
-                {
-                    Console.WriteLine("1");
-                }
+                var table = instance as ItemDropParamTable;
+                table!.itemList.Add(1);
             }
+
+        data.Write(filename);
+    }
+}
+
+
+//random drop
+{
+    foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
+    {
+        string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\CompleteRandomDrop\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        var data = new userdata();
+        data.Read(original_filename);
+        /*
+        foreach (var instance in data.instances)
+            if (instance as ItemDropParamTableItem is not null)
+            {
+                var item=instance as ItemDropParamTableItem;
+                if(item.Id==0xf5)
+                {
+                    if(item!.Attr!=1)
+                    {
+                        ;
+                    }
+                }
+                if (item!.Attr != 0&&item!.Id!=0xfb&&item!.Id!=0xf5)
+                    ;
+            }*/
+
+        List<int> stdlist=new List<int>();
+        foreach(var itemId in itemId2Name.Keys)
+        {
+            var newItem = new ItemDropParamTableItem();
+            newItem.Id = Int32.Parse(itemId);
+            newItem.Num = 1;
+            newItem.Rate = 1;
+            newItem.Attr = 0;
+            data.instances.Insert(0, newItem);
+            data.instanceinfos.Insert(0, InstanceTypeEnum.appItemDropParamTableItem);
+            stdlist.Add(stdlist.Count);
         }
+        data.IncreaseAllIdx(itemId2Name.Count);
+        foreach (var instance in data.instances)
+            if (instance as ItemDropParamTable is not null)
+            {
+                var table = instance as ItemDropParamTable;
+                table!.itemList = stdlist;
+            }
+
+        data.Write(filename);
     }
 }
 
-void Init()
-{
-    var enumnames = Enum.GetNames(typeof(InstanceTypeEnum));
-    var values = Enum.GetValues(typeof(InstanceTypeEnum));
-    int ct = 0;
-    foreach (InstanceTypeEnum v in values)
-    {
-        var enumname = enumnames[ct];
-        ct++;
-
-        var typename = enumname.Substring(3);
-        var type = Type.GetType(typename);
-        Enum2Class.Add(v, type!);
-        Class2Enum.Add(type!, v);
-    }
-}
-
-List<uint> ReadInstanceInfos(byte[] bytes, ref int offset)
-{
-    List<uint> ret = new List<uint>();
-    for (; offset < bytes.Length;)
-    {
-        uint id = BitConverter.ToUInt32(bytes, offset);
-        if (id == 0)
-            break;
-        ret.Add(id);
-        offset += 0x8;
-    }
-    offset += 0x4;
-    return ret;
-}
-List<ReadableItem> ReadInstances(byte[] bytes, List<uint> instanceInfos, ref int offset)
-{
-    List<ReadableItem> ret = new List<ReadableItem>();
-    foreach (var instanceInfo in instanceInfos)
-    {
-        var type = Enum2Class[(InstanceTypeEnum)instanceInfo];
-        ret.Add(ReadClass(bytes, ref offset, type));
-    }
-    return ret;
-}
-
-void WriteInstances(byte[] bytes, List<ReadableItem> instances, ref int offset)
-{
-    foreach (var instance in instances)
-        instance.Write(bytes, ref offset);
-}
 
 
 
@@ -282,156 +232,4 @@ RSZHeader getHeader(byte[] bytes, int offset)
     var header = (RSZHeader)Marshal.PtrToStructure(buffer, typeof(RSZHeader))!;
     Marshal.FreeHGlobal(buffer);
     return header;
-}
-
-ReadableItem ReadClass(byte[] bytes, ref int offset, Type type)
-{
-    var ret = Activator.CreateInstance(type) as ReadableItem;
-    ret!.Read(bytes, ref offset);
-    return ret;
-}
-
-enum InstanceTypeEnum : uint
-{
-    appItemDropParamLot = 0x6aa821d2,
-    appItemDropParamTableItem = 0x32b6b787,
-    appItemDropParamTable = 0x8fcd056d,
-    appItemDropParam = 0xd4dd21f2,
-    appItemDropData = 0x1428e659,
-};
-
-
-struct RSZHeader
-{
-    public uint magic;//0x52535A00
-    public uint version;
-    public int objectCount;
-    public int instanceCount;
-    public int userdataCount;
-    public Int64 instanceOffset;
-    public Int64 dataOffset;
-    public Int64 userdataOffset;
-};
-
-class ItemDropParamLot : ReadableItem
-{
-    public int Num;
-    public int Rate;
-}
-
-class ItemDropParamTableItem : ReadableItem
-{
-    public int Id;
-    public short Num;
-    public short Rate;
-    public int Attr;
-}
-class ItemDropParam : ReadableItem
-{
-    public int _;
-    public uint characterId;
-    public int gimmickId;
-    public List<int> lotList = new List<int>();
-    public List<int> tableList = new List<int>();
-}
-class ItemDropParamTable : ReadableItem
-{
-    public int _;
-    public int __;
-    public List<int> itemList = new List<int>();
-}
-class ItemDropData : ReadableItem
-{
-    public List<int> Params = new List<int>();
-}
-
-class ReadableItem
-{
-    public void Read(byte[] bytes, ref int offset)
-    {
-        var type = GetType();
-        FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
-        foreach (var field in fields)
-        {
-            if (field.FieldType == typeof(int))
-            {
-                field.SetValue(this, BitConverter.ToInt32(bytes, offset));
-                offset += 0x4;
-            }
-            else if (field.FieldType == typeof(uint))
-            {
-                field.SetValue(this, BitConverter.ToUInt32(bytes, offset));
-                offset += 0x4;
-            }
-            else if (field.FieldType == typeof(short))
-            {
-                field.SetValue(this, BitConverter.ToInt16(bytes, offset));
-                offset += 0x2;
-            }
-            else if (field.FieldType == typeof(List<int>))
-            {
-                List<int> tmp = new List<int>();
-                int len = BitConverter.ToInt32(bytes, offset);
-                offset += 0x4;
-
-                for (int i = 0; i < len; i++)
-                {
-                    tmp.Add(BitConverter.ToInt32(bytes, offset));
-                    offset += 0x4;
-                }
-
-                field.SetValue(this, tmp);
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-    }
-    public void Write(byte[] bytes, ref int offset)
-    {
-        var type = GetType();
-        FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
-        foreach (var field in fields)
-        {
-            if (field.FieldType == typeof(int))
-            {
-                var tmp = BitConverter.GetBytes((int)field.GetValue(this));
-                System.Array.Copy(tmp, 0x0, bytes, offset, 0x4);
-                offset += 0x4;
-            }
-            else if (field.FieldType == typeof(uint))
-            {
-                var tmp = BitConverter.GetBytes((uint)field.GetValue(this));
-                System.Array.Copy(tmp, 0x0, bytes, offset, 0x4);
-                offset += 0x4;
-            }
-            else if (field.FieldType == typeof(short))
-            {
-                var tmp = BitConverter.GetBytes((short)field.GetValue(this));
-                System.Array.Copy(tmp, 0x0, bytes, offset, 0x2);
-                offset += 0x2;
-            }
-            else if (field.FieldType == typeof(List<int>))
-            {
-                List<int> v = (List<int>)field.GetValue(this);
-                var tmp = BitConverter.GetBytes(v.Count);
-                System.Array.Copy(tmp, 0x0, bytes, offset, 0x4);
-                offset += 0x4;
-
-                foreach (var i in v)
-                {
-                    tmp = BitConverter.GetBytes(i);
-                    System.Array.Copy(tmp, 0x0, bytes, offset, 0x4);
-                    offset += 0x4;
-                }
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-    }
-    public ReadableItem() { }
-
 }
