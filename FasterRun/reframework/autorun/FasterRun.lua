@@ -4,7 +4,8 @@ local myLog="LogStart\n"
 local config = json.load_file("FasterRun.json") or {}
 if config.Speed1==nil then config.Speed1=9 end
 if config.Speed2==nil then config.Speed2=30 end
-if config.Speed3==nil then config.Speed3=46 end
+if config.Speed3==nil then config.Speed3=30 end
+if config.Speed4==nil then config.Speed4=46 end
 
 local function Log(msg)
     --myLog = myLog .."\n".. msg
@@ -21,6 +22,23 @@ local function getplayer()
     return player
 end
 
+--local speedpara=getplayer():get_Human():get_Param():get_Speed()
+--local list=speedpara.SpeedDataList
+--list[0].BaseSpeed=1
+--list[1].BaseSpeed=100
+
+--re.on_frame(function()
+--    local speedpara=getplayer():get_Human():get_Param():get_Speed()
+--    local list=speedpara.SpeedDataList
+--    Log(tostring(#list))
+--    for i=0,#list-1 do
+--        Log(tostring(list[i].BaseSpeed))
+--    end
+--    ClearLog()
+--end)
+
+
+
 sdk.hook(
     sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
     function() end,
@@ -31,11 +49,11 @@ sdk.hook(
             Log("Init Move Speed2")
             local speedpara=player:get_Human():get_Param():get_Speed()
             local list=speedpara.SpeedDataList
-            --6.047/17.71/26.92
+            --6.047/17.71/23.32/26.92
             list[0].BaseSpeed=config.Speed1--徐行(轻推摇杆)
             list[1].BaseSpeed=config.Speed2--走路（推摇杆）
-            --2不知道是什么
-            list[3].BaseSpeed=config.Speed3--冲刺      
+            list[2].BaseSpeed=config.Speed3--持刀冲刺
+            list[3].BaseSpeed=config.Speed4--收刀冲刺
         end
     end
 )
