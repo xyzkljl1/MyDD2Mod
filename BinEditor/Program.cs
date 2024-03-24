@@ -59,6 +59,7 @@ if (false)
     }
 }
 
+//higher drop rate
 if(false)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
@@ -81,6 +82,7 @@ if(false)
                         if (lot is null) throw new Exception();
                         if (lot.Num > 0)
                         {
+                            //有几个包含两个非空掉落的lot的param但是两个lot都为50，所以都设100没有影响
                             lot.Num = lot.Num*2;
                             lot.Rate = 100;
                         }
@@ -103,14 +105,13 @@ if(false)
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
         string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
-        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\DropFerryStone3\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\DropFerryStone7\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
         var data = new userdata();
         data.Read(original_filename);
-
         var newItem = new ItemDropParamTableItem();
         newItem.Id = 80;
         newItem.Num = 1;
-        newItem.Rate = 2;
+        newItem.Rate = 8;
         newItem.Attr = 0;
         data.instances.Insert(0, newItem);
         data.instanceinfos.Insert(0, InstanceTypeEnum.appItemDropParamTableItem);
@@ -121,6 +122,34 @@ if(false)
                 var table = instance as ItemDropParamTable;
                 table!.itemList.Add(1);
             }
+
+        for (int i = 0; i < data.instances.Count; ++i)
+        {
+            var instance = data.instances[i];
+            var param = instance as ItemDropParam;
+            if (param != null)
+            {
+                if (param.lotList.Count > 1)
+                {
+                    foreach (var lotid in param.lotList)
+                    {
+                        var lot = data.instances[lotid - 1] as ItemDropParamLot;
+                        if (lot is null) throw new Exception();
+                        if (lot.Num > 0)
+                        {
+                            lot.Num = lot.Num * 2;
+                            lot.Rate = 100;
+                        }
+                        else
+                        {
+                            lot.Rate = 0;
+                        }
+                    }
+
+                }
+            }
+        }
+
 
         data.Write(filename);
     }
@@ -155,7 +184,7 @@ if(false)
         List<int> stdlist = new List<int>();
         foreach (var itemId in itemId2Name.Keys)
             //if(Int32.Parse(itemId)!=606)
-            //if (Int32.Parse(itemId) == 3541)
+            if (Int32.Parse(itemId) == 3531)
         {
             var newItem = new ItemDropParamTableItem();
             newItem.Id = Int32.Parse(itemId);
@@ -252,9 +281,9 @@ if(false)
                                 additionalMsg += isCN ? $"增加{item.specialValue1}魔法攻击。" : $"Add {item.specialValue1} Magic ATK.";
 
                             else if (item.special_ext == 7)
-                                additionalMsg += isCN ? $"增加{item.specialValue1}经验。" : $"Add {item.specialValue1} Exp.";
+                                additionalMsg += isCN ? $"{item.specialValue1}%额外经验(可叠加)。" : $"{item.specialValue1}% More Exp(stackable).";
                             else if (item.special_ext == 8)
-                                additionalMsg += isCN ? $"增加{item.specialValue1}JP。" : $"Add {item.specialValue1} JP.";
+                                additionalMsg += isCN ? $"{item.specialValue1}%额外JP(可叠加)。" : $"{item.specialValue1}% More JP(stackable).";
 
                             else if (item.special_ext == 9)
                                 additionalMsg += isCN ? $"击倒敌人回复{item.specialValue1}。" : $"Heal {item.specialValue1} on kill.";
@@ -276,10 +305,10 @@ if(false)
                             else if (item.special_ext == 16)
                                 additionalMsg += isCN ? $"一次受伤超过{item.specialValue1}%生命上限时，<lf>{item.specialValue2}秒内回复少量体力。" : $"Slight heal for {item.specialValue2} seconds when <lf>taken damage over {item.specialValue1}% MaxHP";
                             else if (item.special_ext == 17)//未测试
-                                additionalMsg += isCN ? $"生命值少于{item.specialValue1}%时获得{item.specialValue2}攻击力(不显示在面板)" : $"Gain {item.specialValue2} ATK when HP under {item.specialValue1}%";
+                                additionalMsg += isCN ? $"生命值少于{item.specialValue1}%时<lf>获得{item.specialValue2}攻击力" : $"Gain {item.specialValue2} ATK when HP under {item.specialValue1}%";
                              
                             else if (item.special_ext == 18)//未测试
-                                additionalMsg += isCN ? $"生命值不少于{item.specialValue1}%时获得{item.specialValue2}攻击力(不显示在面板)" : $"Gain {item.specialValue2} ATK when HP over {item.specialValue1}%";
+                                additionalMsg += isCN ? $"生命值不少于{item.specialValue1}%时<lf>获得{item.specialValue2}攻击力" : $"Gain {item.specialValue2} ATK when HP over {item.specialValue1}%";
 
                             else if (item.special_ext == 21)
                                 additionalMsg += isCN ? $"增加{item.specialValue1}体力回复。" : $"Add {item.specialValue1} Stamina Recover";
@@ -304,9 +333,9 @@ if(false)
                         if (item.magicDef > 0)
                             additionalMsg += isCN ? $"增加{item.magicDef}魔法防御。" : $"Add {item.magicDef} Magic DEF.";
                         if (item.slashDefRate > 0)
-                            additionalMsg += isCN ? $"增加{item.slashDefRate}%斩击减伤。" : $"Add {item.slashDefRate}% slash DEF rate.";
+                            additionalMsg += isCN ? $"获得{item.slashDefRate}%斩击减伤。" : $"Gain {item.slashDefRate}% slash DEF rate.";
                         if (item.strikeDefRate > 0)
-                            additionalMsg += isCN ? $"增加{item.strikeDefRate}%打击减伤。" : $"Add {item.strikeDefRate}% strike DEF rate.";
+                            additionalMsg += isCN ? $"获得{item.strikeDefRate}%打击减伤。" : $"Gain {item.strikeDefRate}% strike DEF rate.";
                         //def是受伤抗性，res是异常抵抗
                         if (item.fireDef > 0)
                             additionalMsg += isCN ? $"增加{item.fireDef}火抗。" : $"Add {item.fireDef} Fire DEF.";
