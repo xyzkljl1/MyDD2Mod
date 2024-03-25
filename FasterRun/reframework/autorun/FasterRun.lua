@@ -6,7 +6,7 @@ if config.Speed1==nil then config.Speed1=9 end
 if config.Speed2==nil then config.Speed2=30 end
 if config.Speed3==nil then config.Speed3=30 end
 if config.Speed4==nil then config.Speed4=46 end
-if config.Speed5==nil then config.Speed5=30 end
+if config.Speed5==nil then config.Speed5=24 end
 
 local function Log(msg)
     myLog = myLog .."\n".. msg
