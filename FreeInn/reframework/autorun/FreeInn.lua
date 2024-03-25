@@ -24,18 +24,25 @@ local function DoShopDatas(shopDatas)
     end    
 end
 
-local tm=sdk.get_managed_singleton("app.TalkEventManager")
-local iter=tm._ShopTalkEventDataCatalog:GetEnumerator()
-iter:MoveNext()
-while iter:get_Current():get_Value()~=nil do
-    local shopDatas=iter:get_Current():get_Value()._CharacterShopData
-    --Log(tostring(shopDatas))
-    DoShopDatas(shopDatas)
-    iter:MoveNext()
-end
-
-Log("Done")
-
 --re.on_frame(function()
 --    ClearLog()
 --end)
+
+sdk.hook(
+    sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
+    nil,
+    function()
+        --data reseted when return to title
+        local tm=sdk.get_managed_singleton("app.TalkEventManager")
+        local iter=tm._ShopTalkEventDataCatalog:GetEnumerator()
+        iter:MoveNext()
+        while iter:get_Current():get_Value()~=nil do
+            local shopDatas=iter:get_Current():get_Value()._CharacterShopData
+            --Log(tostring(shopDatas))
+            DoShopDatas(shopDatas)
+            iter:MoveNext()
+        end	
+        Log("Done")
+    end
+)
+

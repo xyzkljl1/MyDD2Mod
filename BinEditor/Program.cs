@@ -409,17 +409,6 @@ string readIdList(byte[] bytes, ref int offset)
     return ret;
 }
 
-[DllImport("kernel32.dll", EntryPoint = "LCMapStringA")]
-static extern int LCMapString(int Locale, int dwMapFlags, byte[] lpSrcStr, int cchSrc, byte[] lpDestStr, int cchDest);
-
-string CHT2CHS(string s)
-{
-    byte[] src = Encoding.Default.GetBytes(s);
-    byte[] dest = new byte[src.Length];
-    LCMapString(2052,0x04000000,src,-2,dest,src.Length);
-    return Encoding.Default.GetString(dest);
-}
-
 
 
 

@@ -2,10 +2,18 @@ local modname="[ShowBossHP]"
 
 log.info(modname.."Start")
 local myLog="LogStart\n"
-local font = imgui.load_font("times.ttf", 60)
 local screen_w=0
 local screen_h=0
 
+local config = json.load_file("ShowBossHP.json") or {}
+if config.fontsize==nil then config.fontsize=60 end
+if config.color1==nil then config.color1=0xffEEEEEE end
+if config.color2==nil then config.color2=0x66999999 end
+if config.offsetX==nil then config.offsetX=0 end
+if config.offsetY==nil then config.offsetY=0 end
+
+
+local font = imgui.load_font("times.ttf", config.fontsize)
 
 local function Log(msg)
     myLog = myLog .."\n".. msg
@@ -65,13 +73,13 @@ re.on_frame(function()
         --Log(message)
         --Log(d2d.detail.get_max_updaterate())
 
-        local x0=screen_w/2-300
-        local y0=100
+        local x0=screen_w/2-300+config.offsetX
+        local y0=100+config.offsetY
         --Log(tostring(x0))
         --Log(tostring(y0))
         imgui.push_font(font)
-        draw.text(message,x0,y0,0xffCCCCCC)
-        draw.filled_rect(x0,y0,600,80,0x66999999)
+        draw.text(message,x0,y0,config.color1)
+        draw.filled_rect(x0,y0,600,80,config.color2)
         imgui.pop_font()
     end
 
