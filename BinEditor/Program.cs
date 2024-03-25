@@ -157,7 +157,7 @@ if(false)
 
 
 //random drop
-if(false)
+//if(true)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
@@ -184,7 +184,7 @@ if(false)
         List<int> stdlist = new List<int>();
         foreach (var itemId in itemId2Name.Keys)
             //if(Int32.Parse(itemId)!=606)
-            if (Int32.Parse(itemId) == 3531)
+            if (Int32.Parse(itemId) == 3549)
         {
             var newItem = new ItemDropParamTableItem();
             newItem.Id = Int32.Parse(itemId);
@@ -209,7 +209,7 @@ if(false)
 
 
 //item detail
-//if(false)
+if(false)
 {
     List<int> itemIdByOrder = new List<int>();
     {
