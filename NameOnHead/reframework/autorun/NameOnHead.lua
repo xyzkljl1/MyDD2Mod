@@ -30,7 +30,7 @@ end
 local function ClearLog()
     draw.text(myLog,50,50,0xffEEEEFE)
     --draw.text(myLog,250,-1000,0xffEEEEFE)
-    --myLog = ""
+    myLog = ""
 end
 
 re.on_frame(function()
@@ -39,7 +39,7 @@ re.on_frame(function()
         --Log("Trigger")        
         --ClearLog()
     end
-    ClearLog()
+    --ClearLog()
     if on then
         local player_listh=sdk.get_managed_singleton("app.CharacterListHolder")
         local npcm=sdk.get_managed_singleton("app.NPCManager")
