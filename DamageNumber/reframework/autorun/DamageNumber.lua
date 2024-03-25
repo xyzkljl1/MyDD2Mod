@@ -31,6 +31,10 @@ end
 local function getCharacterPos(char)
     local joint=char:get_GameObject():get_Transform():getJointByName("Head_0")
     local ground_joint=char:get_GameObject():get_Transform():getJointByName("root")
+    -- no head enemy
+    if joint == nil then
+        return ground_joint:get_Position()        
+    end
     --if head is too tall from ground, return the ground
     if joint:get_Position().y - ground_joint:get_Position().y >2 then
         return ground_joint:get_Position()

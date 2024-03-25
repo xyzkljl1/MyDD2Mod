@@ -34,8 +34,8 @@ re.on_frame(function()
             state="Dawn"
         elseif tm:isNoon() then
             state="Noon"
-        elseif tm:isDask() then
-            state="Dask"
+        elseif tm:isDusk() then
+            state="Dusk"
         end
         --2sec for 1min?
         local msg=string.format("%dDay %s %d:%d:%d",d,state,h,m,math.floor(s)%2)
