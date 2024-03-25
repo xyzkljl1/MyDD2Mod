@@ -13,7 +13,7 @@ if config.color2==nil then config.color2=0xff990000 end
 if config.color3==nil then config.color3=0xffEEEEEE end
 if config.time==nil or config.time<2 then config.time=120 end
 if config.showlefthp==nil then config.showlefthp=false end
-if config.showmultiplier==nil then config.showmultiplier=false end
+if config.showmultiplier==nil then config.showmultiplier=true end
 if config.showenemydamage==nil then config.showenemydamage=true end
 if config.showfrienddamage==nil then config.showfrienddamage=true end
 if config.bigcap==nil then config.bigcap=1200 end

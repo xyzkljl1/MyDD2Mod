@@ -6,7 +6,7 @@
     "color3": 4293848814,
     "time": 120,
     "showlefthp": false,
-    "showmultiplier": false,
+    "showmultiplier": true,
     "showenemydamage": true,
     "showfrienddamage": true,
     "bigcap": 1200,
