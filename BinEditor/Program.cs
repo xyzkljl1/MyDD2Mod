@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using BinEditor;
 using System.Text;
+using Microsoft.VisualBasic;
+using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 
 if (false)
 {
@@ -157,7 +159,7 @@ if(false)
 
 
 //random drop
-//if(true)
+if(false)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
@@ -209,7 +211,7 @@ if(false)
 
 
 //item detail
-if(false)
+//if(false)
 {
     List<int> itemIdByOrder = new List<int>();
     {
@@ -224,11 +226,10 @@ if(false)
     var armordata = new userdata();
     armordata.Read("E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdata\\itemarmordata.user.2");
 
-    foreach (bool isCN in new[]{ true,false})
+    foreach (string lng in new[] { "en","zhCN","zhTW" })
     {
-        string msgFileName = "itemdetail.msg.22.en.txt";
-        if(isCN)
-            msgFileName= "itemdetail.msg.22.zhCN.txt";
+        bool isCN = lng == "zhCN" || lng == "zhTW";
+        string msgFileName = $"itemdetail.msg.22.{lng}.txt";
         //带_的为原版
         var filename = $"E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\BetterItemDescription\\_{msgFileName}";
         var MsgLines=File.ReadAllLines(filename);
@@ -374,6 +375,9 @@ if(false)
 
                 }
             }
+
+            if(lng=="zhTW")
+                additionalMsg = ChineseConverter.Convert(additionalMsg, ChineseConversionDirection.SimplifiedToTraditional);
             if (additionalMsg!="")
             {
                 newMsgLines.Add($"{MsgLines[i]}<lf>{additionalMsg}");
@@ -404,6 +408,19 @@ string readIdList(byte[] bytes, ref int offset)
     offset += 0x4;
     return ret;
 }
+
+[DllImport("kernel32.dll", EntryPoint = "LCMapStringA")]
+static extern int LCMapString(int Locale, int dwMapFlags, byte[] lpSrcStr, int cchSrc, byte[] lpDestStr, int cchDest);
+
+string CHT2CHS(string s)
+{
+    byte[] src = Encoding.Default.GetBytes(s);
+    byte[] dest = new byte[src.Length];
+    LCMapString(2052,0x04000000,src,-2,dest,src.Length);
+    return Encoding.Default.GetString(dest);
+}
+
+
 
 
 void SetItemSellPrice(string filename, int itemStructLength, int ct, int rate = 1)
