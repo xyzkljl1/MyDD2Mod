@@ -17,7 +17,8 @@ local function ClearLog()
 end
 
 local currentHitController=nil
-local currentGaugeUI=nil
+--local currentGaugeUI=nil
+local currentGaugeUIGO=nil
 
 sdk.hook(
     sdk.find_type_definition("app.ui020501"):get_method("updateGauge"),
@@ -26,8 +27,8 @@ sdk.hook(
         if this.TargetHitCtrl ~=currentHitController then
             currentHitController=this.TargetHitCtrl
         end
-        if currentGaugeUI ~=this then
-            currentGaugeUI=this
+        if currentGaugeUIGO ~=this:get_GameObject() then
+            currentGaugeUIGO=this:get_GameObject()
         end
     end,
     function()end
@@ -50,8 +51,15 @@ re.on_frame(function()
     if gm == nil then return end
     if gm:get_IsLoadGui()==true then return end
 
-    if currentHitController~=nil and currentGaugeUI~=nil then
-        if currentGaugeUI:get_GameObject():get_DrawSelf() ==false then return end
+    if currentHitController~=nil and currentGaugeUIGO~=nil then
+        --become invalid after return to tile
+        if not currentGaugeUIGO:get_Valid() then
+            currentHitController=nil
+            currentGaugeUIGO=nil
+            return
+        end
+ 
+        if currentGaugeUIGO:get_DrawSelf() ==false then return end
 
         local message= tostring(math.floor(currentHitController:get_Hp())) .. " / " .. tostring(math.floor(currentHitController:get_ReducedMaxHp())) .. " ("..tostring(math.floor(100*(currentHitController:get_ReducedHpRate()))) .."%)"
         --Log(message)
