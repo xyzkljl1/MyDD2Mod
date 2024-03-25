@@ -1,8 +1,14 @@
 {
     "fontsize": 60,
     "color1": 4293848814,
+    "color11": 4293848814,
     "color2": 4288217088,
+    "color3": 4293848814,
     "time": 120,
     "showlefthp": false,
-    "bigcap": 1200
+    "showmultiplier": false,
+    "showenemydamage": true,
+    "showfrienddamage": true,
+    "bigcap": 1200,
+    "ignorecap": -1
 }

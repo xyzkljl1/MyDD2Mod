@@ -8,10 +8,16 @@ local mainplayer=nil
 local config = json.load_file("DamageNumber.json") or {}
 if config.fontsize==nil then config.fontsize=60 end
 if config.color1==nil then config.color1=0xffEEEEEE end
+if config.color11==nil then config.color11=0xffEEEEEE end
 if config.color2==nil then config.color2=0xff990000 end
+if config.color3==nil then config.color3=0xffEEEEEE end
 if config.time==nil or config.time<2 then config.time=120 end
 if config.showlefthp==nil then config.showlefthp=false end
+if config.showmultiplier==nil then config.showmultiplier=false end
+if config.showenemydamage==nil then config.showenemydamage=true end
+if config.showfrienddamage==nil then config.showfrienddamage=true end
 if config.bigcap==nil then config.bigcap=1200 end
+if config.ignorecap==nil then config.ignorecap=-1 end
 
 local colorDelta=math.floor(0xff000000/(config.time-1))&0xff000000
 local posDelta=2/(config.time-1)
@@ -58,9 +64,8 @@ local function f2s2(float)
 end
 
 
-mainplayer=getplayer()
 local function AddDamageNumber(character,damageInfo)
-    damageNumber={}
+    local damageNumber={}
     damageNumber.pos=getCharacterPos(character)
     damageNumber.finalDamage=damageInfo.Damage    
     damageNumber.bigFont=false
@@ -68,9 +73,15 @@ local function AddDamageNumber(character,damageInfo)
     --damageNumber.rate=damageInfo.DamageRate
     --damageNumber.rateMaxHP=damageInfo.MaxHpDamageRate
 
+    if damageInfo.Damage < config.ignorecap then return end
+
+    local isEnemy=character:get_EnemyController():get_IsHostileArisen()
+    if isEnemy==true and config.showenemydamage==false then return end
+    if config.showfrienddamage==false and isEnemy==false then return end
+
     damageNumber.msg=f2s(damageInfo.Damage)
     -- compare float to 1 seems to be okay?
-    if damageInfo.DamageRate ~=1 then
+    if damageInfo.DamageRate ~=1 and config.showmultiplier==true then
         damageNumber.msg=damageNumber.msg.." (x"..f2s2(damageInfo.DamageRate) ..")"
     end
 
@@ -79,15 +90,19 @@ local function AddDamageNumber(character,damageInfo)
         damageNumber.msg=damageNumber.msg.." ! "
     end
 
-    if config.showlefthp then
+    if config.showlefthp and character:get_Hp() > 0 then
         damageNumber.msg=damageNumber.msg.." -> "..f2s(character:get_Hp()-damageInfo.Damage)
     end
 
-
     damageNumber.color=config.color1
-    if mainplayer == character then
+    if damageInfo.Damage > config.bigcap then
+        damageNumber.color=config.color3
+    elseif mainplayer == character then
         damageNumber.color=config.color2
+    elseif isEnemy==true then
+        damageNumber.color=config.color11    
     end
+
 
     --should match color disappear time
     damageNumbers[damageNumber]=config.time
