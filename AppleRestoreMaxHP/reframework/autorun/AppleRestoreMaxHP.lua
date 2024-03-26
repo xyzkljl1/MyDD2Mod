@@ -15,6 +15,7 @@ local im=sdk.get_managed_singleton("app.ItemManager")
 im:getItemData(1):get_ItemParam()._HealBlackHp=500
 im:getItemData(2):get_ItemParam()._HealBlackHp=500
 im:getItemData(3):get_ItemParam()._HealBlackHp=500
+im:getItemData(184):get_ItemParam()._HealBlackHp=500
 Log("Done")
 
 --re.on_frame(function()

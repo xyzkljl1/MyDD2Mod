@@ -1,4 +1,5 @@
 {
+    "font": "times.ttf",
     "fontsize": 60,
     "color1": 4293848814,
     "color11": 4293848814,
@@ -10,5 +11,6 @@
     "showenemydamage": true,
     "showfrienddamage": true,
     "bigcap": 1200,
-    "ignorecap": -1
+    "ignorecap": -1,
+    "rndoffset": 0.2
 }

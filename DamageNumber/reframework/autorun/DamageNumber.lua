@@ -7,6 +7,7 @@ local mainplayer=nil
 
 local config = json.load_file("DamageNumber.json") or {}
 if config.fontsize==nil then config.fontsize=60 end
+if config.font==nil then config.font="times.ttf" end
 if config.color1==nil then config.color1=0xffEEEEEE end
 if config.color11==nil then config.color11=0xffEEEEEE end
 if config.color2==nil then config.color2=0xff990000 end
@@ -18,12 +19,14 @@ if config.showenemydamage==nil then config.showenemydamage=true end
 if config.showfrienddamage==nil then config.showfrienddamage=true end
 if config.bigcap==nil then config.bigcap=1200 end
 if config.ignorecap==nil then config.ignorecap=-1 end
+if config.rndoffset==nil then config.rndoffset=0.2 end
+
 
 local colorDelta=math.floor(0xff000000/(config.time-1))&0xff000000
 local posDelta=2/(config.time-1)
 
-local font = imgui.load_font("times.ttf", config.fontsize)
-local bigFont = imgui.load_font("times.ttf", math.floor(config.fontsize*1.8))
+local font = imgui.load_font(config.font, config.fontsize)
+local bigFont = imgui.load_font(config.font, math.floor(config.fontsize*1.8))
 
 local function Log(msg)
     myLog = myLog .."\n".. msg
@@ -67,6 +70,11 @@ end
 local function AddDamageNumber(character,damageInfo)
     local damageNumber={}
     damageNumber.pos=getCharacterPos(character)
+    local ofx=(math.random(7)-4)*config.rndoffset
+    local ofy=(math.random(7)-4)*config.rndoffset
+    damageNumber.pos.x=damageNumber.pos.x+ofx
+    damageNumber.pos.y=damageNumber.pos.y+ofy
+
     damageNumber.finalDamage=damageInfo.Damage    
     damageNumber.bigFont=false
     --damageNumber.def=damageInfo.DamageGuard
@@ -103,6 +111,7 @@ local function AddDamageNumber(character,damageInfo)
         damageNumber.color=config.color11    
     end
 
+    --damageNumber.msg=tostring(ofx).."/"..tostring(ofy)
 
     --should match color disappear time
     damageNumbers[damageNumber]=config.time
