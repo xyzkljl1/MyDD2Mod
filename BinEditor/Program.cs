@@ -104,12 +104,16 @@ if(false)
 //drop ferrystone
 if(false)
 {
+    //0x192be280 :drops 4064
+    var ignoreItemId = new HashSet<int> { };
+    //var ignoreItemId = new HashSet<int> { 4064 };
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
         string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
-        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\DropFerryStone7\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
+        string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\DropFerryStone\\natives\\stm\\appsystem\\item\\itemdropdata\\{_filename}";
         var data = new userdata();
         data.Read(original_filename);
+
         var newItem = new ItemDropParamTableItem();
         newItem.Id = 80;
         newItem.Num = 1;
@@ -118,48 +122,74 @@ if(false)
         data.instances.Insert(0, newItem);
         data.instanceinfos.Insert(0, InstanceTypeEnum.appItemDropParamTableItem);
         data.IncreaseAllIdx(1);
+        if(false)
         foreach (var instance in data.instances)
             if(instance as ItemDropParamTable is not null)
             {
                 var table = instance as ItemDropParamTable;
+                bool ignore = false;
+                foreach (var itemId in table.itemList)
+                {
+                    var item = data.instances[itemId-1] as ItemDropParamTableItem;
+                    if(ignoreItemId.Contains(item!.Id))
+                        ignore=true;
+                }
                 table!.itemList.Add(1);
             }
-
-        for (int i = 0; i < data.instances.Count; ++i)
+        //if (false)
         {
-            var instance = data.instances[i];
-            var param = instance as ItemDropParam;
-            if (param != null)
+            for (int i = 0; i < data.instances.Count; ++i)
             {
-                if (param.lotList.Count > 1)
+                var instance = data.instances[i];
+                var param = instance as ItemDropParam;
+                bool x=false;
+                if (param != null)
                 {
-                    foreach (var lotid in param.lotList)
+                    foreach (var tableId in param.tableList)
                     {
-                        var lot = data.instances[lotid - 1] as ItemDropParamLot;
-                        if (lot is null) throw new Exception();
-                        if (lot.Num > 0)
+                        var table = data.instances[tableId - 1] as ItemDropParamTable;
+                        //if(table.itemList.Count==1)
+                        foreach (var itemId in table.itemList)
                         {
-                            lot.Num = lot.Num * 2;
-                            lot.Rate = 100;
-                        }
-                        else
-                        {
-                            lot.Rate = 0;
+                            var item = data.instances[itemId - 1] as ItemDropParamTableItem;
+                            if (item.Id == 4064)
+                            {
+                                x = true;                                
+                                foreach (var lotId in param.lotList)
+                                {
+                                    var lot = data.instances[lotId - 1] as ItemDropParamLot;
+                                    Console.WriteLine($"{lot.Num}/{lot.Rate}");
+                                }
+                                Console.WriteLine("1111");
+                            }
                         }
                     }
-
+                    if(x)
+                    {
+                        foreach (var tableId in param.tableList)
+                        {
+                            var table = data.instances[tableId - 1] as ItemDropParamTable;
+                            foreach (var xItemId in table.itemList)
+                            {
+                                var xItem = data.instances[xItemId - 1] as ItemDropParamTableItem;
+                                Console.WriteLine($"{xItem.Id}/{xItem.Rate}/{xItem.Rate}");
+                            }
+                            Console.WriteLine("---");
+                        }
+                        x =false;
+                    }
                 }
             }
+
         }
 
-
-        data.Write(filename);
+        //data.Write(filename);
     }
 }
 
 
 //random drop
-if(false)
+//if(false)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
@@ -186,7 +216,7 @@ if(false)
         List<int> stdlist = new List<int>();
         foreach (var itemId in itemId2Name.Keys)
             //if(Int32.Parse(itemId)!=606)
-            if (Int32.Parse(itemId) == 3549)
+            if (Int32.Parse(itemId) == 398)
         {
             var newItem = new ItemDropParamTableItem();
             newItem.Id = Int32.Parse(itemId);
@@ -211,7 +241,7 @@ if(false)
 
 
 //item detail
-//if(false)
+if(false)
 {
     List<int> itemIdByOrder = new List<int>();
     {
