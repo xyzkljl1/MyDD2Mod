@@ -1,4 +1,11 @@
 {
     "range": 3000,
-    "light": 10
+    "light": 10,
+    "cone": 140.0,
+    "spotR": 1.0,
+    "spotG": 0.451,
+    "spotB": 0.18,
+    "pointR": 1.0,
+    "pointG": 0.451,
+    "pointB": 0.18
 }
