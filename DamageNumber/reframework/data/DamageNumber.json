@@ -10,6 +10,7 @@
     "showmultiplier": true,
     "showenemydamage": true,
     "showfrienddamage": true,
+"shownonplayerdealandtakendamage":true,
     "bigcap": 1200,
     "ignorecap": -1,
     "rndoffset": 0.2

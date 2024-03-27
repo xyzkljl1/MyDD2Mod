@@ -4,6 +4,7 @@ log.info(modname.."Start")
 local myLog="LogStart\n"
 local damageNumbers={}
 local mainplayer=nil
+local mainplayerGO=nil
 
 local config = json.load_file("DamageNumber.json") or {}
 if config.fontsize==nil then config.fontsize=60 end
@@ -17,6 +18,7 @@ if config.showlefthp==nil then config.showlefthp=false end
 if config.showmultiplier==nil then config.showmultiplier=true end
 if config.showenemydamage==nil then config.showenemydamage=true end
 if config.showfrienddamage==nil then config.showfrienddamage=true end
+if config.shownonplayerdealandtakendamage==nil then config.shownonplayerdealandtakendamage=true end
 if config.bigcap==nil then config.bigcap=1200 end
 if config.ignorecap==nil then config.ignorecap=-1 end
 if config.rndoffset==nil then config.rndoffset=0.2 end
@@ -51,11 +53,15 @@ local function getCharacterPos(char)
     return joint:get_Position()
 end
 
-local function getplayer()
+local function refreshplayer()
     local player_man=sdk.get_managed_singleton("app.CharacterManager")
-    local player=player_man:get_ManualPlayer()
-    Log(tostring(player))
-    return player
+    mainplayer=player_man:get_ManualPlayer()
+    mainplayerGO=nil
+    Log(tostring(player))    
+    if mainplayer~=nil then
+        mainplayerGO=mainplayer:get_GameObject()
+        Log("GetMainPlayerDone")
+    end
 end
 
 local function f2s(float)
@@ -66,10 +72,14 @@ local function f2s2(float)
     return string.format("%.2f",float)
 end
 
-
 local function AddDamageNumber(character,damageInfo)
     local damageNumber={}
     damageNumber.pos=getCharacterPos(character)
+    --learned from SilverEzredes
+    local owner_gameobj = damageInfo and damageInfo["<AttackOwnerObject>k__BackingField"]
+    local isPlayerAttackHit = (owner_gameobj == mainplayerGO)
+    local isPlayerTakenHit = (mainplayer == character)
+
     local ofx=(math.random(7)-4)*config.rndoffset
     local ofy=(math.random(7)-4)*config.rndoffset
     damageNumber.pos.x=damageNumber.pos.x+ofx
@@ -82,6 +92,9 @@ local function AddDamageNumber(character,damageInfo)
     --damageNumber.rateMaxHP=damageInfo.MaxHpDamageRate
 
     if damageInfo.Damage < config.ignorecap then return end
+    if config.shownonplayerdealandtakendamage==false and isPlayerAttackHit==false and isPlayerTakenHit==false then
+        return
+    end
 
     local isEnemy=character:get_EnemyController():get_IsHostileArisen()
     if isEnemy==true and config.showenemydamage==false then return end
@@ -105,7 +118,7 @@ local function AddDamageNumber(character,damageInfo)
     damageNumber.color=config.color1
     if damageInfo.Damage > config.bigcap then
         damageNumber.color=config.color3
-    elseif mainplayer == character then
+    elseif isPlayerTakenHit then
         damageNumber.color=config.color2
     elseif isEnemy==true then
         damageNumber.color=config.color11    
@@ -175,9 +188,6 @@ sdk.hook(
     sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
     function() end,
     function()
-        mainplayer=getplayer()
-        if mainplayer~=nil then
-            Log("GetMainPlayerDone")
-        end
+        refreshplayer()
     end
 )
