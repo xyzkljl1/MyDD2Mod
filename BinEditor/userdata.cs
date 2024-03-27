@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace BinEditor
 {
-
-
     public enum InstanceTypeEnum : uint
     {
         appItemDropParamLot = 0x6aa821d2,

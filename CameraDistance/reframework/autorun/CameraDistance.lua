@@ -27,9 +27,6 @@ local mouse_singleton=sdk.get_native_singleton("via.hid.Mouse")
 local mouse_typedef=sdk.find_type_definition("via.hid.Mouse")
 local mouse_device
 
-local cm=sdk.get_managed_singleton("app.CameraManager")
-cm._DistanceOffset=config.dis
-
 
 local function Log(msg)
     myLog = myLog .."\n".. msg
@@ -75,3 +72,12 @@ re.on_application_entry("UpdateHID",
 		mouse_device=sdk.call_native_func(mouse_singleton, mouse_typedef, "get_Device")
 	end
 )
+
+sdk.hook(
+    sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
+    nil,
+    function()
+        ModifyDistance(config.dis)
+    end
+)
+

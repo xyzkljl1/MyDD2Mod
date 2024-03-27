@@ -187,9 +187,18 @@ if(false)
     }
 }
 
+//"e980ba7a-aa46-453b-8561-950ad0d09fcb" 835
+//
+{
+    string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\event\\talkevent\\talkeventresource\\common.user.2";
+    string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\StorageAnywhere\\natives\\stm\\event\\talkevent\\talkeventresource\\common.user.2";
+    var data = new userdata();
+    data.Read(original_filename);
+
+}
 
 //random drop
-//if(false)
+if (false)
 {
     foreach (string _filename in new[] { "enemydefaultitemdropdata.user.2", "enemyitemdropdata.user.2" })
     {
@@ -438,8 +447,6 @@ string readIdList(byte[] bytes, ref int offset)
     offset += 0x4;
     return ret;
 }
-
-
 
 
 void SetItemSellPrice(string filename, int itemStructLength, int ct, int rate = 1)
