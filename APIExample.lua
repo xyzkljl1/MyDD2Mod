@@ -50,6 +50,7 @@ re.on_frame(function()
 end)
 
 ------Draw UI If api exists
+--XYZAPI is optional,still run without api,just no UI.
 local function prequire(...)
     local status, lib = pcall(require, ...)
     if(status) then return lib end

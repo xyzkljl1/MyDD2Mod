@@ -1,17 +1,21 @@
-local modname="[NameOnHead]"
-log.info(modname.."Start")
-local myLog="LogStart\n"
-
-local config = json.load_file("NameOnHead.json") or {}
-if config.font==nil then config.font="simsun.ttc" end
-if config.fontsize==nil then config.fontsize=29 end
-if config.color==nil then config.color=0xffEEEEEE end
-if config.offsetX==nil then config.offsetX=0 end
-if config.offsetY==nil then config.offsetY=0 end
-if config.offsetZ==nil then config.offsetZ=0 end
-if config.keyboardKey==nil then config.keyboardKey="Alpha1" end
-if config.controllerKeyShoulder==nil then config.controllerKeyShoulder="RT (R2)" end
-if config.controllerKeyNotShoulder==nil then config.controllerKeyNotShoulder="LLeft" end
+local modname="NameOnHead"
+local configfile=modname..".json"
+log.info("["..modname.."]".."Start")
+--settings
+local _config={
+    {name="font",type="font",default="simsun.ttc"},
+    {name="fontsize",type="fontsize",default=29},
+    {name="color",type="rgba32",default=0xffEEEEEE},
+    {name="offsetX",type="int",default=0,min=-300,max=5000},
+    {name="offsetY",type="int",default=0,min=-300,max=5000},
+    {name="offsetZ",type="int",default=0,min=-300,max=5000},
+    {name="keyboardKey",type="hotkey",default="Alpha1",actionName="keyboardKey2728"},
+    {name="controllerKeyShoulder",type="hotkey",default="RT (R2)",actionName="controllerKeyShoulder2728"},
+    {name="controllerKeyNotShoulder",type="hotkey",default="LLeft",actionName="controllerKeyNotShoulder2728"},
+}
+local myapi = require("_XYZApi/_XYZApi")
+local hk = require("Hotkeys/Hotkeys")
+local config=myapi.InitFromFile(_config,configfile)
 
 --thanks to lingsamuel
 local CJK_GLYPH_RANGES = {
@@ -23,42 +27,21 @@ local CJK_GLYPH_RANGES = {
     0x4e00, 0x9FAF, -- CJK Ideograms
     0,
 }
-
-local font=nil
 --必须有CJK_GLYPH_RANGES才能支持中文字符
 --字号过大就会崩溃，不同字体支持字号不一样，中文字体支持的字号比较小？
 --simsun:约30，times:至少250 MS明朝：60
 local font = imgui.load_font( config.font, config.fontsize,CJK_GLYPH_RANGES)
---local font = imgui.load_font( "NotoSansJP-Regular.otf", 85,CJK_GLYPH_RANGES)
---local font = imgui.load_font( "times.ttc", 250,CJK_GLYPH_RANGES)
---local font = imgui.load_font( "tohoma.ttf", 70,CJK_GLYPH_RANGES)
-local hk = require("Hotkeys/Hotkeys")
 
-local hotkeySettings = {
-		["Keyboard"] = config.keyboardKey,
-		["controllerKeyShoulder"] = config.controllerKeyShoulder,
-		["controllerKeyNotShoulder"] = config.controllerKeyNotShoulder,
-}
-hk.setup_hotkeys(hotkeySettings)
 local on=false
 
 local function Log(msg)
-    myLog = myLog .."\n".. msg
     log.info(modname..msg)
-end
-local function ClearLog()
-    draw.text(myLog,50,50,0xffEEEEFE)
-    --draw.text(myLog,250,-1000,0xffEEEEFE)
-    myLog = ""
 end
 
 re.on_frame(function()
-    if hk.check_hotkey("Keyboard",false,true) or ((hk.check_hotkey("controllerKeyShoulder",  true,false) and hk.check_hotkey("controllerKeyNotShoulder",  false,true))) then
+    if hk.check_hotkey("keyboardKey2728",false,true) or ((hk.check_hotkey("controllerKeyShoulder2728",  true,false) and hk.check_hotkey("controllerKeyNotShoulder2728",  false,true))) then
         on=not on
-        --Log("Trigger")        
-        --ClearLog()
     end
-    --ClearLog()
     if on then
         local player_listh=sdk.get_managed_singleton("app.CharacterListHolder")
         local npcm=sdk.get_managed_singleton("app.NPCManager")
@@ -76,11 +59,11 @@ re.on_frame(function()
                 local text_pos=Vector3f.new(pos.x+config.offsetX, pos.y+config.offsetY+0.2, pos.z+config.offsetZ)
                 --LogTypeMethods(d)
                 local text=d:get_Name()
-                --text="啦啦啦啦"
                 draw.world_text(text,text_pos,config.color)
             end
         end
         imgui.pop_font()
-        ClearLog()
     end
 end)
+
+myapi.DrawIt(modname,configfile,_config,config,nil,true)

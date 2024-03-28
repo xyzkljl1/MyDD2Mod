@@ -45,7 +45,7 @@ local function recurse_def_settings(tbl, new_tbl)
 	return tbl
 end
 
-local function InitFromFile(_config,configfilename,dontInitHotkey)
+local function InitFromFile(_config,configfile,dontInitHotkey)
     --merge config file to default config
     local config = {} 
     for key,para in ipairs(_config) do
