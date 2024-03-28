@@ -9,7 +9,8 @@ local _config={
     {name="para4",type="rgba4f",default={1.0,0.5,0.5,1.0},width=100},
     {name="para5",type="intN",default={20,25},min=1,max=100},
     {name="para6",type="string",default="para6",tip="this is a tip",needreentry=true},
-    {name="para7",type="bool",default=true},
+    {name="para7",type="bool",default=true,label="This is label"},
+    {name="para8",type="hotkey",default="Z",actionName="HotKeyActionNameThisShouldBeUniqueInAllMods"},
 }
 ------Init Config
 --merge config file to default config
