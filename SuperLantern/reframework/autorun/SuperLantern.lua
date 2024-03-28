@@ -5,7 +5,7 @@ log.info("["..modname.."]".."Start")
 local _config={
     {name="range",type="int",default=3000,min=1,max=100000},
     {name="light",type="int",default=10,min=0,max=100000},
-    {name="blink",type="bool",default=true},
+    {name="blink",type="bool",default=false},
     {name="cone",type="int",default=140,min=1,max=180},
     {name="spotLightColor",type="rgba4f",default={1.0,0.451,0.18}},
     {name="pointLightColor",type="rgba4f",default={1.0,0.451,0.18}},
@@ -28,8 +28,9 @@ local config = {}
 for key,para in pairs(_config) do
     config[para.name]=para.default
 end
-
 config= recurse_def_settings(config, json.load_file(configfile) or {})
+--end
+
 local light_ptr=sdk.float_to_ptr(config.light)
 
 local function Log(msg)
