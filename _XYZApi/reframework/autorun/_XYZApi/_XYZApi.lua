@@ -17,7 +17,10 @@ local function prequire(...)
     return nil
 end
 local hk = prequire("Hotkeys/Hotkeys")
-local itemIds=nil
+local itemNames=nil
+local itemIndex2itemId={}
+local itemId2itemIndex={}
+
 
 local function setupHotKey(_config,config)
     if hk~=nil then
@@ -59,18 +62,29 @@ local function InitFromFile(_config,configfile,dontInitHotkey)
 end
 
 local function DD2_InitItemId()
-    itemIds={}
+    -- imgui.combo seems not to sort by number index when there are many items.Use continuous index to force it sort
+    itemNames={}
+    local id2Name={}
+    local ids={}
     local im=sdk.get_managed_singleton("app.ItemManager")
     local iter=im._ItemDataDict:GetEnumerator()
     iter:MoveNext()
     while iter:get_Current():get_Value()~=nil do
         local itemCommonParam=iter:get_Current():get_Value()
         local name=itemCommonParam:get_Name()
-        if name ~="Invalid" then
-            itemIds[itemCommonParam._Id]=string.format("%4d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
+        if name ~="Invalid" and name~=nil then
+            id2Name[itemCommonParam._Id]=string.format("%06d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
+            table.insert(ids,itemCommonParam._Id)
         end
         iter:MoveNext()
     end
+    table.sort(ids)
+    for _,id in pairs(ids) do
+        table.insert(itemNames,id2Name[id])
+        itemIndex2itemId[#itemNames]=id
+        itemId2itemIndex[id]=#itemNames
+    end
+
 end
 
 --Chinese font need pass CJK_GLYPH_RANGES as [ranges] when load and the lua file need to be unicode
@@ -81,7 +95,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
         setupHotKey(_config,config)
     end
 
-    if itemIds==nil then
+    if itemNames==nil then
         DD2_InitItemId()
     end
 
@@ -96,7 +110,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
 		    --imgui.same_line()
 		    --imgui.text("*Right click on most options to reset them")		
 		    imgui.begin_rect()
-            for idx,para in ipairs (_config) do
+            for _,para in ipairs (_config) do
                 local key = para.name
                 local actionName = para.actionName or key
                 local title_postfix=""
@@ -182,7 +196,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         changed=true
                     end
                 elseif para.type=="item" then
-                    changed, config[key]= imgui.combo(label .. title_postfix, config[key] ,itemIds)
+                    changed, tmp_idx= imgui.combo(label .. title_postfix, itemId2itemIndex[config[key]] ,itemNames)
+                    config[key]=itemIndex2itemId[tmp_idx]
                     _changed=changed or _changed
                 end
 
