@@ -74,7 +74,8 @@ end
 
 local function AddDamageNumber(character,damageInfo)
     local damageNumber={}
-    damageNumber.pos=getCharacterPos(character)
+    --damageNumber.pos=getCharacterPos(character)
+    damageNumber.pos=damageInfo:get_Position()
     --learned from SilverEzredes
     local owner_gameobj = damageInfo and damageInfo["<AttackOwnerObject>k__BackingField"]
     local isPlayerAttackHit = (owner_gameobj == mainplayerGO)
