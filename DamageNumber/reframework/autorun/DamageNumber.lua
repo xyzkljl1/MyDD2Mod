@@ -1,28 +1,51 @@
-local modname="[DamageNumber]"
+local modname="DamageNumber"
+local configfile=modname..".json"
+log.info("["..modname.."]".."Start")
+--settings
+local _config={
+    {name="fontsize",type="int",default=60,min=1,max=250,needrestart=true},
+    {name="font",type="font",default="times.ttf",needrestart=true},
+    {name="color1",type="rgba32",default=0xffEEEEEE},
+    {name="color11",type="rgba32",default=0xffEEEEEE},
+    {name="color2",type="rgba32",default=0xffEEEEEE},
+    {name="color3",type="rgba32",default=0xffEEEEEE},
+    {name="time",type="int",default=120,min=2,max=4000},
+    {name="showlefthp",type="bool",default=false},
+    {name="showmultiplier",type="bool",default=true},
+    {name="showenemydamage",type="bool",default=true},
+    {name="showfrienddamage",type="bool",default=true},
+    {name="shownonplayerdealandtakendamage",type="bool",default=true},
+    {name="bigcap",type="int",default=1200,min=0,max=1000000},
+    {name="ignorecap",type="int",default=-1,min=-1,max=1000000},
+    {name="rndoffset",type="float",default=0.2,min=0.0,max=10.0},
+}
+--merge config file to default config
+local function recurse_def_settings(tbl, new_tbl)
+	for key, value in pairs(new_tbl) do
+		if type(tbl[key]) == type(value) then
+		    if type(value) == "table" then
+			    tbl[key] = recurse_def_settings(tbl[key], value)
+            else
+    		    tbl[key] = value
+            end
+		end
+	end
+	return tbl
+end
+local config = {} 
+for key,para in pairs(_config) do
+    config[para.name]=para.default
+end
+config= recurse_def_settings(config, json.load_file(configfile) or {})
+--On setting Change
+local function OnChanged()
+end
 
-log.info(modname.."Start")
+
 local myLog="LogStart\n"
 local damageNumbers={}
 local mainplayer=nil
 local mainplayerGO=nil
-
-local config = json.load_file("DamageNumber.json") or {}
-if config.fontsize==nil then config.fontsize=60 end
-if config.font==nil then config.font="times.ttf" end
-if config.color1==nil then config.color1=0xffEEEEEE end
-if config.color11==nil then config.color11=0xffEEEEEE end
-if config.color2==nil then config.color2=0xff990000 end
-if config.color3==nil then config.color3=0xffEEEEEE end
-if config.time==nil or config.time<2 then config.time=120 end
-if config.showlefthp==nil then config.showlefthp=false end
-if config.showmultiplier==nil then config.showmultiplier=true end
-if config.showenemydamage==nil then config.showenemydamage=true end
-if config.showfrienddamage==nil then config.showfrienddamage=true end
-if config.shownonplayerdealandtakendamage==nil then config.shownonplayerdealandtakendamage=true end
-if config.bigcap==nil then config.bigcap=1200 end
-if config.ignorecap==nil then config.ignorecap=-1 end
-if config.rndoffset==nil then config.rndoffset=0.2 end
-
 
 local colorDelta=math.floor(0xff000000/(config.time-1))&0xff000000
 local posDelta=2/(config.time-1)
@@ -192,3 +215,13 @@ sdk.hook(
         refreshplayer()
     end
 )
+
+
+--try load api and draw ui
+local function prequire(...)
+    local status, lib = pcall(require, ...)
+    if(status) then return lib end
+    return nil
+end
+local myapi = prequire("_XYZApi/_XYZApi")
+if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,OnChanged) end

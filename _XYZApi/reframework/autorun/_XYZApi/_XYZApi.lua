@@ -39,6 +39,17 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                     end
                     imgui.pop_item_width()
                     imgui.new_line()
+                elseif para.type=="font" or para.type=="string" then
+        		    changed , config[key]= imgui.input_text(key .. title_postfix, config[key] or para.default)
+                    _changed=changed or _changed
+                elseif para.type=="bool" then
+                    --don't use "config[key] or default"
+                    if config[key] ~=nil then
+            		    changed , config[key]= imgui.checkbox(key .. title_postfix, config[key])
+                    else
+            		    changed , config[key]= imgui.checkbox(key .. title_postfix, para.default)
+                    end
+                    _changed=changed or _changed
                 elseif para.type=="float" then
         		    changed , config[key]= imgui.drag_float(key .. title_postfix, 
                                                             config[key] or para.default or para.min or 0,
