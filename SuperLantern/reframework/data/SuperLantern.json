@@ -1,6 +1,7 @@
 {
     "range": 3000,
     "light": 10,
+    "blink":false,
     "cone": 140.0,
     "spotR": 1.0,
     "spotG": 0.451,

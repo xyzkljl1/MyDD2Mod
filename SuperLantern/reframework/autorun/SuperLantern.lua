@@ -8,6 +8,7 @@ local fix_msg=""
 local fix_msg2=""
 config.range=config.range or 3000
 config.light=config.light or 10
+config.blink=config.blink or false
 --140
 config.cone=config.cone or 140
 --default 1/0.451,0.18
@@ -31,6 +32,7 @@ end
 
 local tm=sdk.get_managed_singleton("app.ItemManager")
 local player_man=sdk.get_managed_singleton("app.CharacterManager")
+local frame=0
 
 local function SetConsumeNone()
     local player=player_man:get_ManualPlayer()
@@ -83,8 +85,24 @@ local function SetLightColorCone()
         local lights=player:get_Human():get_LanternCtrl().LanternLightList
         --0 SpotLight 1 PointLight
         setSpotLightDirection(lights[0],config.cone*1.0)
+
+        if config.blink==true then
+            frame=frame+1
+            if frame>60 then
+                frame=0
+            end
+            local x=(frame%60)/60.0
+            local y=((20+frame)%60)/60.0
+            local z=((40+frame)%60)/60.0
+
+            setLightColor(lights[0],config.spotR*1.0*z,config.spotG*1.0*x,config.spotB*1.0*y)
+            setLightColor(lights[1],config.pointR*1.0*x,config.pointG*1.0*y,config.pointB*1.0*z)
+
+        else
         setLightColor(lights[0],config.spotR*1.0,config.spotG*1.0,config.spotB*1.0)
         setLightColor(lights[1],config.pointR*1.0,config.pointG*1.0,config.pointB*1.0)
+        end
+
     end
 end
 
