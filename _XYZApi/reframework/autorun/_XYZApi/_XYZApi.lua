@@ -27,6 +27,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                 local title_postfix=""
                 if para.needrestart==true then
                     title_postfix=" (Need Restart To Apply)"
+                elseif para.needreentry==true then
+                    title_postfix=" (Need Return to Title to Apply)"
                 end
 
                 if para.type=="int" then
@@ -96,6 +98,9 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                     _changed=changed or _changed
                     imgui.pop_item_width()
                     config[key]=(a<<24)|(r)|(g<<8)|(b<<16)
+                end
+                if para.tip ~=nil and imgui.is_item_hovered() then
+                    imgui.set_tooltip(para.tip)
                 end
             end
 		    imgui.tree_pop()
