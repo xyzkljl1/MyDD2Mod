@@ -1,4 +1,4 @@
-local vecNames={
+﻿local vecNames={
     ".x",
     ".y",
     ".z",
@@ -17,7 +17,7 @@ local function prequire(...)
     return nil
 end
 local hk = prequire("Hotkeys/Hotkeys")
-
+local itemIds=nil
 
 local function setupHotKey(_config,config)
     if hk~=nil then
@@ -58,21 +58,44 @@ local function InitFromFile(_config,configfile,dontInitHotkey)
     return config
 end
 
-local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey)
+local function DD2_InitItemId()
+    itemIds={}
+    local im=sdk.get_managed_singleton("app.ItemManager")
+    local iter=im._ItemDataDict:GetEnumerator()
+    iter:MoveNext()
+    while iter:get_Current():get_Value()~=nil do
+        local itemCommonParam=iter:get_Current():get_Value()
+        local name=itemCommonParam:get_Name()
+        if name ~="Invalid" then
+            itemIds[itemCommonParam._Id]=string.format("%4d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
+        end
+        iter:MoveNext()
+    end
+end
+
+--Chinese font need pass CJK_GLYPH_RANGES as [ranges] when load and the lua file need to be unicode
+local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,font)
     configfile=configfile or (modname..".json")
 
     if dontInitHotkey~=true then
         setupHotKey(_config,config)
     end
 
+    if itemIds==nil then
+        DD2_InitItemId()
+    end
+
     re.on_draw_ui(function()
         local changed=false
         local _changed=false
-	    if imgui.tree_node(modname) then	
+        if font~=nil then
+            imgui.push_font(font)
+        end
+        local triggeredButtons={}
+	    if imgui.tree_node(modname) then
 		    --imgui.same_line()
 		    --imgui.text("*Right click on most options to reset them")		
 		    imgui.begin_rect()
-		
             for idx,para in ipairs (_config) do
                 local key = para.name
                 local actionName = para.actionName or key
@@ -148,26 +171,19 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey)
                                                             para.step or 0.1 , para.min or 0, para.max)
                     _changed=changed or _changed
                 elseif para.type=="rgba32" then
-                    local value=config[key] or para.default or para.min or 0xffffffff
-                    local a=(value & 0xff000000) >>24
-                    local b=(value & 0x00ff0000) >>16
-                    local g=(value & 0x0000ff00) >>8
-                    local r=value & 0xff
-                    local width=para.width or 80
-                    imgui.push_item_width(width)
-                    changed , r= imgui.drag_int(label..".R" .. title_postfix, r,1 , 0, 255)
+                    changed,config[key]= imgui.color_picker(label .. title_postfix, config[key])
                     _changed=changed or _changed
-                    imgui.same_line()
-                    changed , g= imgui.drag_int(label ..".G".. title_postfix, g,1 , 0, 255)
+                elseif para.type=="button" then
+                    clicked=imgui.button(label..title_postfix)
+                    if clicked==true and para.onClick ~=nil then
+                        --will only trigger once when pressed
+                        triggeredButtons[key]=para.onClick
+                        --should mark to true?
+                        changed=true
+                    end
+                elseif para.type=="item" then
+                    changed, config[key]= imgui.combo(label .. title_postfix, config[key] ,itemIds)
                     _changed=changed or _changed
-                    imgui.same_line()
-                    changed , b= imgui.drag_int(label ..".B".. title_postfix, b,1 , 0, 255)
-                    _changed=changed or _changed
-                    imgui.same_line()
-                    changed , a= imgui.drag_int(label ..".A".. title_postfix, a,1 , 0, 255)
-                    _changed=changed or _changed
-                    imgui.pop_item_width()
-                    config[key]=(a<<24)|(r)|(g<<8)|(b<<16)
                 end
 
                 if para.tip ~=nil and imgui.is_item_hovered() then
@@ -175,7 +191,16 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey)
                 end
             end
 		    imgui.tree_pop()
+        end        
+        if font~=nil then
+            imgui.pop_font(font)
         end
+
+        --should call before on change?
+        for key,func in pairs(triggeredButtons) do 
+            func()
+        end
+
         if _changed==true then
             json.dump_file(configfile, config)
             if OnChange~=nil then
