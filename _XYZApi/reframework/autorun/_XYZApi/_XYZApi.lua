@@ -38,7 +38,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                     _changed=changed or _changed
                 elseif para.type=="intN" then
                     --Start From 1!
-                    imgui.push_item_width(215)
+                    local width=para.width or 215
+                    imgui.push_item_width(width)
                     for _k,_ in pairs (config[key]) do
                         local vname=vecNames[_k] or ".".._k
             		    changed , config[key][_k] = imgui.drag_int(key..vname .. title_postfix, 
@@ -51,7 +52,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                     imgui.new_line()
                 elseif para.type=="rgba4f" then -- float 4
                     --Start From 1!
-                    imgui.push_item_width(215)
+                    local width=para.width or 215
+                    imgui.push_item_width(width)
                     for _k,_ in pairs (config[key]) do
                         local vname=vecNamesColor[_k] or ".".._k
             		    changed , config[key][_k] = imgui.drag_float(key..vname .. title_postfix, 
@@ -84,7 +86,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                     local b=(value & 0x00ff0000) >>16
                     local g=(value & 0x0000ff00) >>8
                     local r=value & 0xff
-                    imgui.push_item_width(80)
+                    local width=para.width or 80
+                    imgui.push_item_width(width)
                     changed , r= imgui.drag_int(key..".R" .. title_postfix, r,1 , 0, 255)
                     _changed=changed or _changed
                     imgui.same_line()
