@@ -73,7 +73,7 @@ local function DD2_InitItemId()
         local itemCommonParam=iter:get_Current():get_Value()
         local name=itemCommonParam:get_Name()
         if name ~="Invalid" and name~=nil then
-            id2Name[itemCommonParam._Id]=string.format("%06d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
+            id2Name[itemCommonParam._Id]=string.format("%5d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
             table.insert(ids,itemCommonParam._Id)
         end
         iter:MoveNext()
