@@ -1,33 +1,39 @@
-local modname="[SuperLantern]"
+local modname="SuperLantern"
+local configfile=modname..".json"
+log.info("["..modname.."]".."Start")
+--settings
+local _config={
+    {name="range",type="int",default=3000,min=1,max=100000},
+    {name="light",type="int",default=10,min=0,max=100000},
+    {name="blink",type="bool",default=true},
+    {name="cone",type="int",default=140,min=1,max=180},
+    {name="spotLightColor",type="rgba4f",default={1.0,0.451,0.18}},
+    {name="pointLightColor",type="rgba4f",default={1.0,0.451,0.18}},
+}
 
-log.info(modname.."Start")
-local myLog="LogStart\n"
+--merge config file to default config
+local function recurse_def_settings(tbl, new_tbl)
+	for key, value in pairs(new_tbl) do
+		if type(tbl[key]) == type(value) then
+		    if type(value) == "table" then
+			    tbl[key] = recurse_def_settings(tbl[key], value)
+            else
+    		    tbl[key] = value
+            end
+		end
+	end
+	return tbl
+end
+local config = {} 
+for key,para in pairs(_config) do
+    config[para.name]=para.default
+end
 
-local config = json.load_file("SuperLantern.json") or {}
-local fix_msg=""
-local fix_msg2=""
-config.range=config.range or 3000
-config.light=config.light or 10
-config.blink=config.blink or false
---140
-config.cone=config.cone or 140
---default 1/0.451,0.18
-config.spotR=config.spotR or 1.0
-config.spotG=config.spotG or 0.451
-config.spotB=config.spotB or 0.18
-config.pointR=config.pointR or 1
-config.pointG=config.pointG or 0.451
-config.pointB=config.pointB or 0.18
-
+config= recurse_def_settings(config, json.load_file(configfile) or {})
 local light_ptr=sdk.float_to_ptr(config.light)
 
 local function Log(msg)
-    myLog = myLog .."\n".. msg
     log.info(modname..msg)
-end
-local function ClearLog()
-    draw.text(myLog,50,50,0xffEEEEFE)
-    myLog = ""
 end
 
 local tm=sdk.get_managed_singleton("app.ItemManager")
@@ -94,13 +100,12 @@ local function SetLightColorCone()
             local x=(frame%60)/60.0
             local y=((20+frame)%60)/60.0
             local z=((40+frame)%60)/60.0
-
-            setLightColor(lights[0],config.spotR*1.0*z,config.spotG*1.0*x,config.spotB*1.0*y)
-            setLightColor(lights[1],config.pointR*1.0*x,config.pointG*1.0*y,config.pointB*1.0*z)
+            setLightColor(lights[0],config.spotLightColor[1]*1.0*z,config.spotLightColor[2]*1.0*x,config.spotLightColor[3]*1.0*y)
+            setLightColor(lights[1],config.pointLightColor[1]*1.0*x,config.pointLightColor[2]*1.0*y,config.pointLightColor[3]*1.0*z)
 
         else
-        setLightColor(lights[0],config.spotR*1.0,config.spotG*1.0,config.spotB*1.0)
-        setLightColor(lights[1],config.pointR*1.0,config.pointG*1.0,config.pointB*1.0)
+        setLightColor(lights[0],config.spotLightColor[1]*1.0,config.spotLightColor[2]*1.0,config.spotLightColor[3]*1.0)
+        setLightColor(lights[1],config.pointLightColor[1]*1.0,config.pointLightColor[2]*1.0,config.pointLightColor[3]*1.0)
         end
 
     end
@@ -108,25 +113,41 @@ end
 
 sdk.hook(
     sdk.find_type_definition("app.LanternController.LanternLightParam"):get_method("setLightIntensity(System.Single)"),
-    function(args)
-        args[3]=light_ptr
-    end,
+    function(args) args[3]=light_ptr end,
     nil
 )
 
-SetLightRange()
-SetConsumeNone()
+local function Init()
+    SetLightRange()
+    SetConsumeNone()    
+    light_ptr=sdk.float_to_ptr(config.light)
+end
 sdk.hook(
     sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
     nil,
     function()
-        SetLightRange()
-        SetConsumeNone()
+        Init()
     end
 )
 
 re.on_frame(SetLightColorCone)
 
+
+--try load api and draw ui
+local function prequire(...)
+    local status, lib = pcall(require, ...)
+    if(status) then return lib end
+    return nil
+end
+--On setting Change
+local function OnChanged()    
+    Init()
+end
+local myapi = prequire("_XYZApi/_XYZApi")
+if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,OnChanged) end
+
+
+--debug
 local function logf(light)
     Log("-")
     Log(tostring(light))
@@ -167,10 +188,6 @@ if false then
                 Log(";;;;;;;;;;;;;;;;;;;")        
             end
             --Log(tostring(player.CharacterID))
-            Log(fix_msg)
-            Log(fix_msg2)
-            ClearLog()
         end
     end)
 end
-

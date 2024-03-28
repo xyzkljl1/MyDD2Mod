@@ -4,6 +4,13 @@ local vecNames={
     ".z",
     ".w"
 }
+local vecNamesColor={
+    ".R",
+    ".G",
+    ".B",
+    ".A"
+}
+
 
 local function DrawIt(modname,configfile,_config,config,OnChange)
     configfile=configfile or (modname..".json")
@@ -28,12 +35,26 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                                                             para.step or 1 , para.min or 0, para.max)
                     _changed=changed or _changed
                 elseif para.type=="intN" then
+                    --Start From 1!
                     imgui.push_item_width(215)
                     for _k,_ in pairs (config[key]) do
                         local vname=vecNames[_k] or ".".._k
             		    changed , config[key][_k] = imgui.drag_int(key..vname .. title_postfix, 
                                                              config[key][_k] or para.default or para.min or 0,
                                                              para.step or 1 , para.min or 0, para.max)
+                        _changed=changed or _changed
+                        imgui.same_line()
+                    end
+                    imgui.pop_item_width()
+                    imgui.new_line()
+                elseif para.type=="rgba4f" then -- float 4
+                    --Start From 1!
+                    imgui.push_item_width(215)
+                    for _k,_ in pairs (config[key]) do
+                        local vname=vecNamesColor[_k] or ".".._k
+            		    changed , config[key][_k] = imgui.drag_float(key..vname .. title_postfix, 
+                                                                config[key][_k] or para.default or para.min or 0,
+                                                                para.step or 0.01 , para.min or 0.0, para.max or 1.0)
                         _changed=changed or _changed
                         imgui.same_line()
                     end
