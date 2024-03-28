@@ -6,6 +6,7 @@ local vecNames={
 }
 
 local function DrawIt(modname,configfile,_config,config,OnChange)
+    configfile=configfile or (modname..".json")
     re.on_draw_ui(function()
         local changed=false
         local _changed=false
@@ -38,6 +39,11 @@ local function DrawIt(modname,configfile,_config,config,OnChange)
                     end
                     imgui.pop_item_width()
                     imgui.new_line()
+                elseif para.type=="float" then
+        		    changed , config[key]= imgui.drag_float(key .. title_postfix, 
+                                                            config[key] or para.default or para.min or 0,
+                                                            para.step or 0.1 , para.min or 0, para.max)
+                    _changed=changed or _changed
                 elseif para.type=="rgba32" then
                     local value=config[key] or para.default or para.min or 0xffffffff
                     local a=(value & 0xff000000) >>24
