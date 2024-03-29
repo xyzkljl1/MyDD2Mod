@@ -21,6 +21,9 @@ local itemNames=nil
 local itemIndex2itemId={}
 local itemId2itemIndex={}
 
+local function isDD2()
+    return reframework.get_game_name()=="dd2"
+end
 
 local function setupHotKey(_config,config)
     if hk~=nil then
@@ -62,6 +65,7 @@ local function InitFromFile(_config,configfile,dontInitHotkey)
 end
 
 local function DD2_InitItemId()
+    if isDD2()==false then return end
     -- imgui.combo seems not to sort by number index when there are many items.Use continuous index to force it sort
     itemNames={}
     local id2Name={}
@@ -84,8 +88,13 @@ local function DD2_InitItemId()
         itemIndex2itemId[#itemNames]=id
         itemId2itemIndex[id]=#itemNames
     end
-
 end
+
+if isDD2()==true then
+    --dlc item is not in items at the first,need retry
+    sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,DD2_InitItemId)
+end
+
 
 --Chinese font need pass CJK_GLYPH_RANGES as [ranges] when load and the lua file need to be unicode
 local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,font)
