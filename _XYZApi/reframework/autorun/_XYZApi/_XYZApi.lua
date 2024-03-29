@@ -247,6 +247,7 @@ local function LoadFontIfCJK(fontname,fontsize,fontrange)
     if not isDD2() then return nil end
     local CJK_GLYPH_RANGES = {
         0x0020, 0x00FF, -- Basic Latin + Latin Supplement
+        0x0400, 0x04FF, -- Cyrillic
         0x2000, 0x206F, -- General Punctuation
         0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
         --0xFF00, 0xFFEF, -- Half-width characters
@@ -265,7 +266,8 @@ local function LoadFontIfCJK(fontname,fontsize,fontrange)
     local optionItem=om._OptionItems:get_Item(sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data())
     local lng=optionItem:get_FixedValueModel():get_StringValue()
     --SimplelifiedChinese is capcom's typo
-    if lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Korean" or lng=="Japanese" then
+    if lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Korean" or lng=="Japanese"
+        or lng=="Russian" or lng == "Ukrainian" then
         font=imgui.load_font(fontname or "simhei.ttf", fontsize or 14,fontrange or CJK_GLYPH_RANGES)
         print("Load CN font")
     else

@@ -18,8 +18,16 @@ local function Log(msg)
     log.info(modname..msg)
 end
 
-local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
-myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
+
+sdk.hook(
+    sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),
+    nil,
+    function ()
+        local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
+        myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
+    end
+)
+
 
 local function AddItem()
 
@@ -37,3 +45,5 @@ local function AddItem()
 end
 
 onClickFunc=AddItem
+
+

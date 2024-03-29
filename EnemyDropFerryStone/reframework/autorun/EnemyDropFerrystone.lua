@@ -79,5 +79,14 @@ local function OnChanged()
 end
 OnChanged()
 
-local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
-myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,font)
+sdk.hook(
+    sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),
+    nil,
+    function ()
+        local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
+        myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,font)
+    end
+)
+
+
+
