@@ -63,7 +63,7 @@ re.on_frame(function()
         end
         local ampm=""
         if config.useAMPM==true then
-            if h<=12 then ampm="AM"
+            if h<12 then ampm="AM"
             else ampm="PM" end
             -- 0:30 PM should be 12:30 PM?
             if h>12 then h=h%12 end
