@@ -21,6 +21,8 @@ local itemNames=nil
 local itemIndex2itemId={}
 local itemId2itemIndex={}
 
+--local defaultCNFont=nil
+
 local function isDD2()
     return reframework.get_game_name()=="dd2"
 end
@@ -237,8 +239,42 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
 end
 
 
+local function LoadFontIfCJK(fontname,fontsize,fontrange)
+    if not isDD2() then return nil end
+    local CJK_GLYPH_RANGES = {
+        0x0020, 0x00FF, -- Basic Latin + Latin Supplement
+        0x2000, 0x206F, -- General Punctuation
+        0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
+        --0xFF00, 0xFFEF, -- Half-width characters
+        0x4e00, 0x9FAF, -- CJK Ideograms
+        0,
+        }
+    local font =nil
+    --local gm=sdk.get_managed_singleton("app.GuiManager")
+    --Language is the stem-setting Language when launch, then changed to game-setting language,need to fetch from optionmanager
+    --local lng=gm:get_CurrFontLanguage()
+    --if lng==sdk.find_type_definition("via.Language"):get_field("TransitionalChinese"):get_data()
+    --    or lng==sdk.find_type_definition("via.Language"):get_field("SimplelifiedChinese"):get_data()
+    --    or lng==sdk.find_type_definition("via.Language"):get_field("Korean"):get_data()
+    --    or lng==sdk.find_type_definition("via.Language"):get_field("Japanese"):get_data()
+    --    then
+    local om=sdk.get_managed_singleton("app.OptionManager")
+    local optionItem=om._OptionItems:get_Item(sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data())
+    local lng=optionItem:get_FixedValueModel():get_StringValue()
+    --SimplelifiedChinese is capcom's typo
+    if lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Korean" or lng=="Japanese" then
+        font=imgui.load_font(fontname or "simhei.ttf", fontsize or 14,fontrange or CJK_GLYPH_RANGES)
+        print("Load CN font")
+    else
+        print("Use Default Font")
+    end
+    return font
+end
+
+
 _XYZApi={
     DrawIt=DrawIt,
-    InitFromFile=InitFromFile
+    InitFromFile=InitFromFile,
+    LoadFontIfCJK=LoadFontIfCJK
 }
 return _XYZApi
