@@ -18,10 +18,15 @@ local function prequire(...)
 end
 local hk = prequire("Hotkeys/Hotkeys")
 local itemNames=nil
+local itemIds=nil
 local itemIndex2itemId={}
 local itemId2itemIndex={}
 
 --local defaultCNFont=nil
+local function Log(...)
+    print(...)
+    --log.info(...)
+end
 
 local function isDD2()
     return reframework.get_game_name()=="dd2"
@@ -71,7 +76,7 @@ local function DD2_InitItemId()
     -- imgui.combo seems not to sort by number index when there are many items.Use continuous index to force it sort
     itemNames={}
     local id2Name={}
-    local ids={}
+    itemIds={}
     local im=sdk.get_managed_singleton("app.ItemManager")
     local iter=im._ItemDataDict:GetEnumerator()
     iter:MoveNext()
@@ -80,16 +85,17 @@ local function DD2_InitItemId()
         local name=itemCommonParam:get_Name()
         if name ~="Invalid" and name~=nil then
             id2Name[itemCommonParam._Id]=string.format("%5d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
-            table.insert(ids,itemCommonParam._Id)
+            table.insert(itemIds,itemCommonParam._Id)
         end
         iter:MoveNext()
     end
-    table.sort(ids)
-    for _,id in pairs(ids) do
+    table.sort(itemIds)
+    for _,id in pairs(itemIds) do
         table.insert(itemNames,id2Name[id])
         itemIndex2itemId[#itemNames]=id
         itemId2itemIndex[id]=#itemNames
     end
+    Log("Init Item List")
 end
 
 if isDD2()==true then
@@ -104,7 +110,7 @@ end
 --Chinese font need pass CJK_GLYPH_RANGES as [ranges] when load and the lua file need to be unicode
 local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,font)
     configfile=configfile or (modname..".json")
-
+    Log("CAll DrawIt")
     if dontInitHotkey~=true then
         setupHotKey(_config,config)
     end
@@ -114,10 +120,21 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
     end
 
     re.on_draw_ui(function()
-        local changed=false
-        local _changed=false
+        local changed=false--tmp
+        local _changed=false--final
+
+        local isFontChanged=false
         if font~=nil then
-            imgui.push_font(font)
+            if type(font)=="number" then
+                imgui.push_font(font)
+                isFontChanged=true
+            elseif type(font)=="function" then
+                local tmp=font()
+                if tmp~=nil then
+                    imgui.push_font(tmp)
+                    isFontChanged=true
+                end
+            end
         end
         local triggeredButtons={}
 	    if imgui.tree_node(modname) then
@@ -212,8 +229,45 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         changed=true
                     end
                 elseif para.type=="item" then
-                    changed, tmp_idx= imgui.combo(label .. title_postfix, itemId2itemIndex[config[key]] ,itemNames)
-                    config[key]=itemIndex2itemId[tmp_idx]
+                    if para.enableSearch or true then
+                        imgui.push_item_width(imgui.calc_item_width()*0.2)
+                        changed, para.tmp_SearchText = imgui.input_text("<-searh in items(not support IME)", para.tmp_SearchText)
+                        imgui.pop_item_width()
+                        imgui.same_line()
+
+                        if changed then
+                            para.tmp_Items={}
+                            para.itemIndex2itemId={}
+                            para.itemId2itemIndex={}
+                            Log("OnSerachInItem")
+                            if para.tmp_SearchText~="" then
+                                local lower=para.tmp_SearchText:lower()
+                                for k,id in pairs(itemIds) do
+                                    if itemNames[k]:lower():find(lower) then
+                                        table.insert(para.tmp_Items, itemNames[k])
+                                        para.itemIndex2itemId[#para.tmp_Items]=id
+                                        para.itemId2itemIndex[id]=#para.tmp_Items
+                                    end
+                                end
+                            else
+                                para.tmp_Items=itemNames
+                                para.itemIndex2itemId=itemIndex2itemId
+                                para.itemId2itemIndex=itemId2itemIndex                            
+                            end
+                        end
+                    end
+                    if para.tmp_Items==nil then
+                        para.tmp_Items=itemNames
+                        para.itemIndex2itemId=itemIndex2itemId
+                        para.itemId2itemIndex=itemId2itemIndex                            
+                    end
+
+                    imgui.push_item_width(imgui.calc_item_width()*0.7)
+                    changed, tmp_idx= imgui.combo(label .. title_postfix, para.itemId2itemIndex[config[key]] ,para.tmp_Items)
+                    imgui.pop_item_width()
+                    
+                    --Log(config[key]," ",tmp_idx)
+                    config[key]=para.itemIndex2itemId[tmp_idx] or 1
                     _changed=changed or _changed
                 end
 
@@ -223,8 +277,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
             end
 		    imgui.tree_pop()
         end        
-        if font~=nil then
-            imgui.pop_font(font)
+        if isFontChanged then
+            imgui.pop_font()
         end
 
         --should call before on change?
