@@ -60,9 +60,9 @@ re.on_frame(function()
         end
         local ampm=""
         if config.useAMPM==true then
-            h=h%12
             if h<=12 then ampm="AM"
             else ampm="PM" end
+            h=h%12
         end
 
         --2sec for 1min?
