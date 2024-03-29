@@ -79,13 +79,5 @@ local function OnChanged()
 end
 OnChanged()
 
-local CJK_GLYPH_RANGES = {
-    0x0020, 0x00FF, -- Basic Latin + Latin Supplement
-    0x2000, 0x206F, -- General Punctuation
-    --0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
-    --0xFF00, 0xFFEF, -- Half-width characters
-    0x4e00, 0x9FAF, -- CJK Ideograms
-    0,
-}
-local font = imgui.load_font( "simhei.ttf", 14,CJK_GLYPH_RANGES)
+local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
 myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,font)
