@@ -185,8 +185,10 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                                                             para.step or 0.1 , para.min or 0, para.max)
                     _changed=changed or _changed
                 elseif para.type=="rgba32" then
+                    imgui.push_item_width(imgui.calc_item_width()*0.6)
                     changed,config[key]= imgui.color_picker(label .. title_postfix, config[key])
                     _changed=changed or _changed
+                    imgui.pop_item_width()
                 elseif para.type=="button" then
                     clicked=imgui.button(label..title_postfix)
                     if clicked==true and para.onClick ~=nil then

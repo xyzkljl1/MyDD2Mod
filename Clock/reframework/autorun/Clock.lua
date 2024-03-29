@@ -6,6 +6,9 @@ local _config={
     {name="fontsize",type="int",default=60,min=1,max=250,needrestart=true},
     {name="offset",type="intN",default={50,50},min=-300,max=8000},
     {name="color",type="rgba32",default=0xffEEEEEE},
+    {name="backgroundcolor",type="rgba32",default=0x88777777},
+    {name="zerofill",type="bool",default=false},
+    {name="showbackground",type="bool",default=true},
     {name="showtimeslot",type="bool",default=true},
     {name="useAMPM",type="bool",default=false},
     {name="customFormat",type="string",default="{D}Day {T} {h}:{m}:{s} {a}"},
@@ -67,14 +70,20 @@ re.on_frame(function()
 
         --2sec for 1min?
         msg=config.customFormat
-        msg=string.gsub(msg,"{h}", string.format("%2d",h))
-        msg=string.gsub(msg,"{m}", string.format("%2d",m))
-        msg=string.gsub(msg,"{s}", string.format("%2d",math.floor(s)%2))
+        local dformat="%2d"
+        if config.zerofill then dformat="%02d" end
+        msg=string.gsub(msg,"{h}", string.format(dformat,h))
+        msg=string.gsub(msg,"{m}", string.format(dformat,m))
+        msg=string.gsub(msg,"{s}", string.format(dformat,math.floor(s)%2))
 
         msg=string.gsub(msg,"{D}", tostring(d))
         msg=string.gsub(msg,"{T}", state)
         msg=string.gsub(msg,"{a}", ampm)
 
+        if config.showbackground ==true then
+            local size=imgui.calc_text_size(msg)
+            draw.filled_rect(config.offset[1]-5, config.offset[2]-5, size.x +10,size.y+10, config.backgroundcolor)
+        end
         draw.text(msg,config.offset[1],config.offset[2],config.color) 
     end
     imgui.pop_font()
