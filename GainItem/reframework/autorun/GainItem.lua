@@ -18,13 +18,16 @@ local function Log(msg)
     log.info(modname..msg)
 end
 
-
+local inited=false
 sdk.hook(
     sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),
     nil,
     function ()
-        local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
-        myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
+        if not inited then
+            local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
+            myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
+            inited=true
+        end
     end
 )
 
