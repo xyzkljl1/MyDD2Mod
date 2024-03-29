@@ -79,18 +79,17 @@ local function OnChanged()
 end
 OnChanged()
 
+--Should Add this to api
 local inited=false
-sdk.hook(
-    sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),
-    nil,
-    function ()
-        if not inited then
-            local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
-            myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
-            inited=true
-        end
+local function Init()
+    if not inited then
+        local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
+        myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
+        inited=true
     end
-)
+end
+sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),nil,Init)
+sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
 
 
 
