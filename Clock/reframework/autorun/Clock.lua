@@ -65,7 +65,8 @@ re.on_frame(function()
         if config.useAMPM==true then
             if h<=12 then ampm="AM"
             else ampm="PM" end
-            h=h%12
+            -- 0:30 PM should be 12:30 PM?
+            if h>12 then h=h%12 end
         end
 
         --2sec for 1min?
