@@ -20,6 +20,7 @@ local config=myapi.InitFromFile(_config,configfile)
 --thanks to lingsamuel
 local CJK_GLYPH_RANGES = {
     0x0020, 0x00FF, -- Basic Latin + Latin Supplement
+    0x0400, 0x04FF, -- Cyrillic
     0x2000, 0x206F, -- General Punctuation
     0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
     0x31F0, 0x31FF, -- Katakana Phonetic Extensions
