@@ -95,6 +95,9 @@ end
 if isDD2()==true then
     --dlc item is not in items at the first,need retry
     sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,DD2_InitItemId)
+    --get_Message return is decided by current language, so need to fetch item messages when option loaded
+    sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),
+    nil,DD2_InitItemId)
 end
 
 
@@ -238,7 +241,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
     end)
 end
 
-
+--Language is the stem-setting Language when launch, then changed to game-setting language
+--need to check lng when app.OptionManager(saveConfigFile()/app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase))
 local function LoadFontIfCJK(fontname,fontsize,fontrange)
     if not isDD2() then return nil end
     local CJK_GLYPH_RANGES = {
@@ -251,7 +255,6 @@ local function LoadFontIfCJK(fontname,fontsize,fontrange)
         }
     local font =nil
     --local gm=sdk.get_managed_singleton("app.GuiManager")
-    --Language is the stem-setting Language when launch, then changed to game-setting language,need to fetch from optionmanager
     --local lng=gm:get_CurrFontLanguage()
     --if lng==sdk.find_type_definition("via.Language"):get_field("TransitionalChinese"):get_data()
     --    or lng==sdk.find_type_definition("via.Language"):get_field("SimplelifiedChinese"):get_data()
