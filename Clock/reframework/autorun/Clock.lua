@@ -6,6 +6,9 @@ local _config={
     {name="fontsize",type="int",default=60,min=1,max=250,needrestart=true},
     {name="offset",type="intN",default={50,50},min=-300,max=8000},
     {name="color",type="rgba32",default=0xffEEEEEE},
+    {name="showtimeslot",type="bool",default=true},
+    {name="useAMPM",type="bool",default=false},
+    {name="customFormat",type="string",default="{D}Day {T} {h}:{m}:{s} {a}"},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -44,22 +47,38 @@ re.on_frame(function()
         local s=tm:get_InGameElapsedDaySeconds()
         --local r=tm:get_MinutesRate()
         local state=""
-        if tm:isNight() then
-            state="Night"
-        elseif tm:isDawn() then
-            state="Dawn"
-        elseif tm:isNoon() then
-            state="Noon"
-        elseif tm:isDusk() then
-            state="Dusk"
+        if config.showtimeslot then
+            if tm:isNight() then
+                state="Night"
+            elseif tm:isDawn() then
+                state="Dawn"
+            elseif tm:isNoon() then
+                state="Noon"
+            elseif tm:isDusk() then
+                state="Dusk"
+            end
         end
+        local ampm=""
+        if config.useAMPM==true then
+            h=h%12
+            if h<=12 then ampm="AM"
+            else ampm="PM" end
+        end
+
         --2sec for 1min?
-        local msg=string.format("%dDay %s %d:%d:%d",d,state,h,m,math.floor(s)%2)
+        msg=config.customFormat
+        msg=string.gsub(msg,"{h}", string.format("%2d",h))
+        msg=string.gsub(msg,"{m}", string.format("%2d",m))
+        msg=string.gsub(msg,"{s}", string.format("%2d",math.floor(s)%2))
+
+        msg=string.gsub(msg,"{D}", tostring(d))
+        msg=string.gsub(msg,"{T}", state)
+        msg=string.gsub(msg,"{a}", ampm)
+
         draw.text(msg,config.offset[1],config.offset[2],config.color) 
     end
     imgui.pop_font()
 end)
-
 
 
 --try load api and draw ui
