@@ -59,7 +59,7 @@ sdk.hook(
                 myItem._Id = config['item'..istr]
                 myItem._Num = config['count'..istr]
                 Log("Rate: ",random," Replace Drop With "..i)
-                return myItem
+                return sdk.to_ptr(myItem)
             end
         end
         Log("Rate: ",random," No Replace ",item._Id)
@@ -85,7 +85,7 @@ local inited=false
 local function Init()
     if not inited then
         local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
-        myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
+        myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,font)
         inited=true
     end
 end
