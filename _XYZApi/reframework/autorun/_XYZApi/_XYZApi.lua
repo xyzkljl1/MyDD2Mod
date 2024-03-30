@@ -178,7 +178,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     imgui.new_line()
                 elseif para.type=="rgba4f" then -- float 4
                     --Start From 1!
-                    local width=para.width or 215
+                    local width=para.width or 130
                     imgui.push_item_width(width)
                     for _k,_ in pairs (config[key]) do
                         local vname=vecNamesColor[_k] or ".".._k
@@ -229,9 +229,10 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         changed=true
                     end
                 elseif para.type=="item" then
-                    if para.enableSearch or true then
+                    if para.enableSearch or true and (key=="item1" or key=="item2") then
                         imgui.push_item_width(imgui.calc_item_width()*0.2)
-                        changed, para.tmp_SearchText = imgui.input_text("<-searh in items(not support IME)", para.tmp_SearchText)
+                        --Two input_text with same label will share data 
+                        changed, para.tmp_SearchText = imgui.input_text("<-searh "..key .."(not sup IME) ", para.tmp_SearchText)
                         imgui.pop_item_width()
                         imgui.same_line()
 
@@ -252,7 +253,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             else
                                 para.tmp_Items=itemNames
                                 para.itemIndex2itemId=itemIndex2itemId
-                                para.itemId2itemIndex=itemId2itemIndex                            
+                                para.itemId2itemIndex=itemId2itemIndex
                             end
                         end
                     end
@@ -262,7 +263,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         para.itemId2itemIndex=itemId2itemIndex                            
                     end
 
-                    imgui.push_item_width(imgui.calc_item_width()*0.7)
+                    imgui.push_item_width(imgui.calc_item_width()*0.5)
                     changed, tmp_idx= imgui.combo(label .. title_postfix, para.itemId2itemIndex[config[key]] ,para.tmp_Items)
                     imgui.pop_item_width()
                     
