@@ -19,7 +19,8 @@ local _config={
     {name="ignorecap",type="int",default=-1,min=-1,max=1000000},
     {name="rndoffset",type="float",default=0.2,min=0.0,max=10.0},
     {name="precisevalue",type="bool",default=false},
-
+    {name="showActionRate",type="bool",default=false},
+    {name="showDamageType",type="bool",default=false},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -103,6 +104,22 @@ local function f2s2(float)
     return string.format("%.2f",float)
 end
 
+local function GetEnumMap(enumName)
+    local ret={}
+    for _,field in pairs(sdk.find_type_definition(enumName):get_fields()) do
+        local value=field:get_data()
+        if value~=nil and value >0 then
+            print(field:get_name())
+            ret[value]=field:get_name()
+        end
+    end
+    return ret
+end
+
+local PhysicsAttrSettingType2Str=GetEnumMap("app.AttackUserData.PhysicsAttrSettingType")
+local DamageTypeEnum2Str=GetEnumMap("app.AttackUserData.DamageTypeEnum")
+local ElementTypeEnum2Str=GetEnumMap("app.AttackUserData.ElementType")
+
 local function AddDamageNumber(character,damageInfo)
     local damageNumber={}
     --damageNumber.pos=getCharacterPos(character)
@@ -133,9 +150,36 @@ local function AddDamageNumber(character,damageInfo)
     if config.showfrienddamage==false and isEnemy==false then return end
 
     damageNumber.msg=f2s(damageInfo.Damage)
+
+    local AttackUserData=damageInfo["<AttackUserData>k__BackingField"]
+    if config.showActionRate then
+        damageNumber.msg=string.format("%s [%s]",damageNumber.msg, f2s2(AttackUserData.ActionRate))
+    end
+
     -- compare float to 1 seems to be okay?
     if damageInfo.DamageRate ~=1 and config.showmultiplier==true then
         damageNumber.msg=damageNumber.msg.." (x"..f2s2(damageInfo.DamageRate) ..")"
+    end
+
+    if config.showDamageType then
+        local typeMsg=""
+        --print(isPlayerAttackHit,damageInfo.Damage,AttackUserData.DamageValue,AttackUserData.ActionAttackValue,AttackUserData.ActionRate,AttackUserData.AttackType)
+        if AttackUserData._ElementType > 0 then
+            typeMsg=typeMsg.."/"..ElementTypeEnum2Str[AttackUserData._ElementType]
+        end
+        if AttackUserData._NonMagicElementType > 0 then
+            typeMsg=typeMsg.."/phy"..ElementTypeEnum2Str[AttackUserData._NonMagicElementType]
+        end
+        if AttackUserData.PhysicsAttrSettingTypeValue > 0 then
+            typeMsg=typeMsg.."/"..PhysicsAttrSettingType2Str[AttackUserData.PhysicsAttrSettingTypeValue]
+        end
+        if AttackUserData.DamageType > 0 then
+            typeMsg=typeMsg.."/"..DamageTypeEnum2Str[AttackUserData.DamageType]
+        end
+        typeMsg=string.gsub(typeMsg,"^/","")
+        if typeMsg~="" then
+            damageNumber.msg=damageNumber.msg.." {"..typeMsg.."}"
+        end
     end
 
     if damageInfo.Damage > config.bigcap then
@@ -157,6 +201,7 @@ local function AddDamageNumber(character,damageInfo)
     end
 
     --damageNumber.msg=tostring(ofx).."/"..tostring(ofy)
+
 
     --should match color disappear time
     damageNumbers[damageNumber]=config.time
@@ -208,7 +253,7 @@ re.on_frame(function()
             Log("DamageNumberDisappear "..tostring(damageNumbers.finalDamage))
         end
 
-        Log(k.msg.."/"..tostring(v))
+        --Log(k.msg.."/"..tostring(v))
     end
     imgui.pop_font()
     ClearLog()
