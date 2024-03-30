@@ -79,6 +79,7 @@ local function DD2_InitItemId()
     itemIds={}
     local im=sdk.get_managed_singleton("app.ItemManager")
     local iter=im._ItemDataDict:GetEnumerator()
+    --可以直接从app.ItemIDEnum取ID,但是里面有invalid物品
     iter:MoveNext()
     while iter:get_Current():get_Value()~=nil do
         local itemCommonParam=iter:get_Current():get_Value()
@@ -229,7 +230,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         changed=true
                     end
                 elseif para.type=="item" then
-                    if para.enableSearch or true and (key=="item1" or key=="item2") then
+                    if para.enableSearch==true or para.enableSearch==nil then
                         imgui.push_item_width(imgui.calc_item_width()*0.2)
                         --Two input_text with same label will share data 
                         changed, para.tmp_SearchText = imgui.input_text("<-searh "..key .."(not sup IME) ", para.tmp_SearchText)
