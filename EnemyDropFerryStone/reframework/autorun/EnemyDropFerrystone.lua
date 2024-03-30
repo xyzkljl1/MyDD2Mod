@@ -35,7 +35,8 @@ local function Log(...)
     log.info(modname,...)
 end
 
-local myItem=sdk.create_instance("app.ItemDropParam.Table.Item")
+--Must add_ref(),otherwise the object will be released when the game has a chance to do so
+local myItem=sdk.create_instance("app.ItemDropParam.Table.Item"):add_ref()
 myItem._Id=1
 myItem._Num=1
 myItem._Rate=1
@@ -58,7 +59,7 @@ sdk.hook(
                 myItem._Id = config['item'..istr]
                 myItem._Num = config['count'..istr]
                 Log("Rate: ",random," Replace Drop With "..i)
-                return sdk.to_ptr(myItem)
+                return myItem
             end
         end
         Log("Rate: ",random," No Replace ",item._Id)
