@@ -3,6 +3,7 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 local _config={
     {name="DoubleLootChance",type="int",default=100,min=0,max=100},
+    {name="AdditionalLootChance",type="int",default=30,min=0,max=100},
     {name="AdditionalLoot",type="bool",default=true},
 }
 --merge config file to default config
@@ -44,7 +45,7 @@ sdk.hook(
         local this=sdk.to_managed_object(args[2])
         --app.gm80_001.ItemParam
         local ItemList=this.ItemList
-        if ItemList~=nil then
+        if ItemList~=nil then   
             local double=(math.random(0,99) < config.DoubleLootChance)
             if double then
                 local ct=ItemList:get_Count()-1
@@ -52,7 +53,7 @@ sdk.hook(
                     ItemList[i].ItemNum = ItemList[i].ItemNum * 2
                 end
             end
-            if config.AdditionalLoot then
+            if config.AdditionalLoot and (math.random(0,99) < config.AdditionalLootChance) then
                 local newItem=sdk.create_instance("app.gm80_001.ItemParam")
                 newItem.ItemId=additionalItemIds[math.random(1,#additionalItemIds)]
                 newItem.ItemNum=1
