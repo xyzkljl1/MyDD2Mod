@@ -1,4 +1,5 @@
 local modname="HigherItemSellPrice"
+local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 
 --settings
