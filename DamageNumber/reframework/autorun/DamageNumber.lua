@@ -18,6 +18,8 @@ local _config={
     {name="bigcap",type="int",default=1200,min=0,max=1000000},
     {name="ignorecap",type="int",default=-1,min=-1,max=1000000},
     {name="rndoffset",type="float",default=0.2,min=0.0,max=10.0},
+    {name="precisevalue",type="bool",default=false},
+
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -88,10 +90,16 @@ local function refreshplayer()
 end
 
 local function f2s(float)
+    if config.precisevalue then
+        return tostring(float)
+    end
     return tostring(math.floor(float))
 end
 
 local function f2s2(float)
+    if config.precisevalue then
+        return tostring(float)
+    end
     return string.format("%.2f",float)
 end
 
