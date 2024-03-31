@@ -5,22 +5,24 @@ log.info("["..modname.."]".."Start")
 local _config={
     {name="fontsize",type="int",default=60,min=1,max=250,needrestart=true},
     {name="font",type="font",default="times.ttf",needrestart=true},
-    {name="color1",type="rgba32",default=0xffEEEEEE},
-    {name="color11",type="rgba32",default=0xffEEEEEE},
-    {name="color2",type="rgba32",default=0xffEEEEEE},
-    {name="color3",type="rgba32",default=0xffEEEEEE},
-    {name="time",type="int",default=120,min=2,max=4000},
-    {name="showlefthp",type="bool",default=false},
-    {name="showmultiplier",type="bool",default=true},
-    {name="showenemydamage",type="bool",default=true},
-    {name="showfrienddamage",type="bool",default=true},
-    {name="shownonplayerdealandtakendamage",type="bool",default=true},
-    {name="bigcap",type="int",default=1200,min=0,max=1000000},
-    {name="ignorecap",type="int",default=-1,min=-1,max=1000000},
-    {name="rndoffset",type="float",default=0.2,min=0.0,max=10.0},
-    {name="precisevalue",type="bool",default=false},
+    {name="color1",type="rgba32",default=0xffEEEEEE,label="Base Color"},
+    {name="color11",type="rgba32",default=0xffEEEEEE,label="Enemy Taken Damage Color"},
+    {name="color2",type="rgba32",default=0xffEEEEEE,label="Player Taken Damage Color"},
+    {name="color3",type="rgba32",default=0xffEEEEEE,label="Big Damage Color"},
+    {name="color4",type="rgba32",default=0xff2E9B16,label="DOT&Fall Color"},
+    {name="time",type="int",default=120,min=2,max=4000,label="Number Lasting Time"},
+    {name="showlefthp",type="bool",default=false,label="Show Left HP"},
+    {name="showmultiplier",type="bool",default=true,label="Show Multiplier"},
+    {name="showenemydamage",type="bool",default=true,label="Show Damage Taken By Enemy"},
+    {name="showfrienddamage",type="bool",default=true,label="Show Damage Taken By Friend"},
+    {name="shownonplayerdealandtakendamage",type="bool",default=true,label="Show Non Player Damage"},
+    {name="bigcap",type="int",default=1200,min=0,max=1000000,label="Big Cap"},
+    {name="ignorecap",type="int",default=-1,min=-1,max=1000000,label="Ignore Cap"},
+    {name="rndoffset",type="float",default=0.2,min=0.0,max=10.0,label="Position Random Offset"},
+    {name="precisevalue",type="bool",default=false,label="Show Precise Value"},
     {name="showActionRate",type="bool",default=false},
     {name="showDamageType",type="bool",default=false},
+    {name="showDOT",type="bool",default=true,label="Show Dot&Fall Damage"},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -45,7 +47,6 @@ local function OnChanged()
 end
 
 
-local myLog="LogStart\n"
 local damageNumbers={}
 local mainplayer=nil
 local mainplayerGO=nil
@@ -57,14 +58,9 @@ local font = imgui.load_font(config.font, config.fontsize)
 local bigFont = imgui.load_font(config.font, math.floor(config.fontsize*1.8))
 
 local function Log(msg)
-    myLog = myLog .."\n".. msg
     log.info(modname..msg)
+    print(msg)
 end
-local function ClearLog()
-    --draw.text(myLog,50,50,0xffEEEEFE)
-    myLog = ""
-end
-
 local function getCharacterPos(char)
     local joint=char:get_GameObject():get_Transform():getJointByName("Head_0")
     local ground_joint=char:get_GameObject():get_Transform():getJointByName("root")
@@ -120,15 +116,29 @@ local PhysicsAttrSettingType2Str=GetEnumMap("app.AttackUserData.PhysicsAttrSetti
 local DamageTypeEnum2Str=GetEnumMap("app.AttackUserData.DamageTypeEnum")
 local ElementTypeEnum2Str=GetEnumMap("app.AttackUserData.ElementType")
 
+--refreshplayer()
 local function AddDamageNumber(character,damageInfo)
     local damageNumber={}
-    --damageNumber.pos=getCharacterPos(character)
+    local AttackUserData=damageInfo["<AttackUserData>k__BackingField"]
+
+    --character=damageInfo["<DamageHitController>k__BackingField"]:get_CachedCharacter()
+    --local ahc=damageInfo["<AttackHitController>k__BackingField"]
+    --local chara2= ahc and ahc:get_CachedCharacter()
+    --print(character,character2,mainplayer)
+    --dot damage pos is 0,0,0
     damageNumber.pos=damageInfo:get_Position()
+    if damageNumber.pos.x==0 and damageNumber.pos.y==0 and damageNumber.pos.z==0 then
+        damageNumber.pos=getCharacterPos(character)
+    end
+    
+    --treat damage withou AttackUserData as Dot
+    --Actuall contains DOT,Fall,etc    
+    local isDOT=(AttackUserData==nil)
     --learned from SilverEzredes
-    local owner_gameobj = damageInfo and damageInfo["<AttackOwnerObject>k__BackingField"]
+    local owner_gameobj = damageInfo and damageInfo["<AttackOwnerObject>k__BackingField"]    
     local isPlayerAttackHit = (owner_gameobj == mainplayerGO)
     local isPlayerTakenHit = (mainplayer == character)
-
+    
     local ofx=(math.random(7)-4)*config.rndoffset
     local ofy=(math.random(7)-4)*config.rndoffset
     damageNumber.pos.x=damageNumber.pos.x+ofx
@@ -151,8 +161,12 @@ local function AddDamageNumber(character,damageInfo)
 
     damageNumber.msg=f2s(damageInfo.Damage)
 
-    local AttackUserData=damageInfo["<AttackUserData>k__BackingField"]
-    if config.showActionRate then
+    if config.showDOT == false and isDOT then
+        return
+    end
+
+
+    if config.showActionRate and AttackUserData~=nil then
         damageNumber.msg=string.format("%s [%s]",damageNumber.msg, f2s2(AttackUserData.ActionRate))
     end
 
@@ -161,7 +175,7 @@ local function AddDamageNumber(character,damageInfo)
         damageNumber.msg=damageNumber.msg.." (x"..f2s2(damageInfo.DamageRate) ..")"
     end
 
-    if config.showDamageType then
+    if config.showDamageType and AttackUserData~=nil then
         local typeMsg=""
         --print(isPlayerAttackHit,damageInfo.Damage,AttackUserData.DamageValue,AttackUserData.ActionAttackValue,AttackUserData.ActionRate,AttackUserData.AttackType)
         if AttackUserData._ElementType > 0 then
@@ -190,9 +204,11 @@ local function AddDamageNumber(character,damageInfo)
     if config.showlefthp and character:get_Hp() > 0 then
         damageNumber.msg=damageNumber.msg.." -> "..f2s(character:get_Hp()-damageInfo.Damage)
     end
-
+    
     damageNumber.color=config.color1
-    if damageInfo.Damage > config.bigcap then
+    if isDOT then
+        damageNumber.color=config.color4
+    elseif damageInfo.Damage > config.bigcap then
         damageNumber.color=config.color3
     elseif isPlayerTakenHit then
         damageNumber.color=config.color2
@@ -218,16 +234,18 @@ local function printDamageInfo(di)
     return msg
 end
 
+--app.Character:onCalcDamageEnd 
+--onDamageCalcEnd is shit,onDamageHit don't have damage number
+--sdk.find_type_definition("app.PlayerDamageCalculator"):get_method("damageCalcEnd(app.HitController.DamageInfo)"),
 sdk.hook(
-    --onCalcDamageEnd 
-    --onDamageCalcEnd is shit,onDamageHit don't have damage number
-    sdk.find_type_definition("app.Character"):get_method("onCalcDamageEnd"),
+    --contains DOT
+    sdk.find_type_definition("app.HitController"):get_method("updateDamage"),
     function(args)
         local this=sdk.to_managed_object(args[2])
-        local di=sdk.to_managed_object(args[3])
-        AddDamageNumber(this,di)
-        --fix_msg=fix_msg.."\n"..tostring(this:get_Hp())
-        --fix_msg=fix_msg.."\n"..printDamageInfo(di)            
+        local damageInfo=sdk.to_managed_object(args[3])        
+        --local dn=sdk.to_float(args[5])
+        --print(dn)
+        AddDamageNumber(this:get_CachedCharacter(),damageInfo)
     end,
     nil
 )
@@ -249,16 +267,14 @@ re.on_frame(function()
         k.pos.y=k.pos.y+posDelta
         k.color=k.color-colorDelta
         if v == 0 then
+            Log("DamageNumber Disappear "..tostring(k .finalDamage))
             damageNumbers[k]=nil
-            Log("DamageNumberDisappear "..tostring(damageNumbers.finalDamage))
         end
 
         --Log(k.msg.."/"..tostring(v))
     end
     imgui.pop_font()
-    ClearLog()
 end)
-
 
 
 sdk.hook(
@@ -268,7 +284,6 @@ sdk.hook(
         refreshplayer()
     end
 )
-
 
 --try load api and draw ui
 local function prequire(...)
