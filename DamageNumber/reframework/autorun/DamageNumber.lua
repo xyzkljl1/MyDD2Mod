@@ -23,6 +23,7 @@ local _config={
     {name="showActionRate",type="bool",default=false},
     {name="showDamageType",type="bool",default=false},
     {name="showDOT",type="bool",default=true,label="Show Dot&Fall Damage"},
+    {name="showDamageComposition",type="bool",default=true,label="Show Original Damage Composition"},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -66,7 +67,7 @@ local function getCharacterPos(char)
     local ground_joint=char:get_GameObject():get_Transform():getJointByName("root")
     -- no head enemy
     if joint == nil then
-        return ground_joint:get_Position()        
+        return ground_joint:get_Position()
     end
     --if head is too tall from ground, return the ground
     if joint:get_Position().y - ground_joint:get_Position().y >2 then
@@ -116,18 +117,41 @@ local PhysicsAttrSettingType2Str=GetEnumMap("app.AttackUserData.PhysicsAttrSetti
 local DamageTypeEnum2Str=GetEnumMap("app.AttackUserData.DamageTypeEnum")
 local ElementTypeEnum2Str=GetEnumMap("app.AttackUserData.ElementType")
 
+
+local function printDamageInfo(di)
+    local t=di:get_type_definition()
+    local fields=t:get_fields()
+    for i=1,#fields do
+        Log(fields[i]:get_name()..":"..tostring(fields[i]:get_data(di)))
+    end
+end
+
 --refreshplayer()
 local function AddDamageNumber(character,damageInfo)
     local damageNumber={}
     local AttackUserData=damageInfo["<AttackUserData>k__BackingField"]
 
-    --character=damageInfo["<DamageHitController>k__BackingField"]:get_CachedCharacter()
+    if character==nil then
+        Log("No Character,try get from <DamageHitController>k__BackingField")
+        --printDamageInfo(damageInfo)
+        character=damageInfo["<DamageHitController>k__BackingField"]:get_CachedCharacter()
+    end
+    if character==nil then
+        --0 damage and nil character appears,why???
+        Log("Still No Character,Ignore")
+        if damageInfo.Damage~=0 then
+            Log("Ignore None Zero Damage!!")
+            printDamageInfo(damageInfo)
+        end
+        return
+    end
     --local ahc=damageInfo["<AttackHitController>k__BackingField"]
     --local chara2= ahc and ahc:get_CachedCharacter()
     --print(character,character2,mainplayer)
     --dot damage pos is 0,0,0
     damageNumber.pos=damageInfo:get_Position()
-    if damageNumber.pos.x==0 and damageNumber.pos.y==0 and damageNumber.pos.z==0 then
+    if damageNumber.pos.x==0 and damageNumber.pos.y==0 and damageNumber.pos.z==0 
+        and character~=nil then
         damageNumber.pos=getCharacterPos(character)
     end
     
@@ -161,10 +185,21 @@ local function AddDamageNumber(character,damageInfo)
 
     damageNumber.msg=f2s(damageInfo.Damage)
 
-    if config.showDOT == false and isDOT then
-        return
-    end
+    if config.showDOT == false and isDOT then return end
 
+    if config.showDamageComposition then
+        local msg=""
+        if damageInfo.SlashDamage > 0 then msg=msg.." Slash:"..f2s(damageInfo.SlashDamage) end
+        if damageInfo.BlowDamage > 0 then msg=msg.." Blow:"..f2s(damageInfo.BlowDamage) end
+        if damageInfo.ShootDamage > 0 then msg=msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
+        if damageInfo.MagicDamage > 0 then msg=msg.." Magic:"..f2s(damageInfo.MagicDamage) end
+        if damageInfo.EnchantDamage > 0 then msg=msg.." Enchant:"..f2s(damageInfo.EnchantDamage) end
+        if damageInfo.NonMagicElementDamage > 0 then msg=msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage) end
+        if damageInfo.FixedDamage > 0 then msg=msg.." Fixed:"..f2s(damageInfo.FixedDamage) end
+        if msg  ~=nil then
+            damageNumber.msg=damageNumber.msg.."/"..msg
+        end
+    end
 
     if config.showActionRate and AttackUserData~=nil then
         damageNumber.msg=string.format("%s [%s]",damageNumber.msg, f2s2(AttackUserData.ActionRate))
@@ -221,18 +256,9 @@ local function AddDamageNumber(character,damageInfo)
 
     --should match color disappear time
     damageNumbers[damageNumber]=config.time
-    Log("Add Damage Number "..tostring(damageNumber.finalDamage)..":"..f2s(damageNumber.pos.x).."/"..f2s(damageNumber.pos.y).."/"..f2s(damageNumber.pos.z))
+    Log("Add Damage Number "..tostring(damageNumber.finalDamage).."in("..f2s2(damageNumber.pos.x)..","..f2s2(damageNumber.pos.y)..","..f2s2(damageNumber.pos.z).."): "..damageNumber.msg)
 end
 
-local function printDamageInfo(di)
-    local msg=""
-    local t=di:get_type_definition()
-    local fields=t:get_fields()
-    for i=1,#fields do
-        msg=msg.."\n"..fields[i]:get_name()..":"..tostring(fields[i]:get_data(di))
-    end
-    return msg
-end
 
 --app.Character:onCalcDamageEnd 
 --onDamageCalcEnd is shit,onDamageHit don't have damage number
