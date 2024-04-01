@@ -554,15 +554,7 @@ local function GetOrAddSkillDesc(originalMessage,Id)
         local player=player_man:get_ManualPlayer()
         if player~=nil then
             local appendtext=GetAbilityDetail(player,Id)
-            if config.removeOriginalText then
-                if appendtext~="" then
-                    SkillDescCache[Id]=appendtext
-                else
-                    SkillDescCache[Id]=originalMessage
-                end
-            else
-                SkillDescCache[Id]=string.format("%s\n%s",originalMessage,appendtext)
-            end
+            SkillDescCache[Id]=string.format("%s\n%s",originalMessage,appendtext)
             Log(SkillDescCache[Id])
         else
             return sdk.create_managed_string(originalMessage)
@@ -657,6 +649,7 @@ sdk.hook(
             local abilityId=nil
             local cursor=tmpJobWindow._Job_AbilityListCtrl:get_SelectedInfo()
             -- is selecting ability in left
+            --print("---",abilityId,tmpJobWindow._TxtJobAbilityInfo:get_Message())
             if cursor.ContenstsType==MainContentsInfoKindAbility then
                 abilityId=cursor.Ability.AbilityID
                 if abilityId~=nil and abilityId>0 then

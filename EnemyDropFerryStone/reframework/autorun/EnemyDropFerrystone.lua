@@ -7,6 +7,8 @@ local DropListCT=5
 
 local _config={
     {name="AffectGatherSpot",type="bool",default=true},
+    {name="IgnoreBossDrop",type="bool",default=true},
+    {name="IgnoreQuestItem",type="bool",default=true},
 
     {name="item1",type="item",default=80},
     {name="count1",type="int",default=1,min=0,max=99},
@@ -43,25 +45,28 @@ myItem._Id=1
 myItem._Num=1
 myItem._Rate=1
 
+local QuestAndSpecialItemIds={}
 local isLootingGimmick=false
 local isLootingBody=false
-
+local isLootingBoss=false
 
 sdk.hook(
-    sdk.find_type_definition("app.ItemDropParam"):get_method("getFumbleLotItem"),
+    sdk.find_type_definition("app.SearchDeadBodyInteractController"):get_method("executeInteract"),
     function(args)
         local this=sdk.to_managed_object(args[2])
-        local gid=this:get_GimmickId()
-        --print(gid)
-        if gid ~=0 then
-            --never hit
-        else
-            isLootingBody=true
-            Log("Start Looting Body")
+        local corpsectrl=this.CorpseCtrl
+        if corpsectrl~=nil and corpsectrl:get_Chara()~=nil 
+            and corpsectrl:get_Chara():get_IsBoss() then
+            isLootingBoss=true
+            Log("IsBoss")
         end
+       
+        isLootingBody=true
+        Log("Start Looting Body")
     end,
     function (retval)
         Log("End Looting Body")
+        isLootingBoss=false
         isLootingBody=false
         return retval
     end
@@ -90,6 +95,7 @@ sdk.hook(
 --app.ItemDropParam.getFumbleLotItem(app.GatherContext, System.Int32, System.Int32)
 -- beetle/Â·±ßµÄ²Ý is called by giveItem,no fumbleLotItem
 --app.Gm82_009.giveItem(app.Character, System.Boolean)
+
 sdk.hook(
     sdk.find_type_definition("app.ItemDropParam.Table"):get_method("getLotItemSub"),
     nil,
@@ -106,6 +112,15 @@ sdk.hook(
                 return retval
             end
 
+            if config.IgnoreQuestItem and QuestAndSpecialItemIds[item._Id] ~=nil then
+                Log("Ignore Quest Item")
+                return retval
+            end
+
+            if config.IgnoreBossDrop and isLootingBoss then 
+                Log("Ignore Boss")
+                return retval
+            end
             --roll a dice
             local random= math.random(0,99)
             for i=1,DropListCT do
@@ -146,9 +161,24 @@ local function Init()
         myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,font)
         inited=true
     end
+    
+    QuestAndSpecialItemIds={}
+    local CategoryQuest=sdk.find_type_definition("app.ItemSubCategory"):get_field("Quest"):get_data()
+    local CategorySpecial=sdk.find_type_definition("app.ItemSubCategory"):get_field("Special"):get_data()
+    local im=sdk.get_managed_singleton("app.ItemManager")
+    local iter=im._ItemDataDict:GetEnumerator()
+    iter:MoveNext()
+    while iter:get_Current():get_Value()~=nil do
+        local itemCommonParam=iter:get_Current():get_Value()
+        if itemCommonParam._SubCategory~=nil and (itemCommonParam._SubCategory==CategoryQuest or itemCommonParam._SubCategory == CategorySpecial) then
+            QuestAndSpecialItemIds[itemCommonParam._Id]=""
+            --print(itemCommonParam._Id,itemCommonParam:get_Name())
+        end
+        iter:MoveNext()
+    end
 end
 sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),nil,Init)
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
-
+Init()
 
 

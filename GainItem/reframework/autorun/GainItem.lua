@@ -29,7 +29,7 @@ local function Init()
 end
 sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),nil,Init)
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
-
+Init()
 
 local Wakestone=77
 local WakestoneShards=78
