@@ -16,6 +16,7 @@ local _config={
     {name="showenemydamage",type="bool",default=true,label="Show Damage Taken By Enemy"},
     {name="showfrienddamage",type="bool",default=true,label="Show Damage Taken By Friend"},
     {name="shownonplayerdealandtakendamage",type="bool",default=true,label="Show Non Player Damage"},
+    {name="showNonBossEnemyTakenDamage",type="bool",default=true},
     {name="bigcap",type="int",default=1200,min=0,max=1000000,label="Big Cap"},
     {name="ignorecap",type="int",default=-1,min=-1,max=1000000,label="Ignore Cap"},
     {name="rndoffset",type="float",default=0.2,min=0.0,max=10.0,label="Position Random Offset"},
@@ -141,7 +142,7 @@ local function AddDamageNumber(character,damageInfo)
         Log("Still No Character,Ignore")
         if damageInfo.Damage~=0 then
             Log("Ignore None Zero Damage!!")
-            printDamageInfo(damageInfo)
+            --printDamageInfo(damageInfo)
         end
         return
     end
@@ -162,7 +163,8 @@ local function AddDamageNumber(character,damageInfo)
     local owner_gameobj = damageInfo and damageInfo["<AttackOwnerObject>k__BackingField"]    
     local isPlayerAttackHit = (owner_gameobj == mainplayerGO)
     local isPlayerTakenHit = (mainplayer == character)
-    
+    local isBossTakenHit=character:get_IsBoss()
+
     local ofx=(math.random(7)-4)*config.rndoffset
     local ofy=(math.random(7)-4)*config.rndoffset
     damageNumber.pos.x=damageNumber.pos.x+ofx
@@ -175,8 +177,17 @@ local function AddDamageNumber(character,damageInfo)
     --damageNumber.rateMaxHP=damageInfo.MaxHpDamageRate
 
     if damageInfo.Damage < config.ignorecap then return end
-    if config.shownonplayerdealandtakendamage==false and isPlayerAttackHit==false and isPlayerTakenHit==false then
-        return
+
+    --Dot don't check conditions about player because always fail
+    if isDot then
+        if config.showDOT == false then return end
+    else
+        if config.shownonplayerdealandtakendamage==false and isPlayerAttackHit==false and isPlayerTakenHit==false then
+            return
+        end    
+        if config.showNonBossEnemyTakenDamage==false and isBossTakenHit==false then
+            return
+        end
     end
 
     local isEnemy=character:get_EnemyController():get_IsHostileArisen()
@@ -185,7 +196,6 @@ local function AddDamageNumber(character,damageInfo)
 
     damageNumber.msg=f2s(damageInfo.Damage)
 
-    if config.showDOT == false and isDOT then return end
 
     if config.showDamageComposition then
         local msg=""
