@@ -483,7 +483,7 @@ end
 local function isRingOrItem(param)
     if param==nil then return false end
     if param:get_type_definition():is_a("app.ItemDataParam") then return true end
-    if isRing()==true then return true end
+    if isRing(param)==true then return true end
     return false
 end
 
