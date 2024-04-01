@@ -3,9 +3,12 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
 local OnClickFunc=nil
+local OnClickEFunc=nil
 local _config={
     {name="NPCLimit",type="int",default=0,min=0,max=200},
     {name="RemoveNearbyNPC",type="button",onClick=function() OnClickFunc() end},
+    {name="EnemyLimit",type="int",default=0,min=0,max=200},
+    {name="RemoveNearbyEnemy",type="button",onClick=function() OnClickEFunc() end},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -37,9 +40,12 @@ re.on_frame(function ()
     man._NPCGenerateLimit=config.NPCLimit
     man._RuleNPCGenerateLimit=config.NPCLimit
     man.DefaultNPCGenerateLimit=config.NPCLimit
+    man._RuleEnemyGenerateLimit=config.EnemyLimit
+    man.DefaultEnemyGenerateLimit=config.EnemyLimit
 end)
 
 OnClickFunc=function() man:requestDestroyAllNPC() end
+OnClickEFunc=function() man:requestDestroyAllEnemy() end
 
 --try load api and draw ui
 local function prequire(...)
@@ -49,3 +55,4 @@ local function prequire(...)
 end
 local myapi = prequire("_XYZApi/_XYZApi")
 if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,nil) end
+
