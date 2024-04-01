@@ -35,13 +35,29 @@ local function Log(msg)
     print(msg)
 end
 
+local sceneType=nil
+local enumfield=sdk.find_type_definition("app.MainFlowManager.SceneType"):get_field("Field"):get_data()
+local isInGame=false
+sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
+function(args)
+    sceneType=sdk.to_int64(args[3])&0xf
+end,
+function()
+    isInGame=(enumfield==sceneType)
+    sceneType=nil
+end
+)
+
 local man=sdk.get_managed_singleton("app.GenerateManager")
 re.on_frame(function ()
-    man._NPCGenerateLimit=config.NPCLimit
-    man._RuleNPCGenerateLimit=config.NPCLimit
-    man.DefaultNPCGenerateLimit=config.NPCLimit
-    man._RuleEnemyGenerateLimit=config.EnemyLimit
-    man.DefaultEnemyGenerateLimit=config.EnemyLimit
+    if isInGame then
+        man._NPCGenerateLimit=config.NPCLimit
+        man._RuleNPCGenerateLimit=config.NPCLimit
+        man.DefaultNPCGenerateLimit=config.NPCLimit
+        man._RuleEnemyGenerateLimit=config.EnemyLimit
+        man.DefaultEnemyGenerateLimit=config.EnemyLimit
+    end
+    --print(isInGame)
 end)
 
 OnClickFunc=function() man:requestDestroyAllNPC() end
