@@ -179,7 +179,7 @@ local function AddDamageNumber(character,damageInfo)
     if damageInfo.Damage < config.ignorecap then return end
 
     --Dot don't check conditions about player because always fail
-    if isDot then
+    if isDOT then
         if config.showDOT == false then return end
     else
         if config.shownonplayerdealandtakendamage==false and isPlayerAttackHit==false and isPlayerTakenHit==false then
