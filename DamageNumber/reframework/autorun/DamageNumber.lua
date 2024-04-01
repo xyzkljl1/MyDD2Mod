@@ -23,7 +23,7 @@ local _config={
     {name="showActionRate",type="bool",default=false},
     {name="showDamageType",type="bool",default=false},
     {name="showDOT",type="bool",default=true,label="Show Dot&Fall Damage"},
-    {name="showDamageComposition",type="bool",default=true,label="Show Original Damage Composition"},
+    {name="showDamageComposition",type="bool",default=false,label="Show Original Damage Composition"},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)

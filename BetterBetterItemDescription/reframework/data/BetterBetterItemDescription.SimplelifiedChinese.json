@@ -1,0 +1,419 @@
+{
+  "FieldFormat": {
+    "_BlowResistRate": "%s%% 吹飞抵抗",
+    "_BuyPrice": {
+      "enable": false,
+      "format": "BuyPrice %s.",
+      "type": "String"
+    },
+    "_Category": {
+      "enable": false,
+      "format": "类别 %s",
+      "map": [
+        "材料",
+        "其它",
+        "装备"
+      ],
+      "type": "Enum"
+    },
+    "_DarkDefence": "%s%% 暗抗",
+    "_FireDefence": "%s%% 火抗",
+    "_FireResist": "%s%% 火异常抵抗",
+    "_HealBlackHp": "回复 %s 生命上限.",
+    "_HealStamina": "回复 %s 体力",
+    "_HealWhiteHp": "回复 %s 生命.",
+    "_IceDefence": "%s%% 冰抗",
+    "_IceResist": "%s%% 冰异常抵抗",
+    "_Id": {
+      "enable": false,
+      "format": "Id %s.",
+      "type": "String"
+    },
+    "_LightDefence": "%s%% 光抗",
+    "_MagicAttack": "%s 魔法攻击",
+    "_MagicDefence": "%s 魔法防御",
+    "_OilResist": "%s%% 浸油抵抗",
+    "_PhysicalAttack": "%s 物理攻击",
+    "_PhysicalDefence": "%s 物理防御",
+    "_PoisonResist": "%s%% 追毒抵抗",
+    "_SellPrice": {
+      "enable": false,
+      "format": "售价 %s.",
+      "type": "String"
+    },
+    "_ShakeResistRate": "%s%% 昏厥抵抗",
+    "_SilentResist": "%s%% 沉默抵抗",
+    "_SlashDefenceRate": "%s%% 斩击抗性",
+    "_SleepResist": "%s%% 睡眠抵抗",
+    "_StoneResist": "%s%% 石化抵抗",
+    "_StrikeDefenceRate": "%s%% 打击抗性",
+    "_SubCategory": {
+      "enable": false,
+      "format": "子类 %s",
+      "map": [
+        "Buff",
+        "材料",
+        "特殊",
+        "任务",
+        "书籍",
+        "箭",
+        "技能",
+        "追随者技能",
+        "魔法书",
+        "线上游戏"
+      ],
+      "type": "Enum"
+    },
+    "_ThunderDefence": "%s%% 雷抗",
+    "_ThunderResist": "%s%% 雷异常抵抗",
+    "_UseEffect": {
+      "enable": false,
+      "format": "Effect %s",
+      "map": [
+        "Heal",
+        "RecoverStamina",
+        "Status"
+      ],
+      "type": "Enum"
+    },
+    "_WaterResist": "%s%% 水异常抵抗"
+  },
+  "RingSpecialFormat": {
+    "1": {
+      "enable": true,
+      "format": "+{v1} 生命上限",
+      "hint": "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"
+    },
+    "10": {
+      "enable": true,
+      "format": "{v1}% 快速施法",
+      "hint": "(3533,Ring of Articulacy,15,0,0)"
+    },
+    "11": {
+      "enable": true,
+      "format": "{v1}%快速施法/降低{v2}%生命上限",
+      "hint": "(3534,Ring of Recitation,25,20,0)"
+    },
+    "12": {
+      "enable": true,
+      "format": "+{v1}强韧",
+      "hint": "(3535,Ring of Resolution,100,0,0)"
+    },
+    "13": {
+      "enable": true,
+      "format": "-{v1}% 体力消耗",
+      "hint": "(3536,Ring of Grit,25,0,0)"
+    },
+    "14": {
+      "enable": true,
+      "format": "{v2}秒内获得{v1} ATK",
+      "hint": "(3537,Ring of Requital,15,10,0)"
+    },
+    "15": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3538,Ring of Brawn,0,0,0)"
+    },
+    "16": {
+      "enable": true,
+      "format": "受伤超过{v1}%生命上限时获得持续{v2}秒的少量治疗",
+      "hint": "(3539,Ring of Benevolence,25,3,0)"
+    },
+    "17": {
+      "enable": true,
+      "format": "低于{v1}%生命上限时获得{v2} 攻击力",
+      "hint": "(3540,Ring of Recompense,25,100,0)"
+    },
+    "18": {
+      "enable": true,
+      "format": "不少于{v1}%生命上限时获得{v2} 攻击力",
+      "hint": "(3541,Ring of Predominance,100,10,0)"
+    },
+    "2": {
+      "enable": true,
+      "format": "+{v1} 最大体力",
+      "hint": "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"
+    },
+    "20": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3543,Ring of Disfavor,1,0,0)"
+    },
+    "21": {
+      "enable": true,
+      "format": "+{v1} 体力恢复",
+      "hint": "(3544,Ring of Quickening,10,0,0)"
+    },
+    "22": {
+      "enable": true,
+      "format": "+{v1} 击倒能力",
+      "hint": "(3545,Ring of Vehemence,100,0,0)"
+    },
+    "23": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3548,Ring of Proximity,0,0,0)"
+    },
+    "24": {
+      "enable": true,
+      "format": "+{v1}%/{v2}% 造成/受到的伤害",
+      "hint": "(3549,Ring of Gallantry,25,25,0)"
+    },
+    "25": {
+      "enable": true,
+      "format": "+{v1}% 伤害",
+      "hint": "(3550,Ring of Skullduggery,20,0,0)"
+    },
+    "26": {
+      "enable": true,
+      "format": "{v2}秒内获得{v1} 防御",
+      "hint": "(3551,Ring of Reassurance,50,20,0)"
+    },
+    "27": {
+      "enable": true,
+      "format": "+{v1}% 恢复量",
+      "hint": "(3552,Ring of Amplification,10,0,0)"
+    },
+    "28": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3553,Turquoise Ring,0,0,0)"
+    },
+    "29": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3554,Ring of Derision,0,0,0)"
+    },
+    "3": {
+      "enable": true,
+      "format": "+{v1} 负重上限",
+      "hint": "(3506,Ring of Profusion,10,0,0)(3505,Ring of Accrual,5,0,0)"
+    },
+    "30": {
+      "enable": true,
+      "format": "+{v1}.",
+      "hint": "(3555,Eternal Bond,10,0,0)"
+    },
+    "4": {
+      "enable": true,
+      "format": "+{v1}/{v2}/{v3} 生命上限/体力上限/负重上限",
+      "hint": "(3507,Ring of Triumph,100,100,5)"
+    },
+    "5": {
+      "enable": true,
+      "format": "+{v1} 物理攻击",
+      "hint": "(3508,Ring of Aggression,30,0,0)"
+    },
+    "6": {
+      "enable": true,
+      "format": "+{v1} 魔法攻击",
+      "hint": "(3510,Ring of Percipience,30,0,0)"
+    },
+    "7": {
+      "enable": true,
+      "format": "+{v1}% 额外经验值",
+      "hint": "(3530,Ring of Ambition,50,0,0)"
+    },
+    "8": {
+      "enable": true,
+      "format": "+{v1}% 额外JP",
+      "hint": "(3531,Ring of Endeavor,50,0,0)"
+    },
+    "9": {
+      "enable": true,
+      "format": "杀敌恢复{v1} 生命",
+      "hint": "(3532,Ring of Regeneration,50,0,0)"
+    }
+  },
+
+  "AbilityFormat": {
+    "10": {
+      "format": "+{v1} 最大体力",
+      "hint": "固定値(150.000000,0.000000)"
+    },
+    "11": {
+      "format": "x{v1} 燃油消耗/x{v2} 范围",
+      "hint": "1:燃料の消費速度倍率　2:照らす範囲(0.660000,2.000000)"
+    },
+    "12": {
+      "format": "+{v1} 伤害倍率",
+      "hint": "攻撃倍率加算値(0.050000,0.000000)"
+    },
+    "13": {
+      "format": "悬崖:x{v1}/其它:x{v2}",
+      "hint": "1：段差登り、2：しがみつき・しゃがみ(1.100000,1.100000)"
+    },
+    "14": {
+      "format": "获得 {v2}%+{v1} 魔法防御",
+      "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
+    },
+    "15": {
+      "format": "+{v1}% 恢复量",
+      "hint": "増加回復量(％)(10.000000,0.000000)"
+    },
+    "16": {
+      "format": "x{v1} 持续",
+      "hint": "効果時間倍率(0.700000,0.000000)"
+    },
+    "17": {
+      "format": "x{v1} 持续",
+      "hint": "効果時間倍率(1.200000,0.000000)"
+    },
+    "18": {
+      "format": "+{v1} 倍率",
+      "hint": "加算倍率を入力(0.100000,0.000000)"
+    },
+    "19": {
+      "format": "x{v1} 仇恨倍率",
+      "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
+    },
+    "20": {
+      "format": "恢复生命上限{v1}%~{v2}%的生命",
+      "hint": "トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"
+    },
+    "21": {
+      "format": "x{v1}体力消耗",
+      "hint": "(0.800000,0.000000)"
+    },
+    "22": {
+      "format": "x{v1}体力消耗",
+      "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
+    },
+    "23": {
+      "format": "获得{v2}%+{v1}力量",
+      "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "24": {
+      "format": "获得 {v2}%+{v1} 生命上限",
+      "hint": "HPの上限値 + Value(200.000000,0.000000)"
+    },
+    "25": {
+      "format": "x{v1}倍",
+      "hint": "組み付き時の押し引き力 * Value(1.500000,0.000000)"
+    },
+    "26": {
+      "format": "+{v1}% 破盾能力",
+      "hint": "ガード削り攻撃力 + Value%(30.000000,0.000000)"
+    },
+    "27": {
+      "format": "+{v1}% 击倒能力",
+      "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
+    },
+    "28": {
+      "format": "x{v1} 生命上限损失",
+      "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
+    },
+    "29": {
+      "format": "+{v1}% 异常积蓄",
+      "hint": "状態異常与蓄積値 + Value%(20.000000,0.000000)"
+    },
+    "30": {
+      "format": "{v1}/{v2}",
+      "hint": "(75.000000,90.000000)"
+    },
+    "31": {
+      "format": "+{v1}% 击倒抗性",
+      "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
+    },
+    "32": {
+      "format": "+{v1}% 伤害",
+      "hint": "弱点属性による与ダメージ + Value%(5.000000,0.000000)"
+    },
+    "33": {
+      "format": "{v2}%+{v1} 魔法攻击",
+      "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "34": {
+      "format": "x{v1} 移动速度",
+      "hint": "持ち上げ、担ぎ上げ時の移動速度xValue(1.100000,0.000000)"
+    },
+    "35": {
+      "format": "x{v1} 金币获取",
+      "hint": "金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"
+    },
+    "36": {
+      "format": "白天(4:00~20:00)获得{v2}% 物理攻击\n夜晚(18:00~6:00)获得{v2}%魔法攻击",
+      "hint": "日中（4時～20時）、物理攻撃力+ 夜間（18時～6時）、魔法攻撃力+ １：固定値　２：割合値(%)(0.000000,5.000000)"
+    },
+    "37": {
+      "format": "x{v1} 数量",
+      "hint": "リム決勝を入手したときのリム獲得量xValue(1.050000,0.000000)"
+    },
+    "38": {
+      "format": "x{v1} 体力消耗",
+      "hint": "ダッシュ中のスタミナ消費量×Value(0.900000,0.000000)"
+    },
+    "39": {
+      "format": "{v2}%+{v1} 物理/魔法防御",
+      "hint": "ポーンの物理防御力/魔法防御力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "4": {
+      "format": "x{v1} 倍率",
+      "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
+    },
+    "40": {
+      "format": "恢复{v1}% 体力",
+      "hint": "敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"
+    },
+    "41": {
+      "format": "x{v1} 几率",
+      "hint": "(1.200000,0.000000)"
+    },
+    "42": {
+      "format": "获得 {v2}%+{v1} 物理/魔法攻击",
+      "hint": "ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "43": {
+      "format": "-{v1}秒",
+      "hint": "ポーン蘇生にかかる時間 -Value(秒)(1.000000,0.000000)"
+    },
+    "44": {
+      "format": "{v1}",
+      "hint": "(1.500000,0.000000)"
+    },
+    "45": {
+      "format": "{v1}% 获得额外一个物品",
+      "hint": "調合時にアイテム作成個数+1個になる確率Value％(15.000000,0.000000)"
+    },
+    "46": {
+      "format": "x{v1}被袭击概率",
+      "hint": "襲撃確率 * Value(0.350000,0.000000)"
+    },
+    "47": {
+      "format": "敌人视野变为x{v1}",
+      "hint": "敵の視界センサー * Value(0.850000,0.000000)"
+    },
+    "48": {
+      "format": "x{v1}好感上升量",
+      "hint": "NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"
+    },
+    "49": {
+      "format": "x{v1} 体力消耗",
+      "hint": "カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"
+    },
+    "5": {
+      "format": "获得{v2}%+{v1}防御",
+      "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
+    },
+    "50": {
+      "format": "移动时负重等级下降-{v1}级",
+      "hint": "移動時の重量ランクをValue段階下げる(1.000000,0.000000)"
+    },
+    "6": {
+      "format": "获得 {v2}%+{v1} 负重上限",
+      "hint": "最大重量加算値(10.000000,0.000000)"
+    },
+    "7": {
+      "format": "抬起+{v1}秒.压制+{v2}秒",
+      "hint": "1：担ぎ上げ、2：押さえつけ。単位は秒(2.000000,2.000000)"
+    },
+    "8": {
+      "format": "倒下: -{v1}秒.匍匐: -{v2}秒",
+      "hint": "1：ダウン、2：這いずり。単位は秒(0.300000,1.000000)"
+    },
+    "9": {
+      "format": "+{v1} 伤害倍率",
+      "hint": "攻撃倍率加算値(0.100000,0.000000)"
+    }
+  }
+}
