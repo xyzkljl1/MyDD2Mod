@@ -56,12 +56,23 @@ re.on_frame(function ()
         man.DefaultNPCGenerateLimit=config.NPCLimit
         man._RuleEnemyGenerateLimit=config.EnemyLimit
         man.DefaultEnemyGenerateLimit=config.EnemyLimit
+    else
+        --set limit to max to prevent potential issue on loading save
+        man._NPCGenerateLimit=2000
+        man._RuleNPCGenerateLimit=2000
+        man.DefaultNPCGenerateLimit=2000
+        man._RuleEnemyGenerateLimit=2000
+        man.DefaultEnemyGenerateLimit=2000
     end
     --print(isInGame)
 end)
 
+
+
 OnClickFunc=function() man:requestDestroyAllNPC() end
 OnClickEFunc=function() man:requestDestroyAllEnemy() end
+
+
 
 --try load api and draw ui
 local function prequire(...)
