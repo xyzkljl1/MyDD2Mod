@@ -185,7 +185,7 @@ local RingSpecialFormat={
     [27]= {enable= true,format= "+{v1}% recover amount",hint= "(3552,Ring of Amplification,10,0,0)"},
     [28]= {enable= false,format= "{v1} {v2} {v3}",hint= "(3553,Turquoise Ring,0,0,0)"},
     [29]= {enable= false,format= "{v1} {v2} {v3}",hint= "(3554,Ring of Derision,0,0,0)"},
-    [30]= {enable= true,format= "+{v1}.",hint= "(3555,Eternal Bond,10,0,0)"},
+    [30]= {enable= true,format= "Gain +{v1}% Favorability.",hint= "(3555,Eternal Bond,10,0,0)"},
 }
 
 local AbilityFormat={

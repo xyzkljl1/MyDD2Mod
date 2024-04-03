@@ -381,7 +381,7 @@
         },
         "30": {
             "enable": true,
-            "format": "+{v1}.",
+            "format": "Gain +{v1}% Favorability.",
             "hint": "(3555,Eternal Bond,10,0,0)"
         },
         "4": {

@@ -1,93 +1,62 @@
 local modname="MoreRandomChest"
 local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
+local myapi = require("_XYZApi/_XYZApi")
 --settings
 local _config={
-   
+    {name="ChanceScale",type="floatPercent",default=50},
+    {name="ReplacedStaff",type="boolList",default={
+                            --"Gm82_000",--可拾取物品
+                            --"Gm82_000_001",--自然生成的物品
+                            --"Gm82_000_002",--丢弃的物品
+                            ["Gm80_008"]="chain",--stone
+                            ["Gm80_009"]="stone",--stone
+                            ["Gm80_010"]="stone",--stone
+                            ["Gm80_103"]="sandbag",--沙袋
+                            ["Gm80_109"]="tree",--tree
+                            ["Gm80_110"]="tree",--tree?
+                            ["Gm80_241"]="candle&glass?",
+                            --["Gm82_001"]="key",
+                            --["Gm82_002"]="key",
+                            ["Gm82_009_01"]="plant gather point",--草
+                            ["Gm82_009_02"]="plant gather point",
+                            ["Gm82_009_03"]="plant gather point",
+                            ["Gm82_009_04"]="plant gather point",--草
+                            ["Gm82_009_05"]="plant gather point",--草
+                            ["Gm82_009_06"]="plant gather point",--草
+                            ["Gm82_009_10"]="plant gather point",--草
+                            ["Gm82_009_20"]="plant gather point",--草
+                            ["Gm82_016_10"]="bone gather point",--骨头
+                            ["Gm82_017_10"]="wood gather point",--废墟堆
+                            ["Gm82_011"]="plant gather point",--草
+                            ["Gm82_012"]="plant gather point",--草
+                            ["Gm82_013"]="plant gather point",--草
+                            ["Gm82_020"]="potato gather point",--草
+                            ["Gm82_069"]="fish gather point",--鱼
+                        --    "Gm80_079_10",--篝火
+                        --    "Gm51_574",--箱子
+                            ["Gm50_097"]="haystack",--稻草堆
+                            ["Gm50_011_00"]="wood",
+                            ["Gm50_011_01"]="wood",
+                            ["Gm50_011_02"]="wood",
+                            ["Gm50_013_01"]="barrel",
+                            ["Gm50_013_02"]="barrel",
+                            ["Gm50_040_10"]="barrel",--木桶
+                            ["Gm51_083"]="barrel",
+                            ["Gm51_009"]="wood rack",
+                            ["Gm51_010"]="wood rack",
+                            ["Gm51_011"]="wood stick",
+                        }
+    },
 }
---merge config file to default config
-local function recurse_def_settings(tbl, new_tbl)
-	for key, value in pairs(new_tbl) do
-		if type(tbl[key]) == type(value) then
-		    if type(value) == "table" then
-			    tbl[key] = recurse_def_settings(tbl[key], value)
-            else
-    		    tbl[key] = value
-            end
-		end
-	end
-	return tbl
-end
-local config = {} 
-for key,para in pairs(_config) do
-    config[para.name]=para.default
-end
-config= recurse_def_settings(config, json.load_file(configfile) or {})
+local config=myapi.InitFromFile(_config,configfile)
 
-local removeList={
-    --"Gm80_000",--可拾取物品
-    --"Gm80_000_002",--丢弃的物品
-    --"Gm80_000_002",--丢弃的物品
-    --"Gm80_002",--tr
-    "Gm80_009",--stone
-    "Gm80_010",--stone
-    "Gm80_103",--沙袋
-    "Gm80_109",--tree
-    --"Gm80_110",--tree?
-    "Gm82_011",--草
-    "Gm82_012",--草
-    "Gm82_009_01",--草
-    "Gm82_009_02",
-    "Gm82_009_03",
-    "Gm82_009_04",--草
-    "Gm82_009_09",--草
-    "Gm82_016_10",--骨头
-    "Gm82_017_10",--废墟堆
-    "Gm82_013",--草
-    "Gm82_020",--草
-    "Gm82_069",--鱼
---    "Gm80_079_10",--篝火
---    "Gm51_574",--箱子
-    "Gm50_097",--稻草堆
-    "Gm50_013_02",--凳子
-    "Gm50_040_10",--木桶
-    "Gm51_083",--杂物
-    "Gm51_045",--木桶
-}
-local replaceList={
-    ["Gm80_001"]=90,--箱子
-    ["Gm82_080"]=3,--甲虫
-    ["Gm82_036"]=1,--探求者之证明
-}
 local function Log(msg)
     log.info(modname..msg)
     print(msg)
 end
 
-local function GetEnumMap(enumName)
-    local ret={}
-    for _,field in pairs(sdk.find_type_definition(enumName):get_fields()) do
-        local value=field:get_data()
-        if value~=nil and value >0 then
-            ret[field:get_name()]=value
-        end
-    end
-    return ret
-end
-
-local gimmickName2ID=GetEnumMap("app.GimmickID")
-
-local function EnumListToInt(list)
-    local intList={}
-    for _,v in pairs(list) do
-        local intvalue=gimmickName2ID[v]
-        if intvalue~=nil and intvalue>=0 then
-            intList[intvalue]=intvalue
-        end
-    end
-    return intList
-end
-removeList=EnumListToInt(removeList)
+local gimmickID2Name,gimmickName2ID=myapi.Enum2Map("app.GimmickID")
 
 local function EnumListToInt2(list)
     local intList={}
@@ -100,7 +69,13 @@ local function EnumListToInt2(list)
     end
     return intList
 end
-replaceList=EnumListToInt2(replaceList)
+local replaceList=EnumListToInt2({
+    ["Gm80_001"]=32,--箱子
+    ["Gm80_096"]=32,--箱子
+    ["Gm80_097"]=32,--箱子
+    ["Gm82_080"]=3,--甲虫
+    ["Gm82_036"]=1,--探求者之证明
+})
 
 
 sdk.hook(
@@ -114,16 +89,22 @@ sdk.hook(
             for i=0,ct do
                 local rowData=tableRow[i]
                 local id=rowData._GimmickID
-                if id~=nil and removeList[id]~=nil then
+                --nil 表示不在列表中，false表示没有勾选
+                if id~=nil and config.ReplacedStaff[gimmickID2Name[id]]~=nil and config.ReplacedStaff[gimmickID2Name[id]]~=false then
                     local roll=math.random(0,99)
-                    for replaceId,rate in pairs(replaceList) do
-                        if roll<rate then
-                            rowData._GimmickID=replaceId
-                            print("Replace ",id,roll,"Use",replaceId,rate)
-                            break
+                    if roll < config.ChanceScale then
+                        --will triggered for the same object when each time it's displayed
+                        for replaceId,rate in pairs(replaceList) do
+                            if roll<rate then
+                                rowData._GimmickID=replaceId
+                                print("Replace ",gimmickID2Name[id],roll,"Use",replaceId,rate*config.ChanceScale)
+                                break
+                            end
+                            roll=roll-rate
                         end
                     end
-                    --print("End",id)
+                --else
+                    --print("Ignore ",gimmickID2Name[id])
                 end
             end
         end
@@ -142,7 +123,9 @@ function Init()
         local itemCommonParam=iter:get_Current():get_Value()
         local name=itemCommonParam:get_Name()
         if name ~="Invalid" and name~=nil then
-            table.insert(itemIds,itemCommonParam._Id)
+            if itemCommonParam._SubCategory==nil or (itemCommonParam._SubCategory ~= CategoryQuest) then
+                table.insert(itemIds,itemCommonParam._Id)
+            end
         end
         iter:MoveNext()
     end
@@ -150,7 +133,7 @@ function Init()
 end
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
 
-
+--箱子有80_001,80_096,80_097等，都使用app.gm80_001(使用app.gm80_001的都是箱子，使用app.gm82_009的都是采集点)
 sdk.hook(
     sdk.find_type_definition("app.gm80_001"):get_method("getItem"),
     function(args)
@@ -167,12 +150,4 @@ sdk.hook(
     end,nil
 )
 
-
---try load api and draw ui
-local function prequire(...)
-    local status, lib = pcall(require, ...)
-    if(status) then return lib end
-    return nil
-end
-local myapi = prequire("_XYZApi/_XYZApi")
---if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,OnChanged) end
+myapi.DrawIt(modname,configfile,_config,config,nil)

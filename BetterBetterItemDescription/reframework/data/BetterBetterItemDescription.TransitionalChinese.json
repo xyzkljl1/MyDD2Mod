@@ -191,7 +191,7 @@
     },
     "30": {
       "enable": true,
-      "format": "+{v1}.",
+      "format": "獲得+{v1}% 好感",
       "hint": "(3555,Eternal Bond,10,0,0)"
     },
     "4": {
