@@ -91,7 +91,7 @@ sdk.hook(
                 local id=rowData._GimmickID
                 --nil 表示不在列表中，false表示没有勾选
                 if id~=nil and config.ReplacedStaff[gimmickID2Name[id]]~=nil and config.ReplacedStaff[gimmickID2Name[id]]~=false then
-                    local roll=math.random(0,99)
+                    local roll=math.random(0,9999)/100.0
                     if roll < config.ChanceScale then
                         --will triggered for the same object when each time it's displayed
                         for replaceId,rate in pairs(replaceList) do
