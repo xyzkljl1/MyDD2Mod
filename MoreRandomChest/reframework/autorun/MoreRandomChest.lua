@@ -142,7 +142,7 @@ sdk.hook(
         local ItemList=this.ItemList
         if ItemList~=nil and ItemList:get_Count()==0 then
             print("Generate Random Drop")
-            local myItem=sdk.create_instance("app.gm80_001.ItemParam")
+            local myItem=sdk.create_instance("app.gm80_001.ItemParam"):add_ref()
             myItem.ItemId=itemIds[math.random(1,#itemIds)]
             myItem.ItemNum=1
             ItemList:Add(myItem)

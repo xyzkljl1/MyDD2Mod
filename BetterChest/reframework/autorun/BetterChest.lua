@@ -54,7 +54,7 @@ sdk.hook(
                 end
             end
             if config.AdditionalLoot and (math.random(0,99) < config.AdditionalLootChance) then
-                local newItem=sdk.create_instance("app.gm80_001.ItemParam")
+                local newItem=sdk.create_instance("app.gm80_001.ItemParam"):add_ref()
                 newItem.ItemId=additionalItemIds[math.random(1,#additionalItemIds)]
                 newItem.ItemNum=1
                 ItemList:Add(newItem)
