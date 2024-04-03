@@ -1,0 +1,1019 @@
+CharacterID;Numeric ID;Name;Group name;Group
+ch310000;2601185669;Allard;Vernworth;Group006
+ch310001;4267448965;Waldhar;Vernworth;Group006
+ch310002;1461307325;Wilhelmina;Vernworth;Group006
+ch310003;1210835050;Sven;Vernworth;Group006
+ch310004;1483341763;Disa;Vernworth;Group006
+ch310005;3052646550;Patrick;Vernworth;Group006
+ch310006;189868107;Brant;Vernworth;Group006
+ch310007;1413112416;Rodge;Checkpoint Rest Town;Group011
+ch310008;2839254405;Darragh;Vernworth;Group006
+ch310009;2365554741;Phaesus;Flambearer Palace;Group012
+ch310010;663264662;Bermudo;Always on the move;None
+ch310011;4137867127;Menella;Flambearer Palace;Group012
+ch310012;561828483;The Dragonforged;Bay Wayside Shrine;Group010
+ch310013;2411836891;Luz;Bakbattahl;Group013
+ch310014;2190167323;Rivage Elder;Harve;Group007
+ch310015;1977045206;Rothais;Seafloor Shrine - Sacred Grounds;Group014
+ch310016;4006438697;Beren;Borderwatch Outpost;Group001
+ch310017;3560980369;Glyndwr;Sacred Arbor;Group009
+ch310018;3597605784;Taliesin;Sacred Arbor;Group009
+ch310019;1007143618;Doireann;Sacred Arbor;Group009
+ch310020;1108605478;Sigurd;Harve;Group007
+ch310021;3215417244;Martin;Vernworth;Group006
+ch310022;2984506176;Ian;Melve;Group002
+ch310023;1907264696;Norbert;Melve;Group002
+ch310024;3412497406;Olven;Vernworth;Group006
+ch310025;1363233817;Sara;Bakbattahl;Group013
+ch310026;2439785051;Brokkr;Bakbattahl;Group013
+ch310027;1431240533;Trysha;Eini's home;Group003
+ch310028;678396953;Eini;Eini's home;Group003
+ch310029;3013948984;Eino;Eini's home;Group003
+ch310030;1603137626;Myrddin;Checkpoint Rest Town;Group011
+ch310031;2544621420;Cliodhna;Windwalker's Home;Group015
+ch310032;1468499554;Gautstafr;Windwalker's Home;Group015
+ch310033;3656022968;Elena;Vernworth;Group006
+ch310034;1872023094;Nadinia;Flambearer Palace;Group012
+ch310035;3450149089;Irmhild;Flambearer Palace;Group012
+ch310036;1766073404;Benjamin;Bakbattahl;Group013
+ch310037;2000968413;Dietrich;Bakbattahl;Group013
+ch310038;43671194;Simon;Vernworth;Group006
+ch310039;419651890;Augustin;Flambearer Palace;Group012
+ch310040;3287815186;Flora;Vernworth;Group006
+ch310041;3059207198;Ernesto;Bakbattahl;Group013
+ch310042;1071544705;Margit;Vernworth;Group006
+ch310043;1770383584;Fyoran;Harve;Group007
+ch310044;3675926147;Jonas;Harve;Group007
+ch310045;2696546033;Albert;Vernworth;Group006
+ch310046;2408633150;Hilda;Vernworth;Group006
+ch310047;4031770774;Benton;Vernworth;Group006
+ch310048;3282344307;Celina;Vernworth;Group006
+ch310049;920227254;Kendrick;Vernworth;Group006
+ch310050;1310870807;Malcolm;Vernworth;Group006
+ch310051;2737641289;Lubomir;Vernworth;Group006
+ch310052;4028809669;Radcliff;Checkpoint Rest Town;Group011
+ch310053;1297612550;Jehan;Checkpoint Rest Town;Group011
+ch310054;220028531;Bruno;Checkpoint Rest Town;Group011
+ch310055;1488552131;Daphne;Vernworth;Group006
+ch310056;4124055264;Sebastian;Vernworth;Group006
+ch310057;2187954548;Vidal;Vernworth;Group006
+ch310058;1676923158;Cyrus;Vernworth;Group006
+ch310059;815535650;Adelina;Vernworth;Group006
+ch310060;1008455080;Godric;Vernworth;Group006
+ch310061;3202987914;Mildred;Vernworth;Group006
+ch310062;3335726897;Klaus;Vernworth;Group006
+ch310063;1191862039;Morris;Checkpoint Rest Town;Group011
+ch310064;3252066890;Lamond;Geyser Hamlet;Group016
+ch310065;2151757684;Jarle;Bakbattahl;Group013
+ch310066;1545619405;Isaac;Bakbattahl;Group013
+ch310067;3472286413;Ibrahim;Checkpoint Rest Town;Group011
+ch310068;1562187612;Fulvio;Bakbattahl;Group013
+ch310069;2088314313;Herman;Always on the move;None
+ch310070;3680129867;Offulve;Checkpoint Rest Town;Group011
+ch310071;3027823138;Everard;Checkpoint Rest Town;Group011
+ch310072;1584718463;Gregor;Borderwatch Outpost;Group001
+ch310073;1261971841;Ulrika;Melve;Group002
+ch310074;504636546;Pathfinder;Always on the move;None
+ch310075;665009116;Hugo;Always on the move;None
+ch310076;1282542142;Lanzo;Always on the move;None
+ch310077;3463222861;Ambrosius;Flambearer Palace;Group012
+ch310078;1874680072;Raghnall;Flambearer Palace;Group012
+ch310079;2017223576;Rook;Always on the move;None
+ch310080;3087152512;Fiska;Excavation Site;Group018
+ch310081;240278635;Lennart;Melve;Group002
+ch310082;407577432;Vera;Flambearer Palace;Group012
+ch310086;1020361921;Srail;Nameless Village;Group008
+ch310087;424542582;?;Always on the move;None
+ch300000;260732951;Silas;Vernworth;Group006
+ch300001;602560855;Jacint;Checkpoint Rest Town;Group011
+ch300002;3893680371;Alsa;Checkpoint Rest Town;Group011
+ch300004;1365116448;Timothy;Checkpoint Rest Town;Group011
+ch300005;3713252879;Xavier;Checkpoint Rest Town;Group011
+ch300007;4099837137;Rikhard;Checkpoint Rest Town;Group011
+ch300008;184604006;Lutz;Checkpoint Rest Town;Group011
+ch300009;1460554004;Roderick;Vernworth;Group006
+ch300010;492391322;Roland;Vernworth;Group006
+ch300011;4091448110;Ronald;Vernworth;Group006
+ch300012;744954925;Giovanni;Vernworth;Group006
+ch300013;3941173386;Edwarr;Vernworth;Group006
+ch300014;1478811284;Konstantin;Vernworth;Group006
+ch300015;479844820;Nikolas;Vernworth;Group006
+ch300016;91423506;Teodor;Vernworth;Group006
+ch300017;378286785;Henrietta;Vernworth;Group006
+ch300018;362659020;Scarlett;Vernworth;Group006
+ch300019;3573393756;Samantha;Vernworth;Group006
+ch300020;2953915779;Heinz;Vernworth;Group006
+ch300021;1452901959;William;Vernworth;Group006
+ch300022;2874491352;Shaun;Vernworth;Group006
+ch300023;1487864388;Stitalv;Vernworth;Group006
+ch300024;3580316444;Gwen;Vernworth;Group006
+ch300025;4272790326;Jessika;Vernworth;Group006
+ch300026;916963396;Bernall;Vernworth;Group006
+ch300027;2237419475;Arnold;Vernworth;Group006
+ch300028;4154161421;Billam;Vernworth;Group006
+ch300029;3196466085;Cragg;Vernworth;Group006
+ch300030;1745512190;Thurstan;Vernworth;Group006
+ch300031;3113368597;Etzo;Vernworth;Group006
+ch300032;1963952716;Franc;Vernworth;Group006
+ch300033;1249347714;Sonia;Vernworth;Group006
+ch300034;1685603851;Jak;Vernworth;Group006
+ch300035;3959927929;Ritton;Vernworth;Group006
+ch300036;1197604036;Akheem;Vernworth;Group006
+ch300037;2263240892;Benedict;Vernworth;Group006
+ch300038;1357683849;Phillippe;Vernworth;Group006
+ch300039;3033566831;George;Vernworth;Group006
+ch300040;2490934314;Talib;Vernworth;Group006
+ch300041;3941483108;Andre;Excavation Site;Group018
+ch300042;4069011432;Ahdnel;Excavation Site;Group018
+ch300043;1362874362;Lynn;Excavation Site;Group018
+ch300044;2328912829;Gilliam;Excavation Site;Group018
+ch300045;1783016000;Kahluya;Excavation Site;Group018
+ch300046;1653927012;Barnham;Excavation Site;Group018
+ch300047;1368937622;Esse;Excavation Site;Group018
+ch300048;2092050643;Croft;Excavation Site;Group018
+ch300049;1898473198;Jeunesse;Excavation Site;Group018
+ch300050;4271160779;Lax;Excavation Site;Group018
+ch300051;1996860211;Edie;Borderwatch Outpost;Group001
+ch300052;41790483;Phill;Borderwatch Outpost;Group001
+ch300053;2386910030;Enrique;Borderwatch Outpost;Group001
+ch300054;2775162458;Brandon;Borderwatch Outpost;Group001
+ch300055;457109765;Bradley;Borderwatch Outpost;Group001
+ch300056;4114667104;Margot;Borderwatch Outpost;Group001
+ch300057;1309161284;Jose;Borderwatch Outpost;Group001
+ch300058;670900004;Joshua;Borderwatch Outpost;Group001
+ch300059;4052630797;Warrick;Borderwatch Outpost;Group001
+ch300060;2928473830;Tristan;Melve;Group002
+ch300061;2715701266;Stanley;Melve;Group002
+ch300062;195891058;Norman;Vernworth;Group006
+ch300063;2005149068;Dann;Vernworth;Group006
+ch300064;4267731056;Joel;Vernworth;Group006
+ch300065;94467753;Stephen;Vernworth;Group006
+ch300066;1008080936;Otto;Vernworth;Group006
+ch300067;952698873;Achille;Vernworth;Group006
+ch300068;2847869141;Walt;Vernworth;Group006
+ch300069;4230930303;Roddie;Vernworth;Group006
+ch300070;2243755402;Lindsay;Vernworth;Group006
+ch300071;1160817127;Tarmo;Castle;Group005
+ch300072;178070616;Nem;Castle;Group005
+ch300073;1557629232;Rex;Castle;Group005
+ch300074;2953883437;Nox;Castle;Group005
+ch300075;863866576;Gordon;Checkpoint Rest Town;Group011
+ch300076;730376142;Guillaume ;Bakbattahl;Group013
+ch300077;2178791607;Jerome;Flambearer Palace;Group012
+ch300078;1972840988;Yglie;Flambearer Palace;Group012
+ch300079;3844540263;Hubert;Flambearer Palace;Group012
+ch300080;3342177111;Emerich;Flambearer Palace;Group012
+ch300081;1207491184;Kimball;Volcanic Island Camp;Group017
+ch300082;4177381045;Daison;Volcanic Island Camp;Group017
+ch300083;3333221499;Peter;Volcanic Island Camp;Group017
+ch300084;733144532;Garland;Volcanic Island Camp;Group017
+ch300085;4173042146;Neveah;Volcanic Island Camp;Group017
+ch300086;3295696522;Ladnian;Volcanic Island Camp;Group017
+ch300087;2439044175;Blonco;Volcanic Island Camp;Group017
+ch300088;3363595156;Bertha;Volcanic Island Camp;Group017
+ch300089;1517696665;Cesar;Volcanic Island Camp;Group017
+ch300090;4207487022;Auriol;Vernworth;Group006
+ch300091;2008577628;Eli;Borderwatch Outpost;Group001
+ch300092;2325054344;Holgar;Borderwatch Outpost;Group001
+ch300093;1967729994;Randall;Borderwatch Outpost;Group001
+ch300094;673679638;Humphrey;Castle;Group005
+ch300095;1887094116;Liotte;Borderwatch Outpost;Group001
+ch300096;2922846711;Gilbert;Borderwatch Outpost;Group001
+ch300097;1220571437;Rolf;Vernworth;Group006
+ch300098;3059499762;Pate;Vernworth;Group006
+ch300099;2262406465;Riddick;Vernworth;Group006
+ch300100;4201527906;Veronika;Vernworth;Group006
+ch300101;2407534764;Marissa;Vernworth;Group006
+ch300102;1927848229;Jenniferr;Vernworth;Group006
+ch300103;3056366253;Rionne;Vernworth;Group006
+ch300104;1869667592;Gibran;Vernworth;Group006
+ch300105;2652192620;Marie;Vernworth;Group006
+ch300106;3469901822;Raymond;Vernworth;Group006
+ch300107;3612120636;Liam;Vernworth;Group006
+ch300108;221865799;Miles;Vernworth;Group006
+ch300109;3979723974;Robert;Vernworth;Group006
+ch300110;3478964779;Aisha;Vernworth;Group006
+ch300111;2105581016;Luomir;Sacred Arbor;Group009
+ch300112;4061189805;Lindoll;Sacred Arbor;Group009
+ch300113;4127432047;Fearoth;Sacred Arbor;Group009
+ch300114;36894919;Linneisl;Sacred Arbor;Group009
+ch300115;1190947041;Kalle;Melve;Group002
+ch300116;2610896172;Gantt;Melve;Group002
+ch300117;1212673335;Vinse;Melve;Group002
+ch300118;2148990346;Abigail;Melve;Group002
+ch300119;1849952287;Kamil;Melve;Group002
+ch300120;2670173849;Noah;Melve;Group002
+ch300121;1482978693;Sousanna;Melve;Group002
+ch300122;3553145341;Milton;Melve;Group002
+ch300123;1781728144;Rudolf;Melve;Group002
+ch300124;1018748919;Capella;Melve;Group002
+ch300125;304726309;Hartley;Melve;Group002
+ch300126;3183106937;Heston;Melve;Group002
+ch300127;3975689448;Graham;Melve;Group002
+ch300128;24902487;Paul;Melve;Group002
+ch300129;1596304636;Dalton;Melve;Group002
+ch300130;1327866194;Roger;Bakbattahl;Group013
+ch300131;1110598581;Wendy;Nameless Village;Group008
+ch300132;2350591203;Mosse;Vernworth;Group006
+ch300133;1739332021;Ashe;Always on the move;None
+ch300134;4183974637;Brefft;Always on the move;None
+ch300135;2734356024;Leander;Vernworth;Group006
+ch300136;1137422990;Rochus;Vernworth;Group006
+ch300137;2464077077;Accardo;Borderwatch Outpost;Group001
+ch300138;527644994;Geoffrey;Borderwatch Outpost;Group001
+ch300139;573175824;Markus;Borderwatch Outpost;Group001
+ch300140;4097835434;Akakios;Bakbattahl;Group013
+ch300141;3756687913;Barbas;Volcanic Island Camp;Group017
+ch300142;1188538230;Hillaire;Bakbattahl;Group013
+ch300143;2696396312;Oswald;Vernworth;Group006
+ch300144;826381136;Brenda;Vernworth;Group006
+ch300145;1392118998;Richard;Harve;Group007
+ch300146;2787561375;Aizam;Harve;Group007
+ch300147;3066725970;Zoran;Harve;Group007
+ch300148;1637975128;Harvey;Vernworth;Group006
+ch300149;3385393972;Rick;Vernworth;Group006
+ch300150;2889201289;Aimee;Vernworth;Group006
+ch300151;190095189;Vlasiy;Vernworth;Group006
+ch300152;3946952391;Edda;Vernworth;Group006
+ch300153;2712112267;Lottie;Vernworth;Group006
+ch300154;2882142903;Lawrence;Vernworth;Group006
+ch300155;4105858003;Monika;Vernworth;Group006
+ch300156;3719288234;Alois;Vernworth;Group006
+ch300157;4111806649;Glenna;Vernworth;Group006
+ch300158;3156592466;Ewan;Vernworth;Group006
+ch300159;739685463;Johannes;Vernworth;Group006
+ch300160;3689427708;Gunther;Vernworth;Group006
+ch300161;306105337;Earland;Bakbattahl;Group013
+ch300162;2976408800;Vachss;Bakbattahl;Group013
+ch300163;2075959192;Keith;Bakbattahl;Group013
+ch300164;3693696745;Ezekiel;Bakbattahl;Group013
+ch300165;3175663102;Matthieu;Bakbattahl;Group013
+ch300166;2577934254;Rod;Bakbattahl;Group013
+ch300167;3069000800;Pearl;Bakbattahl;Group013
+ch300168;3261068208;Orley;Bakbattahl;Group013
+ch300169;540239875;Esmerelda;Bakbattahl;Group013
+ch300170;1088771312;Raelia;Bakbattahl;Group013
+ch300171;2884679268;Klark;Vernworth;Group006
+ch300172;2028597872;Deborah;Flambearer Palace;Group012
+ch300173;3013184643;Philbert;Vernworth;Group006
+ch300174;97841474;Rance;Vernworth;Group006
+ch300175;3323743501;Fiachra;Vernworth;Group006
+ch300176;2950601180;Gallad;Always on the move;None
+ch300177;2362554677;Robbe;Checkpoint Rest Town;Group011
+ch300178;4016193561;Moses;Checkpoint Rest Town;Group011
+ch300179;2230727513;Ehtgren;Vernworth;Group006
+ch300180;2016204777;Dimitri;Vernworth;Group006
+ch300181;442924736;Kyrk;Borderwatch Outpost;Group001
+ch300182;1375808479;Anthony;Borderwatch Outpost;Group001
+ch300183;1107248171;Heath;Borderwatch Outpost;Group001
+ch300184;1331603540;Dahlia;Borderwatch Outpost;Group001
+ch300185;2844375342;Severino;Vernworth;Group006
+ch300186;1008946947;Katerina;Vernworth;Group006
+ch300187;1364231180;Viktor;Vernworth;Group006
+ch300188;191162522;Irena;Vernworth;Group006
+ch300189;3230931805;Emile;Vernworth;Group006
+ch300190;3118290474;Charlotte;Vernworth;Group006
+ch300191;1413857097;Landar;Vernworth;Group006
+ch300192;1130569995;Tania;Vernworth;Group006
+ch300193;3670196092;Peyton;Vernworth;Group006
+ch300194;975781026;Nannsi;Vernworth;Group006
+ch300195;1041507632;Todd;Vernworth;Group006
+ch300196;433403061;Jimmi;Vernworth;Group006
+ch300197;3676536995;Lorraine;Vernworth;Group006
+ch300198;1480859836;Karl;Vernworth;Group006
+ch300199;546316533;Abraham;Vernworth;Group006
+ch300200;657891082;Friedrich;Vernworth;Group006
+ch300201;4054130031;Alexander;Vernworth;Group006
+ch300202;429645780;Eugene;Vernworth;Group006
+ch300203;3450192742;Damien;Borderwatch Outpost;Group001
+ch300204;221897851;Josef;Borderwatch Outpost;Group001
+ch300205;386706998;Finn;Borderwatch Outpost;Group001
+ch300206;3990059766;Eliza;Vernworth;Group006
+ch300207;3373855585;Karoline;Vernworth;Group006
+ch300208;615026124;Lucia;Vernworth;Group006
+ch300209;1194091672;Klein;Vernworth;Group006
+ch300210;3730022162;Holand;Vernworth;Group006
+ch300211;549477508;Dorothy;Vernworth;Group006
+ch300212;1410889957;Jarvis;Vernworth;Group006
+ch300213;1058319285;Brian;Vernworth;Group006
+ch300214;1577276021;Birgit;Vernworth;Group006
+ch300215;227593115;Mirabeau;Vernworth;Group006
+ch300216;2314842441;Preston;Vernworth;Group006
+ch300217;1370657521;Gisela;Vernworth;Group006
+ch300218;92240296;Franklin;Vernworth;Group006
+ch300219;1882746207;Hjalmar;Vernworth;Group006
+ch300220;1463154897;Battrey;Flambearer Palace;Group012
+ch300221;3935828734;Eggim;Flambearer Palace;Group012
+ch300222;1375500943;Sekkah;Flambearer Palace;Group012
+ch300223;482973189;Rufus;Flambearer Palace;Group012
+ch300224;4112853421;Jackson;Flambearer Palace;Group012
+ch300225;4153699967;Justinn;Borderwatch Outpost;Group001
+ch300226;1801129436;Alcott;Borderwatch Outpost;Group001
+ch300227;2355507112;Kris;Borderwatch Outpost;Group001
+ch300228;2573571565;Luksa;Borderwatch Outpost;Group001
+ch300229;3301614471;Hazell;Always on the move;None
+ch300230;2142700884;Kishore;Always on the move;None
+ch300231;1565309162;Daniella;Always on the move;None
+ch300232;2280165527;Borden;Always on the move;None
+ch300233;2938433269;Korban;Always on the move;None
+ch300234;2338130315;Kassandra;Borderwatch Outpost;Group001
+ch300235;2946092228;Tarkoff;Borderwatch Outpost;Group001
+ch300236;1693480023;Shellie;Borderwatch Outpost;Group001
+ch300237;4189298102;Edmund;Excavation Site;Group018
+ch300238;2151584439;Boris;Excavation Site;Group018
+ch300239;72686948;Willem;Excavation Site;Group018
+ch300240;3889228012;Reuben;Excavation Site;Group018
+ch300241;1134563594;Mellanya;Excavation Site;Group018
+ch300242;631430055;Floris;Excavation Site;Group018
+ch300243;2246375649;Santiago;Excavation Site;Group018
+ch300244;2888299269;Jamilla;Excavation Site;Group018
+ch300245;3609031674;Alfred;Excavation Site;Group018
+ch300246;3921662580;Lyla;Excavation Site;Group018
+ch300247;1488514733;Blade;Excavation Site;Group018
+ch300248;1036748561;Rahnks;Excavation Site;Group018
+ch300249;1592523092;Fredey;Excavation Site;Group018
+ch300250;2853399953;Norris;Excavation Site;Group018
+ch300251;104561237;Tennyson;Excavation Site;Group018
+ch300252;3278738275;Melvin;Excavation Site;Group018
+ch300253;1847417173;Bouma;Excavation Site;Group018
+ch300254;391828353;Pauline;Excavation Site;Group018
+ch300255;3925092503;Henderson;Excavation Site;Group018
+ch300256;3796555590;Battla;Excavation Site;Group018
+ch300257;1980700026;Inga;Excavation Site;Group018
+ch300258;2706237301;Behn;Vernworth;Group006
+ch300259;3405953120;Marshall;Vernworth;Group006
+ch300260;142723282;Agathe;Vernworth;Group006
+ch300261;296734378;Runne;Melve;Group002
+ch300262;645936823;Amr;Melve;Group002
+ch300263;4055520999;Marett;Melve;Group002
+ch300264;3457646091;Nina;Melve;Group002
+ch300265;211750272;Jonathan;Melve;Group002
+ch300266;848265673;Konan;Melve;Group002
+ch300267;928231968;Vanessa;Melve;Group002
+ch300268;460763428;Suri;Melve;Group002
+ch300269;1847077563;Pamella;Flambearer Palace;Group012
+ch300270;2692748767;Giselbert;Flambearer Palace;Group012
+ch300271;2344598557;Jahd;Flambearer Palace;Group012
+ch300272;1913244086;Makenzie;Vernworth;Group006
+ch300273;1812165814;Richmond;Vernworth;Group006
+ch300274;2092139650;Montague;Vernworth;Group006
+ch300275;497054276;Tiffanie;Vernworth;Group006
+ch300276;2801834903;Keila;Vernworth;Group006
+ch300277;584455432;Russell;Vernworth;Group006
+ch300278;3344050726;Lazare;Flambearer Palace;Group012
+ch300279;248598156;Grantt;Flambearer Palace;Group012
+ch300280;1652338685;Abba;Flambearer Palace;Group012
+ch300281;4054049362;Scario;Bakbattahl;Group013
+ch300282;1111375959;Nabrah;Bakbattahl;Group013
+ch300283;466570005;Glintt;Bakbattahl;Group013
+ch300284;3628922176;Nomos;Bakbattahl;Group013
+ch300285;3530434734;Henrique;Excavation Site;Group018
+ch300286;876292505;Diego;Excavation Site;Group018
+ch300287;2175975067;Moftahr;Excavation Site;Group018
+ch300288;677468035;Hildegard;Excavation Site;Group018
+ch300289;3636495280;Edmilson;Excavation Site;Group018
+ch300290;1431504452;Gretta;Melve;Group002
+ch300291;4260842572;Niann;Vernworth;Group006
+ch300292;879149171;Montgomery;Checkpoint Rest Town;Group011
+ch300293;703323879;Dagras;Vernworth;Group006
+ch300294;2778856194;Navil;Vernworth;Group006
+ch300295;3082351283;Mansenn;Vernworth;Group006
+ch300296;1249970411;Kenneth;Vernworth;Group006
+ch300297;3843282439;Berkut;Vernworth;Group006
+ch300298;963132753;Nikk;Vernworth;Group006
+ch300299;1758958104;Ortega;Checkpoint Rest Town;Group011
+ch300300;3181258355;Floyd;Checkpoint Rest Town;Group011
+ch300301;1812271771;Gassh;Checkpoint Rest Town;Group011
+ch300302;3327340334;Robellt;Flambearer Palace;Group012
+ch300303;1954090909;Thiem;Flambearer Palace;Group012
+ch300304;573961596;Maxima;Flambearer Palace;Group012
+ch300305;603410556;Ekkihm;Flambearer Palace;Group012
+ch300306;59355431;Legga;Flambearer Palace;Group012
+ch300307;2310282013;Elizabeth;Flambearer Palace;Group012
+ch300308;1760983056;Alex;Vernworth;Group006
+ch300309;1166703429;Barton;Vernworth;Group006
+ch300310;2509455584;Charley;Vernworth;Group006
+ch300311;2579823315;Dylan;Vernworth;Group006
+ch300312;914477592;Frantz;Vernworth;Group006
+ch300313;1949013051;Thurston;Vernworth;Group006
+ch300314;2692845113;Hollis;Vernworth;Group006
+ch300315;319580651;Haymish;Vernworth;Group006
+ch300316;3509439612;James;Vernworth;Group006
+ch300317;1522827202;Toumi;Checkpoint Rest Town;Group011
+ch300318;507217651;Saverio;Checkpoint Rest Town;Group011
+ch300319;3841890128;Tobias;Checkpoint Rest Town;Group011
+ch300320;2097686220;Lyssandro;Checkpoint Rest Town;Group011
+ch300321;2640781732;Seferinno;Checkpoint Rest Town;Group011
+ch300322;1228964420;Hayne;Checkpoint Rest Town;Group011
+ch300323;3389685362;Thor;Checkpoint Rest Town;Group011
+ch300324;1630446024;Quentin;Always on the move;None
+ch300325;4071170573;Sasha;Always on the move;None
+ch300326;3235709456;Niles;Bakbattahl;Group013
+ch300327;4184260780;Lillian;Bakbattahl;Group013
+ch300328;1650521133;Abel;Harve;Group007
+ch300329;1219490769;Troia;Harve;Group007
+ch300330;1147709375;Whatt;Harve;Group007
+ch300331;2473072049;Megan;Harve;Group007
+ch300332;4125526546;Lenna;Harve;Group007
+ch300333;2436771762;Tremaine;Borderwatch Outpost;Group001
+ch300334;3444989115;Rolph;Always on the move;None
+ch300335;2954976292;Oskar;Checkpoint Rest Town;Group011
+ch300336;2326997604;Regina;Always on the move;None
+ch300337;3142523802;Luz;Always on the move;None
+ch300338;3743885470;Diana;Vernworth;Group006
+ch300339;4032702110;Natasha;Vernworth;Group006
+ch300340;1661831556;Mirthe;Vernworth;Group006
+ch300341;681157119;Tyrell;Volcanic Island Camp;Group017
+ch300342;2688348239;Percival;Volcanic Island Camp;Group017
+ch300343;3171867014;Marthe;Volcanic Island Camp;Group017
+ch300344;1691150499;Torrence;Volcanic Island Camp;Group017
+ch300345;3746981592;Karnel;Bakbattahl;Group013
+ch300346;2024333060;Ekratt;Bakbattahl;Group013
+ch300347;1424070675;Roman;Vernworth;Group006
+ch300348;1333279266;Abdul;Always on the move;None
+ch300349;985501123;Folka;Always on the move;None
+ch300350;3644252352;Johan;Always on the move;None
+ch300351;1492684247;Oliver;Always on the move;None
+ch300352;2370715819;Bahram;Always on the move;None
+ch300353;303697017;Emerson;Always on the move;None
+ch300354;161957997;Sidney;Always on the move;None
+ch300355;2310143765;Harland;Always on the move;None
+ch300356;2872864050;Ariadne;Vernworth;Group006
+ch300357;3066760969;Nirvane;Vernworth;Group006
+ch300358;2269824472;Linda;Vernworth;Group006
+ch300359;973476632;Kellen;Vernworth;Group006
+ch300360;3968554041;Thiemothee;Vernworth;Group006
+ch300361;2058559252;Dudley;Vernworth;Group006
+ch300362;1578496137;Mia;Melve;Group002
+ch300363;371494753;Zachary;Excavation Site;Group018
+ch300364;2099520328;Georg;Bakbattahl;Group013
+ch300365;3644115485;Gabriel;Excavation Site;Group018
+ch300366;4092990758;Ines;Checkpoint Rest Town;Group011
+ch300367;1966695602;Antonio;Bakbattahl;Group013
+ch300368;4164035122;Willard;Vernworth;Group006
+ch300369;1912181947;Jaqueline;Bakbattahl;Group013
+ch300370;59122127;Cortago;Geyser Hamlet;Group016
+ch300371;590080768;Ursula;Vernworth;Group006
+ch300372;3516464060;Zennan;Vernworth;Group006
+ch300373;4043594571;Corette;Bakbattahl;Group013
+ch300374;76530895;Edgar;Checkpoint Rest Town;Group011
+ch300375;507070971;Rozze;Volcanic Island Camp;Group017
+ch300376;277884805;Galian;Bakbattahl;Group013
+ch300377;819194497;Clovis;Vernworth;Group006
+ch300378;1926782680;Mettefere;Bakbattahl;Group013
+ch300379;3210490735;Amritta;Melve;Group002
+ch300380;1596148651;Henricks;Checkpoint Rest Town;Group011
+ch300381;2826864117;Keaton;Bakbattahl;Group013
+ch300382;1749655689;Marilyn;Melve;Group002
+ch300383;1149238594;Chaque;Vernworth;Group006
+ch300384;3916691380;Alque;Bakbattahl;Group013
+ch300385;2074013987;Neomith;Vernworth;Group006
+ch300386;2497895708;Alexia;Bakbattahl;Group013
+ch300387;36454432;Chandler;Harve;Group007
+ch300388;1099077099;Eldart;Sacred Arbor;Group009
+ch300389;3992584122;Mondaine;Nameless Village;Group008
+ch300390;83780915;Tabitha;Excavation Site;Group018
+ch300391;153325727;Higgs;Vernworth;Group006
+ch300392;3905576685;Grisha;Sacred Arbor;Group009
+ch300393;1130117035;Bjorn;Vernworth;Group006
+ch300394;2763075421;Bodas;Bakbattahl;Group013
+ch300395;846497722;Awaran;Bakbattahl;Group013
+ch300396;1024289258;Imelda;Melve;Group002
+ch300397;922248223;Clarith;Melve;Group002
+ch300398;3344684746;Celeste;Checkpoint Rest Town;Group011
+ch300399;2874710935;Beatrice;Volcanic Island Camp;Group017
+ch300400;3192336148;Shakir;Vernworth;Group006
+ch300401;2413314947;Kough;Sacred Arbor;Group009
+ch300402;1924380137;Feith;Nameless Village;Group008
+ch300403;1403427208;Lionel;Checkpoint Rest Town;Group011
+ch300404;2555329880;Denny;Bakbattahl;Group013
+ch300405;3981451397;Melissa;Volcanic Island Camp;Group017
+ch300406;2048483027;Danton;Excavation Site;Group018
+ch300407;2821779832;Walter;Vernworth;Group006
+ch300408;1053098183;Pein;Vernworth;Group006
+ch300409;3261381809;Howard;Vernworth;Group006
+ch300410;1878107999;Edwin;Vernworth;Group006
+ch300411;930935041;Frio;Vernworth;Group006
+ch300412;805932857;Derek;Vernworth;Group006
+ch300413;534315458;Donne;Vernworth;Group006
+ch300414;90316817;Orellian;Vernworth;Group006
+ch300415;4118484849;Raul;Vernworth;Group006
+ch300416;3170083733;Ryuka;Vernworth;Group006
+ch300417;11232101;Bastian;Vernworth;Group006
+ch300418;832925818;Thed;Vernworth;Group006
+ch300419;1784085200;Jeremy;Vernworth;Group006
+ch300420;1160559588;Arno;Vernworth;Group006
+ch300421;406827180;Richare;Vernworth;Group006
+ch300422;1606242782;Leslie;Vernworth;Group006
+ch300423;3208322964;Annette;Vernworth;Group006
+ch300424;3219121552;Fabia;Vernworth;Group006
+ch300425;2074102591;Chantie;Vernworth;Group006
+ch300426;2352885357;Emoa;Vernworth;Group006
+ch300427;2062789287;Roxanne;Vernworth;Group006
+ch300428;2591136162;Midna;Vernworth;Group006
+ch300429;1041580560;Rebekka;Vernworth;Group006
+ch300430;2709704828;Sella;Vernworth;Group006
+ch300431;2141284712;Marielle;Vernworth;Group006
+ch300432;3690756251;Margaret;Vernworth;Group006
+ch300433;3216009952;Francisca;Vernworth;Group006
+ch300434;538204273;Serra;Vernworth;Group006
+ch300435;598818412;Evelyn;Vernworth;Group006
+ch300436;1207186756;Straffe;Vernworth;Group006
+ch300437;1163962220;Irving;Vernworth;Group006
+ch300438;1587253032;Wade;Vernworth;Group006
+ch300439;783156902;Austin;Vernworth;Group006
+ch300440;1924706487;Garrett;Vernworth;Group006
+ch300441;2094362024;Clyde;Vernworth;Group006
+ch300442;2088789384;Kevine;Vernworth;Group006
+ch300443;1607848835;Amanda;Vernworth;Group006
+ch300444;1195182585;Ivanna;Vernworth;Group006
+ch300445;2943961748;Wanda;Vernworth;Group006
+ch300446;2853750379;Olivia;Vernworth;Group006
+ch300447;999765101;Katrina;Vernworth;Group006
+ch300448;18211652;Thom;Vernworth;Group006
+ch300449;809800245;Ranvelt;Vernworth;Group006
+ch300450;1815590621;Pietro;Vernworth;Group006
+ch300451;161676283;Joachim;Vernworth;Group006
+ch300452;2632727050;Ashleigh;Vernworth;Group006
+ch300453;3619583885;Mona;Vernworth;Group006
+ch300454;3740052207;Kittey;Vernworth;Group006
+ch300455;957146656;Ingrid;Vernworth;Group006
+ch300456;1264673426;Roy;Vernworth;Group006
+ch300457;3158866038;Kurtis;Vernworth;Group006
+ch300458;391373449;Jho;Vernworth;Group006
+ch300459;20724144;Delphin;Vernworth;Group006
+ch300460;3939355222;Garrack;Vernworth;Group006
+ch300461;1076807512;Burnns;Vernworth;Group006
+ch300462;774060297;Dommel;Vernworth;Group006
+ch300463;469516371;Aurgie;Vernworth;Group006
+ch300464;2731319276;Eternna;Vernworth;Group006
+ch300465;83378795;Amie;Vernworth;Group006
+ch300466;2827069018;Sandra;Vernworth;Group006
+ch300467;1121792498;Juliana;Vernworth;Group006
+ch300468;115056581;Josephine;Vernworth;Group006
+ch300469;4078070387;Marjory;Vernworth;Group006
+ch300470;3283735451;Rachel;Vernworth;Group006
+ch300471;2603664346;Adorr;Bakbattahl;Group013
+ch300472;2393810203;Luis;Bakbattahl;Group013
+ch300473;843585727;Lingen;Bakbattahl;Group013
+ch300474;1581029105;Falgo;Bakbattahl;Group013
+ch300475;4033603197;Bordeau;Bakbattahl;Group013
+ch300476;1097309561;Navvan;Bakbattahl;Group013
+ch300477;1961301161;Azell;Bakbattahl;Group013
+ch300478;3556027155;Frey;Bakbattahl;Group013
+ch300479;3253440311;Asam;Bakbattahl;Group013
+ch300480;1133959884;Gomez;Bakbattahl;Group013
+ch300481;1554726139;Majaff;Bakbattahl;Group013
+ch300482;3899008821;Leigh;Bakbattahl;Group013
+ch300483;4234172345;Vandann;Bakbattahl;Group013
+ch300484;301358386;Alexei;Bakbattahl;Group013
+ch300485;1300103587;Trekk;Bakbattahl;Group013
+ch300486;180599383;Jinn;Bakbattahl;Group013
+ch300487;1359186762;Magorr;Bakbattahl;Group013
+ch300488;750042086;Rakim;Bakbattahl;Group013
+ch300489;639792906;Bonita;Bakbattahl;Group013
+ch300490;1036325110;Sheela;Bakbattahl;Group013
+ch300491;2846458161;Aveline;Bakbattahl;Group013
+ch300492;3110811544;Amelia;Bakbattahl;Group013
+ch300493;2933071528;Bianka;Bakbattahl;Group013
+ch300494;3054526639;Kaeyla;Bakbattahl;Group013
+ch300495;3119605818;Sibyl;Bakbattahl;Group013
+ch300496;3924896872;Kitry;Bakbattahl;Group013
+ch300497;1722151350;Cynthia;Bakbattahl;Group013
+ch300498;1379409914;Merrida;Bakbattahl;Group013
+ch300499;3778438241;Raja;Bakbattahl;Group013
+ch300500;209217475;Beralta;Bakbattahl;Group013
+ch300501;385319721;Gaiana;Bakbattahl;Group013
+ch300502;2113474887;Marina;Bakbattahl;Group013
+ch300503;1444172597;Dorica;Bakbattahl;Group013
+ch300504;2421704055;Felicia;Bakbattahl;Group013
+ch300505;2236224257;Eva;Bakbattahl;Group013
+ch300506;1169428072;Madeline;Bakbattahl;Group013
+ch300507;1442373486;Amir;Bakbattahl;Group013
+ch300508;3359969029;Bertran;Bakbattahl;Group013
+ch300509;2616949644;Keane;Bakbattahl;Group013
+ch300510;986949927;Hughie;Bakbattahl;Group013
+ch300511;3770449310;Alezio;Bakbattahl;Group013
+ch300512;1647984626;Dixon;Bakbattahl;Group013
+ch300513;3599324782;Cy;Bakbattahl;Group013
+ch300514;4195196481;Hans;Bakbattahl;Group013
+ch300515;1070134065;Akram;Bakbattahl;Group013
+ch300516;1789005030;Levohk;Bakbattahl;Group013
+ch300517;317705234;Johanna;Bakbattahl;Group013
+ch300518;278470423;Elcela;Bakbattahl;Group013
+ch300519;3614386307;Logge;Bakbattahl;Group013
+ch300520;1227339656;Millei;Bakbattahl;Group013
+ch300521;2147119563;Fern;Bakbattahl;Group013
+ch300522;88480398;Klaudia;Bakbattahl;Group013
+ch300523;1539602478;Korinna;Bakbattahl;Group013
+ch300524;143847627;Hera;Bakbattahl;Group013
+ch300525;445251741;Gonzalo;Bakbattahl;Group013
+ch300526;239498654;Madhif;Bakbattahl;Group013
+ch300527;1745683823;Adib;Bakbattahl;Group013
+ch300528;3582298943;Nonna;Bakbattahl;Group013
+ch300529;2663925072;Nicolette;Bakbattahl;Group013
+ch300530;578256518;Lisette;Bakbattahl;Group013
+ch300531;313364902;Sahl;Bakbattahl;Group013
+ch300532;4225480966;Rommes;Bakbattahl;Group013
+ch300533;3463662345;Hassel;Bakbattahl;Group013
+ch300534;1082499321;Jansen;Bakbattahl;Group013
+ch300535;3658376198;Tatiana;Bakbattahl;Group013
+ch300536;1443838264;Lisse;Bakbattahl;Group013
+ch300537;2891172534;Taleef;Bakbattahl;Group013
+ch300538;433710288;Theo;Bakbattahl;Group013
+ch300539;2145444378;Farrell;Bakbattahl;Group013
+ch300540;659051716;Enoch;Bakbattahl;Group013
+ch300541;439012541;Travvers;Bakbattahl;Group013
+ch300542;110661154;Orlando;Bakbattahl;Group013
+ch300543;1030769204;Clarence;Bakbattahl;Group013
+ch300544;4100555523;Deegan;Bakbattahl;Group013
+ch300545;2617093903;Kodey;Bakbattahl;Group013
+ch300546;574507009;Bakr;Bakbattahl;Group013
+ch300547;414691492;Minerva;Bakbattahl;Group013
+ch300548;2277574939;Lynne;Bakbattahl;Group013
+ch300549;626821440;Kasey;Bakbattahl;Group013
+ch300550;2835474068;Glennda;Bakbattahl;Group013
+ch300551;3542581309;Zoie;Bakbattahl;Group013
+ch300552;2617815836;Irma;Bakbattahl;Group013
+ch300553;494115917;Annabel;Bakbattahl;Group013
+ch300554;864065591;Karrin;Bakbattahl;Group013
+ch300555;2953481569;Chelsea;Bakbattahl;Group013
+ch300556;4194048654;Fredrika;Bakbattahl;Group013
+ch300557;3881568021;Alexandra;Bakbattahl;Group013
+ch300558;3088422882;Clara;Bakbattahl;Group013
+ch300559;3537581578;Lisha;Bakbattahl;Group013
+ch300560;1558004193;Chloe;Bakbattahl;Group013
+ch300561;1533843887;Deo;Bakbattahl;Group013
+ch300562;2736265676;Nothrais;Castle;Group005
+ch300563;2261442576;Farooq;Bakbattahl;Group013
+ch300564;451121259;Raggos;Flambearer Palace;Group012
+ch300565;1694369965;Archibald;Flambearer Palace;Group012
+ch300566;1046020136;Atharv;Flambearer Palace;Group012
+ch300567;2281061904;Morganna;Flambearer Palace;Group012
+ch300568;2350376877;Ella;Flambearer Palace;Group012
+ch300569;317909075;Sirius;Flambearer Palace;Group012
+ch300570;1232791354;Jarod;Flambearer Palace;Group012
+ch300571;1546219338;Lion;Flambearer Palace;Group012
+ch300572;528543642;Drothea;Flambearer Palace;Group012
+ch300573;3209340749;Sanni;Flambearer Palace;Group012
+ch300574;1842512356;Benthe;Flambearer Palace;Group012
+ch300575;192779860;Astona;Flambearer Palace;Group012
+ch300576;3749961778;Rivera;Flambearer Palace;Group012
+ch300577;318032752;Throndir;Sacred Arbor;Group009
+ch300578;4211615164;Myglin;Sacred Arbor;Group009
+ch300579;2752857824;Leonel;Sacred Arbor;Group009
+ch300580;1651953765;Exelion;Sacred Arbor;Group009
+ch300581;1274940008;Sivven;Sacred Arbor;Group009
+ch300582;755327640;Tylion;Sacred Arbor;Group009
+ch300583;1775096940;Amras;Sacred Arbor;Group009
+ch300584;1904705332;Magrol;Sacred Arbor;Group009
+ch300585;475055212;Idorial;Sacred Arbor;Group009
+ch300586;2073919699;Nellas;Sacred Arbor;Group009
+ch300587;4243122266;Lenbren;Sacred Arbor;Group009
+ch300588;2630293378;Fiorina;Sacred Arbor;Group009
+ch300589;1011717458;Agrael;Sacred Arbor;Group009
+ch300590;3992292701;Lutia;Sacred Arbor;Group009
+ch300591;1188525595;Caladomia;Sacred Arbor;Group009
+ch300592;2497495173;Zekloa;Sacred Arbor;Group009
+ch300593;2252070698;Lepak;Nameless Village;Group008
+ch300594;8832784;Zeltas;Nameless Village;Group008
+ch300595;3048578804;Romule;Nameless Village;Group008
+ch300596;2083862150;Levram;Nameless Village;Group008
+ch300597;3188386408;Solt;Nameless Village;Group008
+ch300598;1184488156;Torg;Nameless Village;Group008
+ch300599;3323456474;Elkalim;Nameless Village;Group008
+ch300600;3260345782;Verdi;Nameless Village;Group008
+ch300601;2297176417;Litra;Nameless Village;Group008
+ch300602;1780085843;Eyre;Nameless Village;Group008
+ch300603;301335083;Manna;Nameless Village;Group008
+ch300604;256724460;Gyna;Nameless Village;Group008
+ch300605;2844002861;Canabella;Nameless Village;Group008
+ch300606;2921588463;Rosy;Nameless Village;Group008
+ch300607;2537694857;Kleis;Always on the move;None
+ch300608;3237260238;Janne;Always on the move;None
+ch300609;3636195647;Morce;Always on the move;None
+ch300610;940820336;Galahad;Always on the move;None
+ch300611;346641645;Ramsey;Always on the move;None
+ch300612;2409968063;Jenessa;Always on the move;None
+ch300613;405353275;Dinno;Always on the move;None
+ch300614;3162798980;Luida;Always on the move;None
+ch300615;2707117268;Dulles;Always on the move;None
+ch300616;1478127620;Renton;Always on the move;None
+ch300617;1893259801;Kinno;Always on the move;None
+ch300618;1653816350;Siobhan;Always on the move;None
+ch300619;1762737605;Senna;Always on the move;None
+ch300620;3274951265;Hoffman;Always on the move;None
+ch300621;16045885;Blythe;Always on the move;None
+ch300622;1857447451;Felix;Always on the move;None
+ch300623;1272555;Reijo;Always on the move;None
+ch300624;727281606;Sanchen;Always on the move;None
+ch300625;315898506;Ramon;Always on the move;None
+ch300626;820366861;Erik;Always on the move;None
+ch300627;4136217807;Dante;Checkpoint Rest Town;Group011
+ch300628;4134951879;Alphonse;Always on the move;None
+ch300629;1264778416;Johnson;Always on the move;None
+ch300630;2155643323;Ilona;Always on the move;None
+ch300631;1373371020;Zyanya;Always on the move;None
+ch300632;1931483363;Kiera;Always on the move;None
+ch300633;1553953084;Bridget;Always on the move;None
+ch300634;974119366;Matilda;Always on the move;None
+ch300635;2042189998;Catherine;Always on the move;None
+ch300636;3131876831;Suzan;Always on the move;None
+ch300637;3584277742;Jill;Always on the move;None
+ch300638;993893471;Meredia;Always on the move;None
+ch300639;469508691;Alessa;Always on the move;None
+ch300640;1595448723;Gilmir;Always on the move;None
+ch300641;2031070894;Dinniel;Always on the move;None
+ch300642;1625784600;Daury;Always on the move;None
+ch300643;3918258413;Galmul;Always on the move;None
+ch300644;3564698337;Angus;Always on the move;None
+ch300645;3842043712;Donald;Always on the move;None
+ch300646;769686860;Riley;Always on the move;None
+ch300647;3910225705;Marcello;Always on the move;None
+ch300648;1078095367;Centina;Always on the move;None
+ch300649;2182464208;Narrouga;Always on the move;None
+ch300650;638658706;Celica;Always on the move;None
+ch300651;39261861;Vinevia;Always on the move;None
+ch300652;1733740457;Altanna;Always on the move;None
+ch300653;1216835171;Domingo;Always on the move;None
+ch300654;121832149;Geoff;Always on the move;None
+ch300655;1120494611;Aurelio;Always on the move;None
+ch300656;2012444308;Forrest;Always on the move;None
+ch300657;36109926;Gus;Always on the move;None
+ch300658;4112612111;Svereth;Always on the move;None
+ch300659;3735724466;Paelle;Always on the move;None
+ch300660;805986925;Evo;Always on the move;None
+ch300661;2998372194;Miguel;Always on the move;None
+ch300662;2697573403;Paola;Always on the move;None
+ch300663;3080162345;Mell;Always on the move;None
+ch300664;3971424731;Ganora;Always on the move;None
+ch300665;2578103649;Rowan;Always on the move;None
+ch300666;3707189825;Duke;Always on the move;None
+ch300667;3461530750;Arletta;Always on the move;None
+ch300668;3518390619;Viola;Vernworth;Group006
+ch300669;562642393;Cecili;Vernworth;Group006
+ch300670;2634805084;Dean;Vernworth;Group006
+ch300671;757560907;Judas;Vernworth;Group006
+ch300672;2630267718;Norah;Vernworth;Group006
+ch300673;2860156132;Leo;Vernworth;Group006
+ch300674;2496854090;Frosst;Vernworth;Group006
+ch300675;1037712636;Braun;Vernworth;Group006
+ch300676;2406777350;Waz;Vernworth;Group006
+ch300677;4159014467;Anastasia;Vernworth;Group006
+ch300678;3603006932;Ecktarina;Vernworth;Group006
+ch300679;941040579;Hanspeter;Vernworth;Group006
+ch300680;2619751808;Hildebrecht;Vernworth;Group006
+ch300681;1664329392;Capreth;Borderwatch Outpost;Group001
+ch300682;4270274342;Zofie;Borderwatch Outpost;Group001
+ch300683;2565155418;Flaude;Nameless Village;Group008
+ch300684;67574493;Folkes;Checkpoint Rest Town;Group011
+ch300685;3373190265;Arkus;Vernworth;Group006
+ch300686;1284284224;Nebiru;Vernworth;Group006
+ch300687;603926591;Brounen;Vernworth;Group006
+ch300688;1107796521;Herwicke;Vernworth;Group006
+ch300689;3340851303;Margus;Vernworth;Group006
+ch300690;3274698813;Azorka;Vernworth;Group006
+ch300691;4142704495;Kleyna;Vernworth;Group006
+ch300692;4261562349;Zettra;Vernworth;Group006
+ch300693;364190466;Barkin;Vernworth;Group006
+ch300694;3904663374;Mikis;Vernworth;Group006
+ch300695;1840466894;Vergil;Bakbattahl;Group013
+ch300696;549796702;Maurits;Bakbattahl;Group013
+ch300697;3732488045;Bernstein;Harve;Group007
+ch300698;2632984434;Maxell;Melve;Group002
+ch300699;4078097338;Bertil;Melve;Group002
+ch300700;1647908424;Gaute;Melve;Group002
+ch300701;1981445818;Morton;Melve;Group002
+ch300702;3092505029;Gyas;Melve;Group002
+ch300703;3566937321;Josia;Melve;Group002
+ch300704;1952344001;Algard;Melve;Group002
+ch300705;177384299;Mauritius;Melve;Group002
+ch300706;3611528477;Clarion;Melve;Group002
+ch300707;3409041724;Nagil;Melve;Group002
+ch300708;1785130473;Hayworth;Melve;Group002
+ch300709;1783512693;Jazeps;Melve;Group002
+ch300710;2352734042;Dortmund;Melve;Group002
+ch300711;2848696127;Rakeem;Melve;Group002
+ch300712;1722532600;Agricio;Melve;Group002
+ch300713;2352199842;Banford;Melve;Group002
+ch300714;1033221740;Kalyenti;Melve;Group002
+ch300715;1903466929;Magellan;Melve;Group002
+ch300716;3770796264;Mykolail;Melve;Group002
+ch300717;1073102124;Persor;Melve;Group002
+ch300718;542068695;Donovan;Vernworth;Group006
+ch300719;1071628406;Siegvalt;Vernworth;Group006
+ch300720;3035263974;Fedrico;Vernworth;Group006
+ch300721;2758591272;Segnyth;Vernworth;Group006
+ch300722;918543986;Aguilera;Vernworth;Group006
+ch300723;2829064904;Herald;Vernworth;Group006
+ch300724;3679191460;Victoria;Vernworth;Group006
+ch300725;3420983920;Arclad;Borderwatch Outpost;Group001
+ch300726;2906977770;Nahl;Vernworth;Group006
+ch300727;3886118731;Cesaire;Borderwatch Outpost;Group001
+ch300728;1794579265;Sover;Vernworth;Group006
+ch300729;2805243780;Olphen;Borderwatch Outpost;Group001
+ch300730;2590288511;Jester;Borderwatch Outpost;Group001
+ch300731;733881040;Hount;Vernworth;Group006
+ch300732;58029577;Naela;Vernworth;Group006
+ch300733;2842191109;Nikita;Vernworth;Group006
+ch300734;3718777324;Varsella;Vernworth;Group006
+ch300735;1378290564;Azula;Vernworth;Group006
+ch300736;3452533511;Luigino;Vernworth;Group006
+ch300737;701015612;Ganorie;Vernworth;Group006
+ch300738;2013416102;Schieble;Vernworth;Group006
+ch300739;1201947546;Finnel;Vernworth;Group006
+ch300740;1910796161;Pella;Vernworth;Group006
+ch300741;4256595021;Arkholtz;Bakbattahl;Group013
+ch300742;388641340;Whitney;Bakbattahl;Group013
+ch300743;3423646659;Sorent;Bakbattahl;Group013
+ch300744;1771836076;Anemone;Bakbattahl;Group013
+ch300745;4006610444;Bartred;Bakbattahl;Group013
+ch300746;3889431281;Aella;Bakbattahl;Group013
+ch300747;1898270109;Fyodor;Excavation Site;Group018
+ch300748;5423759;Cuvall;Excavation Site;Group018
+ch300749;122934686;Geloa;Excavation Site;Group018
+ch300750;2282040662;Theodorus;Excavation Site;Group018
+ch300751;1394743469;Bayern;Excavation Site;Group018
+ch300752;2942382340;Ganver;Excavation Site;Group018
+ch300753;4156751622;Darhm;Excavation Site;Group018
+ch300754;4198296923;Nathaniel;Excavation Site;Group018
+ch300755;760867784;Hershey;Excavation Site;Group018
+ch300756;2519728590;Zepet;Excavation Site;Group018
+ch300757;3310458131;Assam;Excavation Site;Group018
+ch300758;2682820350;Devnia;Excavation Site;Group018
+ch300759;939489319;Unica;Excavation Site;Group018
+ch300760;3765511604;Signora;Excavation Site;Group018
+ch300761;1058443059;Themlia;Excavation Site;Group018
+ch300762;3876925440;Maquia;Excavation Site;Group018
+ch300763;1605519372;Quinia;Excavation Site;Group018
+ch300764;321685468;Pladika;Excavation Site;Group018
+ch300765;748874459;Acilia;Excavation Site;Group018
+ch300766;2948265562;Moana;Excavation Site;Group018
+ch300767;594068257;Edina;Excavation Site;Group018
+ch300768;1937942974;Ishburn;Vernworth;Group006
+ch300769;619630010;Nitra;Vernworth;Group006
+ch300770;2723635091;Sovan;Vernworth;Group006
+ch300771;562821329;Targa;Bakbattahl;Group013
+ch300772;1709951256;Extia;Bakbattahl;Group013
+ch300773;799343647;Suabek;Vernworth;Group006
+ch300774;212596983;Flander;Melve;Group002
+ch300775;3220560238;Karlheinz;Bakbattahl;Group013
+ch300776;2372888457;Salvatore;Vernworth;Group006
+ch300777;1965763144;Adrea;Bakbattahl;Group013
+ch300778;4112905895;Corlatta;Bakbattahl;Group013
+ch300779;80436817;Peggy;Bakbattahl;Group013
+ch300780;366581911;Hamish;Bakbattahl;Group013
+ch300781;1633198754;Mulka;Bakbattahl;Group013
+ch300782;1265124485;Avlan;Borderwatch Outpost;Group001
+ch300783;1355116978;Gaeric;Borderwatch Outpost;Group001
+ch300784;1087481980;Etrika;Borderwatch Outpost;Group001
+ch300785;2945366633;Eurius;Always on the move;None
+ch300786;2699233802;Varmont;Always on the move;None
+ch300787;1821600193;Pierce;Always on the move;None
+ch300788;1492355415;Eef;Always on the move;None
+ch300789;1812105415;Verona;Always on the move;None
+ch300790;3483224347;Brink;Always on the move;None
+ch300791;1415842669;Ortansa;Always on the move;None
+ch300792;888948414;Sora;Always on the move;None
+ch300793;1265490644;Igon;Vernworth;Group006
+ch300794;3216139206;Ecletta;Bakbattahl;Group013
+ch300795;2680150390;Gustavo;Vernworth;Group006
+ch300796;3549771845;Jordan;Vernworth;Group006
+ch300797;529598413;Asgard;Vernworth;Group006
+ch300798;4258845541;Senia;Vernworth;Group006
+ch300799;1526139469;Gostoc;Vernworth;Group006
+ch300800;3379678252;Anphina;Vernworth;Group006
+ch300801;2511928910;Ionis;Vernworth;Group006
+ch300802;2195051002;Valen;Vernworth;Group006
+ch300803;432420374;Tram;Vernworth;Group006
+ch300804;3333728525;Kiara;Vernworth;Group006
+ch300805;1489061478;Cayan;Vernworth;Group006
+ch300806;4202256448;Keltse;Vernworth;Group006
+ch300807;3769648822;Daimon;Vernworth;Group006
+ch300808;3070063807;Anya;Vernworth;Group006
+ch300809;3078078139;Sachatt;Vernworth;Group006
+ch300810;3136763525;Outena;Vernworth;Group006
+ch300811;4081643762;Ezekias;Always on the move;None
+ch300812;2484067803;Bakhtiar;Always on the move;None
+ch300813;1495890575;Garmin;Always on the move;None
+ch300814;4288346008;Billiam;Always on the move;None
+ch300815;3529260427;Evron;Always on the move;None
+ch300816;1154546709;Catrey;Always on the move;None
+ch300817;4106777491;Eklon;Always on the move;None
+ch300818;1360070407;Demetrio;Always on the move;None
+ch300819;129504419;Narcyz;Always on the move;None
+ch300820;1457783313;Isla;Always on the move;None
+ch300821;1086173736;Kona;Always on the move;None
+ch300822;1457333867;Evereck;Always on the move;None
+ch300823;796666441;Dorias;Always on the move;None
+ch300824;3768774896;Niam;Always on the move;None
+ch300825;2530688437;Quikkel;Always on the move;None
+ch300826;30844702;Harnett;Always on the move;None
+ch300827;4285244332;Audra;Always on the move;None
+ch300828;1520861990;Stollan;Always on the move;None
+ch300829;2298140020;Gargant;Always on the move;None
+ch300830;2455658406;Gideon;Always on the move;None
+ch300831;1185279776;Phiellma;Always on the move;None
+ch300832;4034865549;Aurelia;Always on the move;None
+ch300833;3692535257;Shnoss;Always on the move;None
+ch300834;638007683;Tacoma;Always on the move;None
+ch300835;2613041949;Zuchna;Always on the move;None
+ch300836;3734237605;Iniesta;Always on the move;None
+ch300837;3538384685;Davis;Always on the move;None
+ch300838;3305705070;Aelia;Always on the move;None
+ch300839;3907664420;Sevris;Excavation Site;Group018
+ch300840;3968055937;Kiena;Excavation Site;Group018
+ch300841;2241469209;Kaiser;Excavation Site;Group018
+ch300842;3667433808;Tantra;Flambearer Palace;Group012
+ch300843;1077876586;Cecilia;Sacred Arbor;Group009
+ch300844;3090649794;Seachlann;Sacred Arbor;Group009
+ch300845;1538864141;Odhran;Sacred Arbor;Group009
+ch300846;1966578402;Fonda;Geyser Hamlet;Group016
+ch300847;3516404293;Zaft;Geyser Hamlet;Group016
+ch300848;3604733374;Sheona;Geyser Hamlet;Group016
+ch300849;340269713;Turcel;Geyser Hamlet;Group016
+ch300850;1385683912;Lysetta;Vernworth;Group006
+ch300851;1881742222;Gareth;Geyser Hamlet;Group016
+ch300852;1922607788;Parsimon;Always on the move;None
+ch300853;2480738063;Boen;Always on the move;None
+ch300854;3797854181;Petra;Always on the move;None
+ch300855;4178120567;Flamure;Always on the move;None
+ch300856;4544311;Machares;Always on the move;None
+ch300857;3602332525;Lieke;Always on the move;None
+ch300858;796312764;Moderina;Always on the move;None
+ch300859;2898973502;Zeplin;Checkpoint Rest Town;Group011
+ch300860;1718084207;Zonna;Bakbattahl;Group013
+ch300861;2642236258;Martha;Vernworth;Group006
+ch300862;1133088666;Idan;Volcanic Island Camp;Group017
+ch300863;3271120244;Muhsina;Volcanic Island Camp;Group017
+ch300864;1262386325;Gravas;Volcanic Island Camp;Group017
+ch300865;2282766554;Entia;Volcanic Island Camp;Group017
+ch300866;1392847435;Cosworth;Volcanic Island Camp;Group017
+ch300867;1194397373;Illia;Volcanic Island Camp;Group017
+ch300868;3659113647;Cardash;Volcanic Island Camp;Group017
+ch300869;3212769619;Tezinha;Volcanic Island Camp;Group017
+ch300870;2237578426;Ignatz;Volcanic Island Camp;Group017
+ch300871;2693634331;Tonya;Volcanic Island Camp;Group017
+ch300872;1001528596;Kunal;Volcanic Island Camp;Group017
+ch300873;3942258058;Dracaena;Volcanic Island Camp;Group017
+ch300874;2590014588;Whitaker;Volcanic Island Camp;Group017
+ch300875;3523052509;Penelope;Volcanic Island Camp;Group017
+ch300876;2111506467;Clem;Volcanic Island Camp;Group017
+ch300877;623851146;Paulina;Volcanic Island Camp;Group017
+ch300878;898137927;Wolt;Volcanic Island Camp;Group017
+ch300879;602790121;Messina;Volcanic Island Camp;Group017
+ch300880;753279085;Garren;Volcanic Island Camp;Group017
+ch300881;546701338;Hakea;Volcanic Island Camp;Group017
+ch300882;3528332809;Guerrero;Vernworth;Group006
+ch300883;1619027194;Shannon;Geyser Hamlet;Group016
+ch300884;460327505;Missha;Vernworth;Group006
+ch300885;2896547582;Telestia;Geyser Hamlet;Group016
+ch300886;2742534749;Dora;Geyser Hamlet;Group016
+ch300887;231011863;Botanika;Geyser Hamlet;Group016
+ch300888;3753949462;Marlene;Vernworth;Group006
+ch300889;3399472919;Gimleth;Geyser Hamlet;Group016
+ch300890;2022169370;Sandred;Geyser Hamlet;Group016
+ch300891;4251116136;Thias;Geyser Hamlet;Group016
+ch300892;3314991799;Cohen;Geyser Hamlet;Group016
+ch300893;434830805;Jesslia;Vernworth;Group006
+ch300894;3099859154;Scloane;Geyser Hamlet;Group016
+ch300895;1006617562;Innes;Melve;Group002
+ch300896;2298813751;Gerare;Melve;Group002
+ch300897;3376249020;Kaikhosru;Melve;Group002
+ch300898;3963636924;Guiles;Melve;Group002
+ch300899;390614036;Dajiel;Melve;Group002
+ch300900;630787608;Astia;Melve;Group002
+ch300901;1273706123;Kitanya;Melve;Group002
+ch300902;3199370652;Thierad;Checkpoint Rest Town;Group011
+ch300903;415736764;Auclair;Checkpoint Rest Town;Group011
+ch300904;1424002094;Querick;Checkpoint Rest Town;Group011
+ch300905;2318879766;Quince;Checkpoint Rest Town;Group011
+ch300906;3251146495;Zellin;Checkpoint Rest Town;Group011
+ch300907;3337832329;Thobson;Checkpoint Rest Town;Group011
+ch300908;4103345837;Kacina;Checkpoint Rest Town;Group011
+ch300909;2467853966;Stella;Checkpoint Rest Town;Group011
+ch300910;1416096015;Lemone;Checkpoint Rest Town;Group011
+ch300911;1334457155;Trenka;Checkpoint Rest Town;Group011
+ch300912;241777015;Perrine;Checkpoint Rest Town;Group011
+ch300913;1416954785;Christina;Checkpoint Rest Town;Group011
+ch300914;2446550852;Wemma;Checkpoint Rest Town;Group011
+ch300915;2882195544;Tauron;Volcanic Island Camp;Group017
+ch300916;1333314103;Gascole;Volcanic Island Camp;Group017
+ch300917;1892817290;Messara;Volcanic Island Camp;Group017
+ch300918;875563933;Loretta;Volcanic Island Camp;Group017
+ch300919;134426413;Eutoria;Volcanic Island Camp;Group017
+ch300920;2391397636;Grouillard;Vernworth;Group006
+ch300921;2899712750;Schwantz;Vernworth;Group006
+ch300922;858854822;Ksenia;Vernworth;Group006
+ch300923;2484544502;Brellia;Vernworth;Group006
+ch300924;408064701;Monet;Vernworth;Group006
+ch300925;888503162;Golfaz;Bakbattahl;Group013
+ch300926;3375378279;Varga;Bakbattahl;Group013
+ch300927;2117856107;Strannd;Bakbattahl;Group013
+ch300928;1428311752;Isaas;Bakbattahl;Group013
+ch300929;4067933759;Mira;Bakbattahl;Group013
+ch300930;3555706525;Yuna;Bakbattahl;Group013
+ch300931;2548205727;Bizenta;Bakbattahl;Group013
+ch300932;2981056509;Cadmia;Bakbattahl;Group013
+ch300933;3894855646;Yolanda;Bakbattahl;Group013
+ch300934;2695702566;Lyailim;Bakbattahl;Group013
