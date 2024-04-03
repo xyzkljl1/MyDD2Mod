@@ -1,0 +1,418 @@
+{
+    "AbilityFormat": {
+        "10": {
+            "format": "+{v1} أقصى تحمل",
+            "hint": "固定値(150.000000,0.000000)"
+        },
+        "11": {
+            "format": "x{v1} سعر الزيت/ {v2}x المسافة",
+            "hint": "1:燃料の消費速度倍率　2:照らす範囲(0.660000,2.000000)"
+        },
+        "12": {
+            "format": "+{v1} معدل الضرر",
+            "hint": "攻撃倍率加算値(0.050000,0.000000)"
+        },
+        "13": {
+            "format": "cliff:x{v1}/Other:x{v2}",
+            "hint": "1：段差登り、2：しがみつき・しゃがみ(1.100000,1.100000)"
+        },
+        "14": {
+            "format": "تحصل {v2}%+ {v1} الدفاع السحريّ",
+            "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
+        },
+        "15": {
+            "format": "+{v1}٪ كمية الاسترداد",
+            "hint": "増加回復量(％)(10.000000,0.000000)"
+        },
+        "16": {
+            "format": "x{v1} المدة",
+            "hint": "効果時間倍率(0.700000,0.000000)"
+        },
+        "17": {
+            "format": "x{v1} المدة",
+            "hint": "効果時間倍率(1.200000,0.000000)"
+        },
+        "18": {
+            "format": "+{v1} معدل الاسترداد",
+            "hint": "加算倍率を入力(0.100000,0.000000)"
+        },
+        "19": {
+            "format": "x{v1} مضاعف الكراهية",
+            "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
+        },
+        "20": {
+            "format": "استرداد {v1}٪~{v2}٪ من الحد الأقصى لنقاط الصحة",
+            "hint": "トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"
+        },
+        "21": {
+            "format": "x{v1} مضاعف تكلفة التحمل",
+            "hint": "(0.800000,0.000000)"
+        },
+        "22": {
+            "format": "x{v1} مضاعف تكلفة التحمل",
+            "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
+        },
+        "23": {
+            "format": "اكتساب {v2}٪+{v1} القوة",
+            "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
+        },
+        "24": {
+            "format": "اكتساب {v2}٪+{v1} الحد الأقصى لنقاط الصحة",
+            "hint": "HPの上限値 + Value(200.000000,0.000000)"
+        },
+        "25": {
+            "format": "x{v1} مضاعف",
+            "hint": "組み付き時の押し引き力 * Value(1.500000,0.000000)"
+        },
+        "26": {
+            "format": "+{v1}٪ معدل ضرر الحماية",
+            "hint": "ガード削り攻撃力 + Value%(30.000000,0.000000)"
+        },
+        "27": {
+            "format": "+{v1}٪ قوة الإسقاط",
+            "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
+        },
+        "28": {
+            "format": "x{v1} فقدان الحد الأقصى لنقاط الصحة",
+            "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
+        },
+        "29": {
+            "format": "+{v1}٪ الإضعاف",
+            "hint": "状態異常与蓄積値 + Value%(20.000000,0.000000)"
+        },
+        "30": {
+            "format": "{v1}/{v2}",
+            "hint": "(75.000000,90.000000)"
+        },
+        "31": {
+            "format": "+{v1}٪ مقاومة الإسقاط",
+            "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
+        },
+        "32": {
+            "format": "+{v1}٪ ضرر",
+            "hint": "弱点属性による与ダメージ + Value%(5.000000,0.000000)"
+        },
+        "33": {
+            "format": "{v2}٪+{v1} هجوم سحري",
+            "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
+        },
+        "34": {
+            "format": "x{v1} سرعة الحركة",
+            "hint": "持ち上げ、担ぎ上げ時の移動速度xValue(1.100000,0.000000)"
+        },
+        "35": {
+            "format": "x{v1} ذهب",
+            "hint": "金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"
+        },
+        "36": {
+            "format": "اكتساب {v2}٪ هجوم في النهار (4:00~20:00)\n{v2}٪ هجوم سحري في الليل (18:00~6:00)",
+            "hint": "日中（4時～20時）、物理攻撃力+ 夜間（18時～6時）、魔法攻撃力+ １：固定値　２：割合値(%)(0.000000,5.000000)"
+        },
+        "37": {
+            "format": "x{v1} الكمية",
+            "hint": "リム決勝を入手したときのリム獲得量xValue(1.050000,0.000000)"
+        },
+        "38": {
+            "format": "x{v1} تكلفة",
+            "hint": "ダッシュ中のスタミナ消費量×Value(0.900000,0.000000)"
+        },
+        "39": {
+            "format": "اكتساب {v2}٪+{v1} دفاع/دفاع سحري",
+            "hint": "ポーンの物理防御力/魔法防御力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
+        },
+        "4": {
+            "format": "x{v1} مضاعف",
+            "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
+        },
+        "40": {
+            "format": "استعادة {v1}٪ تحمل",
+            "hint": "敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"
+        },
+        "41": {
+            "format": "x{v1} فرصة",
+            "hint": "(1.200000,0.000000)"
+        },
+        "42": {
+            "format": "اكتساب {v2}٪+{v1} هجوم/هجوم سحري",
+            "hint": "ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
+        },
+        "43": {
+            "format": "-{v1} ثواني",
+            "hint": "ポーン蘇生にかかる時間 -Value(秒)(1.000000,0.000000)"
+        },
+        "44": {
+            "format": "{v1}",
+            "hint": "(1.500000,0.000000)"
+        },
+        "45": {
+            "format": "{v1}٪ تفعيل",
+            "hint": "調合時にアイテム作成個数+1個になる確率Value％(15.000000,0.000000)"
+        },
+        "46": {
+            "format": "x{v1} فرصة التعرض للهجوم",
+            "hint": "襲撃確率 * Value(0.350000,0.000000)"
+        },
+        "47": {
+            "format": "x{v1} مدى رؤية العدو",
+            "hint": "敵の視界センサー * Value(0.850000,0.000000)"
+        },
+        "48": {
+            "format": "اكتساب x{v1} المحبوبية",
+            "hint": "NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"
+        },
+        "49": {
+            "format": "x{v1} تكلفة",
+            "hint": "カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"
+        },
+        "5": {
+            "format": "اكتساب {v2}٪+{v1} دفاع",
+            "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
+        },
+        "50": {
+            "format": "-{v1} مستوى الوزن عند التحرك",
+            "hint": "移動時の重量ランクをValue段階下げる(1.000000,0.000000)"
+        },
+        "6": {
+            "format": "اكتساب {v2}٪+{v1} الحد الأقصى للوزن",
+            "hint": "最大重量加算値(10.000000,0.000000)"
+        },
+        "7": {
+            "format": "رفع +{v1} ثواني. تثبيت +{v2} ثواني",
+            "hint": "1：担ぎ上げ、2：押さえつけ。単位は秒(2.000000,2.000000)"
+        },
+        "8": {
+            "format": "{v1} ثواني أسرع من الأسفل. {v2} ثواني أسرع من الزحف",
+            "hint": "1：ダウン、2：這いずり。単位は秒(0.300000,1.000000)"
+        },
+        "9": {
+            "format": "+{v1} معدل الضرر",
+            "hint": "攻撃倍率加算値(0.100000,0.000000)"
+        }
+    },
+    "FieldFormat": {
+        "_BlowResistRate": "%s%% Blow Resist",
+        "_BuyPrice": {
+            "enable": false,
+            "format": "BuyPrice %s.",
+            "type": "String"
+        },
+        "_Category": {
+            "enable": false,
+            "format": "Cat %s",
+            "map": [
+                "Material",
+                "Other",
+                "Equip"
+            ],
+            "type": "Enum"
+        },
+        "_DarkDefence": "%s%% Dark Debuff Resist",
+        "_FireDefence": "%s%% Fire Damage Reduce",
+        "_FireResist": "%s%% Fire Debuff Resist",
+        "_HealBlackHp": "Heal %s MAXHP.",
+        "_HealStamina": "Recover %s Stamina",
+        "_HealWhiteHp": "Heal %s HP.",
+        "_IceDefence": "%s%% Ice Damage Reduce",
+        "_IceResist": "%s%% Ice Debuff Resist",
+        "_Id": {
+            "enable": false,
+            "format": "Id %s.",
+            "type": "String"
+        },
+        "_LightDefence": "%s%% Light Damage Reduce",
+        "_MagicAttack": "%s MagATK",
+        "_MagicDefence": "%s MagDEF",
+        "_OilResist": "%s%% Oil Resist",
+        "_PhysicalAttack": "%s ATK",
+        "_PhysicalDefence": "%s PhyDEF",
+        "_PoisonResist": "%s%% Poison Resist",
+        "_SellPrice": {
+            "enable": false,
+            "format": "SellPrice %s.",
+            "type": "String"
+        },
+        "_ShakeResistRate": "%s%% Shake Resist",
+        "_SilentResist": "%s%% Silent Resist",
+        "_SlashDefenceRate": "%s%% Slash Reduce",
+        "_SleepResist": "%s%% Sleep Resist",
+        "_StoneResist": "%s%% Stone Resist",
+        "_StrikeDefenceRate": "%s%% Strike Reduce",
+        "_SubCategory": {
+            "enable": false,
+            "format": "Cat %s",
+            "map": [
+                "Buff",
+                "Material",
+                "Special",
+                "Quest",
+                "Book",
+                "Arrow",
+                "CustomSkill",
+                "PawnSkill",
+                "MagicBook",
+                "Online"
+            ],
+            "type": "Enum"
+        },
+        "_ThunderDefence": "%s%% Thunder Damage Reduce",
+        "_ThunderResist": "%s%% Thunder Debuff Resist",
+        "_UseEffect": {
+            "enable": false,
+            "format": "Effect %s",
+            "map": [
+                "Heal",
+                "RecoverStamina",
+                "Status"
+            ],
+            "type": "Enum"
+        },
+        "_WaterResist": "%s%% Water Resist"
+    },
+    "RingSpecialFormat": {
+        "1": {
+            "enable": true,
+            "format": "+{v1} الحد الأقصى لنقاط الصحة",
+            "hint": "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"
+        },
+        "10": {
+            "enable": true,
+            "format": "{v1}٪ سرعة التلاوة",
+            "hint": "(3533,Ring of Articulacy,15,0,0)"
+        },
+        "11": {
+            "enable": true,
+            "format": "{v1}٪ سرعة التلاوة ولكن تفقد {v2}٪ الحد الأقصى لنقاط الصحة",
+            "hint": "(3534,Ring of Recitation,25,20,0)"
+        },
+        "12": {
+            "enable": true,
+            "format": "+{v1} متانة",
+            "hint": "(3535,Ring of Resolution,100,0,0)"
+        },
+        "13": {
+            "enable": true,
+            "format": "-{v1}٪ تكلفة التحمل",
+            "hint": "(3536,Ring of Grit,25,0,0)"
+        },
+        "14": {
+            "enable": true,
+            "format": "اكتساب {v1} هجوم في {v2} ثواني",
+            "hint": "(3537,Ring of Requital,15,10,0)"
+        },
+        "15": {
+            "enable": false,
+            "format": "{v1} {v2} {v3}",
+            "hint": "(3538,Ring of Brawn,0,0,0)"
+        },
+        "16": {
+            "enable": true,
+            "format": "شفاء طفيف لمدة {v2} ثواني عند تلقي ضرر يزيد عن {v1}٪ الحد الأقصى لنقاط الصحة",
+            "hint": "(3539,Ring of Benevolence,25,3,0)"
+        },
+        "17": {
+            "enable": true,
+            "format": "اكتساب {v2} هجوم عندما تكون أقل من {v1}٪ من نقاط الصحة",
+            "hint": "(3540,Ring of Recompense,25,100,0)"
+        },
+        "18": {
+            "enable": true,
+            "format": "اكتساب {v2} هجوم عندما لا تقل نقاط الصحة عن {v1}٪",
+            "hint": "(3541,Ring of Predominance,100,10,0)"
+        },
+        "2": {
+            "enable": true,
+            "format": "+{v1} الحد الأقصى للتحمل",
+            "hint": "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"
+        },
+        "20": {
+            "enable": false,
+            "format": "{v1} {v2} {v3}",
+            "hint": "(3543,Ring of Disfavor,1,0,0)"
+        },
+        "21": {
+            "enable": true,
+            "format": "+{v1} استعادة التحمل",
+            "hint": "(3544,Ring of Quickening,10,0,0)"
+        },
+        "22": {
+            "enable": true,
+            "format": "+{v1} قوة الإسقاط",
+            "hint": "(3545,Ring of Vehemence,100,0,0)"
+        },
+        "23": {
+            "enable": false,
+            "format": "{v1} {v2} {v3}",
+            "hint": "(3548,Ring of Proximity,0,0,0)"
+        },
+        "24": {
+            "enable": true,
+            "format": "+{v1}٪/{v2}٪ تسديد/تلقي ضرر",
+            "hint": "(3549,Ring of Gallantry,25,25,0)"
+        },
+        "25": {
+            "enable": true,
+            "format": "+{v1}٪ ضرر",
+            "hint": "(3550,Ring of Skullduggery,20,0,0)"
+        },
+        "26": {
+            "enable": true,
+            "format": "اكتساب {v1} دفاع في {v2} ثواني",
+            "hint": "(3551,Ring of Reassurance,50,20,0)"
+        },
+        "27": {
+            "enable": true,
+            "format": "+{v1}٪ كمية الاستعادة",
+            "hint": "(3552,Ring of Amplification,10,0,0)"
+        },
+        "28": {
+            "enable": false,
+            "format": "{v1} {v2} {v3}",
+            "hint": "(3553,Turquoise Ring,0,0,0)"
+        },
+        "29": {
+            "enable": false,
+            "format": "{v1} {v2} {v3}",
+            "hint": "(3554,Ring of Derision,0,0,0)"
+        },
+        "3": {
+            "enable": true,
+            "format": "+{v1} الحد الأقصى للوزن",
+            "hint": "(3506,Ring of Profusion,10,0,0)(3505,Ring of Accrual,5,0,0)"
+        },
+        "30": {
+            "enable": true,
+            "format": "+{v1}.",
+            "hint": "(3555,Eternal Bond,10,0,0)"
+        },
+        "4": {
+            "enable": true,
+            "format": "+{v1}/{v2}/{v3} الحد الأقصى لنقاط الصحة/الحد الأقصى للتحمل/الحد الأقصى للوزن",
+            "hint": "(3507,Ring of Triumph,100,100,5)"
+        },
+        "5": {
+            "enable": true,
+            "format": "+{v1} هجوم",
+            "hint": "(3508,Ring of Aggression,30,0,0)"
+        },
+        "6": {
+            "enable": true,
+            "format": "+{v1} هجوم سحري",
+            "hint": "(3510,Ring of Percipience,30,0,0)"
+        },
+        "7": {
+            "enable": true,
+            "format": "+{v1}٪ كسب الخبرة",
+            "hint": "(3530,Ring of Ambition,50,0,0)"
+        },
+        "8": {
+            "enable": true,
+            "format": "+{v1}٪ كسب نقاط تطوير الشخصية",
+            "hint": "(3531,Ring of Endeavor,50,0,0)"
+        },
+        "9": {
+            "enable": true,
+            "format": "استعادة {v1} من نقاط الصحة عند القتل",
+            "hint": "(3532,Ring of Regeneration,50,0,0)"
+        }
+    }
+}
