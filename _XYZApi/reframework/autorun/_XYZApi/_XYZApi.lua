@@ -53,16 +53,39 @@ local function recurse_def_settings(tbl, new_tbl)
             else
     		    tbl[key] = value
             end
+        elseif type(value)~=nil and type(tbl[key])~=nil then
+            -- for boolList default value
+            tbl[key]=value
 		end
 	end
 	return tbl
+end
+
+local function Enum2Map(typeName,from)
+    from=from or 1
+    local id2name={}
+    local name2id={}
+    local fields=sdk.find_type_definition(typeName):get_fields()
+    for _,field in pairs(fields) do
+        local value=field:get_data()
+        if value~=nil and value >= from then
+            id2name[value]=field:get_name()
+            name2id[field:get_name()]=value
+            print(field:get_name(),value)
+        end
+    end
+    return id2name,name2id
 end
 
 local function InitFromFile(_config,configfile,dontInitHotkey)
     --merge config file to default config
     local config = {} 
     for key,para in ipairs(_config) do
-        config[para.name]=para.default
+        if type(para.default)=="table" then
+            config[para.name]=DeepCopyTable(para.default)
+        else
+            config[para.name]=para.default
+        end
     end
     config= recurse_def_settings(config, json.load_file(configfile) or {})
     if dontInitHotkey~=true then
@@ -107,6 +130,11 @@ if isDD2()==true then
     nil,DD2_InitItemId)
 end
 
+function DeepCopyTable(t)
+  local ret = { }
+  for k,v in pairs(t) do ret[k] = v end
+  return setmetatable(ret, getmetatable(t))
+end
 
 --Chinese font need pass CJK_GLYPH_RANGES as [ranges] when load and the lua file need to be unicode
 local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,font)
@@ -158,6 +186,11 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                                                             config[key] or para.default or para.min or 0,
                                                             para.step or 1 , para.min or 0, para.max or 100)
                     _changed=changed or _changed
+                elseif para.type=="intPercent" then
+        		    changed , config[key]= imgui.drag_int(label .. title_postfix, 
+                                                            config[key] or para.default or para.min or 0,
+                                                            para.step or 1 , para.min or 0, para.max or 100)
+                    _changed=changed or _changed
                 elseif para.type=="fontsize" then
                     changed , config[key]= imgui.drag_int(label .. title_postfix, 
                                                             config[key] or para.default or para.min or 30,
@@ -191,6 +224,45 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     end
                     imgui.pop_item_width()
                     imgui.new_line()
+                elseif para.type=="boolList" then
+                	if imgui.tree_node(para.name..title_postfix) then
+                        if para.tmp_list==nil and para.default~=nil then
+                            para.tmp_list=DeepCopyTable(para.default)
+                        end
+                        if para.tmp_sortListKey==nil then
+                            para.tmp_sortListKey={}
+                            for _k,_ in pairs(para.tmp_list) do
+                                table.insert(para.tmp_sortListKey,_k)
+                            end
+                            table.sort(para.tmp_sortListKey)
+                        end
+
+                        imgui.push_item_width(imgui.calc_item_width()*0.5)
+                        local clicked=imgui.button("UncheckAll")
+                        if clicked==true then
+                            for _,_k in pairs(para.tmp_sortListKey) do
+                                config[key][_k]=false
+                            end
+                            _changed=true
+                        end
+                        imgui.same_line()
+                        clicked =imgui.button("CheckAll")
+                        if clicked==true then 
+                            config[key]=DeepCopyTable(para.tmp_list) 
+                            _changed=true
+                            end
+                        imgui.pop_item_width()
+
+                        local checked=false
+                        for _,_k in pairs(para.tmp_sortListKey) do
+                            local _v=para.tmp_list[_k]
+                            changed, checked = imgui.checkbox(_k.." / ".._v, config[key][_k]~=false)
+                            _changed=changed or _changed
+                            if checked then config[key][_k]=_v
+                            --nil won't be saved,has to be false
+                            else config[key][_k]=false  end
+                        end
+                    end
                 elseif para.type=="font" or para.type=="string" then
         		    changed , config[key]= imgui.input_text(label .. title_postfix, config[key] or para.default)
                     _changed=changed or _changed
@@ -216,13 +288,18 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                                                             config[key] or para.default or para.min or 0,
                                                             para.step or 0.1 , para.min or 0, para.max)
                     _changed=changed or _changed
+                elseif para.type=="floatPercent" then
+        		    changed , config[key]= imgui.drag_float(label .. title_postfix, 
+                                                            config[key] or para.default or para.min or 0,
+                                                            para.step or 0.5 , para.min or 0, para.max or 100)
+                    _changed=changed or _changed
                 elseif para.type=="rgba32" then
                     imgui.push_item_width(imgui.calc_item_width()*0.6)
                     changed,config[key]= imgui.color_picker(label .. title_postfix, config[key])
                     _changed=changed or _changed
                     imgui.pop_item_width()
                 elseif para.type=="button" then
-                    clicked=imgui.button(label..title_postfix)
+                    local clicked=imgui.button(label..title_postfix)
                     if clicked==true and para.onClick ~=nil then
                         --will only trigger once when pressed
                         triggeredButtons[key]=para.onClick
@@ -333,10 +410,10 @@ local function LoadFontIfCJK(fontname,fontsize,fontrange)
     return font
 end
 
-
 _XYZApi={
     DrawIt=DrawIt,
     InitFromFile=InitFromFile,
-    LoadFontIfCJK=LoadFontIfCJK
+    LoadFontIfCJK=LoadFontIfCJK,
+    Enum2Map=Enum2Map
 }
 return _XYZApi

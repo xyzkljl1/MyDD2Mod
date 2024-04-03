@@ -7,7 +7,50 @@ local _config={
     {name="para2",type="fontsize",default=29},
     {name="keyboardKey",type="hotkey",default="Alpha1",actionName="keyboardKey7784"},
     {name="controllerKeyShoulder",type="hotkey",default="RT (R2)",actionName="controllerKeyShoulder7784"},
-    {name="controllerKeyNotShoulder",type="hotkey",default="LLeft",actionName="controllerKeyNotShoulder7784"},
+    {name="controllerKeyNotShoulder",type="hotkey",default="LLeft",actionName="controllerKeyNotShoulder7784"},    
+    {name="ReplacedStaff",type="boolList",default={
+                            --"Gm82_000",--可拾取物品
+                            --"Gm82_000_001",--自然生成的物品
+                            --"Gm82_000_002",--丢弃的物品
+                            ["Gm80_008"]="chain",--stone
+                            ["Gm80_009"]="stone",--stone
+                            ["Gm80_010"]="stone",--stone
+                            ["Gm80_103"]="sandbag",--沙袋
+                            ["Gm80_109"]="tree",--tree
+                            ["Gm80_110"]="tree",--tree?
+                            ["Gm80_241"]="candle&glass?",
+                            --["Gm82_001"]="key",
+                            --["Gm82_002"]="key",
+                            ["Gm82_009_01"]="plant gather point",--草
+                            ["Gm82_009_02"]="plant gather point",
+                            ["Gm82_009_03"]="plant gather point",
+                            ["Gm82_009_04"]="plant gather point",--草
+                            ["Gm82_009_05"]="plant gather point",--草
+                            ["Gm82_009_06"]="plant gather point",--草
+                            ["Gm82_009_10"]="plant gather point?",--草
+                            ["Gm82_009_20"]="plant gather point?",--草
+                            ["Gm82_016_10"]="bone gather point",--骨头
+                            ["Gm82_017_10"]="wood gather point",--废墟堆
+                            ["Gm82_011"]="plant gather point?",--草
+                            ["Gm82_012"]="plant gather point?",--草
+                            ["Gm82_013"]="plant gather point?",--草
+                            ["Gm82_020"]="potato gather point",--草
+                            ["Gm82_069"]="fish gather point",--鱼
+                        --    "Gm80_079_10",--篝火
+                        --    "Gm51_574",--箱子
+                            ["Gm50_097"]="haystack",--稻草堆
+                            ["Gm50_011_00"]="wood",
+                            ["Gm50_011_01"]="wood",
+                            ["Gm50_011_02"]="wood",
+                            ["Gm50_013_01"]="barrel",
+                            ["Gm50_013_02"]="barrel",
+                            ["Gm50_040_10"]="barrel",--木桶
+                            ["Gm51_083"]="barrel",
+                            --"Gm51_045",--杂物
+                        }
+    },
+    {name="item",type="item",default=1},
+    {name="Get",type="button",onClick=function() print("Clicked") end},
 }
 --Require
 --not like the other example,XYZAPI is necessary here.
