@@ -22,6 +22,9 @@ local function recurse_def_settings(tbl, new_tbl)
             else
     		    tbl[key] = value
             end
+        elseif type(value)~=nil and type(tbl[key])~=nil then
+            -- for boolList default value
+            tbl[key]=value
 		end
 	end
 	return tbl

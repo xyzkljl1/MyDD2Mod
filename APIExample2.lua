@@ -50,7 +50,18 @@ local _config={
                         }
     },
     {name="item",type="item",default=1},
-    {name="Get",type="button",onClick=function() print("Clicked") end},
+    {name="Get",type="button",onClick=function() print("Clicked") end},    
+    {name="gimmickName",type="stringComboBox",label="ChestModel",default="Gm80_097",list={
+            ["Gm80_001"]="Wooden",
+            ["Gm80_096"]="Black",
+            ["Gm80_097"]="Golden Red",
+            ["Gm81_042"]="Sphinx",
+            ["Gm80_211"]="Old Golden Red",
+            --["Gm81_042_01"]="Super Big",--need key
+            ["Gm80_001_10"]="Also Wooden",
+            ["Gm80_096_10"]="Also Black",
+            }
+    },
 }
 --Require
 --not like the other example,XYZAPI is necessary here.
