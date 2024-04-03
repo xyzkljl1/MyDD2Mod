@@ -71,7 +71,7 @@ local function Enum2Map(typeName,from)
         if value~=nil and value >= from then
             id2name[value]=field:get_name()
             name2id[field:get_name()]=value
-            print(field:get_name(),value)
+            --print(field:get_name(),value)
         end
     end
     return id2name,name2id
@@ -108,17 +108,20 @@ local function DD2_InitItemId()
         local itemCommonParam=iter:get_Current():get_Value()
         local name=itemCommonParam:get_Name()
         if name ~="Invalid" and name~=nil then
-            id2Name[itemCommonParam._Id]=string.format("%5d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
+            id2Name[itemCommonParam._Id]= string.format("%5d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
             table.insert(itemIds,itemCommonParam._Id)
         end
         iter:MoveNext()
     end
     table.sort(itemIds)
+--    print("{")
     for _,id in pairs(itemIds) do
         table.insert(itemNames,id2Name[id])
         itemIndex2itemId[#itemNames]=id
         itemId2itemIndex[id]=#itemNames
+--        print(string.format("\"%d\":\"%s\",",id,id2Name[id]))
     end
+--    print("}")
     Log("Init Item List")
 end
 
@@ -348,6 +351,27 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     --Log(config[key]," ",tmp_idx)
                     config[key]=para.itemIndex2itemId[tmp_idx] or 1
                     _changed=changed or _changed
+                elseif para.type=="stringComboBox" then
+                    if para.tmp_List==nil then
+                        para.tmp_List={}
+                        para.tmp_Index2Key={}
+                        para.tmp_Key2Index={}
+                        for k,v in pairs(para.list) do
+                            local id=#para.tmp_List+1
+                            local name=string.format("%s / %s",k,v)
+                            para.tmp_List[id]=name
+                            para.tmp_Index2Key[id]=k
+                            para.tmp_Key2Index[k]=id
+                        end
+                    end
+
+                    --imgui.push_item_width(imgui.calc_item_width()*0.5)
+                    changed, tmp_idx= imgui.combo(label .. title_postfix, para.tmp_Key2Index[config[key]] ,para.tmp_List)
+                    --imgui.pop_item_width()
+                    
+                    --Log(config[key]," ",tmp_idx)
+                    config[key]=para.tmp_Index2Key[tmp_idx] or para.tmp_List[1]
+                    _changed=changed or _changed                    
                 end
 
                 if para.tip ~=nil and imgui.is_item_hovered() then

@@ -20,6 +20,7 @@ local _config={
 local config=myapi.InitFromFile(_config,configfile)
 local gimmickID2Name,gimmickName2ID=myapi.Enum2Map("app.GimmickID")
 local woodChestID=gimmickName2ID["Gm80_001"]
+local woodChestID2=gimmickName2ID["Gm80_001_010"]
 
 sdk.hook(
     sdk.find_type_definition("app.GenerateSelector"):get_method("randomSelect")
@@ -32,7 +33,7 @@ sdk.hook(
             for i=0,ct do
                 local rowData=tableRow[i]
                 local id=rowData._GimmickID
-                if id==woodChestID then
+                if id==woodChestID or id==woodChestID2 then
                     print("ReplaceWoodChest ",gimmickName2ID[config.gimmickName])
                     rowData._GimmickID=gimmickName2ID[config.gimmickName]
                 end
