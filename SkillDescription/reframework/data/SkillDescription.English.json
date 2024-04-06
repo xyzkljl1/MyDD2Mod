@@ -424,7 +424,7 @@
     "83": {
       "name": "Job08_FrostBlock",
       "hintJP": "氷塊魔槍",
-      "format": "x{CS_氷塊}\nGain up to 13.0 Damage Rate when Charge\nLv2: up to 13.5 Damage Rate"
+      "format": "x{CS_氷塊}\nGain up to +11.5 Damage Rate when Charge"
     },
   "84": {
     "name": "Job08_ThunderChain",
@@ -787,7 +787,7 @@
     "Job07_2": {
       "Hint": "魔裁チ斬リ",
       "Job": "job07",
-      "format": "x{強攻撃_１段目}+{強攻撃_２段目}+{魔斬波_強攻撃の魔力斬撃}\nx{ジャンプ_強攻撃_落下中}+{ジャンプ_強攻撃_着地後(魔法)}/({強攻撃_大型敵乗り_１段目}*2)/{job07.-1.50}+{job07.-1.51} on Air/StandingOnEnemy/Cling&PinDown\nExecution:x{渾身の追撃_1段目}*2/x{大型敵立ち_渾身の追撃_1段目}+{job07.-1.23}/x{大型敵真横_渾身の追撃_1段目}+{job07.7315.0} to Normal/Large/Large Down"
+      "format": "x{強攻撃_１段目}+{強攻撃_２段目}+{魔斬波_強攻撃の魔力斬撃}\nx{ジャンプ_強攻撃_落下中}+{job07.-1.69}/({強攻撃_大型敵乗り_１段目}*2)/{job07.-1.50}+{job07.-1.51} on Air/StandingOnEnemy/Cling&PinDown\nExecution:x{渾身の追撃_1段目}*2/x{大型敵立ち_渾身の追撃_1段目}+{job07.-1.23}/x{大型敵真横_渾身の追撃_1段目}+{job07.7315.0} to Normal/Large/Large Down"
     },
     "Job07_4": {
       "Hint": "畏レノ魔弾",
