@@ -1,0 +1,834 @@
+{
+  "CustomSkill":{
+    "1": {
+      "name": "Job01_BlinkStrike",
+      "hintJP": "一閃突き",
+      "format": "x{一閃突き}"
+    },
+    "2": {
+      "name": "Job01_RisingLunge",
+      "hintJP": "空裂斬",
+      "format": "x{空裂斬_攻撃} / Lv2: x{空裂斬_攻撃Lv.2}"
+    },
+    "3": {
+      "name": "Job01_CymbalAttack",
+      "hintJP": "シールドバスター",
+      "format": "x{シールドアタック} / Lv2:x{シールドアタック_Lv.2初段}+{シールドアタック}"
+    },
+    "4": {
+      "name": "Job01_FullMoonSlash",
+      "hintJP": "円月斬り",
+      "format": "x{円月斬り} / Lv2: x{円月斬り}+x{円月斬りLv.2_追撃}"
+    },
+  "5": {
+    "name": "Job01_Springboard",
+    "hintJP": "空舞の盾",
+    "format": ""
+  },
+  "6": {
+    "name": "Job01_ShieldSummons",
+    "hintJP": "盾惹き",
+    "format": ""
+  },
+    "7": {
+      "name": "Job01_ViolentStab",
+      "hintJP": "えぐり刺し",
+      "format": "x{job01.1550.0}+{job01.-1.1}*N+{job01.1555.0}\nx{job01.-1.2}+{job01.-1.4}*N+{job01.-1.3} (攀爬)"
+    },
+    "8": {
+      "name": "Job01_HindsightSlash",
+      "hintJP": "逸らし斬り",
+      "format": "x{逸らし斬り攻撃}/{逸らし斬り攻撃_回避}/{逸らし斬り攻撃_ジャスト回避} (普通/闪避攻击/完美闪避)\nLv2: x{逸らし斬り攻撃}+{逸らし斬り攻撃_2段目}/{逸らし斬り攻撃_回避}+{逸らし斬り攻撃_回避_2段目}/{逸らし斬り攻撃_ジャスト回避}+{逸らし斬り攻撃_ジャスト回避__2段目}"
+    },
+    "9": {
+      "name": "Job01_FullMoonGuard",
+      "hintJP": "フローレスガード",
+      "format": "x{円月ガード_回転} / Lv2:x{円月ガード_回転Lv.2}"
+    },
+    "10": {
+      "name": "Job01_ShieldCounter",
+      "hintJP": "カウンタースラッシュ",
+      "format": "x{シールドカウンター}/{シールドカウンター_盾のみ版} (装备武器/未装备武器)\nLv2: x{シールドカウンター_Lv.2}/{シールドカウンター_盾のみ版}"
+    },
+  "11": {
+    "name": "Job01_DivineDefense",
+    "hintJP": "マーズソウル",
+    "format": ""
+  },
+    "12": {
+      "name": "Job01_BravesRaid",
+      "hintJP": "フュリオスレイド",
+      "format": "x{ブレイブスレイド_1段目_盾}+{ブレイブスレイド_2段目_盾}+{ブレイブスレイド_3段目_盾}+{ブレイブスレイド_4段目_剣}*3+{ブレイブスレイド_7段目_剣}\nx{ブレイブスレイド_素手共通}*6+{ブレイブスレイド_7段目_剣} (未装备盾)"
+    },
+    "13": {
+      "name": "Job02_ThreefoldArrow",
+      "hintJP": "連なり射ち",
+      "format": "x{連なり撃ち_近距離}/{連なり撃ち_low_近}/{連なり撃ち_middle_近}/{連なり撃ち_high_近} (无蓄/1蓄/2蓄/满蓄)\n超出射程: x{連なり撃ち_遠距離} "
+    },
+    "14": {
+      "name": "Job02_TriadShot",
+      "hintJP": "扇射ち",
+      "format": "x{扇撃ち_近距離}/{扇撃ち_low_近}/{扇撃ち_middle_近}/{扇撃ち_high_近} (无蓄/1蓄/2蓄/满蓄)\n超出射程：x{扇撃ち_low_遠}"
+    },
+    "15": {
+      "name": "Job02_BodyBinder",
+      "hintJP": "とどめ射ち",
+      "format": "x{トドメ射ち_近距離}/{トドメ射ち_ジャスト_近距離} (普通/目押)\nLv2: x{トドメ射ちLv2_近距離}[{トドメ射ち_遠距離}]/{トドメ射ちLv2_ジャスト_近距離}[{トドメ射ち_ジャスト_遠距離}] [超出射程]"
+    },
+    "16": {
+      "name": "Job02_MeteorShot",
+      "hintJP": "しじま射ち",
+      "format": "x{しじま射ち_近距離}[{しじま射ち_遠距離}] [超出射程]"
+    },
+    "17": {
+      "name": "Job02_SpecialAllowBomb",
+      "hintJP": "火薬矢射ち",
+      "format": "命中: x{job02.-1.33}[{job02.-1.34}] [超出射程]\n爆炸:x{仕込み火薬矢爆発_中心}/{仕込み火薬矢爆_周囲} (内圈/外圈)"
+    },
+    "18": {
+      "name": "Job02_SpecialAllowWater",
+      "hintJP": "水濡れ矢射ち",
+      "format": "x{job02.-1.33}[{job02.-1.34}] [超出射程]"
+    },
+    "19": {
+      "name": "Job02_SpecialAllowOil",
+      "hintJP": "油濡れ矢射ち",
+      "format": "x{job02.-1.33}[{job02.-1.34}] [超出射程]"
+    },
+    "20": {
+      "name": "Job02_SpecialAllowPoison",
+      "hintJP": "追毒矢射ち",
+      "format": "x{仕込み毒矢_近距離}[{仕込み毒矢_遠距離}] [超出射程]"
+    },
+    "21": {
+      "name": "Job02_RandomShot",
+      "hintJP": "怒涛射ち",
+      "format": "x{乱れ射ち_近距離}[{乱れ射ち_遠距離}] [超出射程]"
+    },
+    "22": {
+      "name": "Job02_WhirlingArrow",
+      "hintJP": "渦巻射ち",
+      "format": "x{job02.-1.47}+{渦巻射ち_刺さり}*N\nx{job02.-1.48}+{渦巻射ち_刺さり}*N (超出射程)"
+    },
+    "23": {
+      "name": "Job02_FullBlast",
+      "hintJP": "鬼神射ち",
+      "format": "x{鬼神射ち_成功_近距離}[{鬼神射ち_成功_遠距離}] [射程外]\n失败:x{鬼神射ち_近距離}[{鬼神射ち_遠距離}]"
+    },
+    "24": {
+      "name": "Job03_Firestorm",
+      "hintJP": "ファイアストーム",
+      "Job": "jobmagic",
+      "format": "x{ファイヤーストーム}"
+    },
+    "25": {
+      "name": "Job03_Levin",
+      "hintJP": "サンダーレイン",
+      "Job": "jobmagic",
+      "format": "x{サンダーレイン} "
+    },
+    "26": {
+      "name": "Job03_Frigor",
+      "Job": "jobmagic",
+      "hintJP": "フロストスパイク",
+      "format": "x{フロストスパイク_奥}/{フロストスパイク_手前} (内圈/中圈)\nLv2:对外圈造成x{フロストスパイクLv2_冷気}伤害"
+    },
+  "27": {
+    "name": "Job03_SpellStock",
+    "hintJP": "スペルフィリング",
+    "format": ""
+  },
+  "28": {
+    "name": "Job03_GuardBit",
+    "hintJP": "エスコートアニマ",
+    "format": ""
+  },
+  "29": {
+    "name": "Job03_FireBoon",
+    "hintJP": "ファイアギフト",
+    "format": ""
+  },
+  "30": {
+    "name": "Job03_IceBoon",
+    "hintJP": "アイスギフト",
+    "format": ""
+  },
+  "31": {
+    "name": "Job03_ThunderBoon",
+    "hintJP": "サンダーギフト",
+    "format": ""
+  },
+    "32": {
+      "name": "Job03_HolyShine",
+      "Job": "jobmagic",
+      "hintJP": "ホーリースフィア",
+      "format": "x{ホーリーシャイン}/{ホーリーシャイン：対アンデッド} per Hit (普通/对不死生物)"
+    },
+  "33": {
+    "name": "Job03_CureSpot",
+    "hintJP": "キュアスポット",
+    "format": ""
+  },
+  "34": {
+    "name": "Job03_HasteSpot",
+    "hintJP": "ヘイストスポット",
+    "format": ""
+  },
+  "35": {
+    "name": "Job03_FullRecover",
+    "hintJP": "アージェントリカバー",
+    "format": ""
+  },
+  "36": {
+    "name": "Job03_SpellBreak",
+    "hintJP": "フォースドサイレンス",
+    "format": ""
+  },
+  "37": {
+    "name": "Job03_HolyGlare",
+    "hintJP": "チアーオブザゴッド",
+    "format": ""
+  },
+    "38": {
+      "name": "Job04_CuttingWind",
+      "hintJP": "かまいたち",
+      "format": "x{job04.4310.0} per Hit"
+    },
+    "39": {
+      "name": "Job04_Guillotine",
+      "hintJP": "断頭台",
+      "format": "x({job04.4340.0}/{job04.4340.5}/{job04.4340.1}) + ({job04.4341.0}/{job04.4341.4}/{job04.4341.2})*N\n+ ({job04.4340.2}/{job04.4340.4}/{job04.4340.3}) (下落高度低/中/高).\nLv2: 中段连击伤害提升至x({job04.4341.1}/{job04.4341.5}/{job04.4341.3})*N."
+    },
+    "40": {
+      "name": "Job04_Attract",
+      "hintJP": "引き寄せ",
+      "format": ""
+    },
+    "41": {
+      "name": "Job04_ParryCounter",
+      "hintJP": "流し暗殺",
+      "format": "x{job04.4400.0}+{job04.4403.0}+{job04.4406.1}.\nx{job04.4410.0}+{job04.4415.0} (对大型)"
+    },
+  "42": {
+    "name": "Job04_AbsoluteAvoidance",
+    "hintJP": "虚心の極み",
+    "format": ""
+  },
+    "43": {
+      "name": "Job04_HollowOut",
+      "hintJP": "えぐり抜き",
+      "format": "攀爬: x{job04.4460.0}+{job04.4465.0}+{job04.4474.0}+{job04.4475.0}*N \n压制: x{job04.4460.1}+{job04.4469.0}+{job04.4468.1}+{job04.4474.0}\nLv2: 造成额外一段x{job04.4462.0}伤害."
+    },
+    "44": {
+      "name": "Job04_FlameBlade",
+      "hintJP": "帯炎刃",
+      "format": "施放动作：x{job04.4505.0}*2+{job04.4490.0}*2+{job04.-1.11}*2+{job04.4494.1}*2.\n攀爬: x{job04.-1.10}+{job04.4494.0}"
+    },
+  "45": {
+    "name": "Job04_SmokeScreen",
+    "hintJP": "煙幕",
+    "format": ""
+  },
+    "46": {
+      "name": "Job04_RemoteBomb",
+      "hintJP": "爆炎線",
+      "format": "x{job04.15.4}/{job04.15.5} (内圈/外圈)\nLv2: x{job04.15.7}/{job04.15.6}"
+    },
+  "47": {
+    "name": "Job04_WindWave",
+    "hintJP": "爆跳",
+    "format": ""
+  },
+  "48": {
+    "name": "Job04_Stealth",
+    "hintJP": "隠れ身",
+    "format": ""
+  },
+  "49": {
+    "name": "Job04_Snatch",
+    "hintJP": "分捕り",
+    "format": ""
+  },
+    "50": {
+      "name": "Job05_HeavyRunningThrust",
+      "hintJP": "戦神突き",
+      "format": "冲刺时:x{CS_01_重走_非刺し}*N/({CS_01_重走_刺し低速HIT}+{CS_01_重走_刺し対象継続HIT}*N) (未穿刺/穿刺敌人)\n收尾：x{CS_01_重走_Finish_小型_地上_1_非掴み}/({CS_01_重走_Finish_小型_地上_1_非掴み}+{CS_01_重走_Finish_小型_壁_2_掴み}) (普通/捅墙上了)\n收尾:({CS_01_重走_Finish_小型_地上_1_非掴み}+{CS_01_重走_Finish_大型_通常_2_掴み})/({CS_01_重走_Finish_小型_地上_1_非掴み}+{CS_01_重走_Finish_大型_ダウン_2_非掴み}) (对大型/对倒地的大型)"
+    },
+    "51": {
+      "name": "Job05_HorizontalSlash",
+      "hintJP": "地平斬り",
+      "format": "x{CS_02_地平斬り_無溜_1}[{job05.5330.1}]/{CS_02_地平斬り_1}[{job05.5333.0}]+{CS_02_地平斬り_2_振り}[{job05.5333.2}] (无蓄/蓄力) [后半圈命中]\nLv2: 蓄力伤害提升至x{CS_02_地平斬り_1}+{CSLv2_02_地平斬り_2_振り}"
+    },
+    "52": {
+      "name": "Job05_CrescentSlash",
+      "hintJP": "蒼天斬り",
+      "format": "x{CS_03_三日月斬り_1}+{CS_03_三日月斬り_2_main}+{CS_03_三日月斬り_4}/{CS_03_三日月斬り_溜_1}+{CS_03_三日月斬り_溜_2_main}+{CS_03_三日月斬り_溜_4} (无蓄/蓄力)\nLv2:蓄力伤害提升至 x{CSLv2_03_三日月斬り_溜_1}+{CSLv2_03_三日月斬り_溜_2_main}+{CSLv2_03_三日月斬り_溜_4}"
+    },
+    "53": {
+      "name": "Job05_CycloneSlash",
+      "hintJP": "烈風斬",
+      "format": "x{CS_04_烈風斬り_1}*4+{CS_04_烈風斬り_Finish}"
+    },
+    "54": {
+      "name": "Job05_GroundDrill",
+      "hintJP": "大河穿ち",
+      "format": "起手伤害: x{CS_05_地穿突き_低_落下中}[{CS_05_地穿突き_短着地_構え巻き込み}]/{CS_05_地穿突き_中_落下中}[{CS_05_地穿突き_中_着地}]/{CS_05_地穿突き_高_落下中} (下落高度低/中/高)[过早落地或过晚出刀]\n收尾伤害: x{CS_05_地穿突き_引き抜き}/({CS_05_地穿突き_追撃_突き}+{CS_05_地穿突き_追撃_引き抜き}) (未穿刺/成功穿刺)\nLv2: 成功穿刺的收尾伤害提升至x{CS_05_地穿突き_追撃_突き_lv2}+{CS_05_地穿突き_追撃_突き}+{CS_05_地穿突き_追撃_引き抜き}+{CS_05_地穿突き_追撃_引き抜き_1_lv2}"
+    },
+    "55": {
+      "name": "Job05_CounterAttack",
+      "hintJP": "潮払い",
+      "format": "x{CS_06_逆流払い_1}+{CS_06_逆流払い_2}/{CS_06_逆流払い_1_大型}+{CS_06_逆流払い_2_大型} (对小型/大型)"
+    },
+  "56": {
+    "name": "Job05_WarCry",
+    "hintJP": "雄叫び",
+    "format": ""
+  },
+    "57": {
+      "name": "Job05_LandSlide",
+      "hintJP": "大山崩",
+      "format": "x{CS_08_山崩し_無溜_1}[{CS_08_山崩し_無溜_2}]/({CS_08_山崩し_初段カス}+{CS_08_山崩し_溜_1}[{CS_08_山崩し_溜_2}] (无蓄/蓄力)[上戳击空]\nLv2: 蓄力伤害提升至x{CSLv2_08_山崩し_初段カス}+{CSLv2_08_山崩し_溜_1}[{CSLv2_08_山崩し_溜_2}] [上戳击空]"
+    },
+    "58": {
+      "name": "Job05_IndomitableLash",
+      "hintJP": "魔人斬り",
+      "format": "直接命中:x{CS_09_魔人斬り_無溜_1}/{CS_09_魔人斬り_溜_1} (无蓄/蓄力)\n蓄力时冲击波:x{CS_09_魔人斬り_溜_衝撃波}\nLv2:蓄力直接命中伤害提升至 x{CSLv2_09_魔人斬り_溜_1}"
+    },
+  "59": {
+    "name": "Job05_Guts",
+    "hintJP": "闘気込め",
+    "format": ""
+  },
+  "60": {
+    "name": "Job05_Springboard",
+    "hintJP": "空舞の跳肩",
+    "format": ""
+  },
+    "61": {
+      "name": "Job05_ArcOfObliteration",
+      "hintJP": "退魔剣聖斬",
+      "format": "x{CS_12_退魔剣聖斬_1}+{CS_12_退魔剣聖斬_2}/{CS_12_退魔剣聖斬_溜_1}+{CS_12_退魔剣聖斬_溜_2}/{CS_12_退魔剣聖斬_溜_1_極}+{CS_12_退魔剣聖斬_溜_2_極} (无蓄/蓄力/目押蓄力)"
+    },
+  "62": {
+    "name": "Job06_Salamander",
+    "hintJP": "サラマンダーテイル",
+    "format": "x2+0.75*N"
+  },
+    "63": {
+      "name": "Job06_Blizzard",
+      "Job": "jobmagic",
+      "hintJP": "ブリザードガイザー",
+      "format": "x{ブリザード_中央} per Hit"
+    },
+    "64": {
+      "name": "Job06_MineVolt",
+      "Job": "jobmagic",
+      "hintJP": "マインボルト",
+      "format": "x{マインボルト迎撃} per Hit"
+    },
+    "65": {
+      "name": "Job06_SaintDrain",
+      "Job": "jobmagic",
+      "hintJP": "ライフスティール",
+      "format": "x{セントドレイン}+{セントドレイン付着}*N"
+    },
+    "66": {
+      "name": "Job06_RockBeat",
+      "Job": "jobmagic",
+      "hintJP": "ロックビート",
+      "format": "x{ロックビート発生} per Hit"
+    },
+    "67": {
+      "name": "Job06_AddFlare",
+      "Job": "jobmagic",
+      "hintJP": "ギャザリングフレア",
+      "format": "直接命中: x{アッドフレア}\n爆炸: {アッドフレア爆発_フィニッシュ}/{アッドフレア爆発_初弾}+{アッドフレア爆発_フィニッシュ} (基于爆炸前对命中部位的攻击)"
+    },
+    "68": {
+      "name": "Job06_MeteorFall",
+      "Job": "jobmagic",
+      "hintJP": "メテオフォール",
+      "format": "x{メテオフォール着弾} per Hit"
+    },
+    "69": {
+      "name": "Job06_VortexRage",
+      "Job": "jobmagic",
+      "hintJP": "ヴォルテクスレイジ",
+      "format": "x{ヴォルテクスレイジ} per Hit"
+    },
+  "70": {
+    "name": "Job07_PsychoShoot",
+    "hintJP": "掲ゲル供物",
+    "format": ""
+  },
+  "71": {
+    "name": "Job07_FarThrow",
+    "hintJP": "絶界送リ",
+    "format": ""
+  },
+    "72": {
+      "name": "Job07_EnergyDrain",
+      "hintJP": "奪ウ魔手",
+      "format": "x{エナジードレイン_発動時}+{エナジードレイン_ループ中}*N"
+    },
+    "73": {
+      "name": "Job07_DragonStinger",
+      "hintJP": "飛竜ノ突キ",
+      "format": "x{飛竜突_攻撃} per Hit"
+    },
+  "74": {
+    "name": "Job07_QuickShield",
+    "hintJP": "弾ク神衣",
+    "format": ""
+  },
+    "75": {
+      "name": "Job07_BladeShoot",
+      "hintJP": "狙ウ魔刃",
+      "format": "x{ブレイド} per Hit"
+    },
+    "76": {
+      "name": "Job07_SkyDive",
+      "hintJP": "天竜ノ牙",
+      "format": "x{天竜牙}/{天竜牙_ジャスト} (普通/闪避攻击)\nLv2: {天竜牙Lv.2_物理攻撃}+{飛竜突Lv.2_魔法攻撃}/{天竜牙Lv.2_ジャスト物理攻撃}+{天竜牙Lv.2_ジャスト魔法攻撃} (普通/闪避攻击)"
+    },
+    "77": {
+      "name": "Job07_Gungnir",
+      "hintJP": "放ツ魔槍",
+      "format": "x{グングニル_小溜め} per Hit\nLv2:x{グングニルLv2_小溜め} per Hit"
+    },
+  "78": {
+    "name": "Job07_TwoSeconds",
+    "hintJP": "一息溜メ",
+    "format": ""
+  },
+    "79": {
+      "name": "Job07_DanceOfDeath",
+      "hintJP": "乱レ咬ミ",
+      "format": "x{大乱舞_1段目}*N+{大乱舞_8段目_旋回}*2+{大乱舞_8段目_フィニッシュ}+{job07.-1.21}"
+    },
+    "80": {
+      "name": "Job08_FlameLance",
+      "hintJP": "咬炎魔矢",
+      "format": "x{CS_炎烽_弾}+{CS_炎烽_爆風_Lv2}"
+    },
+    "81": {
+      "name": "Job08_BurningLight",
+      "hintJP": "天照魔球",
+      "format": "Hit:x{CS_天照_発射}+{CS_天照_発火}+{CS_天照_着弾}*N"
+    },
+    "82": {
+      "name": "Job08_FrostTrace",
+      "hintJP": "冷追魔弾",
+      "format": "x{CS_氷追_本体} per Hit"
+    },
+    "83": {
+      "name": "Job08_FrostBlock",
+      "hintJP": "氷塊魔槍",
+      "format": "x{CS_氷塊}\n基于蓄力时间获得最多+13.0伤害倍率\nLv2: 获得最多+13.5伤害倍率"
+    },
+  "84": {
+    "name": "Job08_ThunderChain",
+    "hintJP": "雷鎖魔杭",
+    "format": "x0.04/0.12/0.2 per Hit(条件不明)"
+  },
+    "85": {
+      "name": "Job08_ReflectThunder",
+      "hintJP": "跳弾魔従",
+      "format": "x{CS_跳弾} per Hit"
+    },
+    "86": {
+      "name": "Job08_AbsorbArrow",
+      "hintJP": "転命魔弓",
+      "format": "x{CS_吸生_2}+x{job08.1200.1}*N\nLv2: x{CS_吸生_2}+x{job08.1200.2}*N"
+    },
+    "87": {
+      "name": "Job08_LifeReturn",
+      "hintJP": "命還魔弓",
+      "format": ""
+    },
+    "88": {
+      "name": "Job08_CounterArrow",
+      "hintJP": "抗反魔盾",
+      "format": "x{CS_反晶_爆発}/{CS_反晶_爆発_大} (基于受到攻击的威力)"
+    },
+  "89": {
+    "name": "Job08_SleepArrow",
+    "hintJP": "昏睡魔弾",
+    "format": ""
+  },
+    "90": {
+      "name": "Job08_SeriesArrow",
+      "hintJP": "無尽魔矢",
+      "format": "x{無尽魔矢} per Hit"
+    },
+    "91": {
+      "name": "Job08_SpiritArrow",
+      "hintJP": "殉身覇魔弓",
+      "format": "x{CS_捧魂}*N (基于损失的生命上限获得伤害倍率)"
+    },
+  "92": {
+    "name": "Job09_SmokeWall",
+    "hintJP": "惑い壁の煙",
+    "format": ""
+  },
+  "93": {
+    "name": "Job09_SmokeGround",
+    "hintJP": "うつつ床の霞",
+    "format": ""
+  },
+  "94": {
+    "name": "Job09_TripFregrance",
+    "hintJP": "魂離れの虚香",
+    "format": ""
+  },
+  "95": {
+    "name": "Job09_AttentionFregrance",
+    "hintJP": "大撒きの煙",
+    "format": ""
+  },
+  "96": {
+    "name": "Job09_PossessionSmoke",
+    "hintJP": "憑りつく似姿",
+    "format": ""
+  },
+  "97": {
+    "name": "Job09_RageFregrance",
+    "hintJP": "奮いの烈香",
+    "format": ""
+  },
+  "98": {
+    "name": "Job09_DetectFregrance",
+    "hintJP": "察しの炯煙",
+    "format": ""
+  },
+  "99": {
+    "name": "Job09_SmokeDragon",
+    "hintJP": "妖かし竜の幻",
+    "format": ""
+  },
+  "100": {
+    "name": "Job10_00",
+    "hintJP": "武装早換え",
+    "format": ""
+  },
+    "101": {
+      "name": "Job04_FakeMaster",
+      "hintJP": "絶火超炎刃",
+      "format": "x{job04.15.0}/x{job04.15.1} (对敌人/对自己)"
+    }
+},
+  "NormalSkill": {
+    "1": {
+      "name": "Dummy00",
+      "hintJP": "",
+      "format": ""
+    },
+    "2": {
+      "name": "Dummy01",
+      "hintJP": "",
+      "format": ""
+    },
+    "3": {
+      "name": "Dummy02",
+      "hintJP": "",
+      "format": ""
+    },
+    "4": {
+      "name": "Job01_HalfJustGuard",
+      "hintJP": "",
+      "format": ""
+    },
+    "5": {
+      "name": "Job01_JustGuard",
+      "hintJP": "真盾弾き",
+      "format": ""
+    },
+    "6": {
+      "name": "Job01_TuskToss",
+      "hintJP": "刀牙昇斬",
+      "format": "x{刀牙昇斬_上昇}[{刀牙昇斬_下降}] [后半圈命中]"
+    },
+    "7": {
+      "name": "Job01_FallGuard",
+      "hintJP": "盾敷き",
+      "format": ""
+    },
+    "8": {
+      "name": "Job01_EnchantGuard",
+      "hintJP": "エンチャントバッシュ",
+      "format": "x{盾エンチャント反撃}/{盾エンチャント反撃_ジャスト} (普通/完美防御)"
+    },
+    "9": {
+      "name": "Job02_DashJumpAttack",
+      "hintJP": "飛び蹴り",
+      "format": "x{蹴り}/{ジャンプ蹴り}/{しがみ付き_蹴り} (普通/空中/攀爬)"
+    },
+    "10": {
+      "name": "Job02_AirShootAfterMeleeAttack",
+      "hintJP": "飛び退き射ち",
+      "format": "x{アクロバット射撃_近距離}[{アクロバット射撃_遠距離}] [射程外]"
+    },
+    "11": {
+      "name": "Job02_FullBend",
+      "hintJP": "貫き射ち",
+      "format": ""
+    },
+    "12": {
+      "name": "Job02_QuickLoose",
+      "hintJP": "早つがえ",
+      "format": ""
+    },
+    "13": {
+      "name": "Job03_PowerShot",
+      "hintJP": "コレクトマジックショット",
+      "Job": "jobmagic",
+      "format": "x{パワーショット} per Hit"
+    },
+    "14": {
+      "name": "Job03_Levitate",
+      "hintJP": "フローティング",
+      "format": ""
+    },
+    "15": {
+      "name": "Job03_Concentrate",
+      "hintJP": "ファストスペル",
+      "format": ""
+    },
+    "16": {
+      "name": "Job04_LoopAttack",
+      "hintJP": "百裂斬り",
+      "format": "x{job04.4800.0} per Hit"
+    },
+    "17": {
+      "name": "Job04_BreakFall",
+      "hintJP": "受け身",
+      "format": ""
+    },
+    "18": {
+      "name": "Job04_KickWall",
+      "hintJP": "壁飛び",
+      "format": "落下时攻击: x{job04.4110.0} per hit"
+    },
+    "19": {
+      "name": "Job04_DodgeAttack",
+      "hintJP": "",
+      "format": ""
+    },
+    "20": {
+      "name": "Job04_PickPocket",
+      "hintJP": "瞬盗",
+      "format": ""
+    },
+    "21": {
+      "name": "Job05_SpeedCombo",
+      "hintJP": "早継ぎ",
+      "format": ""
+    },
+    "22": {
+      "name": "Job05_Parry",
+      "hintJP": "弾き逸らし",
+      "format": ""
+    },
+    "23": {
+      "name": "Job05_StrongBody",
+      "hintJP": "剛体堪",
+      "format": ""
+    },
+    "24": {
+      "name": "Job05_JustRelease",
+      "hintJP": "即撃",
+      "format": "如果没有特别说明，令技能获得+10%动作值"
+    },
+    "25": {
+      "name": "Job06_BurstShot",
+      "hintJP": "バーストショット",
+      "Job": "jobmagic",
+      "format": "x{バーストショット}+{バーストショット_追撃}"
+    },
+    "26": {
+      "name": "Job07_MagicBindJustExplosion",
+      "hintJP": "散ジル魔弾",
+      "format": ""
+    },
+    "27": {
+      "name": "Job07_MagicBindJustLeap",
+      "hintJP": "刹那詰メ",
+      "format": ""
+    },
+    "28": {
+      "name": "Job07_SpiralSlash",
+      "hintJP": "螺旋斬リ",
+      "format": "x{螺旋斬}*N+{螺旋斬_フィニッシュ}"
+    },
+    "29": {
+      "name": "Job07_MagicBindLong",
+      "hintJP": "魔弾伸バシ",
+      "format": ""
+    },
+    "30": {
+      "name": "Job08_WideLockOn",
+      "hintJP": "延捉眼",
+      "format": ""
+    },
+    "31": {
+      "name": "Job08_AddMultiCount",
+      "hintJP": "累捉眼",
+      "format": ""
+    },
+    "32": {
+      "name": "Job08_JustArrow",
+      "hintJP": "極魔矢",
+      "format": ""
+    },
+    "33": {
+      "name": "Job08_RemainArrow",
+      "hintJP": "継魔矢",
+      "format": ""
+    },
+    "34": {
+      "name": "Job09_DecoyRegeneration",
+      "hintJP": "治し香",
+      "format": ""
+    },
+    "35": {
+      "name": "Job09_DecoyRangeUp",
+      "hintJP": "継ぎ香",
+      "format": ""
+    },
+    "36": {
+      "name": "Job09_ThrowSmoke",
+      "hintJP": "煙渡しの香",
+      "format": ""
+    },
+    "37": {
+      "name": "Job09_DecoyFastSummon",
+      "hintJP": "早似せの香",
+      "format": ""
+    },
+    "Job01_1": {
+      "Hint": "連撃",
+      "Job": "job01",
+      "format": "x{弱攻撃_ヒットスロー小}/{ジャンプ_弱攻撃}/{ダッシュ_弱攻撃} per Hit (站立/空中/冲刺)\nx{しがみ付き_弱攻撃}/{押さえ付け_弱攻撃} (攀爬/压制)"
+    },
+    "Job01_2": {
+      "Hint": "強刺し",
+      "Job": "job01",
+      "format": "x{強攻撃}/{押さえ付け_強攻撃}/{しがみ付き_強攻撃} (站立/压制/攀爬)\n空中:x{ジャンプ_強攻撃}/{ジャンプ_強攻撃_2段階目}/{ジャンプ_強攻撃_3段階目} (下落高度低/中/高)\n处决时附加伤害:x{渾身の追撃_近距離1段目}+{渾身の追撃_近距離2段目}/{渾身の追撃_ジャンプ1段目}+{渾身の追撃_ジャンプ2段目_蹴り} (站立/空中)\nx{大型敵真横_渾身の追撃_1段目}+{大型敵真横_渾身の追撃_2段目}/{大型敵立ち_渾身の追撃_1段目}+{大型敵立ち_渾身の追撃_2段目} （对大型/对倒地大型）"
+    },
+    "Job01_4": {
+      "Hint": "盾防御",
+      "format": ""
+    },
+    "Job01_5": {
+      "Hint": "盾弾き",
+      "format": ""
+    },
+    "Job02_1": {
+      "Hint": "弓射ち",
+      "format": "x{腰撃ちの矢_近距離}[{腰撃ちの矢_遠距離}] [射程外]\nx{押さえ付け_矢刺し}/{しがみ付き_矢刺し} (压制/攀爬)"
+    },
+    "Job02_2": {
+      "Hint": "前蹴り",
+      "format": "x{蹴り}/{ジャンプ蹴り}/{しがみ付き_蹴り}/{しがみ付き_蹴り} (站立/空中/压制/攀爬)"
+    },
+    "Job02_4": {
+      "Hint": "構え射ち",
+      "format": "x{通常の矢_low_近}/{通常の矢_middle_近}/{通常の矢_high_近} (1蓄/2蓄/满蓄)\nx{通常の矢_low_遠} (射程外)"
+    },
+    "Job03_1": {
+      "Hint": "マジックショット",
+      "format": "x{ラピッドショット} per Hit"
+    },
+    "Job03_2": {
+      "Hint": "ヒーリングスポット",
+      "format": ""
+    },
+    "Job04_1": {
+      "Hint": "連斬",
+      "format": "x{job04.4100.0}/{job04.5150.0}/{job04.4150.0}/{job04.5170.1} per Hit (站立/冲刺/空中/攀爬)\nx{job04.5170.2}+{job04.5170.3} (压制)"
+    },
+    "Job04_2": {
+      "Hint": "二連牙",
+      "format": "x{job04.-1.16} per Hit/ x{job04.5130.0} (对倒地) / x{job04.4180.1}*2+{job04.4183.0}+{job04.4186.0} (攀爬)\n空中:x{job04.4160.2}/{job04.4160.6}/{job04.4160.4} (下落高度低/中/高)\n处决附加伤害(对大型获得+50%动作值):\nx{job04.-1.3}+{job04.-1.5} / x{job04.4210.1}+{job04.4215.1}+{job04.4218.2} (近/远)\nx{job04.4290.1}+{job04.4295.1}/x{job04.4230.1}+{job04.4235.2}/{渾身_地_ダウン_渾身対象}+{渾身_地_ダウン_渾身対象_2} (压制/空中/对倒地)\n"
+    },
+    "Job04_4": {
+      "Hint": "迅身",
+      "format": ""
+    },
+    "Job05_1": {
+      "Hint": "撫で斬り",
+      "Job": "job05",
+      "format": "x{N_軽}/{N_地_軽_走} (站立/冲刺)\nx{N_握_軽} (攀爬或压制)\n后半圈命中:x{N_軽_カス}/{N_空_軽_カス}/{N_地_軽_走_カス} (站立/空中/冲刺)\nx{N_溜_振り中_右} (蓄力)"
+    },
+    "Job05_2": {
+      "Hint": "叩き割り",
+      "Job": "job05",
+      "format": "x{N_地_重_振り中}/{N_地_重_走り_振り中}/{N_握_重}/({N_握_重}+{N_握_重_落下中}*N) (站立/冲刺/攀爬/空中)\n站在敌人身上:x{N_EM立_重_刺し}+{N_EM立_重_抜き2}/{N_EM立_重_刺し_打武器}+{N_EM立_重_抜き1_打武器} (斩击武器/打击武器)\n处决附加伤害:x{渾身_地_立_前_1_渾身対象}+{渾身_地_立_前_2_渾身対象}/{job05.5200.1}+{job05.5205.2} (小型/大型)\nx{渾身_地空_ダウン_渾身対象_1}+{渾身_地空_ダウン_渾身対象_2}/{job05.5240.2}+{job05.5245.2} (对倒地/对倒地大型)\nx{渾身_空_立_渾身対象_1}+{渾身_空_立_渾身対象_2}/{job05.5230.2}+{job05.5231.2} (空中对小型/空中对大型)\nx{渾身_EM立_渾身対象_1}+{渾身_EM立_渾身対象_2} (站在敌人身上)"
+    },
+    "Job05_4": {
+      "Hint": "剛体衝",
+      "format": "x{N_地_タックル}"
+    },
+    "Job06_1": {
+      "Hint": "<REF job03_act_00>",
+      "Job": "jobmagic",
+      "format": "x{ラピッドショット} per Hit"
+    },
+    "Job06_2": {
+      "Hint": "スタミナリペア",
+      "format": ""
+    },
+    "Job07_1": {
+      "Hint": "弐ツ斬リ",
+      "format": "x{弱攻撃_２段ヒット用_初段}+{弱攻撃_ヒットスロー小}*N/x{ダッシュ_弱攻撃_１段目}/{ジャンプ_弱攻撃}/{押さえ付け_弱攻撃} (冲刺/空中/攀爬或压制)"
+    },
+    "Job07_2": {
+      "Hint": "魔裁チ斬リ",
+      "format": "x{強攻撃_１段目}+{強攻撃_２段目}+{魔斬波_強攻撃の魔力斬撃}\nx{ジャンプ_強攻撃_落下中}+{ジャンプ_強攻撃_着地後(魔法)}/({強攻撃_大型敵乗り_１段目}*2)/{job07.-1.50}+{job07.-1.51} (空中/站在敌人身上/攀爬或压制)\n处决附加伤害:x{渾身の追撃_1段目}*2/x{大型敵立ち_渾身の追撃_1段目}+{job07.-1.23}/x{大型敵真横_渾身の追撃_1段目}+{job07.7315.0} (对小型/对大型/对倒地大型)"
+    },
+    "Job07_4": {
+      "Hint": "畏レノ魔弾",
+      "format": ""
+    },
+    "Job07_5": {
+      "Hint": "封ジノ魔弾",
+      "format": ""
+    },
+    "Job08_1": {
+      "Hint": "即射",
+      "format": "x{攻撃魔矢_腰射ち} per Hit\nx{押さえつけ/しがみ付き} (攀爬或压制)"
+    },
+    "Job08_2": {
+      "Hint": "転魔眼",
+      "format": ""
+    },
+    "Job08_4": {
+      "Hint": "構え広射",
+      "format": "x{攻撃魔矢} per Hit"
+    },
+    "Job08_5": {
+      "Hint": "構え狭射",
+      "format": "x{攻撃魔矢} per Hit"
+    },
+    "Job09_1": {
+      "Hint": "浴びせの香",
+      "format": "x{香炉攻撃}/x{香炉攻撃_OBJのみ当たる} (对敌人/物体)"
+    },
+    "Job09_2": {
+      "Hint": "似姿の香",
+      "format": ""
+    },
+    "Job09_3": {
+      "Hint": "似姿消しの香",
+      "format": ""
+    },
+    "Job09_4": {
+      "Hint": "姿寄せの香",
+      "format": ""
+    },
+    "Job09_5": {
+      "Hint": "姿憑かせの香",
+      "format": ""
+    }
+  }
+}

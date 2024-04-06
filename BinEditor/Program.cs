@@ -26,8 +26,9 @@ if (false)
 }
 
 Dictionary<string, string> itemId2Name = new Dictionary<string, string>();
+if (false)
 {
-    var text = File.ReadAllText("E:\\OtherGame\\DragonDogma2\\ITEM_NAME_LOOKUP.json");
+    var text = File.ReadAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\ITEM_NAME_LOOKUP.json");
     var doc = JsonConvert.DeserializeObject(text)! as JObject;
     foreach (JProperty pair in doc["chS"])
     {
@@ -189,6 +190,7 @@ if(false)
 
 //"e980ba7a-aa46-453b-8561-950ad0d09fcb" 835
 //
+if (false)
 {
     string original_filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\re_chunk_000\\natives\\stm\\event\\talkevent\\talkeventresource\\common.user.2";
     string filename = $"E:\\OtherGame\\DragonDogma2\\REtool\\StorageAnywhere\\natives\\stm\\event\\talkevent\\talkeventresource\\common.user.2";
@@ -250,7 +252,7 @@ if (false)
 
 
 //item detail
-//if(false)
+if(false)
 {
     List<int> itemIdByOrder = new List<int>();
     {
@@ -429,6 +431,84 @@ if (false)
     }
 }
 
+userdata.LoadTypeDefine();
+
+//ActionRate
+{
+    //    var y=IsInitialized();
+    var ret = "";
+    var jsonDoc = new Dictionary<string,object>();
+    var jobEnumDictionary = new HashSet<string>()
+    {
+    "job01",
+    "job02",
+    "job03",
+    "job04",
+    "job05",
+    "job06",
+    "job07",
+    "job08",
+    "job09",
+    "job10",
+    "jobmagic",
+    };
+    foreach (var file in Directory.GetFiles("E:\\OtherGame\\DragonDogma2\\rcolLess\\"))
+        //if(file.Contains("1720828575-1911543801.rcol.10"))
+    {
+        var filinfo = new FileInfo(file);
+        var filename=filinfo.Name;
+        while (filename.LastIndexOf('.')>0)
+            filename=filename.Substring(0,filename.LastIndexOf("."));
+
+        foreach(var jobEnum in jobEnumDictionary)
+            if(filename.Contains(jobEnum))
+            {
+                filename = jobEnum; break;
+            }
+
+        if (!jsonDoc.ContainsKey(filename))
+            jsonDoc[filename] = new Dictionary<string, object>();
+        var jsonJobObject= (jsonDoc[filename] as Dictionary<string, object>)!;
+
+        var userdata = new userdata();
+        userdata.Read(file);
+        var tmpstr = "";
+        var hint2ARDic = new Dictionary<string, float>();   
+        foreach (var instance in userdata.instances)
+            if (instance.typeDefine.Name.Equals("app.AttackUserData"))
+            {
+                //SameAttackObjectID和SameFrameHitID似乎要么为空要么等于SameAttackID
+                var satkID = (instance.dynamicValues["SameAttackID"] as int?);
+
+                var atkIDkey=satkID.ToString();
+                if(!jsonJobObject.ContainsKey(atkIDkey))
+                    jsonJobObject[atkIDkey]= new List<object>();
+                var jsonAtkIDObject= (jsonJobObject[atkIDkey] as List<object>)!;
+
+                var hint= (instance.dynamicValues["v0"] as string)!;
+                var ar= (instance.dynamicValues["ActionRate"] as float?);
+                if (hint2ARDic.ContainsKey(hint)&& hint2ARDic[hint]==ar)//相同的值只写一遍
+                    continue;
+                hint2ARDic[hint] = (float)ar!;
+
+
+                var actionObject = new Dictionary<string, object>();               
+
+                actionObject["Hint"] = hint;
+                actionObject["ActionRate"] = ar;
+                //actionObject["Path"] = $"{filename}.{atkIDkey}.{actionKey}";
+                jsonAtkIDObject.Add(actionObject);
+                //stupid
+                jsonAtkIDObject.Sort((l,r) => { return ((l as Dictionary<string, object>)!["Hint"] as string)!.CompareTo((r as Dictionary<string, object>)!["Hint"] as string); } );
+                for(int i=0;i<jsonAtkIDObject.Count;i++)
+                    (jsonAtkIDObject[i] as Dictionary<string, object>)!["Path"]= $"{filename}.{atkIDkey}.{i}";
+            }
+        if (jsonJobObject.Count() == 0) jsonDoc.Remove(filename);
+    }
+    var jsonText = JsonConvert.SerializeObject(jsonDoc);
+    Console.WriteLine(jsonText);
+    File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\SkillDescription\\reframework\\data\\SkillDescription.Para.json", jsonText);
+}
 
 string readIdList(byte[] bytes, ref int offset)
 {

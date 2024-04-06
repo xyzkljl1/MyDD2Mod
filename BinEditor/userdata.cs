@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,7 +22,34 @@ namespace BinEditor
         appItemDataParam = 0x6111A04D,
         appItemArmorData = 0xA111A467,
         appItemArmorDataParam = 0xFA962830,
+
+        viaphysicsUserData = 0xF767C93F,
+        appAttackUserData = 0xE7BD8658,
+        appAttackUserDataEnchantData = 0xF7CA2BAD,
+        appAttackUserDataHitBackDirOptionData = 0x4D308118,
+        appAttackUserDataStatusConditionAccumulationInfo = 0xC60DE11A,
+        appAttackUserDataStatusConditionAtkData = 0x7D1BB74D,
+        appAttackUserDataFriendHitData = 0xBF396190,
+        appAttackUserDataSpecialParam = 0xF14FD085,
+        viaphysicsRequestSetColliderUserData=0xC7516CCC
     };
+    public class TypeDefineField
+    {
+        public int align;
+        public string name;
+        public string original_type;
+        public int size;
+        public string type;
+        public bool array;
+    }
+
+    public class TypeDefine
+    {
+        public int CRC;
+        public string Name ="";
+        public int TypeEnum ;
+        public List<TypeDefineField> fields=new List<TypeDefineField>();
+    }
     public class userdata
     {
         public byte[] start_unknown = new byte[0x30];
@@ -35,22 +64,38 @@ namespace BinEditor
         Dictionary<InstanceTypeEnum, Type> Enum2Class = new Dictionary<InstanceTypeEnum, Type>();
         Dictionary<Type, InstanceTypeEnum> Class2Enum = new Dictionary<Type, InstanceTypeEnum>();
 
+        static Dictionary<string, TypeDefine> TypeDefineMap = new Dictionary<string, TypeDefine>();
+        static Dictionary<int, TypeDefine> TypeDefineEnumMap = new Dictionary<int, TypeDefine>();
+        public static void LoadTypeDefine()
+        {
+            var text = File.ReadAllText("E:\\OtherGame\\DragonDogma2\\RE_RSZ\\rszdd2.json");
+            var doc = JsonConvert.DeserializeObject(text)! as JToken;
+            foreach (JProperty pair in doc!.Children())
+            {
+                var name= pair.Value["name"]!.ToString();
+                if (name == "") continue;
+                var typeDefine=new TypeDefine();
+                var x = pair.Value["crc"]!.ToString();
+                typeDefine.CRC = (int)new System.ComponentModel.Int32Converter().ConvertFromString("0x"+pair.Value["crc"]!.ToString())!;
+                typeDefine.TypeEnum = (int)new System.ComponentModel.Int32Converter().ConvertFromString("0x" + pair.Name!.ToString())!;
+                typeDefine.Name = pair.Value["name"]!.ToString();
+                foreach (var _field in pair.Value["fields"]!.ToArray<JToken>())
+                {
+                    var field=new TypeDefineField();
+                    field.align = _field["align"]!.Value<int>();
+                    field.size = _field["size"]!.Value<int>();
+                    field.array = _field["array"]!.Value<bool>();
+                    field.original_type = _field["original_type"]!.Value<string>()!;
+                    field.type = _field["type"]!.Value<string>()!;
+                    field.name = _field["name"]!.Value<string>()!;
+                    typeDefine.fields.Add(field);
+                }
+                TypeDefineMap.Add(typeDefine.Name, typeDefine);
+                TypeDefineEnumMap.Add(typeDefine.TypeEnum, typeDefine);
+            }
+        }
         public userdata()
         {
-            //init Enum2Class/Class2Enum
-            var enumnames = Enum.GetNames(typeof(InstanceTypeEnum));
-            var values = Enum.GetValues(typeof(InstanceTypeEnum));
-            int ct = 0;
-            foreach (InstanceTypeEnum v in values)
-            {
-                var enumname = enumnames[ct];
-                ct++;
-
-                var typename = $"BinEditor.{enumname.Substring(3)}";
-                var type = Type.GetType(typename);
-                Enum2Class.Add(v, type!);
-                Class2Enum.Add(type!, v);
-            }
         }
         public void IncreaseAllIdx(int offset)
         {
@@ -61,14 +106,21 @@ namespace BinEditor
         }
         public void Read(string filename) 
         {
+            bool isRCOL = filename.Contains(".rcol.");
             int offset = 0x0;
             bytes = File.ReadAllBytes(filename);
             
             //0~0x30
             System.Array.Copy(bytes,start_unknown, start_unknown.Length);
             offset = start_unknown.Length;
+            if (isRCOL)
+            {
+                int rszheaderoffset= BitConverter.ToInt32(bytes,0x38);
+                offset = rszheaderoffset;
+            }
 
             //rszheader
+            var rszheaderStart = offset;
             rszheader.Read(bytes,ref offset);
 
             if (rszheader.magic != 0x5a5352)
@@ -82,13 +134,13 @@ namespace BinEditor
             }
 
             //instanceInfo
-            offset =0x30+ (int)rszheader.instanceOffset;
+            offset = rszheaderStart + (int)rszheader.instanceOffset;
             {
                 offset += 0x8;
                 for (; offset < bytes.Length;)
                 {
                     uint id = BitConverter.ToUInt32(bytes, offset);
-                    if (id == 0)
+                    if (id == 0 || instanceinfos.Count()>=rszheader.instanceCount-1)//去掉开头的null
                         break;
                     instanceinfos.Add((InstanceTypeEnum)id);
                     uint CRC = BitConverter.ToUInt32(bytes, offset + 0x4);
@@ -100,15 +152,14 @@ namespace BinEditor
             }
 
             //instancez
-            offset = (int)rszheader.userdataOffset + 0x30;
+            offset = (int)rszheader.userdataOffset + rszheaderStart;
             foreach (var instanceInfo in instanceinfos)
             {
-                var type = Enum2Class[(InstanceTypeEnum)instanceInfo];
-                var tmp = Activator.CreateInstance(type) as ReadableItem;
-                tmp!.Read(bytes, ref offset);
+                var typeDefine = TypeDefineEnumMap[(int)instanceInfo];
+                var tmp = new ReadableItem();
+                tmp!.Read(bytes, ref offset,typeDefine);
                 instances.Add(tmp);
             }
-
         }
         public void Write(string filename)
         {

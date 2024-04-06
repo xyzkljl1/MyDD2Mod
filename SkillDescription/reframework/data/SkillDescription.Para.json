@@ -1,0 +1,4659 @@
+{
+  "1005694824-781805415": {
+    "-1": [
+      {
+        "Hint": "サンダーレイン地面部分\u0000",
+        "ActionRate": 0.1,
+        "Path": "1005694824-781805415.-1.0"
+      },
+      {
+        "Hint": "サンダーレイン雷部分\u0000",
+        "ActionRate": 0.2,
+        "Path": "1005694824-781805415.-1.1"
+      }
+    ]
+  },
+  "1033683726-4197719267": {
+    "-1": [
+      {
+        "Hint": "ヴォルテクスレイジ\u0000",
+        "ActionRate": 1.0,
+        "Path": "1033683726-4197719267.-1.0"
+      }
+    ]
+  },
+  "1179120857-738622297": {
+    "-1": [
+      {
+        "Hint": "火柱(小)\u0000",
+        "ActionRate": 1.0,
+        "Path": "1179120857-738622297.-1.0"
+      },
+      {
+        "Hint": "火柱(小)残し\u0000",
+        "ActionRate": 1.0,
+        "Path": "1179120857-738622297.-1.1"
+      }
+    ]
+  },
+  "1497558459-3795951231": {
+    "-1": [
+      {
+        "Hint": "DarkBallS\u0000",
+        "ActionRate": 1.0,
+        "Path": "1497558459-3795951231.-1.0"
+      }
+    ]
+  },
+  "1720828575-1911543801": {
+    "30": [
+      {
+        "Hint": "ロックビート\u0000",
+        "ActionRate": 0.1,
+        "Path": "1720828575-1911543801.30.0"
+      },
+      {
+        "Hint": "ロックビート_地震\u0000",
+        "ActionRate": 0.0,
+        "Path": "1720828575-1911543801.30.1"
+      }
+    ]
+  },
+  "2023551148-988252014": {
+    "-1": [
+      {
+        "Hint": "FireBulletHitObj\u0000",
+        "ActionRate": 1.0,
+        "Path": "2023551148-988252014.-1.0"
+      },
+      {
+        "Hint": "FireBulletHitTerrain\u0000",
+        "ActionRate": 1.0,
+        "Path": "2023551148-988252014.-1.1"
+      },
+      {
+        "Hint": "FireBulletL\u0000",
+        "ActionRate": 1.0,
+        "Path": "2023551148-988252014.-1.2"
+      }
+    ]
+  },
+  "2135039041-1201336816": {
+    "-1": [
+      {
+        "Hint": "DarkBulletHitObj\u0000",
+        "ActionRate": 1.0,
+        "Path": "2135039041-1201336816.-1.0"
+      },
+      {
+        "Hint": "DarkBulletHitTerrain\u0000",
+        "ActionRate": 1.0,
+        "Path": "2135039041-1201336816.-1.1"
+      },
+      {
+        "Hint": "DarkBulletL\u0000",
+        "ActionRate": 1.0,
+        "Path": "2135039041-1201336816.-1.2"
+      }
+    ]
+  },
+  "2365592691-869182097": {
+    "-1": [
+      {
+        "Hint": "火柱(大)\u0000",
+        "ActionRate": 1.2,
+        "Path": "2365592691-869182097.-1.0"
+      },
+      {
+        "Hint": "火柱(大)残し\u0000",
+        "ActionRate": 0.1,
+        "Path": "2365592691-869182097.-1.1"
+      }
+    ]
+  },
+  "2437543180-1965520868": {
+    "3": [
+      {
+        "Hint": "範囲魔法雷・初段\u0000",
+        "ActionRate": 1.0,
+        "Path": "2437543180-1965520868.3.0"
+      },
+      {
+        "Hint": "範囲魔法雷・継続\u0000",
+        "ActionRate": 1.0,
+        "Path": "2437543180-1965520868.3.1"
+      }
+    ]
+  },
+  "2527669405-345013407": {
+    "-1": [
+      {
+        "Hint": "Explosion\u0000",
+        "ActionRate": 1.0,
+        "Path": "2527669405-345013407.-1.0"
+      }
+    ]
+  },
+  "2762884318-3788578998": {
+    "-1": [
+      {
+        "Hint": "メテオフォール\u0000",
+        "ActionRate": 1.0,
+        "Path": "2762884318-3788578998.-1.0"
+      },
+      {
+        "Hint": "メテオフォール着弾\u0000",
+        "ActionRate": 1.0,
+        "Path": "2762884318-3788578998.-1.1"
+      }
+    ]
+  },
+  "3180072437-986500097": {
+    "2": [
+      {
+        "Hint": "範囲魔法氷・継続\u0000",
+        "ActionRate": 1.0,
+        "Path": "3180072437-986500097.2.0"
+      }
+    ]
+  },
+  "3340486556-3041293022": {
+    "3": [
+      {
+        "Hint": "範囲魔法\u0000",
+        "ActionRate": 1.0,
+        "Path": "3340486556-3041293022.3.0"
+      }
+    ]
+  },
+  "3699040311-4265158846": {
+    "4": [
+      {
+        "Hint": "範囲魔法闇・初段\u0000",
+        "ActionRate": 1.0,
+        "Path": "3699040311-4265158846.4.0"
+      },
+      {
+        "Hint": "範囲魔法闇・継続\u0000",
+        "ActionRate": 1.0,
+        "Path": "3699040311-4265158846.4.1"
+      }
+    ]
+  },
+  "600730901-951994483": {
+    "2": [
+      {
+        "Hint": "範囲魔法氷・初段\u0000",
+        "ActionRate": 1.0,
+        "Path": "600730901-951994483.2.0"
+      },
+      {
+        "Hint": "範囲魔法氷・継続\u0000",
+        "ActionRate": 1.0,
+        "Path": "600730901-951994483.2.1"
+      }
+    ]
+  },
+  "935541284-42473901": {
+    "-1": [
+      {
+        "Hint": "フロストスパイク\u0000",
+        "ActionRate": 1.0,
+        "Path": "935541284-42473901.-1.0"
+      }
+    ]
+  },
+  "commonshellcharactercollider": {
+    "-1": [
+      {
+        "Hint": "感電\u0000",
+        "ActionRate": 0.0,
+        "Path": "commonshellcharactercollider.-1.0"
+      },
+      {
+        "Hint": "感電・チェック当たり\u0000",
+        "ActionRate": 1.0,
+        "Path": "commonshellcharactercollider.-1.1"
+      },
+      {
+        "Hint": "水感電\u0000",
+        "ActionRate": 0.0,
+        "Path": "commonshellcharactercollider.-1.2"
+      }
+    ]
+  },
+  "fireareastatusshellcollider": {
+    "0": [
+      {
+        "Hint": "範囲魔法炎Ver1\u0000",
+        "ActionRate": 0.1,
+        "Path": "fireareastatusshellcollider.0.0"
+      }
+    ]
+  },
+  "humancommon": {
+    "-1": [
+      {
+        "Hint": "多重詠唱\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.0"
+      },
+      {
+        "Hint": "高所落下巻き込みアタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.1"
+      },
+      {
+        "Hint": "掴み外し専用_敵対\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.2"
+      },
+      {
+        "Hint": "掴み外し専用_中立・味方\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.3"
+      },
+      {
+        "Hint": "素手_大型敵立ち_強攻撃\u0000",
+        "ActionRate": 5.0,
+        "Path": "humancommon.-1.4"
+      },
+      {
+        "Hint": "素手_渾身の追撃_大型敵横\u0000",
+        "ActionRate": 15.0,
+        "Path": "humancommon.-1.5"
+      },
+      {
+        "Hint": "素手_渾身の追撃_立ち\u0000",
+        "ActionRate": 20.0,
+        "Path": "humancommon.-1.6"
+      },
+      {
+        "Hint": "素手_渾身の追撃_ダウン\u0000",
+        "ActionRate": 9.5,
+        "Path": "humancommon.-1.7"
+      },
+      {
+        "Hint": "素手_立ち強攻撃_近距離\u0000",
+        "ActionRate": 2.5,
+        "Path": "humancommon.-1.8"
+      },
+      {
+        "Hint": "素手_立ち強攻撃_遠距離\u0000",
+        "ActionRate": 2.5,
+        "Path": "humancommon.-1.9"
+      },
+      {
+        "Hint": "素手_立ち弱攻撃_右方向\u0000",
+        "ActionRate": 1.5,
+        "Path": "humancommon.-1.10"
+      },
+      {
+        "Hint": "素手_立ち弱攻撃_左方向\u0000",
+        "ActionRate": 1.5,
+        "Path": "humancommon.-1.11"
+      },
+      {
+        "Hint": "素手_押さえつけ強攻撃\u0000",
+        "ActionRate": 2.5,
+        "Path": "humancommon.-1.12"
+      },
+      {
+        "Hint": "素手_押さえつけ弱攻撃\u0000",
+        "ActionRate": 2.5,
+        "Path": "humancommon.-1.13"
+      },
+      {
+        "Hint": "素手_しがみ付き強攻撃\u0000",
+        "ActionRate": 3.5,
+        "Path": "humancommon.-1.14"
+      },
+      {
+        "Hint": "素手_しがみ付き弱攻撃\u0000",
+        "ActionRate": 2.0,
+        "Path": "humancommon.-1.15"
+      },
+      {
+        "Hint": "素手_ジャンプ強攻撃\u0000",
+        "ActionRate": 3.0,
+        "Path": "humancommon.-1.16"
+      },
+      {
+        "Hint": "素手_ジャンプ弱攻撃\u0000",
+        "ActionRate": 2.0,
+        "Path": "humancommon.-1.17"
+      },
+      {
+        "Hint": "梯子攻撃_キック\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.18"
+      },
+      {
+        "Hint": "梯子攻撃_パンチ\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.19"
+      },
+      {
+        "Hint": "投げられアタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.20"
+      },
+      {
+        "Hint": "状態異常 燃焼\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.21"
+      },
+      {
+        "Hint": "CarryDashBump\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.22"
+      },
+      {
+        "Hint": "Catch\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.23"
+      },
+      {
+        "Hint": "CatchAndRelease\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.24"
+      },
+      {
+        "Hint": "CatchCheck\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.25"
+      },
+      {
+        "Hint": "CatchFriendAir\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.26"
+      },
+      {
+        "Hint": "CatchFriendGround\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.27"
+      },
+      {
+        "Hint": "CatchGimmick\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.28"
+      },
+      {
+        "Hint": "CatchLarge\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.29"
+      },
+      {
+        "Hint": "CatchToFinishAttack\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.30"
+      },
+      {
+        "Hint": "CheckHitSearchDeadBody\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.31"
+      },
+      {
+        "Hint": "DashForce\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.32"
+      },
+      {
+        "Hint": "オオカミ_掴み外し専用\u0000",
+        "ActionRate": 0.15,
+        "Path": "humancommon.-1.33"
+      },
+      {
+        "Hint": "ゾンビ_掴み外し専用\u0000",
+        "ActionRate": 0.15,
+        "Path": "humancommon.-1.34"
+      },
+      {
+        "Hint": "ハーピー呼び寄せ設置用\u0000",
+        "ActionRate": 0.0,
+        "Path": "humancommon.-1.35"
+      },
+      {
+        "Hint": "ハイタッチ_チェック\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.36"
+      },
+      {
+        "Hint": "メデューサの首_石化ビーム\u0000",
+        "ActionRate": 1.0,
+        "Path": "humancommon.-1.37"
+      }
+    ]
+  },
+  "humanshellcollider_item": {
+    "-1": [
+      {
+        "Hint": "アッドフレア\u0000",
+        "ActionRate": 0.2,
+        "Path": "humanshellcollider_item.-1.0"
+      },
+      {
+        "Hint": "アッドフレア爆発\u0000",
+        "ActionRate": 15.0,
+        "Path": "humanshellcollider_item.-1.1"
+      },
+      {
+        "Hint": "アッドフレア爆発_初弾\u0000",
+        "ActionRate": 15.0,
+        "Path": "humanshellcollider_item.-1.2"
+      },
+      {
+        "Hint": "アッドフレア爆発_巻き込み\u0000",
+        "ActionRate": 3.75,
+        "Path": "humanshellcollider_item.-1.3"
+      },
+      {
+        "Hint": "アッドフレア爆発_MAX溜めフィニッシュ\u0000",
+        "ActionRate": 30.0,
+        "Path": "humanshellcollider_item.-1.4"
+      },
+      {
+        "Hint": "アッドフレア爆発_MAX溜めフィニッシュ_巻き込み\u0000",
+        "ActionRate": 7.5,
+        "Path": "humanshellcollider_item.-1.5"
+      },
+      {
+        "Hint": "アッドフレア爆発_フィニッシュ\u0000",
+        "ActionRate": 20.0,
+        "Path": "humanshellcollider_item.-1.6"
+      },
+      {
+        "Hint": "アッドフレア爆発_フィニッシュ_巻き込み\u0000",
+        "ActionRate": 5.0,
+        "Path": "humanshellcollider_item.-1.7"
+      },
+      {
+        "Hint": "ヴォルテクスレイジ\u0000",
+        "ActionRate": 2.0,
+        "Path": "humanshellcollider_item.-1.8"
+      },
+      {
+        "Hint": "ヴォルテクスレイジ_竜激の香\u0000",
+        "ActionRate": 1.6,
+        "Path": "humanshellcollider_item.-1.9"
+      },
+      {
+        "Hint": "ガードビット\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.10"
+      },
+      {
+        "Hint": "キュアスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.11"
+      },
+      {
+        "Hint": "スペルブレイク\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.12"
+      },
+      {
+        "Hint": "セントドレイン\u0000",
+        "ActionRate": 1.0,
+        "Path": "humanshellcollider_item.-1.13"
+      },
+      {
+        "Hint": "セントドレイン付着\u0000",
+        "ActionRate": 0.18,
+        "Path": "humanshellcollider_item.-1.14"
+      },
+      {
+        "Hint": "ゾーンオブザゴッド\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.15"
+      },
+      {
+        "Hint": "バーストショット\u0000",
+        "ActionRate": 1.45,
+        "Path": "humanshellcollider_item.-1.16"
+      },
+      {
+        "Hint": "バーストショット_追撃\u0000",
+        "ActionRate": 0.7,
+        "Path": "humanshellcollider_item.-1.17"
+      },
+      {
+        "Hint": "パワーショット\u0000",
+        "ActionRate": 1.45,
+        "Path": "humanshellcollider_item.-1.18"
+      },
+      {
+        "Hint": "ヒーリングスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.19"
+      },
+      {
+        "Hint": "ブリザード_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.20"
+      },
+      {
+        "Hint": "フロストスパイクLv2_冷気\u0000",
+        "ActionRate": 1.5,
+        "Path": "humanshellcollider_item.-1.21"
+      },
+      {
+        "Hint": "ヘイストスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.22"
+      },
+      {
+        "Hint": "ホーリーシャイン\u0000",
+        "ActionRate": 0.25,
+        "Path": "humanshellcollider_item.-1.23"
+      },
+      {
+        "Hint": "ホーリーシャイン：対アンデッド\u0000",
+        "ActionRate": 4.375,
+        "Path": "humanshellcollider_item.-1.24"
+      },
+      {
+        "Hint": "マインボルト探知\u0000",
+        "ActionRate": 1.0,
+        "Path": "humanshellcollider_item.-1.25"
+      },
+      {
+        "Hint": "マインボルト迎撃\u0000",
+        "ActionRate": 0.35,
+        "Path": "humanshellcollider_item.-1.26"
+      },
+      {
+        "Hint": "マインボルト迎撃軌道\u0000",
+        "ActionRate": 0.35,
+        "Path": "humanshellcollider_item.-1.27"
+      },
+      {
+        "Hint": "マインボルト予兆アタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.28"
+      },
+      {
+        "Hint": "メテオフォール\u0000",
+        "ActionRate": 5.0,
+        "Path": "humanshellcollider_item.-1.29"
+      },
+      {
+        "Hint": "メテオフォール着弾\u0000",
+        "ActionRate": 15.0,
+        "Path": "humanshellcollider_item.-1.30"
+      },
+      {
+        "Hint": "ラピッドショット\u0000",
+        "ActionRate": 0.16,
+        "Path": "humanshellcollider_item.-1.31"
+      },
+      {
+        "Hint": "ロックビート_地震\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_item.-1.32"
+      },
+      {
+        "Hint": "ロックビート発生\u0000",
+        "ActionRate": 4.5,
+        "Path": "humanshellcollider_item.-1.33"
+      }
+    ],
+    "2": [
+      {
+        "Hint": "ファイヤーストーム\u0000",
+        "ActionRate": 0.85,
+        "Path": "humanshellcollider_item.2.0"
+      },
+      {
+        "Hint": "ファイヤーストーム_Lv.2\u0000",
+        "ActionRate": 0.85,
+        "Path": "humanshellcollider_item.2.1"
+      }
+    ],
+    "69": [
+      {
+        "Hint": "フロストスパイク_奥\u0000",
+        "ActionRate": 4.0,
+        "Path": "humanshellcollider_item.69.0"
+      },
+      {
+        "Hint": "フロストスパイク_手前\u0000",
+        "ActionRate": 1.0,
+        "Path": "humanshellcollider_item.69.1"
+      }
+    ],
+    "25": [
+      {
+        "Hint": "サンダーレイン\u0000",
+        "ActionRate": 1.1,
+        "Path": "humanshellcollider_item.25.0"
+      },
+      {
+        "Hint": "サンダーレイン_追撃\u0000",
+        "ActionRate": 0.8,
+        "Path": "humanshellcollider_item.25.1"
+      }
+    ],
+    "28": [
+      {
+        "Hint": "ヒーリングスポット：対アンデッド\u0000",
+        "ActionRate": 0.85,
+        "Path": "humanshellcollider_item.28.0"
+      }
+    ],
+    "2110": [
+      {
+        "Hint": "ブリザード_右奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2110.0"
+      },
+      {
+        "Hint": "ブリザード_右手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2110.1"
+      },
+      {
+        "Hint": "ブリザード_中央\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2110.2"
+      },
+      {
+        "Hint": "ブリザード_左奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2110.3"
+      },
+      {
+        "Hint": "ブリザード_左手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2110.4"
+      }
+    ],
+    "2114": [
+      {
+        "Hint": "ブリザードLv.2_右奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2114.0"
+      },
+      {
+        "Hint": "ブリザードLv.2_右手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2114.1"
+      },
+      {
+        "Hint": "ブリザードLv.2_中央\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2114.2"
+      },
+      {
+        "Hint": "ブリザードLv.2_左奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2114.3"
+      },
+      {
+        "Hint": "ブリザードLv.2_左手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_item.2114.4"
+      }
+    ]
+  },
+  "job01": {
+    "-1": [
+      {
+        "Hint": "(地上)えぐり刺し_しがみつき判定\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.-1.0"
+      },
+      {
+        "Hint": "(地上)えぐり刺し_ループ\u0000",
+        "ActionRate": 1.75,
+        "Path": "job01.-1.1"
+      },
+      {
+        "Hint": "(しがみつき)えぐり刺し_開始\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.2"
+      },
+      {
+        "Hint": "(しがみつき)えぐり刺し_フィニッシュ\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.3"
+      },
+      {
+        "Hint": "(しがみつき)えぐり刺し_ループ\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.4"
+      },
+      {
+        "Hint": "大型敵立ち_渾身の追撃_1段目\u0000",
+        "ActionRate": 17.0,
+        "Path": "job01.-1.5"
+      },
+      {
+        "Hint": "大型敵立ち_渾身の追撃_2段目\u0000",
+        "ActionRate": 3.0,
+        "Path": "job01.-1.6"
+      },
+      {
+        "Hint": "大型敵真横_渾身の追撃_1段目\u0000",
+        "ActionRate": 12.0,
+        "Path": "job01.-1.7"
+      },
+      {
+        "Hint": "盾エンチャント反撃\u0000",
+        "ActionRate": 0.25,
+        "Path": "job01.-1.8"
+      },
+      {
+        "Hint": "盾エンチャント反撃_ジャスト\u0000",
+        "ActionRate": 0.5,
+        "Path": "job01.-1.9"
+      },
+      {
+        "Hint": "渾身の追撃_近距離1段目\u0000",
+        "ActionRate": 7.5,
+        "Path": "job01.-1.10"
+      },
+      {
+        "Hint": "渾身の追撃_遠距離1段目\u0000",
+        "ActionRate": 7.5,
+        "Path": "job01.-1.11"
+      },
+      {
+        "Hint": "渾身の追撃_ジャンプ1段目\u0000",
+        "ActionRate": 7.5,
+        "Path": "job01.-1.12"
+      },
+      {
+        "Hint": "空裂斬_攻撃\u0000",
+        "ActionRate": 2.5,
+        "Path": "job01.-1.13"
+      },
+      {
+        "Hint": "空裂斬_攻撃Lv.2\u0000",
+        "ActionRate": 2.75,
+        "Path": "job01.-1.14"
+      },
+      {
+        "Hint": "空裂斬_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "job01.-1.15"
+      },
+      {
+        "Hint": "空舞の盾\u0000",
+        "ActionRate": 0.0,
+        "Path": "job01.-1.16"
+      },
+      {
+        "Hint": "強攻撃\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.17"
+      },
+      {
+        "Hint": "強攻撃_大型敵乗り専用\u0000",
+        "ActionRate": 5.0,
+        "Path": "job01.-1.18"
+      },
+      {
+        "Hint": "弱攻撃_ヒットスロー小\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.-1.19"
+      },
+      {
+        "Hint": "弱攻撃_ヒットスロー中\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.-1.20"
+      },
+      {
+        "Hint": "押さえ付け_強攻撃\u0000",
+        "ActionRate": 3.0,
+        "Path": "job01.-1.21"
+      },
+      {
+        "Hint": "押さえ付け_弱攻撃\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.-1.22"
+      },
+      {
+        "Hint": "一閃突き\u0000",
+        "ActionRate": 2.3,
+        "Path": "job01.-1.23"
+      },
+      {
+        "Hint": "一閃突き_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "job01.-1.24"
+      },
+      {
+        "Hint": "逸らし斬り攻撃\u0000",
+        "ActionRate": 2.5,
+        "Path": "job01.-1.25"
+      },
+      {
+        "Hint": "逸らし斬り攻撃_2段目\u0000",
+        "ActionRate": 1.25,
+        "Path": "job01.-1.26"
+      },
+      {
+        "Hint": "逸らし斬り攻撃_回避\u0000",
+        "ActionRate": 4.5,
+        "Path": "job01.-1.27"
+      },
+      {
+        "Hint": "逸らし斬り攻撃_回避_2段目\u0000",
+        "ActionRate": 2.25,
+        "Path": "job01.-1.28"
+      },
+      {
+        "Hint": "逸らし斬り攻撃_ジャスト回避\u0000",
+        "ActionRate": 5.5,
+        "Path": "job01.-1.29"
+      },
+      {
+        "Hint": "逸らし斬り攻撃_ジャスト回避__2段目\u0000",
+        "ActionRate": 2.75,
+        "Path": "job01.-1.30"
+      },
+      {
+        "Hint": "円月斬り\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.31"
+      },
+      {
+        "Hint": "円月斬りLv.2_追撃\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.-1.32"
+      },
+      {
+        "Hint": "円月ガード_回転\u0000",
+        "ActionRate": 1.3,
+        "Path": "job01.-1.33"
+      },
+      {
+        "Hint": "円月ガード_回転Lv.2\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.-1.34"
+      },
+      {
+        "Hint": "シールドアタック\u0000",
+        "ActionRate": 2.75,
+        "Path": "job01.-1.35"
+      },
+      {
+        "Hint": "シールドアタック_Lv.2初段\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.-1.36"
+      },
+      {
+        "Hint": "シールドカウンター\u0000",
+        "ActionRate": 4.5,
+        "Path": "job01.-1.37"
+      },
+      {
+        "Hint": "シールドカウンター_盾のみ版\u0000",
+        "ActionRate": 3.5,
+        "Path": "job01.-1.38"
+      },
+      {
+        "Hint": "シールドカウンター_巻き込み用\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.39"
+      },
+      {
+        "Hint": "シールドカウンター_Lv.2\u0000",
+        "ActionRate": 5.5,
+        "Path": "job01.-1.40"
+      },
+      {
+        "Hint": "しがみ付き_強攻撃\u0000",
+        "ActionRate": 4.0,
+        "Path": "job01.-1.41"
+      },
+      {
+        "Hint": "しがみ付き_弱攻撃\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.-1.42"
+      },
+      {
+        "Hint": "ジャストガード_巻き込み用\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.43"
+      },
+      {
+        "Hint": "ジャンプ_弱攻撃\u0000",
+        "ActionRate": 1.3,
+        "Path": "job01.-1.44"
+      },
+      {
+        "Hint": "ダッシュ_弱攻撃\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.-1.45"
+      },
+      {
+        "Hint": "ブレイブスレイド_1段目_盾\u0000",
+        "ActionRate": 3.0,
+        "Path": "job01.-1.46"
+      },
+      {
+        "Hint": "ブレイブスレイド_2段目_盾\u0000",
+        "ActionRate": 2.5,
+        "Path": "job01.-1.47"
+      },
+      {
+        "Hint": "ブレイブスレイド_3段目_盾\u0000",
+        "ActionRate": 2.5,
+        "Path": "job01.-1.48"
+      },
+      {
+        "Hint": "ブレイブスレイド_4段目_剣\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.49"
+      },
+      {
+        "Hint": "ブレイブスレイド_5段目_剣\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.50"
+      },
+      {
+        "Hint": "ブレイブスレイド_6段目_剣\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.51"
+      },
+      {
+        "Hint": "ブレイブスレイド_7段目_剣\u0000",
+        "ActionRate": 6.0,
+        "Path": "job01.-1.52"
+      },
+      {
+        "Hint": "ブレイブスレイド_素手共通\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.-1.53"
+      },
+      {
+        "Hint": "メイス専用_大型横_渾身\u0000",
+        "ActionRate": 15.0,
+        "Path": "job01.-1.54"
+      },
+      {
+        "Hint": "メイス専用_大型立ち_渾身\u0000",
+        "ActionRate": 20.0,
+        "Path": "job01.-1.55"
+      },
+      {
+        "Hint": "メイス専用_小型立ち渾身\u0000",
+        "ActionRate": 9.0,
+        "Path": "job01.-1.56"
+      }
+    ],
+    "1155": [
+      {
+        "Hint": "ジャンプ_強攻撃\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.1155.0"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_2段階目\u0000",
+        "ActionRate": 4.0,
+        "Path": "job01.1155.1"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_3段階目\u0000",
+        "ActionRate": 6.0,
+        "Path": "job01.1155.2"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_着地\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.1155.3"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_着地2段階目\u0000",
+        "ActionRate": 4.0,
+        "Path": "job01.1155.4"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_着地3段階目\u0000",
+        "ActionRate": 6.0,
+        "Path": "job01.1155.5"
+      }
+    ],
+    "1338": [
+      {
+        "Hint": "↪周囲アタリ_大型\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.1338.0"
+      },
+      {
+        "Hint": "大型敵真横_渾身の追撃_2段目\u0000",
+        "ActionRate": 3.0,
+        "Path": "job01.1338.1"
+      }
+    ],
+    "1550": [
+      {
+        "Hint": "(地上)えぐり刺し\u0000",
+        "ActionRate": 1.75,
+        "Path": "job01.1550.0"
+      },
+      {
+        "Hint": "(地上)えぐり刺し_高所用\u0000",
+        "ActionRate": 1.75,
+        "Path": "job01.1550.1"
+      },
+      {
+        "Hint": "(地上)えぐり刺し_着地\u0000",
+        "ActionRate": 1.75,
+        "Path": "job01.1550.2"
+      }
+    ],
+    "1555": [
+      {
+        "Hint": "(地上)えぐり刺し_フィニッシュ\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.1555.0"
+      },
+      {
+        "Hint": "(地上)えぐり刺し_フィニッシュ_巻き込み用\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.1555.1"
+      }
+    ],
+    "1311": [
+      {
+        "Hint": "↪周囲アタリ_遠距離\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.1311.0"
+      },
+      {
+        "Hint": "渾身の追撃_近距離2段目\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.1311.1"
+      },
+      {
+        "Hint": "渾身の追撃_遠距離2段目\u0000",
+        "ActionRate": 1.5,
+        "Path": "job01.1311.2"
+      }
+    ],
+    "1117": [
+      {
+        "Hint": "刀牙昇斬_上昇\u0000",
+        "ActionRate": 3.0,
+        "Path": "job01.1117.0"
+      },
+      {
+        "Hint": "刀牙昇斬_下降\u0000",
+        "ActionRate": 2.0,
+        "Path": "job01.1117.1"
+      }
+    ],
+    "1300": [
+      {
+        "Hint": "↪周囲アタリ_近距離\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.1300.0"
+      },
+      {
+        "Hint": "↪周囲アタリ_メイス\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.1300.1"
+      }
+    ],
+    "1323": [
+      {
+        "Hint": "↪周囲アタリ用（ジャンプ2段目）\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.1323.0"
+      },
+      {
+        "Hint": "渾身の追撃_ジャンプ2段目_蹴り\u0000",
+        "ActionRate": 1.0,
+        "Path": "job01.1323.1"
+      }
+    ]
+  },
+  "job02": {
+    "-1": [
+      {
+        "Hint": "蹴り\u0000",
+        "ActionRate": 2.5,
+        "Path": "job02.-1.0"
+      },
+      {
+        "Hint": "剛力射ち_近距離\u0000",
+        "ActionRate": 4.6,
+        "Path": "job02.-1.1"
+      },
+      {
+        "Hint": "剛力射ち_遠距離\u0000",
+        "ActionRate": 0.5,
+        "Path": "job02.-1.2"
+      },
+      {
+        "Hint": "鬼神射ち_成功_近距離\u0000",
+        "ActionRate": 5.5,
+        "Path": "job02.-1.3"
+      },
+      {
+        "Hint": "鬼神射ち_成功_遠距離\u0000",
+        "ActionRate": 2.0,
+        "Path": "job02.-1.4"
+      },
+      {
+        "Hint": "鬼神射ち_近距離\u0000",
+        "ActionRate": 4.5,
+        "Path": "job02.-1.5"
+      },
+      {
+        "Hint": "鬼神射ち_遠距離\u0000",
+        "ActionRate": 1.5,
+        "Path": "job02.-1.6"
+      },
+      {
+        "Hint": "会心の矢\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.7"
+      },
+      {
+        "Hint": "会心の矢_一撃\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.8"
+      },
+      {
+        "Hint": "会心の矢_一撃_本体部位\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.9"
+      },
+      {
+        "Hint": "会心の矢_追撃\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.10"
+      },
+      {
+        "Hint": "連なり撃ち_近距離\u0000",
+        "ActionRate": 0.75,
+        "Path": "job02.-1.11"
+      },
+      {
+        "Hint": "連なり撃ち_遠距離\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.12"
+      },
+      {
+        "Hint": "連なり撃ち_high_近\u0000",
+        "ActionRate": 0.9,
+        "Path": "job02.-1.13"
+      },
+      {
+        "Hint": "連なり撃ち_hign_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.14"
+      },
+      {
+        "Hint": "連なり撃ち_low_近\u0000",
+        "ActionRate": 0.8,
+        "Path": "job02.-1.15"
+      },
+      {
+        "Hint": "連なり撃ち_low_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.16"
+      },
+      {
+        "Hint": "連なり撃ち_middle_近\u0000",
+        "ActionRate": 0.85,
+        "Path": "job02.-1.17"
+      },
+      {
+        "Hint": "連なり撃ち_middle_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.18"
+      },
+      {
+        "Hint": "乱れ射ち_近距離\u0000",
+        "ActionRate": 0.65,
+        "Path": "job02.-1.19"
+      },
+      {
+        "Hint": "乱れ射ち_遠距離\u0000",
+        "ActionRate": 0.2,
+        "Path": "job02.-1.20"
+      },
+      {
+        "Hint": "扇撃ち_近距離\u0000",
+        "ActionRate": 0.65,
+        "Path": "job02.-1.21"
+      },
+      {
+        "Hint": "扇撃ち_遠距離\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.22"
+      },
+      {
+        "Hint": "扇撃ち_high_近\u0000",
+        "ActionRate": 0.8,
+        "Path": "job02.-1.23"
+      },
+      {
+        "Hint": "扇撃ち_high_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.24"
+      },
+      {
+        "Hint": "扇撃ち_low_近\u0000",
+        "ActionRate": 0.7,
+        "Path": "job02.-1.25"
+      },
+      {
+        "Hint": "扇撃ち_low_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.26"
+      },
+      {
+        "Hint": "扇撃ち_middle_近\u0000",
+        "ActionRate": 0.75,
+        "Path": "job02.-1.27"
+      },
+      {
+        "Hint": "扇撃ち_middle_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.28"
+      },
+      {
+        "Hint": "仕込み毒矢_爆発\u0000",
+        "ActionRate": 0.35,
+        "Path": "job02.-1.29"
+      },
+      {
+        "Hint": "仕込み毒矢_近距離\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.30"
+      },
+      {
+        "Hint": "仕込み毒矢_遠距離\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.31"
+      },
+      {
+        "Hint": "仕込み毒矢_中距離\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.32"
+      },
+      {
+        "Hint": "仕込み矢(共通)_近\u0000",
+        "ActionRate": 1.1,
+        "Path": "job02.-1.33"
+      },
+      {
+        "Hint": "仕込み矢(共通)_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.34"
+      },
+      {
+        "Hint": "仕込み水矢爆発\u0000",
+        "ActionRate": 0.0,
+        "Path": "job02.-1.35"
+      },
+      {
+        "Hint": "仕込み水矢爆発(状態異常回復)\u0000",
+        "ActionRate": 0.0,
+        "Path": "job02.-1.36"
+      },
+      {
+        "Hint": "仕込み油矢爆発\u0000",
+        "ActionRate": 0.0,
+        "Path": "job02.-1.37"
+      },
+      {
+        "Hint": "通常の矢_high_近\u0000",
+        "ActionRate": 2.7,
+        "Path": "job02.-1.38"
+      },
+      {
+        "Hint": "通常の矢_high_遠\u0000",
+        "ActionRate": 0.35,
+        "Path": "job02.-1.39"
+      },
+      {
+        "Hint": "通常の矢_low_近\u0000",
+        "ActionRate": 1.8,
+        "Path": "job02.-1.40"
+      },
+      {
+        "Hint": "通常の矢_low_遠\u0000",
+        "ActionRate": 0.35,
+        "Path": "job02.-1.41"
+      },
+      {
+        "Hint": "通常の矢_middle_近\u0000",
+        "ActionRate": 2.45,
+        "Path": "job02.-1.42"
+      },
+      {
+        "Hint": "通常の矢_middle_遠\u0000",
+        "ActionRate": 0.35,
+        "Path": "job02.-1.43"
+      },
+      {
+        "Hint": "渦巻射ち_刺さり\u0000",
+        "ActionRate": 0.12,
+        "Path": "job02.-1.44"
+      },
+      {
+        "Hint": "渦巻射ち_風圧アタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "job02.-1.45"
+      },
+      {
+        "Hint": "渦巻射ちLv2_刺さり\u0000",
+        "ActionRate": 0.12,
+        "Path": "job02.-1.46"
+      },
+      {
+        "Hint": "渦巻き射ち(共通)_近\u0000",
+        "ActionRate": 2.0,
+        "Path": "job02.-1.47"
+      },
+      {
+        "Hint": "渦巻き射ち(共通)_遠\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.48"
+      },
+      {
+        "Hint": "押さえ付け_矢刺し\u0000",
+        "ActionRate": 0.4,
+        "Path": "job02.-1.49"
+      },
+      {
+        "Hint": "腰撃ちの矢_近距離\u0000",
+        "ActionRate": 1.1,
+        "Path": "job02.-1.50"
+      },
+      {
+        "Hint": "腰撃ちの矢_遠距離\u0000",
+        "ActionRate": 0.3,
+        "Path": "job02.-1.51"
+      },
+      {
+        "Hint": "アクロバット射撃_近距離\u0000",
+        "ActionRate": 3.5,
+        "Path": "job02.-1.52"
+      },
+      {
+        "Hint": "アクロバット射撃_遠距離\u0000",
+        "ActionRate": 0.2,
+        "Path": "job02.-1.53"
+      },
+      {
+        "Hint": "しがみ付き_蹴り\u0000",
+        "ActionRate": 6.5,
+        "Path": "job02.-1.54"
+      },
+      {
+        "Hint": "しがみ付き_矢刺し\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.55"
+      },
+      {
+        "Hint": "しがみ付き_仕込み矢刺し\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.56"
+      },
+      {
+        "Hint": "しじま射ち_近距離\u0000",
+        "ActionRate": 2.85,
+        "Path": "job02.-1.57"
+      },
+      {
+        "Hint": "しじま射ち_遠距離\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.58"
+      },
+      {
+        "Hint": "ジャンプ蹴り\u0000",
+        "ActionRate": 3.0,
+        "Path": "job02.-1.59"
+      },
+      {
+        "Hint": "スライディング射撃_近距離\u0000",
+        "ActionRate": 3.0,
+        "Path": "job02.-1.60"
+      },
+      {
+        "Hint": "スライディング射撃_遠距離\u0000",
+        "ActionRate": 0.2,
+        "Path": "job02.-1.61"
+      },
+      {
+        "Hint": "ダッシュ_スライディング\u0000",
+        "ActionRate": 2.5,
+        "Path": "job02.-1.62"
+      },
+      {
+        "Hint": "トドメ射ち_近距離\u0000",
+        "ActionRate": 4.5,
+        "Path": "job02.-1.63"
+      },
+      {
+        "Hint": "トドメ射ち_遠距離\u0000",
+        "ActionRate": 0.5,
+        "Path": "job02.-1.64"
+      },
+      {
+        "Hint": "トドメ射ち_ジャスト_近距離\u0000",
+        "ActionRate": 5.5,
+        "Path": "job02.-1.65"
+      },
+      {
+        "Hint": "トドメ射ち_ジャスト_遠距離\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.66"
+      },
+      {
+        "Hint": "トドメ射ちLv2_近距離\u0000",
+        "ActionRate": 5.0,
+        "Path": "job02.-1.67"
+      },
+      {
+        "Hint": "トドメ射ちLv2_遠距離\u0000",
+        "ActionRate": 0.5,
+        "Path": "job02.-1.68"
+      },
+      {
+        "Hint": "トドメ射ちLv2_ジャスト_近距離\u0000",
+        "ActionRate": 6.0,
+        "Path": "job02.-1.69"
+      },
+      {
+        "Hint": "トドメ射ちLv2_ジャスト_遠距離\u0000",
+        "ActionRate": 1.0,
+        "Path": "job02.-1.70"
+      },
+      {
+        "Hint": "ドロップキック\u0000",
+        "ActionRate": 6.5,
+        "Path": "job02.-1.71"
+      }
+    ],
+    "101": [
+      {
+        "Hint": "仕込み火薬矢爆_周囲\u0000",
+        "ActionRate": 5.0,
+        "Path": "job02.101.0"
+      },
+      {
+        "Hint": "仕込み火薬矢爆発_中心\u0000",
+        "ActionRate": 6.5,
+        "Path": "job02.101.1"
+      }
+    ]
+  },
+  "job04": {
+    "15": [
+      {
+        "Hint": "偽マスタ_対敵\u0000",
+        "ActionRate": 15.0,
+        "Path": "job04.15.0"
+      },
+      {
+        "Hint": "偽マスタ_自身\u0000",
+        "ActionRate": 1.5,
+        "Path": "job04.15.1"
+      },
+      {
+        "Hint": "CS09《爆炎線》風圧\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.15.2"
+      },
+      {
+        "Hint": "CS09《爆炎線》風圧_Lv2\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.15.3"
+      },
+      {
+        "Hint": "CS09《爆炎線》起爆\u0000",
+        "ActionRate": 3.2,
+        "Path": "job04.15.4"
+      },
+      {
+        "Hint": "CS09《爆炎線》起爆_外\u0000",
+        "ActionRate": 2.0,
+        "Path": "job04.15.5"
+      },
+      {
+        "Hint": "CS09《爆炎線》起爆_外_Lv2\u0000",
+        "ActionRate": 2.625,
+        "Path": "job04.15.6"
+      },
+      {
+        "Hint": "CS09《爆炎線》起爆_Lv2\u0000",
+        "ActionRate": 4.2,
+        "Path": "job04.15.7"
+      },
+      {
+        "Hint": "CS09《爆炎線》自傷\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.15.8"
+      }
+    ],
+    "1": [
+      {
+        "Hint": "CS0《風圧波》風圧\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.1.0"
+      },
+      {
+        "Hint": "CS0《風圧波》風圧_lv2\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.1.1"
+      }
+    ],
+    "4": [
+      {
+        "Hint": "煙幕_投げ玉\u0000",
+        "ActionRate": 1.0,
+        "Path": "job04.4.0"
+      }
+    ],
+    "5": [
+      {
+        "Hint": "煙幕\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.5.0"
+      }
+    ],
+    "-1": [
+      {
+        "Hint": "[大型]渾身_地_立_前_1_渾身対象\u0000",
+        "ActionRate": 6.75,
+        "Path": "job04.-1.0"
+      },
+      {
+        "Hint": "[大型]渾身_地_立_前_2_渾身対象\u0000",
+        "ActionRate": 11.25,
+        "Path": "job04.-1.1"
+      },
+      {
+        "Hint": "渾身_地_立_前_1_非渾身対象\u0000",
+        "ActionRate": 3.5,
+        "Path": "job04.-1.2"
+      },
+      {
+        "Hint": "渾身_地_立_前_1_渾身対象\u0000",
+        "ActionRate": 4.5,
+        "Path": "job04.-1.3"
+      },
+      {
+        "Hint": "渾身_地_立_前_2_非渾身対象\u0000",
+        "ActionRate": 3.5,
+        "Path": "job04.-1.4"
+      },
+      {
+        "Hint": "渾身_地_立_前_2_渾身対象\u0000",
+        "ActionRate": 7.5,
+        "Path": "job04.-1.5"
+      },
+      {
+        "Hint": "渾身_地_ダウン_渾身対象\u0000",
+        "ActionRate": 5.25,
+        "Path": "job04.-1.6"
+      },
+      {
+        "Hint": "渾身_地_ダウン_渾身対象_2\u0000",
+        "ActionRate": 6.25,
+        "Path": "job04.-1.7"
+      },
+      {
+        "Hint": "引き寄せ_投擲\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.-1.8"
+      },
+      {
+        "Hint": "CS_01_鎌鼬_チェックアタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.-1.9"
+      },
+      {
+        "Hint": "CS_07_発炎刃_1_握\u0000",
+        "ActionRate": 2.0,
+        "Path": "job04.-1.10"
+      },
+      {
+        "Hint": "CS_07_発炎刃_3\u0000",
+        "ActionRate": 0.5,
+        "Path": "job04.-1.11"
+      },
+      {
+        "Hint": "CS_07_発炎刃_4\u0000",
+        "ActionRate": 0.5,
+        "Path": "job04.-1.12"
+      },
+      {
+        "Hint": "CS0《風圧波》フォース\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.-1.13"
+      },
+      {
+        "Hint": "CS09《爆炎線》起爆_Lv2_フォース\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.-1.14"
+      },
+      {
+        "Hint": "CS09《爆炎線》起爆_フォース\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.-1.15"
+      },
+      {
+        "Hint": "N_地_重_2\u0000",
+        "ActionRate": 1.0,
+        "Path": "job04.-1.16"
+      },
+      {
+        "Hint": "N_地_重_近初段初段\u0000",
+        "ActionRate": 1.0,
+        "Path": "job04.-1.17"
+      },
+      {
+        "Hint": "N_地_重_移動初段\u0000",
+        "ActionRate": 1.0,
+        "Path": "job04.-1.18"
+      },
+      {
+        "Hint": "N_握_軽_3(未)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job04.-1.19"
+      },
+      {
+        "Hint": "N_EM立_重\u0000",
+        "ActionRate": 1.75,
+        "Path": "job04.-1.20"
+      }
+    ],
+    "7": [
+      {
+        "Hint": "引き寄せ_大型_発動\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.7.0"
+      },
+      {
+        "Hint": "引き寄せ_大型_発動Lv2\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.7.1"
+      },
+      {
+        "Hint": "引き寄せ_小型_発動\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.7.2"
+      },
+      {
+        "Hint": "引き寄せ_小型_発動Lv2\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.7.3"
+      }
+    ],
+    "30": [
+      {
+        "Hint": "煙幕_のけぞり\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.30.0"
+      }
+    ],
+    "35": [
+      {
+        "Hint": "煙幕_CheckHit\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.35.0"
+      }
+    ],
+    "36": [
+      {
+        "Hint": "煙幕_Check_味方\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.36.0"
+      }
+    ],
+    "4474": [
+      {
+        "Hint": "CS_06_抉り抜き_Check\u0000",
+        "ActionRate": 0.3,
+        "Path": "job04.4474.0"
+      }
+    ],
+    "4475": [
+      {
+        "Hint": "CS_06_抉り抜き_連HIT\u0000",
+        "ActionRate": 0.45,
+        "Path": "job04.4475.0"
+      },
+      {
+        "Hint": "CS_06_抉り抜き_連HIT\u0000",
+        "ActionRate": 0.5,
+        "Path": "job04.4475.1"
+      }
+    ],
+    "4100": [
+      {
+        "Hint": "N_軽(2連撃用)_R\u0000",
+        "ActionRate": 0.655,
+        "Path": "job04.4100.0"
+      }
+    ],
+    "4110": [
+      {
+        "Hint": "N_壁蹴り_軽_L\u0000",
+        "ActionRate": 5.0,
+        "Path": "job04.4110.0"
+      },
+      {
+        "Hint": "N_壁蹴り_軽_R\u0000",
+        "ActionRate": 5.0,
+        "Path": "job04.4110.1"
+      }
+    ],
+    "4310": [
+      {
+        "Hint": "CS_01_鎌鼬_1\u0000",
+        "ActionRate": 1.1,
+        "Path": "job04.4310.0"
+      }
+    ],
+    "4311": [
+      {
+        "Hint": "CS_01_鎌鼬_2_未使用\u0000",
+        "ActionRate": 1.25,
+        "Path": "job04.4311.0"
+      }
+    ],
+    "4312": [
+      {
+        "Hint": "CS_01_鎌鼬_3\u0000",
+        "ActionRate": 1.1,
+        "Path": "job04.4312.0"
+      }
+    ],
+    "4340": [
+      {
+        "Hint": "CS_02_断頭台_低\u0000",
+        "ActionRate": 0.9,
+        "Path": "job04.4340.0"
+      },
+      {
+        "Hint": "CS_02_断頭台_高\u0000",
+        "ActionRate": 2.7,
+        "Path": "job04.4340.1"
+      },
+      {
+        "Hint": "CS_02_断頭台_着地_低\u0000",
+        "ActionRate": 0.9,
+        "Path": "job04.4340.2"
+      },
+      {
+        "Hint": "CS_02_断頭台_着地_高\u0000",
+        "ActionRate": 1.35,
+        "Path": "job04.4340.3"
+      },
+      {
+        "Hint": "CS_02_断頭台_着地_中\u0000",
+        "ActionRate": 1.125,
+        "Path": "job04.4340.4"
+      },
+      {
+        "Hint": "CS_02_断頭台_中\u0000",
+        "ActionRate": 1.8,
+        "Path": "job04.4340.5"
+      }
+    ],
+    "4341": [
+      {
+        "Hint": "CS_02_断頭台_連ヒット_低\u0000",
+        "ActionRate": 1.375,
+        "Path": "job04.4341.0"
+      },
+      {
+        "Hint": "CS_02_断頭台_連ヒット_低_Lv2\u0000",
+        "ActionRate": 1.5,
+        "Path": "job04.4341.1"
+      },
+      {
+        "Hint": "CS_02_断頭台_連ヒット_高\u0000",
+        "ActionRate": 2.75,
+        "Path": "job04.4341.2"
+      },
+      {
+        "Hint": "CS_02_断頭台_連ヒット_高_Lv2\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.4341.3"
+      },
+      {
+        "Hint": "CS_02_断頭台_連ヒット_中\u0000",
+        "ActionRate": 1.925,
+        "Path": "job04.4341.4"
+      },
+      {
+        "Hint": "CS_02_断頭台_連ヒット_中_Lv2\u0000",
+        "ActionRate": 2.1,
+        "Path": "job04.4341.5"
+      }
+    ],
+    "5100": [
+      {
+        "Hint": "CS_03_滅多刺し\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.5100.0"
+      },
+      {
+        "Hint": "CS_05_絶対回避\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.5100.1"
+      },
+      {
+        "Hint": "CS_08_煙幕\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.5100.2"
+      },
+      {
+        "Hint": "CS_09_爆炎線_1_起爆剣部\u0000",
+        "ActionRate": 1.5,
+        "Path": "job04.5100.3"
+      },
+      {
+        "Hint": "CS_09_爆炎線_1_握設置用\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.5100.4"
+      },
+      {
+        "Hint": "CS_09_爆炎線_1_握設置用_Follow\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.5100.5"
+      },
+      {
+        "Hint": "CS_10_風圧波_飛び中全身\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.5100.6"
+      },
+      {
+        "Hint": "CS_11\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.5100.7"
+      }
+    ],
+    "4400": [
+      {
+        "Hint": "CS_04_流し暗殺_小型_1\u0000",
+        "ActionRate": 2.75,
+        "Path": "job04.4400.0"
+      }
+    ],
+    "4403": [
+      {
+        "Hint": "CS_04_流し暗殺_小型_2\u0000",
+        "ActionRate": 2.75,
+        "Path": "job04.4403.0"
+      }
+    ],
+    "4406": [
+      {
+        "Hint": "CS_04_流し暗殺_3_狼・ハーピー\u0000",
+        "ActionRate": 8.25,
+        "Path": "job04.4406.0"
+      },
+      {
+        "Hint": "CS_04_流し暗殺_小型_3\u0000",
+        "ActionRate": 8.25,
+        "Path": "job04.4406.1"
+      }
+    ],
+    "4407": [
+      {
+        "Hint": "CS_04_流し暗殺_小型_3_空中\u0000",
+        "ActionRate": 8.25,
+        "Path": "job04.4407.0"
+      }
+    ],
+    "4410": [
+      {
+        "Hint": "CS_04_流し暗殺_大型_1\u0000",
+        "ActionRate": 5.0,
+        "Path": "job04.4410.0"
+      }
+    ],
+    "4420": [
+      {
+        "Hint": "CS_04_流し暗殺_大型_敵ストップ\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4420.0"
+      }
+    ],
+    "4421": [
+      {
+        "Hint": "CS_04_流し暗殺_発動_敵ストップ\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4421.0"
+      }
+    ],
+    "4415": [
+      {
+        "Hint": "CS_04_流し暗殺_大型Finish\u0000",
+        "ActionRate": 12.5,
+        "Path": "job04.4415.0"
+      }
+    ],
+    "4460": [
+      {
+        "Hint": "CS_06_抉り抜き_1\u0000",
+        "ActionRate": 5.5,
+        "Path": "job04.4460.0"
+      },
+      {
+        "Hint": "CS_06_抉り抜き_1_押\u0000",
+        "ActionRate": 2.5,
+        "Path": "job04.4460.1"
+      }
+    ],
+    "4462": [
+      {
+        "Hint": "CS_06_抉り抜き_1_2(Lv2)\u0000",
+        "ActionRate": 3.75,
+        "Path": "job04.4462.0"
+      },
+      {
+        "Hint": "CS_06_抉り抜き_1_2(Lv2)_押\u0000",
+        "ActionRate": 3.75,
+        "Path": "job04.4462.1"
+      }
+    ],
+    "4465": [
+      {
+        "Hint": "CS_06_抉り抜き_2_握\u0000",
+        "ActionRate": 12.5,
+        "Path": "job04.4465.0"
+      }
+    ],
+    "4468": [
+      {
+        "Hint": "CS_06_抉り抜き_2_押_slow\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4468.0"
+      },
+      {
+        "Hint": "CS_06_抉り抜き_3_押\u0000",
+        "ActionRate": 5.0,
+        "Path": "job04.4468.1"
+      }
+    ],
+    "4469": [
+      {
+        "Hint": "CS_06_抉り抜き_2_押\u0000",
+        "ActionRate": 20.0,
+        "Path": "job04.4469.0"
+      }
+    ],
+    "4490": [
+      {
+        "Hint": "CS_07_発炎刃_1\u0000",
+        "ActionRate": 0.3675,
+        "Path": "job04.4490.0"
+      },
+      {
+        "Hint": "CS_07_発炎刃_2\u0000",
+        "ActionRate": 0.3675,
+        "Path": "job04.4490.1"
+      }
+    ],
+    "4494": [
+      {
+        "Hint": "CS_07_発炎刃_2_握\u0000",
+        "ActionRate": 2.25,
+        "Path": "job04.4494.0"
+      },
+      {
+        "Hint": "CS_07_発炎刃_5\u0000",
+        "ActionRate": 1.03,
+        "Path": "job04.4494.1"
+      },
+      {
+        "Hint": "CS_07_発炎刃_6\u0000",
+        "ActionRate": 1.03,
+        "Path": "job04.4494.2"
+      }
+    ],
+    "4505": [
+      {
+        "Hint": "CS_07_発炎刃_炎\u0000",
+        "ActionRate": 1.0,
+        "Path": "job04.4505.0"
+      }
+    ],
+    "4640": [
+      {
+        "Hint": "CS_12_押さえつけ\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4640.0"
+      }
+    ],
+    "4644": [
+      {
+        "Hint": "CS_12_立ち\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4644.0"
+      },
+      {
+        "Hint": "CS_12_立ち_Follow\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4644.1"
+      }
+    ],
+    "4649": [
+      {
+        "Hint": "CS_12_ぶんどる_NPC_Check\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4649.0"
+      }
+    ],
+    "4210": [
+      {
+        "Hint": "渾身_地_立_遠_1_非渾身対象\u0000",
+        "ActionRate": 2.25,
+        "Path": "job04.4210.0"
+      },
+      {
+        "Hint": "渾身_地_立_遠_1_渾身対象\u0000",
+        "ActionRate": 2.25,
+        "Path": "job04.4210.1"
+      }
+    ],
+    "4215": [
+      {
+        "Hint": "渾身_地_立_遠_2_非渾身対象\u0000",
+        "ActionRate": 4.0,
+        "Path": "job04.4215.0"
+      },
+      {
+        "Hint": "渾身_地_立_遠_2_渾身対象\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.4215.1"
+      }
+    ],
+    "4218": [
+      {
+        "Hint": "[大型]渾身_地_立_遠_3_渾身対象\u0000",
+        "ActionRate": 10.125,
+        "Path": "job04.4218.0"
+      },
+      {
+        "Hint": "渾身_地_立_遠_3_非渾身対象\u0000",
+        "ActionRate": 4.0,
+        "Path": "job04.4218.1"
+      },
+      {
+        "Hint": "渾身_地_立_遠_3_渾身対象\u0000",
+        "ActionRate": 6.75,
+        "Path": "job04.4218.2"
+      }
+    ],
+    "4214": [
+      {
+        "Hint": "[大型]渾身_地_立_遠_1_渾身対象\u0000",
+        "ActionRate": 3.375,
+        "Path": "job04.4214.0"
+      }
+    ],
+    "4216": [
+      {
+        "Hint": "[大型]渾身_地_立_遠_2_渾身対象\u0000",
+        "ActionRate": 4.5,
+        "Path": "job04.4216.0"
+      }
+    ],
+    "4290": [
+      {
+        "Hint": "渾身_押_1_非渾身対象\u0000",
+        "ActionRate": 4.25,
+        "Path": "job04.4290.0"
+      },
+      {
+        "Hint": "渾身_押_1_渾身対象\u0000",
+        "ActionRate": 4.25,
+        "Path": "job04.4290.1"
+      }
+    ],
+    "4295": [
+      {
+        "Hint": "渾身_押_2_非渾身対象\u0000",
+        "ActionRate": 10.0,
+        "Path": "job04.4295.0"
+      },
+      {
+        "Hint": "渾身_押_2_渾身対象\u0000",
+        "ActionRate": 10.0,
+        "Path": "job04.4295.1"
+      }
+    ],
+    "4270": [
+      {
+        "Hint": "[大型]渾身_地_ダウン_渾身対象\u0000",
+        "ActionRate": 5.25,
+        "Path": "job04.4270.0"
+      },
+      {
+        "Hint": "渾身_地_ダウン_非渾身対象\u0000",
+        "ActionRate": 6.25,
+        "Path": "job04.4270.1"
+      }
+    ],
+    "4230": [
+      {
+        "Hint": "[大型]渾身_空_立_1_渾身対象\u0000",
+        "ActionRate": 6.75,
+        "Path": "job04.4230.0"
+      },
+      {
+        "Hint": "渾身_空_立_1_渾身対象\u0000",
+        "ActionRate": 4.5,
+        "Path": "job04.4230.1"
+      }
+    ],
+    "5205": [
+      {
+        "Hint": "渾身_空_立_1_非渾身対象\u0000",
+        "ActionRate": 3.5,
+        "Path": "job04.5205.0"
+      }
+    ],
+    "4233": [
+      {
+        "Hint": "渾身_空_立_1_渾身対象_srow\u0000",
+        "ActionRate": 0.0,
+        "Path": "job04.4233.0"
+      }
+    ],
+    "4235": [
+      {
+        "Hint": "[大型]渾身_空_立_2_渾身対象\u0000",
+        "ActionRate": 11.25,
+        "Path": "job04.4235.0"
+      },
+      {
+        "Hint": "渾身_空_立_2_非渾身対象\u0000",
+        "ActionRate": 5.5,
+        "Path": "job04.4235.1"
+      },
+      {
+        "Hint": "渾身_空_立_2_渾身対象\u0000",
+        "ActionRate": 7.5,
+        "Path": "job04.4235.2"
+      }
+    ],
+    "4272": [
+      {
+        "Hint": "[大型]渾身_地_ダウン_渾身対象_2\u0000",
+        "ActionRate": 8.25,
+        "Path": "job04.4272.0"
+      },
+      {
+        "Hint": "渾身_地_ダウン_非渾身対象_2\u0000",
+        "ActionRate": 6.25,
+        "Path": "job04.4272.1"
+      }
+    ],
+    "5150": [
+      {
+        "Hint": "N_地_軽_走\u0000",
+        "ActionRate": 2.25,
+        "Path": "job04.5150.0"
+      }
+    ],
+    "5190": [
+      {
+        "Hint": "N_地_重_走\u0000",
+        "ActionRate": 2.25,
+        "Path": "job04.5190.0"
+      }
+    ],
+    "5170": [
+      {
+        "Hint": "N_握_軽_1\u0000",
+        "ActionRate": 1.75,
+        "Path": "job04.5170.0"
+      },
+      {
+        "Hint": "N_握_軽_1_Follow\u0000",
+        "ActionRate": 1.375,
+        "Path": "job04.5170.1"
+      },
+      {
+        "Hint": "N_押_軽_1\u0000",
+        "ActionRate": 2.8,
+        "Path": "job04.5170.2"
+      },
+      {
+        "Hint": "N_押_軽_2\u0000",
+        "ActionRate": 4.24,
+        "Path": "job04.5170.3"
+      }
+    ],
+    "5173": [
+      {
+        "Hint": "N_握_軽_2\u0000",
+        "ActionRate": 1.375,
+        "Path": "job04.5173.0"
+      },
+      {
+        "Hint": "N_握_軽_2_Follow\u0000",
+        "ActionRate": 1.375,
+        "Path": "job04.5173.1"
+      }
+    ],
+    "4180": [
+      {
+        "Hint": "N_握_重_1\u0000",
+        "ActionRate": 0.33,
+        "Path": "job04.4180.0"
+      },
+      {
+        "Hint": "N_握_重_1_3\u0000",
+        "ActionRate": 0.33,
+        "Path": "job04.4180.1"
+      }
+    ],
+    "4183": [
+      {
+        "Hint": "N_握_重_2\u0000",
+        "ActionRate": 2.0,
+        "Path": "job04.4183.0"
+      }
+    ],
+    "4186": [
+      {
+        "Hint": "N_握_重_3\u0000",
+        "ActionRate": 2.5,
+        "Path": "job04.4186.0"
+      }
+    ],
+    "4160": [
+      {
+        "Hint": "N_空_重_低_開始\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.4160.0"
+      },
+      {
+        "Hint": "N_空_重_低_落下中\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.4160.1"
+      },
+      {
+        "Hint": "N_空_重_低_着地\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.4160.2"
+      },
+      {
+        "Hint": "N_空_重_高_開始\u0000",
+        "ActionRate": 6.0,
+        "Path": "job04.4160.3"
+      },
+      {
+        "Hint": "N_空_重_高_落下中\u0000",
+        "ActionRate": 6.0,
+        "Path": "job04.4160.4"
+      },
+      {
+        "Hint": "N_空_重_高_着地\u0000",
+        "ActionRate": 6.0,
+        "Path": "job04.4160.5"
+      },
+      {
+        "Hint": "N_空_重_中_開始\u0000",
+        "ActionRate": 4.5,
+        "Path": "job04.4160.6"
+      },
+      {
+        "Hint": "N_空_重_中_落下中\u0000",
+        "ActionRate": 4.5,
+        "Path": "job04.4160.7"
+      },
+      {
+        "Hint": "N_空_重_中_着地\u0000",
+        "ActionRate": 4.5,
+        "Path": "job04.4160.8"
+      }
+    ],
+    "4150": [
+      {
+        "Hint": "N_空_軽_L\u0000",
+        "ActionRate": 1.2,
+        "Path": "job04.4150.0"
+      },
+      {
+        "Hint": "N_空_軽_L_Follow\u0000",
+        "ActionRate": 1.2,
+        "Path": "job04.4150.1"
+      }
+    ],
+    "4151": [
+      {
+        "Hint": "N_空_軽_R\u0000",
+        "ActionRate": 1.2,
+        "Path": "job04.4151.0"
+      },
+      {
+        "Hint": "N_空_軽_R_Follow\u0000",
+        "ActionRate": 1.2,
+        "Path": "job04.4151.1"
+      }
+    ],
+    "5130": [
+      {
+        "Hint": "N_地_重_ダウン\u0000",
+        "ActionRate": 3.0,
+        "Path": "job04.5130.0"
+      }
+    ],
+    "4101": [
+      {
+        "Hint": "N_軽(2連撃用)_L\u0000",
+        "ActionRate": 0.655,
+        "Path": "job04.4101.0"
+      }
+    ],
+    "4800": [
+      {
+        "Hint": "N_百裂_R\u0000",
+        "ActionRate": 0.6,
+        "Path": "job04.4800.0"
+      },
+      {
+        "Hint": "NS_百裂_R_押えmain\u0000",
+        "ActionRate": 1.375,
+        "Path": "job04.4800.1"
+      },
+      {
+        "Hint": "NS_百裂_R_しがみmain\u0000",
+        "ActionRate": 1.1,
+        "Path": "job04.4800.2"
+      },
+      {
+        "Hint": "NS_百裂_R_しがみmain_2\u0000",
+        "ActionRate": 1.1,
+        "Path": "job04.4800.3"
+      }
+    ],
+    "4801": [
+      {
+        "Hint": "N_百裂_L\u0000",
+        "ActionRate": 0.6,
+        "Path": "job04.4801.0"
+      },
+      {
+        "Hint": "NS_百裂_L_押えmain\u0000",
+        "ActionRate": 1.375,
+        "Path": "job04.4801.1"
+      },
+      {
+        "Hint": "NS_百裂_L_しがみmain\u0000",
+        "ActionRate": 1.1,
+        "Path": "job04.4801.2"
+      },
+      {
+        "Hint": "NS_百裂_L_しがみmain_2\u0000",
+        "ActionRate": 1.1,
+        "Path": "job04.4801.3"
+      }
+    ]
+  },
+  "job07": {
+    "-1": [
+      {
+        "Hint": "大乱舞_1段目\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.0"
+      },
+      {
+        "Hint": "大乱舞_1段目(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.1"
+      },
+      {
+        "Hint": "大乱舞_2段目\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.2"
+      },
+      {
+        "Hint": "大乱舞_2段目(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.3"
+      },
+      {
+        "Hint": "大乱舞_3段目\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.4"
+      },
+      {
+        "Hint": "大乱舞_3段目(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.5"
+      },
+      {
+        "Hint": "大乱舞_4段目\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.6"
+      },
+      {
+        "Hint": "大乱舞_4段目(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.7"
+      },
+      {
+        "Hint": "大乱舞_5段目\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.8"
+      },
+      {
+        "Hint": "大乱舞_5段目(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.9"
+      },
+      {
+        "Hint": "大乱舞_6段目\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.10"
+      },
+      {
+        "Hint": "大乱舞_6段目(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.11"
+      },
+      {
+        "Hint": "大乱舞_7段目_回転\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.12"
+      },
+      {
+        "Hint": "大乱舞_7段目_回転(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.13"
+      },
+      {
+        "Hint": "大乱舞_7段目_振り下ろし\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.14"
+      },
+      {
+        "Hint": "大乱舞_7段目_振り下ろし(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.15"
+      },
+      {
+        "Hint": "大乱舞_8段目_初段\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.16"
+      },
+      {
+        "Hint": "大乱舞_8段目_初段(残像)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job07.-1.17"
+      },
+      {
+        "Hint": "大乱舞_8段目_旋回\u0000",
+        "ActionRate": 0.5,
+        "Path": "job07.-1.18"
+      },
+      {
+        "Hint": "大乱舞_8段目_旋回(残像)\u0000",
+        "ActionRate": 0.5,
+        "Path": "job07.-1.19"
+      },
+      {
+        "Hint": "大乱舞_8段目_フィニッシュ\u0000",
+        "ActionRate": 3.0,
+        "Path": "job07.-1.20"
+      },
+      {
+        "Hint": "大乱舞_8段目_フィニッシュ(残像)\u0000",
+        "ActionRate": 2.0,
+        "Path": "job07.-1.21"
+      },
+      {
+        "Hint": "大型敵立ち_渾身の追撃_1段目\u0000",
+        "ActionRate": 12.5,
+        "Path": "job07.-1.22"
+      },
+      {
+        "Hint": "大型敵立ち_渾身の追撃_2段目(魔法)\u0000",
+        "ActionRate": 7.5,
+        "Path": "job07.-1.23"
+      },
+      {
+        "Hint": "大型敵真横_渾身の追撃_1段目\u0000",
+        "ActionRate": 10.0,
+        "Path": "job07.-1.24"
+      },
+      {
+        "Hint": "飛竜突_攻撃\u0000",
+        "ActionRate": 1.5,
+        "Path": "job07.-1.25"
+      },
+      {
+        "Hint": "飛竜突_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.26"
+      },
+      {
+        "Hint": "飛竜突Lv.2_魔法攻撃\u0000",
+        "ActionRate": 0.7,
+        "Path": "job07.-1.27"
+      },
+      {
+        "Hint": "飛竜突Lv.2_物理攻撃\u0000",
+        "ActionRate": 1.5,
+        "Path": "job07.-1.28"
+      },
+      {
+        "Hint": "渾身の追撃_1段目\u0000",
+        "ActionRate": 3.5,
+        "Path": "job07.-1.29"
+      },
+      {
+        "Hint": "渾身の追撃_2段目(魔法)\u0000",
+        "ActionRate": 3.5,
+        "Path": "job07.-1.30"
+      },
+      {
+        "Hint": "渾身の追撃_ジャンプ_2段目(魔法)\u0000",
+        "ActionRate": 3.5,
+        "Path": "job07.-1.31"
+      },
+      {
+        "Hint": "螺旋斬_フィニッシュ\u0000",
+        "ActionRate": 1.5,
+        "Path": "job07.-1.32"
+      },
+      {
+        "Hint": "魔封殺\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.33"
+      },
+      {
+        "Hint": "魔斬波_強攻撃の魔力斬撃\u0000",
+        "ActionRate": 1.675,
+        "Path": "job07.-1.34"
+      },
+      {
+        "Hint": "強攻撃_１段目\u0000",
+        "ActionRate": 0.5,
+        "Path": "job07.-1.35"
+      },
+      {
+        "Hint": "強攻撃_２段目\u0000",
+        "ActionRate": 1.6,
+        "Path": "job07.-1.36"
+      },
+      {
+        "Hint": "強攻撃_大型敵乗り_１段目\u0000",
+        "ActionRate": 3.5,
+        "Path": "job07.-1.37"
+      },
+      {
+        "Hint": "強攻撃_大型敵乗り_２段目（魔法）\u0000",
+        "ActionRate": 3.5,
+        "Path": "job07.-1.38"
+      },
+      {
+        "Hint": "弱攻撃_２段ヒット用_１段目\u0000",
+        "ActionRate": 0.65,
+        "Path": "job07.-1.39"
+      },
+      {
+        "Hint": "弱攻撃_２段ヒット用_２段目\u0000",
+        "ActionRate": 0.65,
+        "Path": "job07.-1.40"
+      },
+      {
+        "Hint": "弱攻撃_２段ヒット用_初段\u0000",
+        "ActionRate": 0.2,
+        "Path": "job07.-1.41"
+      },
+      {
+        "Hint": "弱攻撃_ヒットスロー大\u0000",
+        "ActionRate": 1.3,
+        "Path": "job07.-1.42"
+      },
+      {
+        "Hint": "弱攻撃_ヒットスロー小\u0000",
+        "ActionRate": 1.3,
+        "Path": "job07.-1.43"
+      },
+      {
+        "Hint": "天竜牙\u0000",
+        "ActionRate": 1.9,
+        "Path": "job07.-1.44"
+      },
+      {
+        "Hint": "天竜牙_ジャスト\u0000",
+        "ActionRate": 4.0,
+        "Path": "job07.-1.45"
+      },
+      {
+        "Hint": "天竜牙Lv.2_魔法攻撃\u0000",
+        "ActionRate": 0.7,
+        "Path": "job07.-1.46"
+      },
+      {
+        "Hint": "天竜牙Lv.2_物理攻撃\u0000",
+        "ActionRate": 1.9,
+        "Path": "job07.-1.47"
+      },
+      {
+        "Hint": "天竜牙Lv.2_ジャスト魔法攻撃\u0000",
+        "ActionRate": 3.0,
+        "Path": "job07.-1.48"
+      },
+      {
+        "Hint": "天竜牙Lv.2_ジャスト物理攻撃\u0000",
+        "ActionRate": 4.0,
+        "Path": "job07.-1.49"
+      },
+      {
+        "Hint": "押さえ付け_強攻撃_1段目(物理)\u0000",
+        "ActionRate": 1.6,
+        "Path": "job07.-1.50"
+      },
+      {
+        "Hint": "押さえ付け_強攻撃_2段目(魔法)\u0000",
+        "ActionRate": 1.8,
+        "Path": "job07.-1.51"
+      },
+      {
+        "Hint": "押さえ付け_弱攻撃\u0000",
+        "ActionRate": 1.6,
+        "Path": "job07.-1.52"
+      },
+      {
+        "Hint": "エナジードレイン_発動時\u0000",
+        "ActionRate": 0.1,
+        "Path": "job07.-1.53"
+      },
+      {
+        "Hint": "エナジードレイン_ループ中\u0000",
+        "ActionRate": 0.025,
+        "Path": "job07.-1.54"
+      },
+      {
+        "Hint": "エナジードレインLv.2_ループ中\u0000",
+        "ActionRate": 0.025,
+        "Path": "job07.-1.55"
+      },
+      {
+        "Hint": "カス魔封殺\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.56"
+      },
+      {
+        "Hint": "クイックシールド_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.57"
+      },
+      {
+        "Hint": "グングニル_小溜め\u0000",
+        "ActionRate": 3.0,
+        "Path": "job07.-1.58"
+      },
+      {
+        "Hint": "グングニル_中溜め\u0000",
+        "ActionRate": 3.0,
+        "Path": "job07.-1.59"
+      },
+      {
+        "Hint": "グングニルLv2_小溜め\u0000",
+        "ActionRate": 4.0,
+        "Path": "job07.-1.60"
+      },
+      {
+        "Hint": "グングニルLv2_中溜め\u0000",
+        "ActionRate": 4.0,
+        "Path": "job07.-1.61"
+      },
+      {
+        "Hint": "サイコシュート_範囲\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.62"
+      },
+      {
+        "Hint": "サイコランチャー_発射シェル\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.63"
+      },
+      {
+        "Hint": "サイコランチャー_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.64"
+      },
+      {
+        "Hint": "しがみ付き_強攻撃_1段目(物理)\u0000",
+        "ActionRate": 1.85,
+        "Path": "job07.-1.65"
+      },
+      {
+        "Hint": "しがみ付き_強攻撃_2段目(魔法)\u0000",
+        "ActionRate": 3.0,
+        "Path": "job07.-1.66"
+      },
+      {
+        "Hint": "しがみ付き_弱攻撃\u0000",
+        "ActionRate": 1.6,
+        "Path": "job07.-1.67"
+      },
+      {
+        "Hint": "ジャスト魔封殺\u0000",
+        "ActionRate": 0.0,
+        "Path": "job07.-1.68"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_着地後(魔法)\u0000",
+        "ActionRate": 1.5,
+        "Path": "job07.-1.69"
+      },
+      {
+        "Hint": "ジャンプ_弱攻撃\u0000",
+        "ActionRate": 1.4,
+        "Path": "job07.-1.70"
+      },
+      {
+        "Hint": "ダッシュ_弱攻撃_１段目\u0000",
+        "ActionRate": 0.75,
+        "Path": "job07.-1.71"
+      },
+      {
+        "Hint": "ダッシュ_弱攻撃_２段目\u0000",
+        "ActionRate": 0.75,
+        "Path": "job07.-1.72"
+      },
+      {
+        "Hint": "ブレイド\u0000",
+        "ActionRate": 0.55,
+        "Path": "job07.-1.73"
+      }
+    ],
+    "7151": [
+      {
+        "Hint": "ジャンプ_強攻撃_落下中\u0000",
+        "ActionRate": 1.6,
+        "Path": "job07.7151.0"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_落下中_２段階目\u0000",
+        "ActionRate": 2.85,
+        "Path": "job07.7151.1"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_落下中_３段階目\u0000",
+        "ActionRate": 4.85,
+        "Path": "job07.7151.2"
+      },
+      {
+        "Hint": "ジャンプ_強攻撃_着地専用\u0000",
+        "ActionRate": 1.1,
+        "Path": "job07.7151.3"
+      }
+    ],
+    "7316": [
+      {
+        "Hint": "渾身の追撃_遠距離_2段目(魔法)\u0000",
+        "ActionRate": 3.5,
+        "Path": "job07.7316.0"
+      }
+    ],
+    "7315": [
+      {
+        "Hint": "大型敵真横_渾身の追撃_2段目(魔法)\u0000",
+        "ActionRate": 5.0,
+        "Path": "job07.7315.0"
+      },
+      {
+        "Hint": "渾身の追撃_遠距離_巻き込み_大型敵用\u0000",
+        "ActionRate": 1.3,
+        "Path": "job07.7315.1"
+      }
+    ],
+    "7117": [
+      {
+        "Hint": "螺旋斬\u0000",
+        "ActionRate": 0.7,
+        "Path": "job07.7117.0"
+      },
+      {
+        "Hint": "螺旋斬_加速\u0000",
+        "ActionRate": 0.7,
+        "Path": "job07.7117.1"
+      }
+    ],
+    "7303": [
+      {
+        "Hint": "渾身の追撃_遠距離_巻き込み_小型敵用\u0000",
+        "ActionRate": 1.3,
+        "Path": "job07.7303.0"
+      }
+    ]
+  },
+  "job08": {
+    "-1": [
+      {
+        "Hint": "攻撃魔矢\u0000",
+        "ActionRate": 0.5,
+        "Path": "job08.-1.0"
+      },
+      {
+        "Hint": "攻撃魔矢_腰射ち\u0000",
+        "ActionRate": 0.2,
+        "Path": "job08.-1.1"
+      },
+      {
+        "Hint": "回復魔矢\u0000",
+        "ActionRate": 0.25,
+        "Path": "job08.-1.2"
+      },
+      {
+        "Hint": "無尽魔矢\u0000",
+        "ActionRate": 0.3,
+        "Path": "job08.-1.3"
+      },
+      {
+        "Hint": "押さえつけ/しがみ付き\u0000",
+        "ActionRate": 0.35,
+        "Path": "job08.-1.4"
+      },
+      {
+        "Hint": "CS_氷塊\u0000",
+        "ActionRate": 1.0,
+        "Path": "job08.-1.5"
+      },
+      {
+        "Hint": "CS_氷追_本体\u0000",
+        "ActionRate": 0.4,
+        "Path": "job08.-1.6"
+      },
+      {
+        "Hint": "CS_逓鎖_着弾\u0000",
+        "ActionRate": 0.0,
+        "Path": "job08.-1.7"
+      },
+      {
+        "Hint": "CS_落陽_AimCharge\u0000",
+        "ActionRate": 0.0,
+        "Path": "job08.-1.8"
+      },
+      {
+        "Hint": "CS_落陽_AimNoCharge\u0000",
+        "ActionRate": 0.0,
+        "Path": "job08.-1.9"
+      },
+      {
+        "Hint": "CS_落陽_NoAim\u0000",
+        "ActionRate": 0.0,
+        "Path": "job08.-1.10"
+      },
+      {
+        "Hint": "CS_命帰_アンデッド用攻撃アタリ\u0000",
+        "ActionRate": 1.0,
+        "Path": "job08.-1.11"
+      },
+      {
+        "Hint": "CS_天照_発火\u0000",
+        "ActionRate": 0.25,
+        "Path": "job08.-1.12"
+      },
+      {
+        "Hint": "CS_天照_発射\u0000",
+        "ActionRate": 0.15,
+        "Path": "job08.-1.13"
+      },
+      {
+        "Hint": "CS_天照_着弾\u0000",
+        "ActionRate": 0.3,
+        "Path": "job08.-1.14"
+      },
+      {
+        "Hint": "CS_跳弾\u0000",
+        "ActionRate": 0.7,
+        "Path": "job08.-1.15"
+      },
+      {
+        "Hint": "CS_吸生\u0000",
+        "ActionRate": 1.65,
+        "Path": "job08.-1.16"
+      },
+      {
+        "Hint": "CS_吸生_2\u0000",
+        "ActionRate": 1.65,
+        "Path": "job08.-1.17"
+      }
+    ],
+    "510": [
+      {
+        "Hint": "CS_逓鎖魔連_チェックアタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "job08.510.0"
+      }
+    ],
+    "80": [
+      {
+        "Hint": "CS_反晶_Aim\u0000",
+        "ActionRate": 0.0,
+        "Path": "job08.80.0"
+      },
+      {
+        "Hint": "CS_命帰\u0000",
+        "ActionRate": 0.15,
+        "Path": "job08.80.1"
+      }
+    ],
+    "1200": [
+      {
+        "Hint": "CS_吸生_Dummy_チェック\u0000",
+        "ActionRate": 0.0,
+        "Path": "job08.1200.0"
+      },
+      {
+        "Hint": "CS_吸生_チェック(ダメージ)\u0000",
+        "ActionRate": 1.0,
+        "Path": "job08.1200.1"
+      },
+      {
+        "Hint": "CS_吸生_チェック(ダメージ)_Lv2\u0000",
+        "ActionRate": 1.1,
+        "Path": "job08.1200.2"
+      }
+    ],
+    "900": [
+      {
+        "Hint": "CS_反晶_爆発\u0000",
+        "ActionRate": 7.5,
+        "Path": "job08.900.0"
+      },
+      {
+        "Hint": "CS_反晶_爆発_大\u0000",
+        "ActionRate": 15.0,
+        "Path": "job08.900.1"
+      }
+    ],
+    "1500": [
+      {
+        "Hint": "CS_炎烽_爆風_Lv2\u0000",
+        "ActionRate": 10.0,
+        "Path": "job08.1500.0"
+      }
+    ],
+    "1510": [
+      {
+        "Hint": "CS_炎烽_弾\u0000",
+        "ActionRate": 2.25,
+        "Path": "job08.1510.0"
+      }
+    ],
+    "1600": [
+      {
+        "Hint": "CS_捧魂\u0000",
+        "ActionRate": 0.18,
+        "Path": "job08.1600.0"
+      }
+    ]
+  },
+  "job09": {
+    "-1": [
+      {
+        "Hint": "飛憑の煙\u0000",
+        "ActionRate": 1.0,
+        "Path": "job09.-1.0"
+      },
+      {
+        "Hint": "幻壁の煙_見失いアタリ\u0000",
+        "ActionRate": 1.0,
+        "Path": "job09.-1.1"
+      },
+      {
+        "Hint": "幻地の煙_踏み外し\u0000",
+        "ActionRate": 1.0,
+        "Path": "job09.-1.2"
+      },
+      {
+        "Hint": "幻竜の巨煙_本体\u0000",
+        "ActionRate": 0.0,
+        "Path": "job09.-1.3"
+      },
+      {
+        "Hint": "幻竜の巨煙_本体_テンション下げ\u0000",
+        "ActionRate": 0.0,
+        "Path": "job09.-1.4"
+      },
+      {
+        "Hint": "幻竜の巨煙_ブレス\u0000",
+        "ActionRate": 1.0,
+        "Path": "job09.-1.5"
+      },
+      {
+        "Hint": "幻憑依\u0000",
+        "ActionRate": 0.0,
+        "Path": "job09.-1.6"
+      },
+      {
+        "Hint": "竜激の香\u0000",
+        "ActionRate": 1.0,
+        "Path": "job09.-1.7"
+      },
+      {
+        "Hint": "憑依攻撃\u0000",
+        "ActionRate": 0.0,
+        "Path": "job09.-1.8"
+      },
+      {
+        "Hint": "清眼の煙\u0000",
+        "ActionRate": 1.0,
+        "Path": "job09.-1.9"
+      },
+      {
+        "Hint": "死なない香炉攻撃\u0000",
+        "ActionRate": 0.05,
+        "Path": "job09.-1.10"
+      },
+      {
+        "Hint": "香炉攻撃\u0000",
+        "ActionRate": 0.03,
+        "Path": "job09.-1.11"
+      },
+      {
+        "Hint": "香炉攻撃_OBJのみ当たる\u0000",
+        "ActionRate": 1.0,
+        "Path": "job09.-1.12"
+      }
+    ]
+  },
+  "jobmagic": {
+    "-1": [
+      {
+        "Hint": "アッドフレア\u0000",
+        "ActionRate": 0.2,
+        "Path": "jobmagic.-1.0"
+      },
+      {
+        "Hint": "アッドフレア爆発\u0000",
+        "ActionRate": 15.0,
+        "Path": "jobmagic.-1.1"
+      },
+      {
+        "Hint": "アッドフレア爆発_初弾\u0000",
+        "ActionRate": 15.0,
+        "Path": "jobmagic.-1.2"
+      },
+      {
+        "Hint": "アッドフレア爆発_巻き込み\u0000",
+        "ActionRate": 3.75,
+        "Path": "jobmagic.-1.3"
+      },
+      {
+        "Hint": "アッドフレア爆発_MAX溜めフィニッシュ\u0000",
+        "ActionRate": 30.0,
+        "Path": "jobmagic.-1.4"
+      },
+      {
+        "Hint": "アッドフレア爆発_MAX溜めフィニッシュ_巻き込み\u0000",
+        "ActionRate": 7.5,
+        "Path": "jobmagic.-1.5"
+      },
+      {
+        "Hint": "アッドフレア爆発_フィニッシュ\u0000",
+        "ActionRate": 20.0,
+        "Path": "jobmagic.-1.6"
+      },
+      {
+        "Hint": "アッドフレア爆発_フィニッシュ_巻き込み\u0000",
+        "ActionRate": 5.0,
+        "Path": "jobmagic.-1.7"
+      },
+      {
+        "Hint": "ヴォルテクスレイジ\u0000",
+        "ActionRate": 2.0,
+        "Path": "jobmagic.-1.8"
+      },
+      {
+        "Hint": "ヴォルテクスレイジ_竜激の香\u0000",
+        "ActionRate": 1.6,
+        "Path": "jobmagic.-1.9"
+      },
+      {
+        "Hint": "ガードビット\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.10"
+      },
+      {
+        "Hint": "キュアスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.11"
+      },
+      {
+        "Hint": "スペルブレイク\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.12"
+      },
+      {
+        "Hint": "セントドレイン\u0000",
+        "ActionRate": 1.0,
+        "Path": "jobmagic.-1.13"
+      },
+      {
+        "Hint": "セントドレイン付着\u0000",
+        "ActionRate": 0.18,
+        "Path": "jobmagic.-1.14"
+      },
+      {
+        "Hint": "ゾーンオブザゴッド\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.15"
+      },
+      {
+        "Hint": "バーストショット\u0000",
+        "ActionRate": 1.45,
+        "Path": "jobmagic.-1.16"
+      },
+      {
+        "Hint": "バーストショット_追撃\u0000",
+        "ActionRate": 0.7,
+        "Path": "jobmagic.-1.17"
+      },
+      {
+        "Hint": "パワーショット\u0000",
+        "ActionRate": 1.45,
+        "Path": "jobmagic.-1.18"
+      },
+      {
+        "Hint": "ヒーリングスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.19"
+      },
+      {
+        "Hint": "ブリザード_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.20"
+      },
+      {
+        "Hint": "フロストスパイクLv2_冷気\u0000",
+        "ActionRate": 1.5,
+        "Path": "jobmagic.-1.21"
+      },
+      {
+        "Hint": "ヘイストスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.22"
+      },
+      {
+        "Hint": "ホーリーシャイン\u0000",
+        "ActionRate": 0.25,
+        "Path": "jobmagic.-1.23"
+      },
+      {
+        "Hint": "ホーリーシャイン：対アンデッド\u0000",
+        "ActionRate": 4.375,
+        "Path": "jobmagic.-1.24"
+      },
+      {
+        "Hint": "マインボルト探知\u0000",
+        "ActionRate": 1.0,
+        "Path": "jobmagic.-1.25"
+      },
+      {
+        "Hint": "マインボルト迎撃\u0000",
+        "ActionRate": 0.35,
+        "Path": "jobmagic.-1.26"
+      },
+      {
+        "Hint": "マインボルト迎撃軌道\u0000",
+        "ActionRate": 0.35,
+        "Path": "jobmagic.-1.27"
+      },
+      {
+        "Hint": "マインボルト予兆アタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.28"
+      },
+      {
+        "Hint": "メテオフォール\u0000",
+        "ActionRate": 5.0,
+        "Path": "jobmagic.-1.29"
+      },
+      {
+        "Hint": "メテオフォール着弾\u0000",
+        "ActionRate": 15.0,
+        "Path": "jobmagic.-1.30"
+      },
+      {
+        "Hint": "ラピッドショット\u0000",
+        "ActionRate": 0.16,
+        "Path": "jobmagic.-1.31"
+      },
+      {
+        "Hint": "ロックビート_地震\u0000",
+        "ActionRate": 0.0,
+        "Path": "jobmagic.-1.32"
+      },
+      {
+        "Hint": "ロックビート発生\u0000",
+        "ActionRate": 4.5,
+        "Path": "jobmagic.-1.33"
+      }
+    ],
+    "2": [
+      {
+        "Hint": "ファイヤーストーム\u0000",
+        "ActionRate": 0.85,
+        "Path": "jobmagic.2.0"
+      },
+      {
+        "Hint": "ファイヤーストーム_Lv.2\u0000",
+        "ActionRate": 0.85,
+        "Path": "jobmagic.2.1"
+      }
+    ],
+    "69": [
+      {
+        "Hint": "フロストスパイク_奥\u0000",
+        "ActionRate": 4.0,
+        "Path": "jobmagic.69.0"
+      },
+      {
+        "Hint": "フロストスパイク_手前\u0000",
+        "ActionRate": 1.0,
+        "Path": "jobmagic.69.1"
+      }
+    ],
+    "25": [
+      {
+        "Hint": "サンダーレイン\u0000",
+        "ActionRate": 1.1,
+        "Path": "jobmagic.25.0"
+      },
+      {
+        "Hint": "サンダーレイン_追撃\u0000",
+        "ActionRate": 0.8,
+        "Path": "jobmagic.25.1"
+      }
+    ],
+    "28": [
+      {
+        "Hint": "ヒーリングスポット：対アンデッド\u0000",
+        "ActionRate": 0.85,
+        "Path": "jobmagic.28.0"
+      }
+    ],
+    "2110": [
+      {
+        "Hint": "ブリザード_右奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2110.0"
+      },
+      {
+        "Hint": "ブリザード_右手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2110.1"
+      },
+      {
+        "Hint": "ブリザード_中央\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2110.2"
+      },
+      {
+        "Hint": "ブリザード_左奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2110.3"
+      },
+      {
+        "Hint": "ブリザード_左手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2110.4"
+      }
+    ],
+    "2114": [
+      {
+        "Hint": "ブリザードLv.2_右奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2114.0"
+      },
+      {
+        "Hint": "ブリザードLv.2_右手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2114.1"
+      },
+      {
+        "Hint": "ブリザードLv.2_中央\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2114.2"
+      },
+      {
+        "Hint": "ブリザードLv.2_左奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2114.3"
+      },
+      {
+        "Hint": "ブリザードLv.2_左手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "jobmagic.2114.4"
+      }
+    ]
+  },
+  "humanshellcollider_magicbook": {
+    "-1": [
+      {
+        "Hint": "キュアスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_magicbook.-1.0"
+      },
+      {
+        "Hint": "スペルブレイク\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_magicbook.-1.1"
+      },
+      {
+        "Hint": "ゾーンオブザゴッド\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_magicbook.-1.2"
+      },
+      {
+        "Hint": "ヒーリングスポット\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_magicbook.-1.3"
+      },
+      {
+        "Hint": "ブリザードLv.2_チェック当たり\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_magicbook.-1.4"
+      },
+      {
+        "Hint": "フロストスパイク_奥\u0000",
+        "ActionRate": 4.0,
+        "Path": "humanshellcollider_magicbook.-1.5"
+      },
+      {
+        "Hint": "フロストスパイク_手前\u0000",
+        "ActionRate": 1.0,
+        "Path": "humanshellcollider_magicbook.-1.6"
+      },
+      {
+        "Hint": "フロストスパイクLv2_冷気\u0000",
+        "ActionRate": 1.5,
+        "Path": "humanshellcollider_magicbook.-1.7"
+      },
+      {
+        "Hint": "ホーリーシャイン\u0000",
+        "ActionRate": 0.25,
+        "Path": "humanshellcollider_magicbook.-1.8"
+      },
+      {
+        "Hint": "ホーリーシャイン：対アンデッド\u0000",
+        "ActionRate": 0.3375,
+        "Path": "humanshellcollider_magicbook.-1.9"
+      },
+      {
+        "Hint": "マインボルト探知\u0000",
+        "ActionRate": 1.0,
+        "Path": "humanshellcollider_magicbook.-1.10"
+      },
+      {
+        "Hint": "マインボルト迎撃\u0000",
+        "ActionRate": 0.47,
+        "Path": "humanshellcollider_magicbook.-1.11"
+      },
+      {
+        "Hint": "マインボルト迎撃軌道\u0000",
+        "ActionRate": 0.47,
+        "Path": "humanshellcollider_magicbook.-1.12"
+      },
+      {
+        "Hint": "マインボルト予兆アタリ\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_magicbook.-1.13"
+      },
+      {
+        "Hint": "メテオフォール\u0000",
+        "ActionRate": 5.0,
+        "Path": "humanshellcollider_magicbook.-1.14"
+      },
+      {
+        "Hint": "メテオフォール着弾\u0000",
+        "ActionRate": 15.0,
+        "Path": "humanshellcollider_magicbook.-1.15"
+      },
+      {
+        "Hint": "ロックビート_地震\u0000",
+        "ActionRate": 0.0,
+        "Path": "humanshellcollider_magicbook.-1.16"
+      },
+      {
+        "Hint": "ロックビート発生\u0000",
+        "ActionRate": 25.0,
+        "Path": "humanshellcollider_magicbook.-1.17"
+      }
+    ],
+    "28": [
+      {
+        "Hint": "ヒーリングスポット：対アンデッド\u0000",
+        "ActionRate": 0.085,
+        "Path": "humanshellcollider_magicbook.28.0"
+      }
+    ],
+    "25": [
+      {
+        "Hint": "サンダーレイン\u0000",
+        "ActionRate": 1.1,
+        "Path": "humanshellcollider_magicbook.25.0"
+      },
+      {
+        "Hint": "サンダーレイン_追撃\u0000",
+        "ActionRate": 0.7,
+        "Path": "humanshellcollider_magicbook.25.1"
+      }
+    ],
+    "2110": [
+      {
+        "Hint": "ブリザードLv.2_右奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_magicbook.2110.0"
+      },
+      {
+        "Hint": "ブリザードLv.2_右手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_magicbook.2110.1"
+      },
+      {
+        "Hint": "ブリザードLv.2_中央\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_magicbook.2110.2"
+      },
+      {
+        "Hint": "ブリザードLv.2_左奥\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_magicbook.2110.3"
+      },
+      {
+        "Hint": "ブリザードLv.2_左手前\u0000",
+        "ActionRate": 0.4,
+        "Path": "humanshellcollider_magicbook.2110.4"
+      }
+    ]
+  },
+  "job05": {
+    "5100": [
+      {
+        "Hint": "CS_07_雄叫び\u0000",
+        "ActionRate": 2.4,
+        "Path": "job05.5100.0"
+      },
+      {
+        "Hint": "CS_09_魔人斬り_無溜_1\u0000",
+        "ActionRate": 3.6,
+        "Path": "job05.5100.1"
+      },
+      {
+        "Hint": "CS_09_魔人斬り_無溜_2\u0000",
+        "ActionRate": 3.6,
+        "Path": "job05.5100.2"
+      },
+      {
+        "Hint": "CS_10_気合\u0000",
+        "ActionRate": 2.4,
+        "Path": "job05.5100.3"
+      },
+      {
+        "Hint": "CS_11_空舞の刀身\u0000",
+        "ActionRate": 2.4,
+        "Path": "job05.5100.4"
+      },
+      {
+        "Hint": "CS_12_退魔剣聖斬_3(未)\u0000",
+        "ActionRate": 24.0,
+        "Path": "job05.5100.5"
+      },
+      {
+        "Hint": "N_軽\u0000",
+        "ActionRate": 1.85,
+        "Path": "job05.5100.6"
+      },
+      {
+        "Hint": "N_軽_早繋ぎ\u0000",
+        "ActionRate": 1.85,
+        "Path": "job05.5100.7"
+      },
+      {
+        "Hint": "N_軽_カス\u0000",
+        "ActionRate": 0.8,
+        "Path": "job05.5100.8"
+      },
+      {
+        "Hint": "N_軽_カス_早繋ぎ\u0000",
+        "ActionRate": 0.8,
+        "Path": "job05.5100.9"
+      }
+    ],
+    "5130": [
+      {
+        "Hint": "N_地_重_振り抜き\u0000",
+        "ActionRate": 3.15,
+        "Path": "job05.5130.0"
+      },
+      {
+        "Hint": "N_地_重_振り中\u0000",
+        "ActionRate": 3.15,
+        "Path": "job05.5130.1"
+      },
+      {
+        "Hint": "N_地_重_振り中_上\u0000",
+        "ActionRate": 3.15,
+        "Path": "job05.5130.2"
+      },
+      {
+        "Hint": "N_地_重_走り_振り抜き\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5130.3"
+      },
+      {
+        "Hint": "N_地_重_走り_振り中\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5130.4"
+      }
+    ],
+    "5140": [
+      {
+        "Hint": "N_EM立_重_刺し\u0000",
+        "ActionRate": 2.0,
+        "Path": "job05.5140.0"
+      },
+      {
+        "Hint": "N_EM立_重_刺し_Follow\u0000",
+        "ActionRate": 2.0,
+        "Path": "job05.5140.1"
+      }
+    ],
+    "5145": [
+      {
+        "Hint": "N_EM立_重_刺し_打武器\u0000",
+        "ActionRate": 2.4,
+        "Path": "job05.5145.0"
+      },
+      {
+        "Hint": "N_EM立_重_刺し_打武器_Follow\u0000",
+        "ActionRate": 2.4,
+        "Path": "job05.5145.1"
+      }
+    ],
+    "-1": [
+      {
+        "Hint": "CS_11_空舞の刀身_1\u0000",
+        "ActionRate": 0.0,
+        "Path": "job05.-1.0"
+      },
+      {
+        "Hint": "N_EM立_重_抜き1\u0000",
+        "ActionRate": 0.4,
+        "Path": "job05.-1.1"
+      }
+    ],
+    "5146": [
+      {
+        "Hint": "N_EM立_重_抜き1_打武器\u0000",
+        "ActionRate": 0.2,
+        "Path": "job05.5146.0"
+      },
+      {
+        "Hint": "N_EM立_重_抜き1_打武器_Follow\u0000",
+        "ActionRate": 0.2,
+        "Path": "job05.5146.1"
+      }
+    ],
+    "5142": [
+      {
+        "Hint": "N_EM立_重_抜き2\u0000",
+        "ActionRate": 2.2,
+        "Path": "job05.5142.0"
+      },
+      {
+        "Hint": "N_EM立_重_抜き2_Follow\u0000",
+        "ActionRate": 2.2,
+        "Path": "job05.5142.1"
+      }
+    ],
+    "5135": [
+      {
+        "Hint": "N_地_タックル_動き出し\u0000",
+        "ActionRate": 0.0,
+        "Path": "job05.5135.0"
+      }
+    ],
+    "5136": [
+      {
+        "Hint": "N_地_タックル\u0000",
+        "ActionRate": 0.12,
+        "Path": "job05.5136.0"
+      },
+      {
+        "Hint": "N_地_タックル_根本\u0000",
+        "ActionRate": 0.12,
+        "Path": "job05.5136.1"
+      }
+    ],
+    "5120": [
+      {
+        "Hint": "N_溜_振り抜き\u0000",
+        "ActionRate": 5.2,
+        "Path": "job05.5120.0"
+      },
+      {
+        "Hint": "N_溜_振り抜き_極\u0000",
+        "ActionRate": 6.3,
+        "Path": "job05.5120.1"
+      },
+      {
+        "Hint": "N_溜_振り中_右\u0000",
+        "ActionRate": 5.2,
+        "Path": "job05.5120.2"
+      },
+      {
+        "Hint": "N_溜_振り中_右_極\u0000",
+        "ActionRate": 6.3,
+        "Path": "job05.5120.3"
+      },
+      {
+        "Hint": "N_溜_振り中_左\u0000",
+        "ActionRate": 5.2,
+        "Path": "job05.5120.4"
+      },
+      {
+        "Hint": "N_溜_振り中_左_極\u0000",
+        "ActionRate": 6.3,
+        "Path": "job05.5120.5"
+      }
+    ],
+    "5150": [
+      {
+        "Hint": "N_空_軽\u0000",
+        "ActionRate": 1.85,
+        "Path": "job05.5150.0"
+      },
+      {
+        "Hint": "N_空_軽_落下中\u0000",
+        "ActionRate": 1.6,
+        "Path": "job05.5150.1"
+      },
+      {
+        "Hint": "N_空_軽_カス\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5150.2"
+      }
+    ],
+    "5160": [
+      {
+        "Hint": "N_空_重_低\u0000",
+        "ActionRate": 3.15,
+        "Path": "job05.5160.0"
+      },
+      {
+        "Hint": "N_空_重_低_落下中\u0000",
+        "ActionRate": 3.15,
+        "Path": "job05.5160.1"
+      }
+    ],
+    "5170": [
+      {
+        "Hint": "N_握_軽\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5170.0"
+      }
+    ],
+    "5180": [
+      {
+        "Hint": "N_握_重\u0000",
+        "ActionRate": 2.7,
+        "Path": "job05.5180.0"
+      }
+    ],
+    "5181": [
+      {
+        "Hint": "N_握_重_落下中\u0000",
+        "ActionRate": 0.45,
+        "Path": "job05.5181.0"
+      }
+    ],
+    "5306": [
+      {
+        "Hint": "【保険】CS_01_重走_Finish_大型_通常_1_掴み\u0000",
+        "ActionRate": 0.8,
+        "Path": "job05.5306.0"
+      },
+      {
+        "Hint": "【保険】CS_01_重走_Finish_大型_ダウン_1_掴み\u0000",
+        "ActionRate": 1.4,
+        "Path": "job05.5306.1"
+      },
+      {
+        "Hint": "CS_01_重走_Finish_小型_壁_1_掴み\u0000",
+        "ActionRate": 4.8,
+        "Path": "job05.5306.2"
+      },
+      {
+        "Hint": "CS_01_重走_Finish_小型_地上_1_非掴み\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5306.3"
+      },
+      {
+        "Hint": "CS_01_重走_Finish_小型_地上_1_掴み\u0000",
+        "ActionRate": 0.375,
+        "Path": "job05.5306.4"
+      }
+    ],
+    "5315": [
+      {
+        "Hint": "CS_01_重走_Finish_大型_通常_2_非掴み\u0000",
+        "ActionRate": 6.0,
+        "Path": "job05.5315.0"
+      },
+      {
+        "Hint": "CS_01_重走_Finish_大型_通常_2_非掴み_カス\u0000",
+        "ActionRate": 2.0,
+        "Path": "job05.5315.1"
+      },
+      {
+        "Hint": "CS_01_重走_Finish_大型_通常_2_掴み\u0000",
+        "ActionRate": 6.0,
+        "Path": "job05.5315.2"
+      }
+    ],
+    "5311": [
+      {
+        "Hint": "CS_01_重走_Finish_小型_壁_2_非掴み\u0000",
+        "ActionRate": 4.0,
+        "Path": "job05.5311.0"
+      },
+      {
+        "Hint": "CS_01_重走_Finish_小型_壁_2_掴み\u0000",
+        "ActionRate": 4.8,
+        "Path": "job05.5311.1"
+      }
+    ],
+    "5320": [
+      {
+        "Hint": "CS_01_重走_Finish_大型_ダウン_2_非掴み\u0000",
+        "ActionRate": 12.0,
+        "Path": "job05.5320.0"
+      },
+      {
+        "Hint": "CS_01_重走_Finish_大型_ダウン_2_掴み\u0000",
+        "ActionRate": 10.0,
+        "Path": "job05.5320.1"
+      }
+    ],
+    "5300": [
+      {
+        "Hint": "CS_01_重走_掴み\u0000",
+        "ActionRate": 0.0,
+        "Path": "job05.5300.0"
+      }
+    ],
+    "5303": [
+      {
+        "Hint": "CS_01_重走_刺し低速HIT\u0000",
+        "ActionRate": 0.8,
+        "Path": "job05.5303.0"
+      },
+      {
+        "Hint": "CS_01_重走_非刺し\u0000",
+        "ActionRate": 0.6,
+        "Path": "job05.5303.1"
+      }
+    ],
+    "5330": [
+      {
+        "Hint": "CS_02_地平斬り_1\u0000",
+        "ActionRate": 2.28,
+        "Path": "job05.5330.0"
+      },
+      {
+        "Hint": "CS_02_地平斬り_1_2(カス)\u0000",
+        "ActionRate": 1.2,
+        "Path": "job05.5330.1"
+      },
+      {
+        "Hint": "CS_02_地平斬り_1_極\u0000",
+        "ActionRate": 2.52,
+        "Path": "job05.5330.2"
+      },
+      {
+        "Hint": "CS_02_地平斬り_無溜_1\u0000",
+        "ActionRate": 2.4,
+        "Path": "job05.5330.3"
+      }
+    ],
+    "5333": [
+      {
+        "Hint": "CS_02_地平斬り_2_1(カス)\u0000",
+        "ActionRate": 2.12,
+        "Path": "job05.5333.0"
+      },
+      {
+        "Hint": "CS_02_地平斬り_2_1(カス)_極\u0000",
+        "ActionRate": 2.332,
+        "Path": "job05.5333.1"
+      },
+      {
+        "Hint": "CS_02_地平斬り_2_4(カス)\u0000",
+        "ActionRate": 2.2,
+        "Path": "job05.5333.2"
+      },
+      {
+        "Hint": "CS_02_地平斬り_2_振り\u0000",
+        "ActionRate": 6.176,
+        "Path": "job05.5333.3"
+      },
+      {
+        "Hint": "CS_02_地平斬り_2_振り_極\u0000",
+        "ActionRate": 6.8,
+        "Path": "job05.5333.4"
+      },
+      {
+        "Hint": "CS_02_地平斬り_2_振り切り\u0000",
+        "ActionRate": 6.176,
+        "Path": "job05.5333.5"
+      },
+      {
+        "Hint": "CS_02_地平斬り_2_振り切り_極\u0000",
+        "ActionRate": 6.8,
+        "Path": "job05.5333.6"
+      },
+      {
+        "Hint": "CSLv2_02_地平斬り_2_1(カス)\u0000",
+        "ActionRate": 2.332,
+        "Path": "job05.5333.7"
+      },
+      {
+        "Hint": "CSLv2_02_地平斬り_2_1(カス)_極\u0000",
+        "ActionRate": 2.568,
+        "Path": "job05.5333.8"
+      },
+      {
+        "Hint": "CSLv2_02_地平斬り_2_4(カス)\u0000",
+        "ActionRate": 2.42,
+        "Path": "job05.5333.9"
+      },
+      {
+        "Hint": "CSLv2_02_地平斬り_2_振り\u0000",
+        "ActionRate": 6.8,
+        "Path": "job05.5333.10"
+      },
+      {
+        "Hint": "CSLv2_02_地平斬り_2_振り_極\u0000",
+        "ActionRate": 7.48,
+        "Path": "job05.5333.11"
+      },
+      {
+        "Hint": "CSLv2_02_地平斬り_2_振り切り\u0000",
+        "ActionRate": 6.8,
+        "Path": "job05.5333.12"
+      },
+      {
+        "Hint": "CSLv2_02_地平斬り_2_振り切り_極\u0000",
+        "ActionRate": 7.48,
+        "Path": "job05.5333.13"
+      }
+    ],
+    "5650": [
+      {
+        "Hint": "CS_09_魔人斬り_溜_1\u0000",
+        "ActionRate": 11.4,
+        "Path": "job05.5650.0"
+      },
+      {
+        "Hint": "CS_09_魔人斬り_溜_1_極\u0000",
+        "ActionRate": 12.6,
+        "Path": "job05.5650.1"
+      },
+      {
+        "Hint": "CS_09_魔人斬り_溜_2_極\u0000",
+        "ActionRate": 12.6,
+        "Path": "job05.5650.2"
+      },
+      {
+        "Hint": "CS_09_魔人斬り_溜_衝撃波\u0000",
+        "ActionRate": 0.5,
+        "Path": "job05.5650.3"
+      },
+      {
+        "Hint": "CS_09_魔人斬り_溜_Finish_極\u0000",
+        "ActionRate": 12.6,
+        "Path": "job05.5650.4"
+      },
+      {
+        "Hint": "CSLv2_09_魔人斬り_溜_1\u0000",
+        "ActionRate": 12.2,
+        "Path": "job05.5650.5"
+      },
+      {
+        "Hint": "CSLv2_09_魔人斬り_溜_1_極\u0000",
+        "ActionRate": 13.44,
+        "Path": "job05.5650.6"
+      },
+      {
+        "Hint": "CSLv2_09_魔人斬り_溜_2\u0000",
+        "ActionRate": 12.2,
+        "Path": "job05.5650.7"
+      },
+      {
+        "Hint": "CSLv2_09_魔人斬り_溜_2_極\u0000",
+        "ActionRate": 13.44,
+        "Path": "job05.5650.8"
+      },
+      {
+        "Hint": "CSLv2_09_魔人斬り_溜_Finish\u0000",
+        "ActionRate": 12.2,
+        "Path": "job05.5650.9"
+      },
+      {
+        "Hint": "CSLv2_09_魔人斬り_溜_Finish_極\u0000",
+        "ActionRate": 13.44,
+        "Path": "job05.5650.10"
+      }
+    ],
+    "5600": [
+      {
+        "Hint": "CS_08_山崩し_溜_1\u0000",
+        "ActionRate": 6.64,
+        "Path": "job05.5600.0"
+      },
+      {
+        "Hint": "CS_08_山崩し_溜_1_極\u0000",
+        "ActionRate": 8.6,
+        "Path": "job05.5600.1"
+      },
+      {
+        "Hint": "CS_08_山崩し_溜_1_極_SS\u0000",
+        "ActionRate": 8.6,
+        "Path": "job05.5600.2"
+      },
+      {
+        "Hint": "CS_08_山崩し_溜_1_Follow(全共通)\u0000",
+        "ActionRate": 6.64,
+        "Path": "job05.5600.3"
+      },
+      {
+        "Hint": "CS_08_山崩し_溜_1_SS\u0000",
+        "ActionRate": 6.64,
+        "Path": "job05.5600.4"
+      },
+      {
+        "Hint": "CS_08_山崩し_溜_2\u0000",
+        "ActionRate": 0.4,
+        "Path": "job05.5600.5"
+      },
+      {
+        "Hint": "CS_08_山崩し_無溜_1\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5600.6"
+      },
+      {
+        "Hint": "CS_08_山崩し_無溜_2\u0000",
+        "ActionRate": 0.264,
+        "Path": "job05.5600.7"
+      },
+      {
+        "Hint": "CSLv2_08_山崩し_溜_1\u0000",
+        "ActionRate": 7.3,
+        "Path": "job05.5600.8"
+      },
+      {
+        "Hint": "CSLv2_08_山崩し_溜_1_極\u0000",
+        "ActionRate": 8.03,
+        "Path": "job05.5600.9"
+      },
+      {
+        "Hint": "CSLv2_08_山崩し_溜_1_極_SS\u0000",
+        "ActionRate": 8.03,
+        "Path": "job05.5600.10"
+      },
+      {
+        "Hint": "CSLv2_08_山崩し_溜_1_SS\u0000",
+        "ActionRate": 7.3,
+        "Path": "job05.5600.11"
+      },
+      {
+        "Hint": "CSLv2_08_山崩し_溜_2\u0000",
+        "ActionRate": 0.6,
+        "Path": "job05.5600.12"
+      }
+    ],
+    "5500": [
+      {
+        "Hint": "CS_06_逆流払い_1\u0000",
+        "ActionRate": 0.4,
+        "Path": "job05.5500.0"
+      },
+      {
+        "Hint": "CS_06_逆流払い_1_大型\u0000",
+        "ActionRate": 0.4,
+        "Path": "job05.5500.1"
+      }
+    ],
+    "5505": [
+      {
+        "Hint": "CS_06_逆流払い_2\u0000",
+        "ActionRate": 8.0,
+        "Path": "job05.5505.0"
+      },
+      {
+        "Hint": "CS_06_逆流払い_2_大型\u0000",
+        "ActionRate": 12.0,
+        "Path": "job05.5505.1"
+      }
+    ],
+    "5400": [
+      {
+        "Hint": "CS_04_烈風斬り_1\u0000",
+        "ActionRate": 2.64,
+        "Path": "job05.5400.0"
+      },
+      {
+        "Hint": "CS_04_烈風斬り_2\u0000",
+        "ActionRate": 2.64,
+        "Path": "job05.5400.1"
+      },
+      {
+        "Hint": "CS_04_烈風斬り_3\u0000",
+        "ActionRate": 2.64,
+        "Path": "job05.5400.2"
+      },
+      {
+        "Hint": "CS_04_烈風斬り_4\u0000",
+        "ActionRate": 2.64,
+        "Path": "job05.5400.3"
+      }
+    ],
+    "5430": [
+      {
+        "Hint": "CS_04_烈風斬り_Finish\u0000",
+        "ActionRate": 8.0,
+        "Path": "job05.5430.0"
+      }
+    ],
+    "5450": [
+      {
+        "Hint": "CS_05_地穿突き_地震\u0000",
+        "ActionRate": 0.0,
+        "Path": "job05.5450.0"
+      },
+      {
+        "Hint": "CS_05_地穿突き_低_落下中\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5450.1"
+      },
+      {
+        "Hint": "CS_05_地穿突き_低_着地\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5450.2"
+      },
+      {
+        "Hint": "CS_05_地穿突き_短着地_構え巻き込み\u0000",
+        "ActionRate": 2.4,
+        "Path": "job05.5450.3"
+      },
+      {
+        "Hint": "CS_05_地穿突き_高_落下中\u0000",
+        "ActionRate": 9.0,
+        "Path": "job05.5450.4"
+      },
+      {
+        "Hint": "CS_05_地穿突き_高_着地\u0000",
+        "ActionRate": 9.0,
+        "Path": "job05.5450.5"
+      },
+      {
+        "Hint": "CS_05_地穿突き_構え巻き込み\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5450.6"
+      },
+      {
+        "Hint": "CS_05_地穿突き_中_落下中\u0000",
+        "ActionRate": 6.4,
+        "Path": "job05.5450.7"
+      },
+      {
+        "Hint": "CS_05_地穿突き_中_着地\u0000",
+        "ActionRate": 5.8,
+        "Path": "job05.5450.8"
+      }
+    ],
+    "5465": [
+      {
+        "Hint": "CS_05_地穿突き_引き抜き\u0000",
+        "ActionRate": 1.1,
+        "Path": "job05.5465.0"
+      },
+      {
+        "Hint": "CS_05_地穿突き_引き抜き_巻き込み\u0000",
+        "ActionRate": 0.6,
+        "Path": "job05.5465.1"
+      }
+    ],
+    "5475": [
+      {
+        "Hint": "CS_05_地穿突き_突き刺しチェック\u0000",
+        "ActionRate": 0.0,
+        "Path": "job05.5475.0"
+      }
+    ],
+    "5466": [
+      {
+        "Hint": "CS_05_地穿突き_追撃_突き\u0000",
+        "ActionRate": 4.0,
+        "Path": "job05.5466.0"
+      }
+    ],
+    "5480": [
+      {
+        "Hint": "CS_05_地穿突き_追撃_突き_lv2\u0000",
+        "ActionRate": 1.2,
+        "Path": "job05.5480.0"
+      }
+    ],
+    "5467": [
+      {
+        "Hint": "CS_05_地穿突き_追撃_引き抜き\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5467.0"
+      }
+    ],
+    "5485": [
+      {
+        "Hint": "CS_05_地穿突き_追撃_引き抜き_1_lv2\u0000",
+        "ActionRate": 1.2,
+        "Path": "job05.5485.0"
+      },
+      {
+        "Hint": "CS_05_地穿突き_追撃_引き抜き_2_lv2\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5485.1"
+      }
+    ],
+    "5640": [
+      {
+        "Hint": "CS_08_山崩し_初段カス\u0000",
+        "ActionRate": 0.3,
+        "Path": "job05.5640.0"
+      },
+      {
+        "Hint": "CSLv2_08_山崩し_初段カス\u0000",
+        "ActionRate": 0.3,
+        "Path": "job05.5640.1"
+      }
+    ],
+    "5800": [
+      {
+        "Hint": "CS_12_退魔剣聖斬_1\u0000",
+        "ActionRate": 4.0,
+        "Path": "job05.5800.0"
+      }
+    ],
+    "5803": [
+      {
+        "Hint": "CS_12_退魔剣聖斬_2\u0000",
+        "ActionRate": 12.0,
+        "Path": "job05.5803.0"
+      }
+    ],
+    "5830": [
+      {
+        "Hint": "CS_12_退魔剣聖斬_溜_1\u0000",
+        "ActionRate": 8.0,
+        "Path": "job05.5830.0"
+      },
+      {
+        "Hint": "CS_12_退魔剣聖斬_溜_1_極\u0000",
+        "ActionRate": 10.0,
+        "Path": "job05.5830.1"
+      }
+    ],
+    "5833": [
+      {
+        "Hint": "CS_12_退魔剣聖斬_溜_2\u0000",
+        "ActionRate": 32.0,
+        "Path": "job05.5833.0"
+      },
+      {
+        "Hint": "CS_12_退魔剣聖斬_溜_2_極\u0000",
+        "ActionRate": 35.0,
+        "Path": "job05.5833.1"
+      },
+      {
+        "Hint": "CS_12_退魔剣聖斬_溜_衝撃波\u0000",
+        "ActionRate": 0.5,
+        "Path": "job05.5833.2"
+      }
+    ],
+    "5836": [
+      {
+        "Hint": "CS_12_退魔剣聖斬_溜_3\u0000",
+        "ActionRate": 2.0,
+        "Path": "job05.5836.0"
+      },
+      {
+        "Hint": "CS_12_退魔剣聖斬_溜_3_極\u0000",
+        "ActionRate": 30.0,
+        "Path": "job05.5836.1"
+      }
+    ],
+    "5350": [
+      {
+        "Hint": "CS_03_三日月斬り_1\u0000",
+        "ActionRate": 1.72,
+        "Path": "job05.5350.0"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_溜_1\u0000",
+        "ActionRate": 1.32,
+        "Path": "job05.5350.1"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_1\u0000",
+        "ActionRate": 1.32,
+        "Path": "job05.5350.2"
+      }
+    ],
+    "5352": [
+      {
+        "Hint": "CS_03_三日月斬り_2_main\u0000",
+        "ActionRate": 4.0,
+        "Path": "job05.5352.0"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_3_main2\u0000",
+        "ActionRate": 4.0,
+        "Path": "job05.5352.1"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_4\u0000",
+        "ActionRate": 1.2,
+        "Path": "job05.5352.2"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_溜_1-2_main_極\u0000",
+        "ActionRate": 8.04,
+        "Path": "job05.5352.3"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_溜_2_main\u0000",
+        "ActionRate": 7.304,
+        "Path": "job05.5352.4"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_溜_2_main_極\u0000",
+        "ActionRate": 8.04,
+        "Path": "job05.5352.5"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_溜_4\u0000",
+        "ActionRate": 1.2,
+        "Path": "job05.5352.6"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_1_2\u0000",
+        "ActionRate": 8.04,
+        "Path": "job05.5352.7"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_1_2_極\u0000",
+        "ActionRate": 9.24,
+        "Path": "job05.5352.8"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_2_main\u0000",
+        "ActionRate": 8.04,
+        "Path": "job05.5352.9"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_2_main_極\u0000",
+        "ActionRate": 9.24,
+        "Path": "job05.5352.10"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_4\u0000",
+        "ActionRate": 1.32,
+        "Path": "job05.5352.11"
+      }
+    ],
+    "5354": [
+      {
+        "Hint": "CS_03_三日月斬り_溜_3_main2\u0000",
+        "ActionRate": 7.304,
+        "Path": "job05.5354.0"
+      },
+      {
+        "Hint": "CS_03_三日月斬り_溜_3_main2_極\u0000",
+        "ActionRate": 8.04,
+        "Path": "job05.5354.1"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_3_main2\u0000",
+        "ActionRate": 8.04,
+        "Path": "job05.5354.2"
+      },
+      {
+        "Hint": "CSLv2_03_三日月斬り_溜_3_main2_極\u0000",
+        "ActionRate": 9.24,
+        "Path": "job05.5354.3"
+      }
+    ],
+    "5200": [
+      {
+        "Hint": "渾身_地_立_前_1_渾身対象\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5200.0"
+      },
+      {
+        "Hint": "渾身_地_立_前_1_渾身対象(大型)\u0000",
+        "ActionRate": 2.0,
+        "Path": "job05.5200.1"
+      }
+    ],
+    "5202": [
+      {
+        "Hint": "渾身_地_立_前_1_非渾身対象\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5202.0"
+      }
+    ],
+    "5205": [
+      {
+        "Hint": "渾身_地_立_前_2_非渾身対象\u0000",
+        "ActionRate": 4.0,
+        "Path": "job05.5205.0"
+      },
+      {
+        "Hint": "渾身_地_立_前_2_渾身対象\u0000",
+        "ActionRate": 7.5,
+        "Path": "job05.5205.1"
+      },
+      {
+        "Hint": "渾身_地_立_前_2_渾身対象(大型)\u0000",
+        "ActionRate": 8.0,
+        "Path": "job05.5205.2"
+      }
+    ],
+    "5190": [
+      {
+        "Hint": "N_地_軽_走\u0000",
+        "ActionRate": 1.8,
+        "Path": "job05.5190.0"
+      },
+      {
+        "Hint": "N_地_軽_走_カス\u0000",
+        "ActionRate": 1.2,
+        "Path": "job05.5190.1"
+      }
+    ],
+    "5240": [
+      {
+        "Hint": "渾身_地空_ダウン_非渾身対象_1\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5240.0"
+      },
+      {
+        "Hint": "渾身_地空_ダウン_渾身対象_1\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5240.1"
+      },
+      {
+        "Hint": "渾身_地空_ダウン_渾身対象_1(大型)\u0000",
+        "ActionRate": 2.0,
+        "Path": "job05.5240.2"
+      }
+    ],
+    "5245": [
+      {
+        "Hint": "渾身_地空_ダウン_非渾身対象_2\u0000",
+        "ActionRate": 5.0,
+        "Path": "job05.5245.0"
+      },
+      {
+        "Hint": "渾身_地空_ダウン_渾身対象_2\u0000",
+        "ActionRate": 8.5,
+        "Path": "job05.5245.1"
+      },
+      {
+        "Hint": "渾身_地空_ダウン_渾身対象_2(大型)\u0000",
+        "ActionRate": 10.0,
+        "Path": "job05.5245.2"
+      }
+    ],
+    "5210": [
+      {
+        "Hint": "渾身_地_立_後_非渾身対象\u0000",
+        "ActionRate": 5.0,
+        "Path": "job05.5210.0"
+      },
+      {
+        "Hint": "渾身_地_立_後_渾身対象\u0000",
+        "ActionRate": 5.0,
+        "Path": "job05.5210.1"
+      }
+    ],
+    "5230": [
+      {
+        "Hint": "渾身_空_立_非渾身対象_1\u0000",
+        "ActionRate": 1.0,
+        "Path": "job05.5230.0"
+      },
+      {
+        "Hint": "渾身_空_立_渾身対象_1\u0000",
+        "ActionRate": 2.5,
+        "Path": "job05.5230.1"
+      },
+      {
+        "Hint": "渾身_空_立_渾身対象_1(大型)\u0000",
+        "ActionRate": 3.0,
+        "Path": "job05.5230.2"
+      }
+    ],
+    "5255": [
+      {
+        "Hint": "渾身_EM立_非渾身対象_2\u0000",
+        "ActionRate": 6.8,
+        "Path": "job05.5255.0"
+      },
+      {
+        "Hint": "渾身_EM立_非渾身対象_2_打武器\u0000",
+        "ActionRate": 6.8,
+        "Path": "job05.5255.1"
+      },
+      {
+        "Hint": "渾身_EM立_渾身対象_2\u0000",
+        "ActionRate": 14.0,
+        "Path": "job05.5255.2"
+      },
+      {
+        "Hint": "渾身_EM立_渾身対象_2_打武器\u0000",
+        "ActionRate": 14.0,
+        "Path": "job05.5255.3"
+      }
+    ],
+    "5250": [
+      {
+        "Hint": "渾身_EM立_非渾身対象_1\u0000",
+        "ActionRate": 4.0,
+        "Path": "job05.5250.0"
+      },
+      {
+        "Hint": "渾身_EM立_渾身対象_1\u0000",
+        "ActionRate": 6.0,
+        "Path": "job05.5250.1"
+      }
+    ],
+    "5231": [
+      {
+        "Hint": "渾身_空_立_非渾身対象_2\u0000",
+        "ActionRate": 5.0,
+        "Path": "job05.5231.0"
+      },
+      {
+        "Hint": "渾身_空_立_渾身対象_2\u0000",
+        "ActionRate": 6.0,
+        "Path": "job05.5231.1"
+      },
+      {
+        "Hint": "渾身_空_立_渾身対象_2(大型)\u0000",
+        "ActionRate": 10.0,
+        "Path": "job05.5231.2"
+      }
+    ],
+    "5301": [
+      {
+        "Hint": "CS_01_重走_刺し対象継続HIT\u0000",
+        "ActionRate": 0.08,
+        "Path": "job05.5301.0"
+      }
+    ],
+    "5308": [
+      {
+        "Hint": "CS_01_重走_Finish_小型_地上_2\u0000",
+        "ActionRate": 0.8,
+        "Path": "job05.5308.0"
+      }
+    ]
+  },
+  "monstercommonshellcharactercollider": {
+    "-1": [
+      {
+        "Hint": "火柱(大)\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.0"
+      },
+      {
+        "Hint": "火柱(大)残し\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.1"
+      },
+      {
+        "Hint": "火柱(小)\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.2"
+      },
+      {
+        "Hint": "火柱(小)残し\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.3"
+      },
+      {
+        "Hint": "サンダーレイン地面部分\u0000",
+        "ActionRate": 0.1,
+        "Path": "monstercommonshellcharactercollider.-1.4"
+      },
+      {
+        "Hint": "サンダーレイン雷部分\u0000",
+        "ActionRate": 0.2,
+        "Path": "monstercommonshellcharactercollider.-1.5"
+      },
+      {
+        "Hint": "ヒュージブル\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.6"
+      },
+      {
+        "Hint": "フロストスパイク\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.7"
+      },
+      {
+        "Hint": "メテオフォール\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.8"
+      },
+      {
+        "Hint": "メテオフォール着弾\u0000",
+        "ActionRate": 1.0,
+        "Path": "monstercommonshellcharactercollider.-1.9"
+      }
+    ],
+    "30": [
+      {
+        "Hint": "ロックビート\u0000",
+        "ActionRate": 0.1,
+        "Path": "monstercommonshellcharactercollider.30.0"
+      },
+      {
+        "Hint": "ロックビート_地震\u0000",
+        "ActionRate": 0.0,
+        "Path": "monstercommonshellcharactercollider.30.1"
+      }
+    ]
+  },
+  "sm63_042_collider": {
+    "-1": [
+      {
+        "Hint": "AttackUserData\u0000",
+        "ActionRate": 1.0,
+        "Path": "sm63_042_collider.-1.0"
+      }
+    ]
+  },
+  "sm80_047_collider": {
+    "-1": [
+      {
+        "Hint": "バリスタ矢強\u0000",
+        "ActionRate": 0.0,
+        "Path": "sm80_047_collider.-1.0"
+      },
+      {
+        "Hint": "バリスタ矢強-爆発\u0000",
+        "ActionRate": 0.0,
+        "Path": "sm80_047_collider.-1.1"
+      },
+      {
+        "Hint": "バリスタ矢弱\u0000",
+        "ActionRate": 0.0,
+        "Path": "sm80_047_collider.-1.2"
+      },
+      {
+        "Hint": "バリスタ矢中\u0000",
+        "ActionRate": 0.0,
+        "Path": "sm80_047_collider.-1.3"
+      }
+    ]
+  },
+  "sm80_049_collider": {
+    "-1": [
+      {
+        "Hint": "Lv0(最小)\u0000",
+        "ActionRate": 1.0,
+        "Path": "sm80_049_collider.-1.0"
+      },
+      {
+        "Hint": "Lv1\u0000",
+        "ActionRate": 1.0,
+        "Path": "sm80_049_collider.-1.1"
+      },
+      {
+        "Hint": "Lv2\u0000",
+        "ActionRate": 1.0,
+        "Path": "sm80_049_collider.-1.2"
+      },
+      {
+        "Hint": "Lv3\u0000",
+        "ActionRate": 1.0,
+        "Path": "sm80_049_collider.-1.3"
+      },
+      {
+        "Hint": "Lv4(最大)\u0000",
+        "ActionRate": 1.0,
+        "Path": "sm80_049_collider.-1.4"
+      }
+    ]
+  },
+  "wp250_collider": {
+    "-1": [
+      {
+        "Hint": "こん棒\u0000",
+        "ActionRate": 2.0,
+        "Path": "wp250_collider.-1.0"
+      }
+    ]
+  }
+}
