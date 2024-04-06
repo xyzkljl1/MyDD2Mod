@@ -90,8 +90,8 @@ local FieldFormat={
     _HealBlackHp="Heal %s MAXHP.",
     _HealStamina="Recover %s Stamina",
     _UseAttr=nil,
-    _AddStatus="Add Status",
-    _RemoveStatus="Remove Status",--"%s",-- some is in app.StatusConditionDef.StatusConditionEnum,but some are not like id62 Sorbering:32/id70 Allheal:1023
+    _AddStatus={enable=true,type="Enum",format="Add %s Status",map={[1]="Posion"}},
+    _RemoveStatus=nil,
     _FakePrice=nil,
     _FakeItemId=nil,
     
@@ -107,7 +107,7 @@ local FieldFormat={
     _PhysicalAttack="%s ATK",
     _SlashRate=nil,
     _StrikeRate=nil,
-    _StrikeStore=nil,
+    _StrikeStore="%s Unconsicious Store",
     _MagicAttack="%s MagATK",
     _Element=nil,
     _ElementStore="%s%% Element Enchant",
@@ -163,7 +163,7 @@ local RingSpecialFormat={
     [9]= {enable= true,format= "Heal {v1} HP On Kill",hint= "(3532,Ring of Regeneration,50,0,0)"},
     [10]= {enable= true,format= "{v1}% Faster Cast",hint= "(3533,Ring of Articulacy,15,0,0)"},
     [11]= {enable= true,format= "{v1}% Faster Cast but lose {v2}% Max HP",hint= "(3534,Ring of Recitation,25,20,0)"},
-    [12]= {enable= true,format= "+{v1} Robustness",hint= "(3535,Ring of Resolution,100,0,0)"},
+    [12]= {enable= true,format= "+{v1} Knockdown Resist",hint= "(3535,Ring of Resolution,100,0,0)"},
     [13]= {enable= true,format= "-{v1}% Stamina Cost",hint= "(3536,Ring of Grit,25,0,0)"},
     [14]= {enable= true,format= "Gain {v1} ATK in {v2} seconds",hint= "(3537,Ring of Requital,15,10,0)"},
 
