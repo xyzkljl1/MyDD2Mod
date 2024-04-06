@@ -737,6 +737,7 @@
     },
     "Job03_1": {
       "Hint": "マジックショット",
+      "Job": "jobmagic",
       "format": "x{ラピッドショット} per Hit"
     },
     "Job03_2": {
