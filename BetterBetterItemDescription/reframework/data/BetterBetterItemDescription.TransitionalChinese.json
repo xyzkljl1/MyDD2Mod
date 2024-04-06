@@ -16,10 +16,19 @@
       ],
       "type": "Enum"
     },
+    "_AddStatus": {
+      "enable": true,
+      "format": "获得 %s 状态",
+      "map": [
+        "追毒"
+      ],
+      "type": "Enum"
+    },
     "_ElementStore": "%s%% 元素附魔",
     "_Blow": "擊飛",
     "_BlowGuard": "%s 擊飛防御",
     "_PoisonStore": "%s 毒附魔",
+    "_StrikeStore": "%s 昏厥附魔",
     "_SleepStore": "%s 睡眠附魔",
     "_SilentStore": "%s 沉默附魔",
     "_StoneStore": "%s 石化附魔",

@@ -19,12 +19,21 @@
     "_ElementStore": "%s%% 元素附魔",
     "_Blow": "击退",
     "_BlowGuard": "%s 击退防御",
+    "_StrikeStore": "%s 昏厥附魔",
     "_PoisonStore": "%s 毒附魔",
     "_SleepStore": "%s 睡眠附魔",
     "_SilentStore": "%s 沉默附魔",
     "_StoneStore": "%s 石化附魔",
     "_WaterStore": "%s 濡湿附魔",
     "_OilStore": "%s 浸油附魔",
+    "_AddStatus": {
+      "enable": true,
+      "format": "獲得 %s 狀態",
+      "map": [
+        "追毒"
+      ],
+      "type": "Enum"
+    },
 
 
     "_DarkDefence": "%s%% 暗抗",

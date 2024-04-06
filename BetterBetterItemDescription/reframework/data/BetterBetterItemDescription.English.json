@@ -190,7 +190,14 @@
         }
     },
     "FieldFormat": {
-        "_AddStatus": "Add Status",
+        "_AddStatus": {
+            "enable": true,
+            "format": "Add %s Status",
+            "map": [
+                "Posion"
+            ],
+            "type": "Enum"
+        },
         "_Blow": "%s Knockdown",
         "_BlowGuard": "%s Knockdown Guard",
         "_BlowResistRate": "%s%% Knockdown Resist",
@@ -232,7 +239,6 @@
         "_PhysicalDefence": "%s PhyDEF",
         "_PoisonResist": "%s%% Poison Resist",
         "_PoisonStore": "%s PoisonStore",
-        "_RemoveStatus": "Remove Status",
         "_SellPrice": {
             "enable": false,
             "format": "SellPrice %s.",
@@ -247,6 +253,7 @@
         "_StoneResist": "%s%% Stone Resist",
         "_StoneStore": "%s Stone Store",
         "_StrikeDefenceRate": "%s%% Strike Reduce",
+        "_StrikeStore": "%s Unconsicious Store",
         "_SubCategory": {
             "enable": false,
             "format": "Cat %s",
@@ -297,7 +304,7 @@
         },
         "12": {
             "enable": true,
-            "format": "+{v1} Robustness",
+            "format": "+{v1} Knockdown Resist",
             "hint": "(3535,Ring of Resolution,100,0,0)"
         },
         "13": {
