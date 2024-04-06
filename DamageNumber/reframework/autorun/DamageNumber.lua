@@ -25,7 +25,9 @@ local _config={
     {name="showDamageType",type="bool",default=false},
     {name="showDOT",type="bool",default=true,label="Show Dot&Fall Damage"},
     {name="showDamageComposition",type="bool",default=false,label="Show Original Damage Composition"},
+    {name="showBattleLogOnScreen",type="bool",default=false,label="Show BattleLogOnScreen"},
 }
+
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
 	for key, value in pairs(new_tbl) do
@@ -48,7 +50,7 @@ config= recurse_def_settings(config, json.load_file(configfile) or {})
 local function OnChanged()
 end
 
-
+local battleLog={text="",lines=0}
 local damageNumbers={}
 local mainplayer=nil
 local mainplayerGO=nil
@@ -57,7 +59,8 @@ local colorDelta=math.floor(0xff000000/(config.time-1))&0xff000000
 local posDelta=2/(config.time-1)
 
 local font = imgui.load_font(config.font, config.fontsize)
-local bigFont = imgui.load_font(config.font, math.floor(config.fontsize*1.8))
+local jpfont= nil --load when necessary
+local bigFont = imgui.load_font(config.font, math.floor(config.fontsize*1.5))
 
 local function Log(msg)
     log.info(modname..msg)
@@ -127,7 +130,6 @@ local function printDamageInfo(di)
     end
 end
 
---refreshplayer()
 local function AddDamageNumber(character,damageInfo)
     local damageNumber={}
     local AttackUserData=damageInfo["<AttackUserData>k__BackingField"]
@@ -262,7 +264,20 @@ local function AddDamageNumber(character,damageInfo)
     end
 
     --damageNumber.msg=tostring(ofx).."/"..tostring(ofy)
-
+    if config.showBattleLogOnScreen then
+        local log=""
+        if isPlayerAttackHit==true then
+            log=log.."Player-> :"
+        elseif isPlayerTakenHit==true then
+            log=log.."->Player :"
+        end
+        if AttackUserData~=nil then
+            log=log..AttackUserData:get_Name()
+        end
+        log=log..":"..damageNumber.msg
+        battleLog.text=battleLog.text..log.."\n"
+        battleLog.lines=battleLog.lines+1
+    end
 
     --should match color disappear time
     damageNumbers[damageNumber]=config.time
@@ -287,7 +302,6 @@ sdk.hook(
 )
 
 re.on_frame(function()
-
     imgui.push_font(font)
     for k,v in pairs(damageNumbers) do
         --not work
@@ -306,12 +320,28 @@ re.on_frame(function()
             Log("DamageNumber Disappear "..tostring(k .finalDamage))
             damageNumbers[k]=nil
         end
-
-        --Log(k.msg.."/"..tostring(v))
     end
     imgui.pop_font()
+    if config.showBattleLogOnScreen and battleLog.lines>0 then
+        if jpfont==nil then
+            jpfont=imgui.load_font("BIZ-UDGothicR.ttc",14, {
+                                                    0x0020, 0x00FF, -- Basic Latin + Latin Supplement
+                                                    0x2000, 0x206F, -- General Punctuation
+                                                    0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
+                                                    --0xFF00, 0xFFEF, -- Half-width characters
+                                                    0x4e00, 0x9FAF, -- CJK Ideograms
+                                                    0,
+                                                    })
+        end
+        imgui.push_font(jpfont)
+        draw.text(battleLog.text,50,50,0xffffffff)
+        if battleLog.lines>100 then
+            battleLog.text=""
+            battleLog.lines=0
+        end
+        imgui.pop_font(font)
+    end
 end)
-
 
 sdk.hook(
     sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
@@ -320,6 +350,7 @@ sdk.hook(
         refreshplayer()
     end
 )
+refreshplayer()
 
 --try load api and draw ui
 local function prequire(...)
