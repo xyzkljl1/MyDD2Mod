@@ -113,7 +113,10 @@
     "23": {
       "name": "Job02_FullBlast",
       "hintJP": "鬼神射ち",
-      "format": "x{鬼神射ち_成功_近距離}/{鬼神射ち_成功_遠距離} to Near/Far\nFail:x{鬼神射ち_近距離}/{鬼神射ち_遠距離}"
+      "hint2": "约每秒损失20%最大耐力，基于损失耐力的固定值获得最多15倍率，非线性，约9800耐力上限时获得14.99倍率，但是1000体力就能获得+5倍率",
+      "hint3": "推测倍率为0.15*耐力^0.5",
+      "hint4": "SuccessShellStamina=300，实测体力300附近由失败切换到成功",
+      "format": "x{鬼神射ち_成功_近距離}/{鬼神射ち_成功_遠距離} to Near/Far\nFail(Under 300 Stamina):x{鬼神射ち_近距離}/{鬼神射ち_遠距離}\nGain about +(0.15*√Stamina) Damage Rate(max +15.0)"
     },
     "24": {
       "name": "Job03_Firestorm",
@@ -464,7 +467,9 @@
     "91": {
       "name": "Job08_SpiritArrow",
       "hintJP": "殉身覇魔弓",
-      "format": "x{CS_捧魂}*N\nGain Damage Rate based on LostMaxHP"
+      "hint2": "约5秒耗光一条血，根据Job08Parameter.SpiritArrowParam.MaxHpDamageRateByFrame=0.33判断为1秒60消耗20%",
+      "hint3":"帧蓄力中用万能药回血消耗多管血，最多也只能+120倍率;结束蓄力时满血也仍然有+120",
+      "format": "x{CS_捧魂}*N\nLose 20% MaxHP and gain +24.0 Damage Rate(Max +120.0) per second."
     },
   "92": {
     "name": "Job09_SmokeWall",
