@@ -190,7 +190,10 @@
         }
     },
     "FieldFormat": {
-        "_BlowResistRate": "%s%% Blow Resist",
+        "_AddStatus": "Add Status",
+        "_Blow": "%s Knockdown",
+        "_BlowGuard": "%s Knockdown Guard",
+        "_BlowResistRate": "%s%% Knockdown Resist",
         "_BuyPrice": {
             "enable": false,
             "format": "BuyPrice %s.",
@@ -207,6 +210,7 @@
             "type": "Enum"
         },
         "_DarkDefence": "%s%% Dark Debuff Resist",
+        "_ElementStore": "%s%% Element Enchant",
         "_FireDefence": "%s%% Fire Damage Reduce",
         "_FireResist": "%s%% Fire Debuff Resist",
         "_HealBlackHp": "Heal %s MAXHP.",
@@ -223,9 +227,12 @@
         "_MagicAttack": "%s MagATK",
         "_MagicDefence": "%s MagDEF",
         "_OilResist": "%s%% Oil Resist",
+        "_OilStore": "%s Oil Store",
         "_PhysicalAttack": "%s ATK",
         "_PhysicalDefence": "%s PhyDEF",
         "_PoisonResist": "%s%% Poison Resist",
+        "_PoisonStore": "%s PoisonStore",
+        "_RemoveStatus": "Remove Status",
         "_SellPrice": {
             "enable": false,
             "format": "SellPrice %s.",
@@ -233,9 +240,12 @@
         },
         "_ShakeResistRate": "%s%% Shake Resist",
         "_SilentResist": "%s%% Silent Resist",
+        "_SilentStore": "%s Silent Store",
         "_SlashDefenceRate": "%s%% Slash Reduce",
         "_SleepResist": "%s%% Sleep Resist",
+        "_SleepStore": "%s Sleep Store",
         "_StoneResist": "%s%% Stone Resist",
+        "_StoneStore": "%s Stone Store",
         "_StrikeDefenceRate": "%s%% Strike Reduce",
         "_SubCategory": {
             "enable": false,
@@ -266,7 +276,8 @@
             ],
             "type": "Enum"
         },
-        "_WaterResist": "%s%% Water Resist"
+        "_WaterResist": "%s%% Water Resist",
+        "_WaterStore": "%s Water Store"
     },
     "RingSpecialFormat": {
         "1": {

@@ -1,6 +1,6 @@
 {
   "FieldFormat": {
-    "_BlowResistRate": "%s%% 吹飞抵抗",
+    "_BlowResistRate": "%s%% 击退抵抗",
     "_BuyPrice": {
       "enable": false,
       "format": "BuyPrice %s.",
@@ -16,6 +16,17 @@
       ],
       "type": "Enum"
     },
+    "_ElementStore": "%s%% 元素附魔",
+    "_Blow": "击退",
+    "_BlowGuard": "%s 击退防御",
+    "_PoisonStore": "%s 毒附魔",
+    "_SleepStore": "%s 睡眠附魔",
+    "_SilentStore": "%s 沉默附魔",
+    "_StoneStore": "%s 石化附魔",
+    "_WaterStore": "%s 濡湿附魔",
+    "_OilStore": "%s 浸油附魔",
+
+
     "_DarkDefence": "%s%% 暗抗",
     "_FireDefence": "%s%% 火抗",
     "_FireResist": "%s%% 火异常抵抗",
@@ -96,7 +107,7 @@
     },
     "12": {
       "enable": true,
-      "format": "+{v1}强韧",
+      "format": "+{v1} 击退抵抗",
       "hint": "(3535,Ring of Resolution,100,0,0)"
     },
     "13": {
@@ -146,7 +157,7 @@
     },
     "22": {
       "enable": true,
-      "format": "+{v1} 击倒能力",
+      "format": "+{v1} 击退力",
       "hint": "(3545,Ring of Vehemence,100,0,0)"
     },
     "23": {
@@ -296,7 +307,7 @@
       "hint": "ガード削り攻撃力 + Value%(30.000000,0.000000)"
     },
     "27": {
-      "format": "+{v1}% 击倒能力",
+      "format": "+{v1}% 击退力",
       "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
     },
     "28": {
@@ -312,7 +323,7 @@
       "hint": "(75.000000,90.000000)"
     },
     "31": {
-      "format": "+{v1}% 击倒抗性",
+      "format": "+{v1}% 击退抵抗",
       "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
     },
     "32": {

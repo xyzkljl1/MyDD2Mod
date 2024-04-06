@@ -90,8 +90,8 @@ local FieldFormat={
     _HealBlackHp="Heal %s MAXHP.",
     _HealStamina="Recover %s Stamina",
     _UseAttr=nil,
-    _AddStatus=nil,
-    _RemoveStatus=nil,--"%s",-- some is in app.StatusConditionDef.StatusConditionEnum,but some are not like id62 Sorbering:32/id70 Allheal:1023
+    _AddStatus="Add Status",
+    _RemoveStatus="Remove Status",--"%s",-- some is in app.StatusConditionDef.StatusConditionEnum,but some are not like id62 Sorbering:32/id70 Allheal:1023
     _FakePrice=nil,
     _FakeItemId=nil,
     
@@ -110,18 +110,18 @@ local FieldFormat={
     _StrikeStore=nil,
     _MagicAttack="%s MagATK",
     _Element=nil,
-    _ElementStore=nil,
+    _ElementStore="%s%% Element Enchant",
     _Shake=nil,
-    _Blow=nil,
+    _Blow="%s Knockdown",
     _StaminaReduce=nil,
     _ShakeGuard=nil,
-    _BlowGuard=nil,
-    _PoisonStore=nil,
-    _SleepStore=nil,
-    _SilentStore=nil,
-    _StoneStore=nil,
-    _WaterStore=nil,
-    _OilStore=nil,
+    _BlowGuard="%s Knockdown Guard",
+    _PoisonStore="%s PoisonStore",
+    _SleepStore="%s Sleep Store",
+    _SilentStore="%s Silent Store",
+    _StoneStore="%s Stone Store",
+    _WaterStore="%s Water Store",
+    _OilStore="%s Oil Store",
 
     --app.ItemArmorParam
     _StyleNo=nil,
@@ -138,7 +138,7 @@ local FieldFormat={
     _LightDefence="%s%% Light Damage Reduce",
     _DarkDefence="%s%% Dark Debuff Resist",
     _ShakeResistRate="%s%% Shake Resist",
-    _BlowResistRate="%s%% Blow Resist",
+    _BlowResistRate="%s%% Knockdown Resist",
     _PoisonResist="%s%% Poison Resist",
     _SleepResist="%s%% Sleep Resist",
     _SilentResist="%s%% Silent Resist",
@@ -435,7 +435,9 @@ local function TranslateFields(param,paramtype)
                     fieldMsg=fieldMsg..string.format(format.format,tostring(data))
                 elseif format.type=="Enum" and format.enable then
                     local enumstr=format.map[tonumber(data)]
-                    fieldMsg=fieldMsg..string.format(format.format,enumstr)
+                    if enumstr~=nil then
+                        fieldMsg=fieldMsg..string.format(format.format,enumstr)
+                    end
                 end
             end
         else
