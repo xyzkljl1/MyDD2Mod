@@ -111,6 +111,8 @@ sdk.hook(
 end,nil
 )
 
+
+local CategoryQuest=sdk.find_type_definition("app.ItemSubCategory"):get_field("Quest"):get_data()
 --新加的箱子是空的，添加一个默认掉落
 local itemIds={}
 function Init()
