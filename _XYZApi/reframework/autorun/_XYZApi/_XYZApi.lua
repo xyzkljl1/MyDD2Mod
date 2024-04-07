@@ -171,17 +171,24 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
         local triggeredButtons={}
 	    if imgui.tree_node(modname) then
 		    --imgui.same_line()
-		    --imgui.text("*Right click on most options to reset them")		
+		    --imgui.text("*Right click on most options to reset them")
+            local isInMutualBox=false
 		    imgui.begin_rect()
             for _,para in ipairs (_config) do
                 local key = para.name
                 local actionName = para.actionName or key
                 local title_postfix=""
+                local pushed_item_width=false
                 if para.needrestart==true or para.type=="fontsize" or para.type=="font" then
                     title_postfix=" (Need Restart To Apply)"
                 elseif para.needreentry==true then
                     title_postfix=" (Need Return to Title to Apply)"
                 end
+                if para.widthscale~=nil then
+                    imgui.push_item_width(imgui.calc_item_width()*para.widthscale)
+                    pushed_item_width=true
+                end
+
                 local label=para.label or key
 
                 if para.type=="int" then
@@ -297,7 +304,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                                                             para.step or 0.5 , para.min or 0, para.max or 100)
                     _changed=changed or _changed
                 elseif para.type=="rgba32" then
-                    imgui.push_item_width(imgui.calc_item_width()*0.6)
+                    imgui.push_item_width(imgui.calc_item_width()*0.45)
                     changed,config[key]= imgui.color_picker(label .. title_postfix, config[key])
                     _changed=changed or _changed
                     imgui.pop_item_width()
@@ -371,13 +378,37 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     
                     --Log(config[key]," ",tmp_idx)
                     config[key]=para.tmp_Index2Key[tmp_idx] or para.tmp_List[1]
-                    _changed=changed or _changed                    
+                    _changed=changed or _changed
+                elseif para.type=="sameline" then
+                    imgui.same_line()
+                elseif para.type=="mutualbox" then
+                    if isInMutualBox then--end prev box
+                        imgui.end_rect()
+                        isInMutualBox=false
+                    end
+                    imgui.begin_rect()
+                    imgui.text_colored(para.name,para.color or 0xff11aa33)
+                    isInMutualBox=true
+                elseif para.type=="mutualboxend" then
+                    if isInMutualBox then
+                        imgui.end_rect()
+                        isInMutualBox=false
+                    end
                 end
 
                 if para.tip ~=nil and imgui.is_item_hovered() then
                     imgui.set_tooltip(para.tip)
                 end
+
+                if pushed_item_width then
+                    imgui.pop_item_width()
+                end
             end
+
+            if isInMutualBox then--end prev box
+                imgui.end_rect()
+            end
+
 		    imgui.tree_pop()
         end        
         if isFontChanged then

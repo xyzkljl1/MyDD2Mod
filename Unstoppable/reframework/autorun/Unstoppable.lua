@@ -4,7 +4,7 @@ log.info("["..modname.."]".."Start")
 --settings
 local _config={
     {name="CanBeKnockedDownByBoss",type="bool",default=false},
-    {name="HitbackEnemyInOneHit",type="bool",default=true},
+    {name="KnockdownEnemyInOneHit",type="bool",default=true},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -46,13 +46,16 @@ sdk.hook(
 
         if isPlayer then
             if config.CanBeKnockedDownByBoss and isBossAttack then
-            else
+            else                
                 damageInfo.CatchReactionType=0
                 damageInfo.DamageReaction=0.0
                 damageInfo.BlownReactionRate=0.0
                 damageInfo.LeanReactionRate=0.0
             end
-        elseif config.HitbackEnemyInOneHit then
+        elseif config.KnockdownEnemyInOneHit then
+            if AttackUserData~=nil then
+                AttackUserData.DamageTypeLean=12--HitdownL
+            end
             damageInfo.DamageReaction=100000.0
             damageInfo.BlownReactionRate=1000.0
             damageInfo.LeanReactionRate=1000.0
