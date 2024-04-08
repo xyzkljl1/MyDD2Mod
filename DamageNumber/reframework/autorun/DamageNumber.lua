@@ -96,6 +96,20 @@ local font = imgui.load_font(config.font, config.fontsize)
 local jpfont= nil --load when necessary
 local bigfont = imgui.load_font(config.font, config.bigfontsize)
 
+local function loadJpFont()
+    if jpfont==nil then
+            jpfont=imgui.load_font("UDDigiKyokashoN-B.ttc",14, {
+                                                    0x0020, 0x00FF, -- Basic Latin + Latin Supplement
+                                                    0x2000, 0x206F, -- General Punctuation
+                                                    0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
+                                                    --0xFF00, 0xFFEF, -- Half-width characters
+                                                    0x4e00, 0x9FAF, -- CJK Ideograms
+                                                    0,
+                                                    })
+    end
+end
+
+loadJpFont()
 
 local function Log(msg)
     log.info(modname..msg)
@@ -476,16 +490,7 @@ re.on_frame(function()
     
     --Draw battlelog
     if config.showBattleLogOnScreen and battleLog.lines>0 then
-        if jpfont==nil then
-            jpfont=imgui.load_font("BIZ-UDGothicR.ttc",14, {
-                                                    0x0020, 0x00FF, -- Basic Latin + Latin Supplement
-                                                    0x2000, 0x206F, -- General Punctuation
-                                                    0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
-                                                    --0xFF00, 0xFFEF, -- Half-width characters
-                                                    0x4e00, 0x9FAF, -- CJK Ideograms
-                                                    0,
-                                                    })
-        end
+        loadJpFont()
         imgui.push_font(jpfont)
         draw.text(battleLog.text,50,50,0xffffffff)
         if battleLog.lines>100 then
