@@ -21,6 +21,7 @@ local _config={
     {name="showDamage",type="bool",default=true,label="Show Damage"},
     {name="showKnockdownDamage",type="bool",default=false,label="Show Knockdown Damage!"},
     {name="showMeter",type="bool",default=true,label="Show BodyPart & Knockdown Meter"},
+    {name="showDamageReaction",type="bool",default=true,label="Show Shrink/Blown,etc"},
 
     {name="Form",type="mutualbox"},
     {name="time",type="int",default=120,min=2,max=4000,label="Number Lasting Time"},
@@ -218,6 +219,10 @@ local function KnockdownNumber2Message(character,damageInfo,AttackUserData)
     local ldamage=damageInfo:get_LeanReaction()
     local bdamage=damageInfo:get_BlownReaction()
 
+    if ldamage<=config.ignorecap and bdamage<= config.ignorecap then
+        return nil
+    end
+
     if ldamage~=bdamage then
         msg=string.format("$L%s/B%s",f2s(ldamage),f2s(bdamage))
     else
@@ -276,6 +281,13 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
     local isPlayerAttackHit = (owner_gameobj == mainplayerGO)
     local isPlayerTakenHit = (mainplayer == character)
     local isBossTakenHit=character:get_IsBoss()
+    local isEnemy=character:get_EnemyController():get_IsHostileArisen()
+
+    --Record enemy,before ignorecap
+    if isEnemy and (isBossTakenHit or not config.showOnlyBossOnMeter)then
+        lastEnemyGO=character:get_GameObject()
+        lastEnemyHitController=character:get_Hit()
+    end
 
     local ofx=(math.random(7)-4)*config.rndoffset
     local ofy=(math.random(7)-4)*config.rndoffset
@@ -303,7 +315,6 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
         end
     end
 
-    local isEnemy=character:get_EnemyController():get_IsHostileArisen()
     if isEnemy==true and config.showenemydamage==false then return end
     if config.showfrienddamage==false and isEnemy==false then return end
 
@@ -366,11 +377,6 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
         Log("Add Damage Number "..tostring(damageNumber.finalDamage).."in("..f2s2(damageNumber.pos2.x)..","..f2s2(damageNumber.pos2.y)..","..f2s2(damageNumber.pos2.z).."): ".. damageNumber.msg2)
     end
 
-    --Record enemy 
-    if isEnemy and (isBossTakenHit or not config.showOnlyBossOnMeter)then
-        lastEnemyGO=character:get_GameObject()
-        lastEnemyHitController=character:get_Hit()
-    end
 end
 
 --app.Character:onCalcDamageEnd 
@@ -389,12 +395,15 @@ sdk.hook(
 
 local function onDamageReactionTriggered(args,msg)
     local this=sdk.to_managed_object(args[2])
+    if not config.showDamageReaction then return end
     local damageInfo=this["<DamageInfo>k__BackingField"]
     if damageInfo.DamageType>0 then
         local hitDamageType=DamageTypeEnum2Str[damageInfo.DamageType]
         hitDamageType=string.gsub(hitDamageType,"Hitback_","")
         hitDamageType=string.gsub(hitDamageType,"Blown_","")
         --hitDamageType=string.gsub(hitDamageType,"Hitdown","")
+        
+    local AttackUserData=damageInfo["<AttackUserData>k__BackingField"]
         msg =msg.."("..hitDamageType..")!"
     end
     AddDamageNumber(this["<Chara>k__BackingField"],damageInfo,msg)

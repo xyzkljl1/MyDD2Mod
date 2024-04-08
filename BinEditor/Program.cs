@@ -436,7 +436,6 @@ userdata.LoadTypeDefine();
 //ActionRate
 {
     //    var y=IsInitialized();
-    var ret = "";
     var jsonDoc = new Dictionary<string,object>();
     var jobEnumDictionary = new HashSet<string>()
     {
@@ -452,6 +451,7 @@ userdata.LoadTypeDefine();
     "job10",
     "jobmagic",
     };
+    var debugText = "";
     foreach (var file in Directory.GetFiles("E:\\OtherGame\\DragonDogma2\\rcolLess\\"))
         //if(file.Contains("1720828575-1911543801.rcol.10"))
     {
@@ -504,10 +504,79 @@ userdata.LoadTypeDefine();
                     (jsonAtkIDObject[i] as Dictionary<string, object>)!["Path"]= $"{filename}.{atkIDkey}.{i}";
             }
         if (jsonJobObject.Count() == 0) jsonDoc.Remove(filename);
+
+        if (true)
+        {
+            var enum2strDic=new Dictionary<int, string>() {
+                {-1,"" },
+                {0,"" },
+            { 1,"Wind_M"},
+            { 2,"Wind_L"},
+            { 3,"Quake_S"},
+            { 4,"Quake_L"},
+            { 5,"Hitback_S"},
+            { 6,"Hitback_M"},
+            { 7,"Hitback_L"},
+            { 8,"Hitback_LL"},
+            { 9,"Hitback_LLL"},
+            { 10,"Hitdown_S"},
+            { 11,"HitdownQuick_S"},
+            { 12,"Hitdown_L"},
+            { 13,"HitdownQuick_L"},
+            { 14,"Slam_S"},
+            { 15,"Slam_L"},
+            { 16,"Upper_S"},
+            { 17,"Upper_L"},
+            { 18,"Blown_S"},
+            { 19,"Blown_L"},
+            { 20,"Dialog_Blown_S"},
+            { 21,"Dialog_Blown_L"},
+            { 22,"FlashFlood"},
+            { 23,"Num"},
+            };
+            var list=new Dictionary<string,string> ();
+            foreach (var instance in userdata.instances)
+                if (instance.typeDefine.Name.Equals("app.AttackUserData"))
+                {
+                    var name = (instance.dynamicValues["v0"] as string)!;
+                    var ar = (instance.dynamicValues["ActionRate"] as float?);
+                    var lean = enum2strDic[(int)(instance.dynamicValues["DamageTypeLean"] as int?)];
+                    var blow = enum2strDic[(int)(instance.dynamicValues["DamageTypeBlown"] as int?)];
+                    var t = $"{ar}/{(instance.dynamicValues["DmgReactionRate"] as float?)}/{lean}/{blow}";
+
+                    var enchantObjectIndex = (int)(instance.dynamicValues["Enchant"] as int?)!;
+                    var enchantObject = userdata.instances[enchantObjectIndex-1];
+                    var a = (float)(enchantObject.dynamicValues["PhysicalFactor"] as float?)!;
+                    var b = (float)(enchantObject.dynamicValues["MagicalFactor"] as float?)!;
+                    var c = (float)(enchantObject.dynamicValues["StatusDamageFactor"] as float?)!;
+
+                    if (Math.Abs(a - 1) > 0.01)
+                        t += $"(PhyEnchantFactor:{a})";
+                    if (Math.Abs(b - 1) > 0.01)
+                        t += $"(MagEnchantFactor:{b})";
+                    if (Math.Abs(c - 1) > 0.01)
+                        t += $"(StatusEnchantFactor:{c})";
+
+                    if (!list.ContainsKey(name))
+                        list[name] = t;
+                    else if (list[name]!=t)
+                    {
+                        while (list.ContainsKey(name))
+                            name += "_";
+                        list[name] = t;
+                    }
+                }
+            if(list.Count!=0)
+                debugText += filename + "\n\n";
+            foreach (var pair in list)
+                debugText +=$"{pair.Key} : {pair.Value}\n";
+
+        }
     }
+    File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\PlayerActionRate3.txt", debugText);
     var jsonText = JsonConvert.SerializeObject(jsonDoc);
-    Console.WriteLine(jsonText);
-    File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\SkillDescription\\reframework\\data\\SkillDescription.Para.json", jsonText);
+    //Console.WriteLine(jsonText);
+    //File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\SkillDescription\\reframework\\data\\SkillDescription.Para.json", jsonText);
 }
 
 string readIdList(byte[] bytes, ref int offset)
