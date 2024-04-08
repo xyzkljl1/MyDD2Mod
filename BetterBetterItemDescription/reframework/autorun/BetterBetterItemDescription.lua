@@ -515,14 +515,14 @@ local function ReWrapText(originalMessage)
         local c=originalMessage:byte(i)
         if c==string.byte(" ") and width>config.newlinewidth then
             --print("SSS2",last_start,width,originalMessage)
-            if newMessage~="" then newMessage=newMessage.."\r\b" end
+            if newMessage~="" then newMessage=newMessage.."\r\n" end
             newMessage=newMessage..string.sub(originalMessage,last_start,last_start+width-1)
-            last_start=i
+            last_start=i+1
             width=0
         end
     end
     if width>0 then
-        if newMessage~="" then newMessage=newMessage.."\r\b" end
+        if newMessage~="" then newMessage=newMessage.."\r\n" end
         newMessage=newMessage..string.sub(originalMessage,last_start,last_start+width-1)
     end
 
