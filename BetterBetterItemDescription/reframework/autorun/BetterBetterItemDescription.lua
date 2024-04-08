@@ -4,6 +4,7 @@ log.info("["..modname.."]".."Start")
 --settings
 local _config={
     {name="newlinewidth",type="int",default=20,min=1,max=250},
+    {name="newlinewidthaffectoriginaltext",type="bool",default=true,label="NewLineWidthAlsoAffectOriginalText"},
     {name="ignoreArmorAndWeapon",type="bool",default=false},
     {name="removeOriginalText",type="bool",default=true},
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
@@ -504,6 +505,30 @@ local function GetItemDetail(itemCommonParam)
     return ret
 end
 
+local function ReWrapText(originalMessage)
+    originalMessage=string.gsub(originalMessage,"\r\n"," ")
+    local newMessage=""
+    local width=0
+    local last_start=1
+    for i=1,#originalMessage do
+        width=width+1
+        local c=originalMessage:byte(i)
+        if c==string.byte(" ") and width>config.newlinewidth then
+            --print("SSS2",last_start,width,originalMessage)
+            if newMessage~="" then newMessage=newMessage.."\r\b" end
+            newMessage=newMessage..string.sub(originalMessage,last_start,last_start+width-1)
+            last_start=i
+            width=0
+        end
+    end
+    if width>0 then
+        if newMessage~="" then newMessage=newMessage.."\r\b" end
+        newMessage=newMessage..string.sub(originalMessage,last_start,last_start+width-1)
+    end
+
+    return newMessage
+end
+
 local function GetOrAddItemDesc(originalMessage,itemCommonParam)
     --if tmpStr~=nil then return tmpStr end
     local Id=itemCommonParam._Id
@@ -517,6 +542,9 @@ local function GetOrAddItemDesc(originalMessage,itemCommonParam)
                 ItemDescCache[Id]=originalMessage
             end
         else
+            if appendtext~="" and config.newlinewidthaffectoriginaltext then
+                originalMessage=ReWrapText(originalMessage)
+            end
             ItemDescCache[Id]=string.format("%s\n%s",originalMessage,appendtext)
         end
         Log(ItemDescCache[Id])
@@ -545,7 +573,6 @@ local function GetAbilityDetail(player,Id)
     --return tostring(Id).."/"..ret
     return ret
 end
-
 
 
 local function GetOrAddSkillDesc(originalMessage,Id)
