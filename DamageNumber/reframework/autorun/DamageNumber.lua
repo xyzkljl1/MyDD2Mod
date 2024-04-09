@@ -98,7 +98,7 @@ local bigfont = imgui.load_font(config.font, config.bigfontsize)
 
 local function loadJpFont()
     if jpfont==nil then
-            jpfont=imgui.load_font("UDDigiKyokashoN-B.ttc",14, {
+            jpfont=imgui.load_font("MSMinchoM.TTC",14, {
                                                     0x0020, 0x00FF, -- Basic Latin + Latin Supplement
                                                     0x2000, 0x206F, -- General Punctuation
                                                     0x3000, 0x30FF, -- CJK Symbols and Punctuations, Hiragana, Katakana
