@@ -508,7 +508,7 @@ re.on_frame(function()
                     local t=statusConditionInfo:getRemainTimer()
                     local e=statusConditionInfo:getEnduranceValue()
                     if t>0 then
-                        debuffmsg=debuffmsg..string.format("      %s:%ss/%s\n",name,f2s(t/60),f2s(e))
+                        debuffmsg=debuffmsg..string.format("      %s:%ss\n",name,f2s(t/60))
                     end
                 end
                 if debuffmsg~="" then

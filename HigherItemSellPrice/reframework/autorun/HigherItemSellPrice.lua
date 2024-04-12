@@ -32,7 +32,10 @@ local function OnChanged()
     iter:MoveNext()
     while iter:get_Current():get_Value()~=nil do
         local itemCommonParam=iter:get_Current():get_Value()
-        itemCommonParam._SellPrice=math.floor(itemCommonParam._BuyPrice*config.ratio)
+        --93:gold,for some reason,gold sell price will affect how many gold monster  drops!
+        if itemCommonParam._Id~=93 then
+            itemCommonParam._SellPrice=math.floor(itemCommonParam._BuyPrice*config.ratio)
+        end
         iter:MoveNext()
     end
 end
