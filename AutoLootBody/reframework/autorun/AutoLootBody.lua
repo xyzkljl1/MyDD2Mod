@@ -3,10 +3,10 @@ local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
     {name="Loot",type="mutualbox"},
-    {name="range",type="int",default=20,label="Loot Range"},
+    {name="range",type="int",default=30,label="Loot Range"},
 
     {name="LootMessage",type="mutualbox"},
-    {name="showLootMessage",type="bool",default=false},
+    {name="showLootMessage",type="bool",default=true},
     {name="messageFontsize",type="fontsize",default=30},
 }  
 local myapi = require("_XYZApi/_XYZApi")
