@@ -3,11 +3,18 @@ local modname="ExampleModUsingHotkeyAndInit"
 local configfile=modname..".json"
 --settings
 local _config={
-    {name="para1",type="font",default="simsun.ttc"},
-    {name="para2",type="fontsize",default=29},
+    {name="para1",type="font",default="simsun.ttc",widthscale=0.4},
+    {name="",type="sameline"},-- same line
+    {name="para2",type="fontsize",default=29,widthscale=0.4},
+
+    {name="Box1",type="mutualbox"},--box
     {name="keyboardKey",type="hotkey",default="Alpha1",actionName="keyboardKey7784"},
     {name="controllerKeyShoulder",type="hotkey",default="RT (R2)",actionName="controllerKeyShoulder7784"},
+
+    --{name="",type="mutualboxend"},--start a new mutualbox will end the prev box automatically
+    {name="Box2",type="mutualbox"},
     {name="controllerKeyNotShoulder",type="hotkey",default="LLeft",actionName="controllerKeyNotShoulder7784"},    
+    {name="",type="mutualboxend"},
     {name="ReplacedStaff",type="boolList",default={
                             --"Gm82_000",--可拾取物品
                             --"Gm82_000_001",--自然生成的物品
