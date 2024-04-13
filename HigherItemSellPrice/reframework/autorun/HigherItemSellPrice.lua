@@ -5,6 +5,7 @@ log.info("["..modname.."]".."Start")
 --settings
 local _config={
     {name="ratio",type="float",default=1.0,min=0.0,max=1000.0},
+    {name="baseOnSellPrice",type="bool",default=false},
 }
 
 --merge config file to default config
@@ -25,6 +26,8 @@ for key,para in pairs(_config) do
     config[para.name]=para.default
 end
 config= recurse_def_settings(config, json.load_file(configfile) or {})
+
+local originalSellPrice={}
 --On setting Change
 local function OnChanged()
     local im=sdk.get_managed_singleton("app.ItemManager")
@@ -34,7 +37,14 @@ local function OnChanged()
         local itemCommonParam=iter:get_Current():get_Value()
         --93:gold,for some reason,gold sell price will affect how many gold monster  drops!
         if itemCommonParam._Id~=93 then
-            itemCommonParam._SellPrice=math.floor(itemCommonParam._BuyPrice*config.ratio)
+            if originalSellPrice[itemCommonParam._Id]==nil then
+                originalSellPrice[itemCommonParam._Id]=itemCommonParam._SellPrice
+            end
+            if config.baseOnSellPrice then
+                itemCommonParam._SellPrice=math.floor(originalSellPrice[itemCommonParam._Id]*config.ratio)
+            else
+                itemCommonParam._SellPrice=math.floor(itemCommonParam._BuyPrice*config.ratio)
+            end
         end
         iter:MoveNext()
     end
