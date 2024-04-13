@@ -36,6 +36,8 @@ local _config={
     {name="showDamageType",type="bool",default=false,label="Show Damage Type Flag"},
     {name="",type="sameline"},
     {name="showDamageComposition",type="bool",default=false,label="Show Original Damage Composition"},
+    {name="",type="sameline"},
+    {name="showBigcapPostfix",type="bool",default=true,label="Show ! after big number"},
     {name="precisevalue",type="bool",default=false,label="Show Precise Value"},
 
     {name="Damage Filter",type="mutualbox"},
@@ -88,7 +90,6 @@ local lastEnemyHitController=nil
 local lastEnemyGO=nil
 local guiManager=sdk.get_managed_singleton("app.GuiManager")
 
-
 local colorDelta=math.floor(0xff000000/(config.time-1))&0xff000000
 local posDelta=2/(config.time-1)
 
@@ -133,7 +134,7 @@ local function refreshplayer()
     local player_man=sdk.get_managed_singleton("app.CharacterManager")
     mainplayer=player_man:get_ManualPlayer()
     mainplayerGO=nil
-    Log(tostring(player))    
+    Log(tostring(player))
     if mainplayer~=nil then
         mainplayerGO=mainplayer:get_GameObject()
         Log("GetMainPlayerDone")
@@ -218,7 +219,7 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData)
         end
     end
 
-    if damageInfo.Damage > config.bigcap then
+    if damageInfo.Damage > config.bigcap and config.showBigcapPostfix then
         msg=msg.." ! "
     end
 
@@ -255,7 +256,7 @@ local function KnockdownNumber2Message(character,damageInfo,AttackUserData)
             msg=msg.." (Lx"..f2s2(damageInfo.LeanReactionRate) .."/Bx"..f2s2(damageInfo.BlownReactionRate)..")"
         end
     end
-    if damageInfo.Damage > config.bigcap then
+    if damageInfo.Damage > config.bigcap and config.showBigcapPostfix then
         msg=msg.." ! "
     end
     return msg
@@ -509,6 +510,9 @@ re.on_frame(function()
         local bodyparts=lastEnemyHitController.RegionData
         if bodyparts~=nil then
             local ct=bodyparts:get_Count()-1
+
+            --sdk.find_type_definition("app.GUIBase"):get_method("getName(app.CharacterID)"):call(nil, characterId)
+            --lastEnemyHitController:get_CachedCharacter():get_Name()
             msg=msg..lastEnemyGO:get_Name().."\n"
             for i=0,ct do
                 --region means body part
