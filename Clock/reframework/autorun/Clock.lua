@@ -41,7 +41,7 @@ local function Log(msg)
 end
 
 re.on_frame(function()
-    imgui.push_font()
+    imgui.push_font(font)
     local tm=sdk.get_managed_singleton("app.TimeManager")
     if tm~=nil then
         local d=tm:get_InGameDay()
