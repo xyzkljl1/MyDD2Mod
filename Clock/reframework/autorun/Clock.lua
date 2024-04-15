@@ -1,4 +1,4 @@
-local modname="Clock"
+﻿local modname="Clock"
 local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
