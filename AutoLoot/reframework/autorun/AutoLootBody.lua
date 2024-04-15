@@ -5,6 +5,9 @@ local _config={
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
+    {name="lootBodyPart",type="bool",default=true,label="Loot Body Part"},
+    {name="lootDropItem",type="bool",default=true,label="Loot Drop Item"},
+    {name="lootDirectItem",type="bool",default=true,label="Loot Direct Item"},
     {name="lootGatherSpot",type="bool",default=true,label="Loot Gather Point"},
     {name="disableOnBattle",type="bool",default=false,label="Disable During Battle"},
 
@@ -62,7 +65,19 @@ local function getCharacterPos(char)
     return joint:get_Position()
 end
 
-local function Loot(deadBodyController)
+local function AddMessage(msg,pos)
+    Log("Add Message:",msg)
+    if config.showLootMessage then
+        local lootMsg={
+            msg=msg,
+            pos=pos,
+            color=0xffeeeeee
+        }
+        lootMessageList[lootMsg]=msgTime
+    end
+end
+
+local function LootBody(deadBodyController)
     if deadBodyController==nil or (not sdk.is_managed_object(deadBodyController)) or deadBodyController:get_IsEnablePickup()==false then
         waitingBodyControllerList[deadBodyController]=nil
         return
@@ -83,7 +98,7 @@ local function Loot(deadBodyController)
                 end
             end
         end
-        Log("Start Loot",thread.get_id(),maxNum)
+        Log("Start Loot",maxNum)
         --Log("--",deadBodyController.GatherContext._Num,distance,deadBodyController:get_IsDropItemPickuped(),deadBodyController:get_IsDisableInteract(),deadBodyController:isDead(),deadBodyController:isInteractEnable(0),deadBodyController.Chara:get_CharaIDString())
         --item over 99 will be gone and consume loot chance sometimes? but not consumeing loot chance sometimes?
 
@@ -92,22 +107,90 @@ local function Loot(deadBodyController)
 		    ct=ct+1
             --break
 	    end
-	    Log("End Loot "..ct)
 
-        if config.showLootMessage then
-            local lootMsg={
-                msg="Loot "..ct,
-                pos=pos,
-                color=0xffeeeeee
-            }
-            lootMessageList[lootMsg]=msgTime
-        end
+        AddMessage("Loot "..ct,pos)
         waitingBodyControllerList[deadBodyController]=nil
+    end
+end
+
+
+local function DistanceSq(l,r)
+    return (l.x-r.x)*(l.x-r.x)
+           +(l.y-r.z)*(l.y-r.y)
+           +(l.y-r.z)*(l.z-r.z)            
+end
+
+local function LootBodyPart(dropPartsController)
+    --don't use dropPartsController:get_DropWork():get_IsInteractEnable() 
+    if dropPartsController==nil 
+        or (not sdk.is_managed_object(dropPartsController)) 
+        -- interactiveObject could be nil
+        or (not dropPartsController:get_DropObject()) 
+        or (not dropPartsController:get__DropPartsContext()) then
+        waitingBodyControllerList[dropPartsController]=nil
+        return
+    end
+    
+    local interObject=dropPartsController:get_DropObject()
+
+    if dropPartsController.PartsRoot==nil then
+        waitingBodyControllerList[dropPartsController]=nil
+        return
+    end
+
+    --getDistanceSqFromPlayer for some tails is 0,why?
+    --local context=dropPartsController:get__DropPartsContext()
+    -- context:get_Pos() is via.Positon, joint:get_Position() is via.vec3 ,can't minus; context:get_pos returns strange position
+    --local disvec=mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position() - dropPartsController.PartsRoot:get_Position()
+    --local distance=DistanceSq(mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position(),context:get_Pos())
+    local distance=DistanceSq(mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position(),dropPartsController.PartsRoot:get_Position())
+
+    --Log("2",distance,dropPartsController:getDropItemData().Item1,dropPartsController:getDropItemData().Item2,interObject:getDistanceSqFromPlayer(0),
+    --    dropPartsController["<IsDropSetup>k__BackingField"],
+    --    "--",dropPartsController.PartsRoot)
+
+    if distance<rangeSq then
+        --dropPartsController:startInteract(0,mainplayer)
+        --Log("3",distance,dropPartsController:getDropItemData().Item1,dropPartsController:getDropItemData().Item2,interObject:getDistanceSqFromPlayer(0),
+        --    interObject:getInteractPointPosition(0).x,interObject:getInteractPointPosition(0).y,interObject:getInteractPointPosition(0).z,
+        --    interObject:get_NumInteractPoints())
+        local pos=interObject:getInteractPointPosition(0)
+        local ct=0
+
+        --DropItemData：<id,num>
+        local maxNum=dropPartsController:getDropItemData().Item2
+        --local dropItems=dropPartsController.DropPartsData:get_DropItems()
+        --local maxNum=context:get_ItemNum()
+
+        Log("Start Loot Body Part",maxNum)
+        --interObject:isInteractEnable(0) returns false
+	    while ct<20 and ct<maxNum do
+    		    dropPartsController:executeInteract(0,mainplayer)
+		    ct=ct+1
+            --break
+	    end
+        --executeInteract不会让尾巴变为不可loot状态，不管调用多少次，每次都会获得一个物品，最后尾巴还可以正常loot一次才消失
+        --需要调用unregisterInteractiveObject才能让尾巴结束可loot状态，但是如果一次都没调用executeInteract，unregisterInteractiveObject不会生效？
+        dropPartsController:unregisterInteractiveObject()
+
+        AddMessage("Loot "..ct,pos)
+        waitingBodyControllerList[dropPartsController]=nil
+    end
+end
+
+local function LootBodyOrBodyPart(controller)
+    if controller:get_type_definition():is_a("app.DropPartsController") then
+        LootBodyPart(controller)
+    elseif controller:get_type_definition():is_a("app.SearchDeadBodyInteractController") then
+        LootBody(controller)
     else
-        -- if a body doesn't go into range for a long time,remove
-        waitingBodyControllerList[deadBodyController] = waitingBodyControllerList[deadBodyController]-1
-        if waitingBodyControllerList[deadBodyController] < -7200 then
-            waitingBodyControllerList[deadBodyController]=nil  
+        waitingBodyControllerList[controller]=nil
+    end
+    --If a controller is not removed after call `loot`,means it's not in loot range.Increase the ct to delete trash datas.
+    if waitingBodyControllerList[controller]~=nil then
+        waitingBodyControllerList[controller] = waitingBodyControllerList[controller]-1
+        if waitingBodyControllerList[controller] < -7200 then
+            waitingBodyControllerList[controller]=nil  
         end
     end
 end
@@ -121,18 +204,48 @@ local function LootGm82_009(gimmick)
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
             --call StartInteract only causes pickup action
-            Log("Loot Gimmick",distance,distance2)
+            Log("Loot Gimmick82_009",distance)
             gimmick:onExecuteInteractBase(0,mainplayer)
-            if config.showLootMessage then
-                local lootMsg={
-                    msg="Loot 1",
-                    pos=gimmick:get_GameObject():get_Transform():get_Position(),
-                    color=0xffeeeeee
-                }
-                lootMessageList[lootMsg]=msgTime
-            end
+            AddMessage("Loot 1",gimmick:get_GameObject():get_Transform():get_Position())
         end
     end
+end
+
+--丢弃的物品和怪物掉落的物品
+local function LootGm82_000_001(gimmick)
+    if gimmick:isInteractEnable(0)==true then
+        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        --treat 0.0 disatance as invalid
+        if distance~=0.0 and distance<rangeSq then
+            Log("Loot Gimmick82_000_001",distance,gimmick:getItemId(),gimmick:getItemNum())
+            local msg="Loot "..gimmick:getItemNum() -- num became 0 after interact
+            --executeInteract do nothing
+            gimmick:onStartInteractBase(0,mainplayer)
+            AddMessage(msg,gimmick:get_GameObject():get_Transform():get_Position())
+        end
+    end
+end
+
+--本来就在地图上的物品
+--not include seeker's token:82_036
+local function LootGm82_000(gimmick)
+    if gimmick:isInteractEnable(0)==true then
+        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        --treat 0.0 disatance as invalid
+        if distance~=0.0 and distance<rangeSq then
+            Log("Loot Gimmick82_000",distance,gimmick:getItemId(),gimmick:getItemNum())
+            local msg="Loot "..gimmick:getItemNum() -- num became 0 after interact
+            --gimmick:onStartInteractBase(0,mainplayer)
+            --gimmick:onExecuteInteractBase(0,mainplayer)
+            --gimmick:onEndInteractBase(0,mainplayer)
+            --gimmick:endInteract(0)
+            --only this works,but each frame only work for one item?
+            gimmick:requestForceInteract(0,mainplayer)
+            AddMessage(msg,gimmick:get_GameObject():get_Transform():get_Position())
+            return true
+        end
+    end
+    return false
 end
 
 --executeInteract throw exception in re.on_frame,why?
@@ -148,11 +261,12 @@ sdk.hook(
             --iterate body controller
             for k,v in pairs(waitingBodyControllerList) do
                 if waitingBodyControllerList[k]<=0 then
-                    Loot(k)
+                    LootBodyOrBodyPart(k)
                 else
                     waitingBodyControllerList[k]=waitingBodyControllerList[k]-1
                 end
             end
+            
             --Log("endFrameN")
             interval=0
         end
@@ -167,24 +281,44 @@ sdk.hook(
     function()
         --Log(battleManager:get_IsBattleMode())
         if config.disableOnBattle and battleManager:get_IsBattleMode() then return end
-        if not config.lootGatherSpot then return end
+        if (not config.lootGatherSpot) and (not config.lootDirectItem) and (not config.lootDropItem) then return end
         
         interval2 = interval2+1
         if interval2 >90 then
-            --iterate gimmick82_009(collectable items)
-            --only contains nearby gimmicks
-            local gimmicks=gimmickManager:get_CollectionGimmicks()
-            local g_ct=gimmicks:get_Count()-1
-            for i=0,g_ct do
-                local gimmick=gimmicks[i]
-                LootGm82_009(gimmick)
+            if config.lootGatherSpot then
+                --iterate gimmick82_009(collectable items)
+                --only contains nearby gimmicks
+                local gimmicks=gimmickManager:get_CollectionGimmicks()
+                local g_ct=gimmicks:get_Count()-1
+                for i=0,g_ct do
+                    LootGm82_009(gimmicks[i])
+                end
             end
+            if config.lootDropItem then
+                --iterate gimmick82_000_001
+                local gimmicks=gimmickManager:get_DropItemGimmicks()
+                local g_ct=gimmicks:get_Count()-1
+                for i=0,g_ct do
+                    LootGm82_000_001(gimmicks[i])
+                end
+            end
+            if config.lootDirectItem then
+                --iterate gimmick82_000
+                local gimmicks=gimmickManager:get_DirectItemGimmicks()
+                local g_ct=gimmicks:get_Count()-1
+                for i=0,g_ct do
+                    --requestForceInteract每帧只能捡起一个物品？
+                    if LootGm82_000(gimmicks[i]) then
+                        break
+                    end
+                end
+            end
+
             interval2=0
         end
     end,
     nil
 )
-
 
 --record body when setup interactive object(when monster die)
 sdk.hook(
@@ -194,12 +328,42 @@ sdk.hook(
     function(args)
         local this=sdk.to_managed_object(args[2])
         if this:get_IsEnablePickup() and config.lootBody then
-            Log("Setup Body",thread.get_id())
+            Log("Setup Body")
             waitingBodyControllerList[this] = 1 -- wait 1*30 frame
         end
     end,
     nil
 )
+
+--Record drop body parts
+--新掉落的尾巴有时只会触发OnPartsBroken而不触发setupInteractiveObject？
+sdk.hook(
+    sdk.find_type_definition("app.DropPartsController"):get_method("onPartsBroken(via.GameObject, System.Boolean)"),
+    function(args)
+        local this=sdk.to_managed_object(args[2])
+        --get_Gimmick returns nil for tail
+        --DropItemData: <id,num>
+        if config.lootBodyPart and this:getDropItemData().Item2>=0 then
+            Log("Setup BodyPart")
+            waitingBodyControllerList[this] = 1 -- wait 1*30 frame
+        end
+    end,
+    nil
+)
+sdk.hook(
+    sdk.find_type_definition("app.DropPartsController"):get_method("setupInteractiveObject"),
+    function(args)
+        local this=sdk.to_managed_object(args[2])
+        --get_Gimmick returns nil for tail
+        --DropItemData: <id,num>
+        if config.lootBodyPart and this:getDropItemData().Item2>=0 then
+            Log("Setup BodyPart2")
+            waitingBodyControllerList[this] = 1 -- wait 1*30 frame
+        end
+    end,
+    nil
+)
+
 
 --draw loot message
 re.on_frame(function()
