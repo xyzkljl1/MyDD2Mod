@@ -25,7 +25,7 @@ function Init()
     Log("Init Items")
 end
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
-
+Init()
 
 sdk.hook(
     sdk.find_type_definition("app.gm80_001"):get_method("getItem"),
@@ -33,9 +33,9 @@ sdk.hook(
         local this=sdk.to_managed_object(args[2])
         --app.gm80_001.ItemParam
         local ItemList=this.ItemList
-        if ItemList~=nil then
+        if ItemList~=nil and #itemIds>=1 then
             local ct=ItemList:get_Count()-1
-            for i=0,ct do                
+            for i=0,ct do
                 ItemList[i].ItemId=itemIds[math.random(1,#itemIds)]
                 ItemList[i].ItemNum=math.random(1,5)
             end
