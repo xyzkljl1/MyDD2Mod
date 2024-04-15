@@ -28,6 +28,7 @@ for key,para in pairs(_config) do
 end
 config= recurse_def_settings(config, json.load_file(configfile) or {})
 
+local guiManager=sdk.get_managed_singleton("app.GuiManager")
 --Cache of expaned Item Description
 local ItemDescCache={}
 local SkillDescCache={}
@@ -647,19 +648,27 @@ sdk.hook(
             local cursor=tmpJobWindow._Main_ContentsListCtrl:get_SelectedInfo()
             local rcursor=tmpJobWindow._Ability_EqListCtrl:get_SelectedInfo()
             local rindex=tmpJobWindow._Ability_EqListCtrl:get_SelectedIndex()
-
-            --selecting on left or just turn to right
-            --should show info in left
-            if rindex==0 then
-                if cursor.ContenstsType==MainContentsInfoKindAbility then
-                    abilityId=cursor.Ability.AbilityID
+           
+            if tmpJobWindow._TxtAbilityInfoName:get_MessageId():ToString()~="00000000-0000-0000-0000-000000000000" then
+                --compare current ability name to selected abilitt in right list to check which list is active
+                local isInRight=false
+                local rAbilityDef=guiManager:getAbilityDefine(rcursor.AbilityID)
+                if rAbilityDef and rAbilityDef:get_AbilityName():ToString()==tmpJobWindow._TxtAbilityInfoName:get_MessageId():ToString() then
+                    isInRight=true
                 end
-            else-- else show info in right
-                abilityId=rcursor.AbilityID
-            end
+                --selecting on left or just turn to right
+                --should show info in left
+                if not isInRight then
+                    if cursor.ContenstsType==MainContentsInfoKindAbility then
+                        abilityId=cursor.Ability.AbilityID
+                    end
+                else-- else show info in right
+                    abilityId=rcursor.AbilityID
+                end
             
-            if abilityId~=nil and abilityId>0 then
-                tmpJobWindow._TxtAbilityInfo:set_Message(GetOrAddSkillDesc(tmpJobWindow._TxtAbilityInfo:get_Message(),abilityId))
+                if abilityId~=nil and abilityId>0 then
+                    tmpJobWindow._TxtAbilityInfo:set_Message(GetOrAddSkillDesc(tmpJobWindow._TxtAbilityInfo:get_Message(),abilityId))
+                end
             end
             tmpJobWindow=nil
         end
