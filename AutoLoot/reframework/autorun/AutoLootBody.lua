@@ -7,8 +7,11 @@ local _config={
     {name="lootBody",type="bool",default=true,label="Loot Body"},
     {name="lootBodyPart",type="bool",default=true,label="Loot Body Part"},
     {name="lootDropItem",type="bool",default=true,label="Loot Drop Item"},
-    {name="lootDirectItem",type="bool",default=true,label="Loot Direct Item"},
+    {name="lootDirectItem",type="bool",default=true,label="Loot Non-Drop Item"},
     {name="lootGatherSpot",type="bool",default=true,label="Loot Gather Point"},
+    {name="lootSeekerToken",type="bool",default=false,label="Loot Seeker's Token"},
+    {name="lootChest",type="bool",default=false,label="Loot Chest"},
+
     {name="disableOnBattle",type="bool",default=false,label="Disable During Battle"},
 
     {name="Loot Message Settings",type="mutualbox"},
@@ -248,6 +251,45 @@ local function LootGm82_000(gimmick)
     return false
 end
 
+--seekers token
+local function LootGm82_036(gimmick)
+    if gimmick:isInteractEnable(0)==true then
+        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        --treat 0.0 disatance as invalid
+        if distance~=0.0 and distance<rangeSq then
+            Log("Loot Gimmick82_036",distance,gimmick:get_IsGetFreeBit())
+            --onEndInteractBase and requestForceInteract both works
+            --gimmick:onEndInteractBase(0,mainplayer)
+            gimmick:requestForceInteract(0,mainplayer)
+            AddMessage("Loot Seeker's Token",gimmick:get_GameObject():get_Transform():get_Position())
+            return true
+        end
+    end
+    return false
+end
+
+--chest
+local function LootGm80_001(gimmick)
+    if gimmick:isInteractEnable(0)==true then
+        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        --treat 0.0 disatance as invalid
+        if distance~=0.0 and distance<rangeSq then
+            Log("Loot Chest",distance,gimmick:get_IsOpenedFreeBit())
+            --requestForceInteract not work
+            --onExecuteInteractBase get the item repeatly without changing chest state
+            --onStartInteractBase/open(false,player) force player go to open chest and change chest state without get the Item
+            --open(true,player) change chest state
+            --gimmick:onStartInteractBase(0,mainplayer)
+            gimmick:onExecuteInteractBase(0,mainplayer)
+            gimmick:open(true,mainplayer)
+            AddMessage("Loot Chest",gimmick:get_GameObject():get_Transform():get_Position())
+            return true
+        end
+    end
+    return false
+end
+
+
 --executeInteract throw exception in re.on_frame,why?
 --Check recorded bodies each 30 frame
 local interval=0
@@ -274,6 +316,9 @@ sdk.hook(
     nil
 )
 
+local getGimmickListMethod=sdk.find_type_definition("app.GimmickManager"):get_method("getGimmickList(app.GimmickID)")
+local gimmick82_036=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_036"):get_data(nil)
+
 --check nearby gimmick instances each 90 frame
 local interval2=0
 sdk.hook(
@@ -281,8 +326,7 @@ sdk.hook(
     function()
         --Log(battleManager:get_IsBattleMode())
         if config.disableOnBattle and battleManager:get_IsBattleMode() then return end
-        if (not config.lootGatherSpot) and (not config.lootDirectItem) and (not config.lootDropItem) then return end
-        
+
         interval2 = interval2+1
         if interval2 >90 then
             if config.lootGatherSpot then
@@ -309,6 +353,26 @@ sdk.hook(
                 for i=0,g_ct do
                     --requestForceInteract每帧只能捡起一个物品？
                     if LootGm82_000(gimmicks[i]) then
+                        break
+                    end
+                end
+            end
+            if config.lootSeekerToken then
+                --iterate gimmick82_000
+                local gimmicks=getGimmickListMethod(gimmickManager,gimmick82_036)
+                local g_ct=gimmicks:get_Count()-1
+                for i=0,g_ct do
+                    if LootGm82_036(gimmicks[i]) then
+                        break
+                    end
+                end
+            end
+            if config.lootChest then
+                local gimmicks=gimmickManager:get_TreasureBoxGimmicks()
+                print(gimmicks:get_Count())
+                local g_ct=gimmicks:get_Count()-1
+                for i=0,g_ct do
+                    if LootGm80_001(gimmicks[i]) then
                         break
                     end
                 end
@@ -363,7 +427,6 @@ sdk.hook(
     end,
     nil
 )
-
 
 --draw loot message
 re.on_frame(function()
