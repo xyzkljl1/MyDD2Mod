@@ -176,16 +176,16 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData)
     msg=f2s(damageInfo.Damage)
 
     if config.showDamageComposition then
-        local msg=""
-        if damageInfo.SlashDamage > 0 then msg=msg.." Slash:"..f2s(damageInfo.SlashDamage) end
-        if damageInfo.BlowDamage > 0 then msg=msg.." Blow:"..f2s(damageInfo.BlowDamage) end
-        if damageInfo.ShootDamage > 0 then msg=msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
-        if damageInfo.MagicDamage > 0 then msg=msg.." Magic:"..f2s(damageInfo.MagicDamage) end
-        if damageInfo.EnchantDamage > 0 then msg=msg.." Enchant:"..f2s(damageInfo.EnchantDamage) end
-        if damageInfo.NonMagicElementDamage > 0 then msg=msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage) end
-        if damageInfo.FixedDamage > 0 then msg=msg.." Fixed:"..f2s(damageInfo.FixedDamage) end
-        if msg  ~=nil then
-            msg=msg.."/"..msg
+        local _msg=""
+        if damageInfo.SlashDamage > 0 then _msg=_msg.." Slash:"..f2s(damageInfo.SlashDamage) end
+        if damageInfo.BlowDamage > 0 then _msg=_msg.." Blow:"..f2s(damageInfo.BlowDamage) end
+        if damageInfo.ShootDamage > 0 then _msg=_msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
+        if damageInfo.MagicDamage > 0 then _msg=_msg.." Magic:"..f2s(damageInfo.MagicDamage) end
+        if damageInfo.EnchantDamage > 0 then _msg=_msg.." Enchant:"..f2s(damageInfo.EnchantDamage) end
+        if damageInfo.NonMagicElementDamage > 0 then _msg=_msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage) end
+        if damageInfo.FixedDamage > 0 then _msg=_msg.." Fixed:"..f2s(damageInfo.FixedDamage) end
+        if _msg  ~=nil then
+            msg=msg.."/".._msg
         end
     end
 

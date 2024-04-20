@@ -3,15 +3,23 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
 local _config={
+    {name="Style",type="mutualbox"},
     {name="fontsize",type="int",default=60,min=1,max=250,needrestart=true},
     {name="offset",type="intN",default={50,50},min=-300,max=8000},
     {name="color",type="rgba32",default=0xffEEEEEE},
     {name="backgroundcolor",type="rgba32",default=0x88777777},
+
+    {name="Format",type="mutualbox"},
     {name="zerofill",type="bool",default=false},
     {name="showbackground",type="bool",default=true},
     {name="showtimeslot",type="bool",default=true},
     {name="useAMPM",type="bool",default=false},
     {name="customFormat",type="string",default="{D}Day {T} {h}:{m}:{s} {a}"},
+    
+    {name="Enable",type="mutualbox"},
+    {name="disableInMenu",type="bool",default=false},
+    {name="enable",type="bool",default=true},
+    {name="enableHotkey",type="hotkey",default="Alpha3",actionName="ClockEnable8293"},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -34,13 +42,27 @@ config= recurse_def_settings(config, json.load_file(configfile) or {})
 --On setting Change
 local function OnChanged()
 end
+--try load api and draw ui
+local function prequire(...)
+    local status, lib = pcall(require, ...)
+    if(status) then return lib end
+    return nil
+end
 
+local hk = prequire("Hotkeys/Hotkeys")
 local font = imgui.load_font("times.ttf", config.fontsize)
+local guiManager=sdk.get_managed_singleton("app.GuiManager")
 local function Log(msg)
     log.info(modname..msg)
 end
 
 re.on_frame(function()
+    if hk~=nil and hk.check_hotkey("ClockEnable8293",false,true) then
+        config.enable=not config.enable
+    end
+    if not config.enable then return end
+    if config.disableInMenu and guiManager:get_IsLoadGui() then return end
+
     imgui.push_font(font)
     local tm=sdk.get_managed_singleton("app.TimeManager")
     if tm~=nil then
@@ -91,11 +113,6 @@ re.on_frame(function()
 end)
 
 
---try load api and draw ui
-local function prequire(...)
-    local status, lib = pcall(require, ...)
-    if(status) then return lib end
-    return nil
-end
+
 local myapi = prequire("_XYZApi/_XYZApi")
 if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,OnChanged) end
