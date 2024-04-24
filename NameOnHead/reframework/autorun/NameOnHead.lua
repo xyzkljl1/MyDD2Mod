@@ -5,6 +5,7 @@ log.info("["..modname.."]".."Start")
 local _config={
     {name="font",type="font",default="simsun.ttc"},
     {name="fontsize",type="fontsize",default=29},
+    {name="shining",type="bool",default=true},
     {name="color",type="rgba32",default=0xffEEEEEE},
     {name="offsetX",type="int",default=0,min=-300,max=5000},
     {name="offsetY",type="int",default=0,min=-300,max=5000},
@@ -39,11 +40,14 @@ local function Log(msg)
     log.info(modname..msg)
 end
 
+local frame=0
 re.on_frame(function()
     if hk.check_hotkey("keyboardKey2728",false,true) or ((hk.check_hotkey("controllerKeyShoulder2728",  true,false) and hk.check_hotkey("controllerKeyNotShoulder2728",  false,true))) then
         on=not on
     end
     if on then
+        frame=frame+2
+        if frame >1024 then frame=0 end
         local player_listh=sdk.get_managed_singleton("app.CharacterListHolder")
         local npcm=sdk.get_managed_singleton("app.NPCManager")
         local chars=player_listh:getAllCharacters()
@@ -60,7 +64,12 @@ re.on_frame(function()
                 local text_pos=Vector3f.new(pos.x+config.offsetX, pos.y+config.offsetY+0.2, pos.z+config.offsetZ)
                 --LogTypeMethods(d)
                 local text=d:get_Name()
-                draw.world_text(text,text_pos,config.color)
+                local color=config.color
+                if config.shining then
+                    color=0xff000000
+                    color=color+(((frame)&0xff)<<16)+(((frame+60)&0xff)<<8)+(((frame+200)&0xff))
+                end
+                draw.world_text(text,text_pos,color)
             end
         end
         imgui.pop_font()
