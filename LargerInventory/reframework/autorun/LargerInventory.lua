@@ -4,12 +4,21 @@ log.info("["..modname.."]".."Start")
 
 sdk.hook(
     sdk.find_type_definition("app.ItemManager"):get_method("countGetEnableNumNoLock(System.Int32, app.CharacterID)"),
-    function()end,
+    nil,
     function(retval)
         --local x=sdk.to_int64(retval)&0xffffffff
         --print("Hook ",x)
         --return retval
          return sdk.to_ptr(999999)
+    end
+)
+
+sdk.hook(
+    sdk.find_type_definition("app.ui060301_00"):get_method("checkCanTradeWareHouse(app.CharacterID)"),
+    nil,
+    function(retval)
+        --print("Check",sdk.to_int64(retval)&0x1)
+        return sdk.to_ptr(true)
     end
 )
 
