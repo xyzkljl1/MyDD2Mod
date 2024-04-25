@@ -63,33 +63,18 @@ sdk.hook(
 )
 
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
-
+Init()
 --try load api and draw ui
 local function prequire(...)
     local status, lib = pcall(require, ...)
     if(status) then return lib end
     return nil
 end
---On setting Change
-local function OnChanged() end
 local myapi = prequire("_XYZApi/_XYZApi")
-if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,OnChanged) end
+if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,nil) end
 
 
---Init()
+
 --re.on_frame(function()
 --    ClearLog()
 --end)
-
-if false then
-    re.on_frame(function()
-        local player_man=sdk.get_managed_singleton("app.CharacterManager")
-        local player=player_man:get_ManualPlayer()
-        if player~= nil  then
-            local currentHuman=player:get_Human()
-            if currentHuman.Hip~=nil then
-                Log(tostring(currentHuman.Hip:get_Position().y))
-            end
-        end
-    end)
-end
