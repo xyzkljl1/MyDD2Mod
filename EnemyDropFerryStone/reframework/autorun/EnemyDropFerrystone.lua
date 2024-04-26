@@ -7,8 +7,8 @@ local DropListCT=5
 
 local _config={
     {name="AffectGatherSpot",type="bool",default=true},
-    {name="IgnoreBossDrop",type="bool",default=true},
-    {name="IgnoreQuestItem",type="bool",default=true},
+    {name="IgnoreBossDrop",type="bool",default=true,label="Dont replace boss drop"},
+    {name="IgnoreQuestItem",type="bool",default=true,label="Dont replace quest item"},
 
     {name="item1",type="item",default=80},
     {name="count1",type="int",default=1,min=0,max=99},
@@ -36,7 +36,9 @@ local config=myapi.InitFromFile(_config,configfile)
 
 local function Log(...)
     print(...)
-    log.info(modname,...)
+    for k,v in ipairs{...} do
+        log.info("["..modname.."]"..tostring(v))
+    end
 end
 
 --Must add_ref(),otherwise the object will be released when the game has a chance to do so
@@ -155,10 +157,13 @@ OnChanged()
 
 --Should Add this to api
 local inited=false
+local font=nil
 local function Init()
+    if font==nil then
+        font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
+    end
     if not inited then
-        local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
-        myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,font)
+        myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,function() return font end)
         inited=true
     end
     
