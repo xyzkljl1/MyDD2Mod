@@ -369,12 +369,12 @@
         },
         "25": {
             "enable": true,
-            "format": "+{v1}% Damage",
+            "format": "+{v1}% Damage from behind",
             "hint": "(3550,Ring of Skullduggery,20,0,0)"
         },
         "26": {
             "enable": true,
-            "format": "Gain {v1} DEF in {v2} seconds",
+            "format": "Pawn gains {v1} DEF in {v2} seconds",
             "hint": "(3551,Ring of Reassurance,50,20,0)"
         },
         "27": {

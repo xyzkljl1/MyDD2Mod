@@ -181,12 +181,12 @@
     },
     "25": {
       "enable": true,
-      "format": "+{v1}% 伤害",
+      "format": "+{v1}% 背面攻击伤害",
       "hint": "(3550,Ring of Skullduggery,20,0,0)"
     },
     "26": {
       "enable": true,
-      "format": "{v2}秒内获得{v1} 防御",
+      "format": "追随者在{v2}秒内获得{v1} 防御",
       "hint": "(3551,Ring of Reassurance,50,20,0)"
     },
     "27": {
