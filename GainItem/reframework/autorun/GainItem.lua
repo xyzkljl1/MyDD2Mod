@@ -20,10 +20,14 @@ end
 
 --Should Add this to api
 local inited=false
+local font=nil
 local function Init()
+    if font==nil then
+        --reload font everytime,in case the font is not right on first init
+        font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
+    end
     if not inited then
-        local font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
-        myapi.DrawIt(modname,configfile,_config,config,nil,true,font)
+        myapi.DrawIt(modname,configfile,_config,config,nil,true,function() return font end)
         inited=true
     end
 end
@@ -34,6 +38,7 @@ Init()
 local Wakestone=77
 local WakestoneShards=78
 
+local tmpep=sdk.create_instance("app.ItemDefine.EnhanceParam"):add_ref()
 local function AddItem()
 
     local im=sdk.get_managed_singleton("app.ItemManager")
@@ -43,7 +48,8 @@ local function AddItem()
 
     --Gather TreasureBox Talk DeadEnemy
     local type=sdk.find_type_definition("app.ItemManager.GetItemEventType"):get_field("TreasureBox"):get_data()
-    local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.Character, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean, System.Boolean)")
+    --local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.Character, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean, System.Boolean)")
+    local getItemMethod2=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.ItemDefine.EnhanceParam, app.CharacterID, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean)")
 
     --wakestone shards->wakestone causes crash.Can't  fix it.
     -- so just remove shards and give wakestone
@@ -68,7 +74,8 @@ local function AddItem()
         end
         Log("Modify WakeStoneShards "..ct.."/"..total_ct.."/"..left_ct)
     else
-        getItemMethod:call(im,math.floor(config.item),math.floor(config.count),player,true,false,false,1,false,false)
+        --getItemMethod:call(im,math.floor(config.item),math.floor(config.count),player,true,false,false,1,false,false)
+        getItemMethod2:call(im,math.floor(config.item),math.floor(config.count),tmpep,65535,true,false,false,1,false)
     end
 end
 

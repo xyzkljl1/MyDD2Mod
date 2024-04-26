@@ -1,4 +1,5 @@
-﻿local vecNames={
+﻿local modname="_XYZAPI"
+local vecNames={
     ".x",
     ".y",
     ".z",
@@ -25,7 +26,9 @@ local itemId2itemIndex={}
 --local defaultCNFont=nil
 local function Log(...)
     print(...)
-    --log.info(...)
+    for k,v in ipairs{...} do
+        log.info("["..modname.."]"..tostring(v))
+    end
 end
 
 local function isDD2()
@@ -298,6 +301,20 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                                                             config[key] or para.default or para.min or 0,
                                                             para.step or 0.1 , para.min or 0, para.max)
                     _changed=changed or _changed
+                elseif para.type=="floatN" then
+                    --Start From 1!
+                    local width=para.width or 215
+                    imgui.push_item_width(width)
+                    for _k,_ in pairs (config[key]) do
+                        local vname=vecNames[_k] or ".".._k
+            		    changed , config[key][_k] = imgui.drag_float(key..vname .. title_postfix, 
+                                                             config[key][_k] or para.default or para.min or 0,
+                                                             para.step or 0.1 , para.min or 0, para.max)
+                        _changed=changed or _changed
+                        imgui.same_line()
+                    end
+                    imgui.pop_item_width()
+                    imgui.new_line()
                 elseif para.type=="floatPercent" then
         		    changed , config[key]= imgui.drag_float(label .. title_postfix, 
                                                             config[key] or para.default or para.min or 0,
@@ -451,16 +468,22 @@ local function LoadFontIfCJK(fontname,fontsize,fontrange)
     --    or lng==sdk.find_type_definition("via.Language"):get_field("Japanese"):get_data()
     --    then
     local om=sdk.get_managed_singleton("app.OptionManager")
-    local optionItem=om._OptionItems:get_Item(sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data())
+    local optionID=sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data()
+    if optionID==nil then
+        --for certain user,scripts are load too early that this func can't get optionID
+        Log("Can't find optionID.Use Default Font")
+        return font
+    end
+    local optionItem=om._OptionItems:get_Item(optionID)
     local lng=optionItem:get_FixedValueModel():get_StringValue()
-    --SimplelifiedChinese is capcom's typo
+    --these are capcom's typo
     if lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Korean" or lng=="Japanese"
         --or lng=="Russian" or lng == "Ukrainian" 
         then
         font=imgui.load_font(fontname or "simhei.ttf", fontsize or 14,fontrange or CJK_GLYPH_RANGES)
-        print("Load CN font")
+        Log("Load CN font")
     else
-        print("Use Default Font")
+        Log("Use Default Font")
     end
     return font
 end
