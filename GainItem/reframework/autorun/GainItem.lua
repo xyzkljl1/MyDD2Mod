@@ -48,8 +48,8 @@ local function AddItem()
 
     --Gather TreasureBox Talk DeadEnemy
     local type=sdk.find_type_definition("app.ItemManager.GetItemEventType"):get_field("TreasureBox"):get_data()
-    --local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.Character, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean, System.Boolean)")
-    local getItemMethod2=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.ItemDefine.EnhanceParam, app.CharacterID, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean)")
+    local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.Character, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean, System.Boolean)")
+    --local getItemMethod2=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.ItemDefine.EnhanceParam, app.CharacterID, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean)")
 
     --wakestone shards->wakestone causes crash.Can't  fix it.
     -- so just remove shards and give wakestone
@@ -74,8 +74,8 @@ local function AddItem()
         end
         Log("Modify WakeStoneShards "..ct.."/"..total_ct.."/"..left_ct)
     else
-        --getItemMethod:call(im,math.floor(config.item),math.floor(config.count),player,true,false,false,1,false,false)
-        getItemMethod2:call(im,math.floor(config.item),math.floor(config.count),tmpep,65535,true,false,false,1,false)
+        getItemMethod:call(im,math.floor(config.item),math.floor(config.count),player,true,false,false,1,false,false)
+        --getItemMethod2:call(im,math.floor(config.item),math.floor(config.count),tmpep,65535,true,false,false,1,false)
     end
 end
 
