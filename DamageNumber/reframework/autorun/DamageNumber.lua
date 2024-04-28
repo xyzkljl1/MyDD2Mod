@@ -187,7 +187,7 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
     if config.showDamageComposition then
         local _msg=""
         if damageInfo.SlashDamage > 0 then _msg=_msg.." Slash:"..f2s(damageInfo.SlashDamage) end
-        if damageInfo.BlowDamage > 0 then _msg=_msg.." Blow:"..f2s(damageInfo.BlowDamage) end
+        if damageInfo.BlowDamage > 0 then _msg=_msg.." Strike:"..f2s(damageInfo.BlowDamage) end
         if damageInfo.ShootDamage > 0 then _msg=_msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
         if damageInfo.MagicDamage > 0 then _msg=_msg.." Magic:"..f2s(damageInfo.MagicDamage) end
         if damageInfo.EnchantDamage > 0 then _msg=_msg.." Enchant:"..f2s(damageInfo.EnchantDamage).."*"..f2s2(damageInfo.EnchantRate) end
