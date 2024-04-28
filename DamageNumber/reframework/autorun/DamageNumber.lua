@@ -180,6 +180,10 @@ local PhysicsAttrSettingType2Str=GetEnumMap("app.AttackUserData.PhysicsAttrSetti
 local DamageTypeEnum2Str=GetEnumMap("app.AttackUserData.DamageTypeEnum")
 local ElementTypeEnum2Str=GetEnumMap("app.AttackUserData.ElementType")
 
+for k,v in pairs(PhysicsAttrSettingType2Str) do
+    if v=="Blow" then PhysicsAttrSettingType2Str[k]="Strike" end
+end
+
 local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
     local msg=""
     msg=f2s(damageInfo.Damage)
