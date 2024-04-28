@@ -154,14 +154,14 @@ local function f2s(float)
     if config.precisevalue then
         return tostring(float)
     end
-    return tostring(math.floor(float))
+    return tostring(math.floor(float or 0))
 end
 
 local function f2s2(float)
     if config.precisevalue then
         return tostring(float)
     end
-    return string.format("%.2f",float)
+    return string.format("%.2f",float or 0)
 end
 
 local function GetEnumMap(enumName)
