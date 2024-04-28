@@ -28,24 +28,19 @@ local _config={
     {name="rndoffset",type="float",default=0.2,min=0.0,max=10.0,label="Position Random Offset"},
     
     {name="Damage Format",type="mutualbox"},
-    {name="showlefthp",type="bool",default=false,label="Show Left HP"},
-    {name="",type="sameline"},
-    {name="showmultiplier",type="bool",default=true,label="Show Multiplier"},
-    {name="",type="sameline"},
+    {name="showlefthp",type="bool",default=false,label="Show Left HP"},{name="",type="sameline"},
+    {name="showmultiplier",type="bool",default=true,label="Show Multiplier"},{name="",type="sameline"},
     {name="showActionRate",type="bool",default=false,label="Show Action Rate"},
-    {name="showDamageType",type="bool",default=false,label="Show Damage Type Flag"},
-    {name="",type="sameline"},
-    {name="showDamageComposition",type="bool",default=false,label="Show Original Damage Composition"},
-    {name="",type="sameline"},
+    {name="showDamageType",type="bool",default=false,label="Show Damage Type Flag"},{name="",type="sameline"},
+    {name="showDamageComposition",type="bool",default=false,label="Show Original Damage Composition"},{name="",type="sameline"},
     {name="showBigcapPostfix",type="bool",default=true,label="Show ! after big number"},
     {name="precisevalue",type="bool",default=false,label="Show Precise Value"},
+    {name="showDamageAtkDefAbsorption",type="bool",default=false,label="Show Final Atk&Def&AbsorptionRate for player's attack"},
 
     {name="Damage Filter",type="mutualbox"},
-    {name="showenemydamage",type="bool",default=true,label="Show Damage Taken By Enemy"},
-    {name="",type="sameline"},
+    {name="showenemydamage",type="bool",default=true,label="Show Damage Taken By Enemy"},{name="",type="sameline"},
     {name="showfrienddamage",type="bool",default=true,label="Show Damage Taken By Friend"},
-    {name="shownonplayerdealandtakendamage",type="bool",default=true,label="Show Non Player Damage"},
-    {name="",type="sameline"},
+    {name="shownonplayerdealandtakendamage",type="bool",default=true,label="Show Non Player Damage"},{name="",type="sameline"},
     {name="showNonBossEnemyTakenDamage",type="bool",default=true,label="Show Damage Taken By Non-Boss Enemy"},
     {name="showDOT",type="bool",default=true,label="Show Dot&Fall Damage"},
     {name="showOnlyBossOnMeter",type="bool",default=true},
@@ -82,9 +77,18 @@ local function OnChanged()
 end
 
 local battleLog={text="",lines=0}
-local damageNumbers={}
+local damageNumbers={} -- damage number message struct 2 last time
+local damageTmpInfos={} -- DamageInfo address 2 middle value struct
 local mainplayer=nil
 local mainplayerGO=nil
+local damageFieldsInDamageInfo={
+    ["Slash"]="SlashDamage",
+    ["Strike"]="BlowDamage",
+    ["Shoot"]="ShootDamage",
+    ["Magic"]="MagicDamage",
+    ["Enchant"]="EnchantDamage",
+    ["NonMagicElement"]="NonMagicElementDamage"
+}
 
 local lastEnemyHitController=nil
 local lastEnemyGO=nil
@@ -96,6 +100,12 @@ local posDelta=2/(config.time-1)
 local font = imgui.load_font(config.font, config.fontsize)
 local jpfont= nil --load when necessary
 local bigfont = imgui.load_font(config.font, config.bigfontsize)
+
+local function prequire(...)
+    local status, lib = pcall(require, ...)
+    if(status) then return lib end
+    return nil
+end
 
 local function loadJpFont()
     if jpfont==nil then
@@ -109,7 +119,6 @@ local function loadJpFont()
                                                     })
     end
 end
-
 loadJpFont()
 
 local function Log(msg)
@@ -171,7 +180,7 @@ local PhysicsAttrSettingType2Str=GetEnumMap("app.AttackUserData.PhysicsAttrSetti
 local DamageTypeEnum2Str=GetEnumMap("app.AttackUserData.DamageTypeEnum")
 local ElementTypeEnum2Str=GetEnumMap("app.AttackUserData.ElementType")
 
-local function DamageNumber2Message(character,damageInfo,AttackUserData)
+local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
     local msg=""
     msg=f2s(damageInfo.Damage)
 
@@ -181,7 +190,7 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData)
         if damageInfo.BlowDamage > 0 then _msg=_msg.." Blow:"..f2s(damageInfo.BlowDamage) end
         if damageInfo.ShootDamage > 0 then _msg=_msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
         if damageInfo.MagicDamage > 0 then _msg=_msg.." Magic:"..f2s(damageInfo.MagicDamage) end
-        if damageInfo.EnchantDamage > 0 then _msg=_msg.." Enchant:"..f2s(damageInfo.EnchantDamage) end
+        if damageInfo.EnchantDamage > 0 then _msg=_msg.." Enchant:"..f2s(damageInfo.EnchantDamage).."*"..f2s2(damageInfo.EnchantRate) end
         if damageInfo.NonMagicElementDamage > 0 then _msg=_msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage) end
         if damageInfo.FixedDamage > 0 then _msg=_msg.." Fixed:"..f2s(damageInfo.FixedDamage) end
         if _msg  ~=nil then
@@ -216,6 +225,17 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData)
         typeMsg=string.gsub(typeMsg,"^/","")
         if typeMsg~="" then
             msg=msg.." {"..typeMsg.."}"
+        end
+    end
+
+    if config.showDamageAtkDefAbsorption and isPlayerAttackHit then
+        local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
+        if damageTmpInfo~=nil then
+            for name,field in pairs(damageFieldsInDamageInfo) do
+                if damageInfo[field] >0.01 then
+                    msg=string.format("%s <%s=(%s-%s)*%s>",msg,name,f2s2(damageTmpInfo[name]),f2s2(damageTmpInfo[name.."_DEF"]),f2s2(damageTmpInfo[name.."_Ab"]))
+                end
+            end
         end
     end
 
@@ -336,7 +356,7 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
     --Generate damage Message
     if reactionMsg==nil then --damage number
         if config.showDamage then
-            damageNumber.msg=DamageNumber2Message(character,damageInfo,AttackUserData)
+            damageNumber.msg=DamageNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
         end
         if config.showKnockdownDamage then
             damageNumber.msg2=KnockdownNumber2Message(character,damageInfo,AttackUserData)
@@ -391,8 +411,46 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
     if damageNumber.msg2~=nil then
         Log("Add Damage Number "..tostring(damageNumber.finalDamage).."in("..f2s2(damageNumber.pos2.x)..","..f2s2(damageNumber.pos2.y)..","..f2s2(damageNumber.pos2.z).."): ".. damageNumber.msg2)
     end
-
 end
+
+local function AddDamageTmpInfoBeforeCalcDef(damageInfo)
+    local address=damageInfo:get_address()
+    local damageTmpInfo=damageTmpInfos[address] or {lifetime=3}
+    damageTmpInfos[address]=damageTmpInfo
+    for name,field in pairs(damageFieldsInDamageInfo) do
+        damageTmpInfo[name]=damageInfo[field]
+    end
+end
+
+local function AddDamageTmpInfoAfterCalcDef(damageInfo)
+    if damageInfo==nil then return end
+    local address=damageInfo:get_address()
+    local damageTmpInfo=damageTmpInfos[address]
+    if damageTmpInfo==nil then return end
+    for name,field in pairs(damageFieldsInDamageInfo) do
+        damageTmpInfo[name.."_DEF"]=damageTmpInfo[name]-damageInfo[field]
+    end
+end
+
+local function AddDamageTmpInfoBeforeCalcAbsorption(damageInfo)
+    local address=damageInfo:get_address()
+    local damageTmpInfo=damageTmpInfos[address] or {lifetime=3}
+    damageTmpInfos[address]=damageTmpInfo
+    for name,field in pairs(damageFieldsInDamageInfo) do
+        damageTmpInfo[name.."_Ab"]=damageInfo[field]
+    end
+end
+
+local function AddDamageTmpInfoAfterCalcAbsorption(damageInfo)
+    if damageInfo==nil then return end
+    local address=damageInfo:get_address()
+    local damageTmpInfo=damageTmpInfos[address]
+    if damageTmpInfo==nil then return end
+    for name,field in pairs(damageFieldsInDamageInfo) do
+        damageTmpInfo[name.."_Ab"]=damageInfo[field]/damageTmpInfo[name.."_Ab"]
+    end
+end
+
 
 --app.Character:onCalcDamageEnd 
 --onDamageCalcEnd is shit,onDamageHit don't have damage number
@@ -402,11 +460,50 @@ sdk.hook(
     sdk.find_type_definition("app.HitController"):get_method("updateDamage"),
     function(args)
         local this=sdk.to_managed_object(args[2])
-        local damageInfo=sdk.to_managed_object(args[3])        
+        local damageInfo=sdk.to_managed_object(args[3])
         AddDamageNumber(this:get_CachedCharacter(),damageInfo)
     end,
     nil
 )
+
+--(player's) attack is calced in PlayerDamageCalculator and set to DamageInfo.xxdamage,then minused by defence in ExceptPlayerDamageCalculator.calcDamageValueDefence
+--thread.get_hook_storage() not working,get nil in postHook as long as another script hooks the same function
+local tmpDamageInfoArg=nil
+sdk.hook(
+    sdk.find_type_definition("app.ExceptPlayerDamageCalculator"):get_method("calcDamageValueDefence(app.HitController.DamageInfo)"),
+    function(args)
+        if config.showDamageAtkDefAbsorption then
+            local damageInfo =sdk.to_managed_object(args[3])
+            AddDamageTmpInfoBeforeCalcDef(damageInfo)
+            tmpDamageInfoArg=damageInfo
+        end
+    end,
+    function()
+        if config.showDamageAtkDefAbsorption then
+            AddDamageTmpInfoAfterCalcDef(tmpDamageInfoArg)
+        end
+        tmpDamageInfoArg=nil
+    end
+)
+
+local tmpDamageInfoArg=nil
+sdk.hook(
+    sdk.find_type_definition("app.HitController"):get_method("calcRegionDamageRate(app.HitController.DamageInfo)"),
+    function(args)
+        if config.showDamageAtkDefAbsorption then
+            local damageInfo =sdk.to_managed_object(args[3])
+            AddDamageTmpInfoBeforeCalcAbsorption(damageInfo)
+            tmpDamageInfoArg=damageInfo
+        end
+    end,
+    function()
+        if config.showDamageAtkDefAbsorption then
+            AddDamageTmpInfoAfterCalcAbsorption(tmpDamageInfoArg)
+        end
+        tmpDamageInfoArg=nil
+    end
+)
+
 
 local function onDamageReactionTriggered(args,msg)
     local this=sdk.to_managed_object(args[2])
@@ -471,7 +568,9 @@ local function DrawDamageNumber(damageNumber)
     end    
 end
 
+local frame_ct=0
 re.on_frame(function()
+    frame_ct=frame_ct+1
     --draw damage numbers
     imgui.push_font(font)
     for k,v in pairs(damageNumbers) do
@@ -489,6 +588,15 @@ re.on_frame(function()
     end
     imgui.pop_font()
     
+    --clear damageTmpInfos 
+    if frame_ct>30 then
+        frame_ct=0
+        for k,v in pairs(damageTmpInfos) do
+            v.lifetime=v.lifetime-1
+            if v.lifetime<0 then damageTmpInfos[k]=nil end
+        end
+    end
+
     --Draw battlelog
     if config.showBattleLogOnScreen and battleLog.lines>0 then
         loadJpFont()
@@ -549,20 +657,9 @@ re.on_frame(function()
     end
 end)
 
-sdk.hook(
-    sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),
-    function() end,
-    function()
-        refreshplayer()
-    end
-)
+sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,refreshplayer)
 refreshplayer()
 
 --try load api and draw ui
-local function prequire(...)
-    local status, lib = pcall(require, ...)
-    if(status) then return lib end
-    return nil
-end
 local myapi = prequire("_XYZApi/_XYZApi")
 if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,OnChanged) end

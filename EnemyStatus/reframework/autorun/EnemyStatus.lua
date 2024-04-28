@@ -20,6 +20,11 @@ local _config={
     {name="showBodyParts",type="bool",default=true},
     {name="showDebuff",type="bool",default=true},
     {name="showATKDEF",type="bool",default=true},
+    {name="showPhysicDamageAbsorption",type="bool",default=true},
+    {name="showMagicDamageAbsorption",type="bool",default=true},
+    {name="showKnockdownAbsorption",type="bool",default=true},
+    {name="showPhysicKnockdownAbsorption",type="bool",default=false},
+    {name="showMagicKnockdownAbsorption",type="bool",default=false},
 
     {name="Hotkey",type="mutualbox"},
     {name="switchEnable",type="hotkey",default="Alpha5",actionName="switchEnableEnemyStatus19054u3"},
@@ -388,6 +393,8 @@ end
 
 local ElementTypeEnum2Str,_=Enum2Map("app.AttackUserData.ElementType")
 local StatusConditionEnum2Str,_=Enum2Map("app.StatusConditionDef.StatusConditionEnum")
+local RegionTypeEnum2Str,_=Enum2Map("app.IntermediateRegionParam.RegionTypeEnum",0)
+
 
 local WeakpointEnum2Str=GetWeakpointEnumMap()
 
@@ -497,6 +504,9 @@ re.on_frame(function()
                 msg=msg..string.format("      ATK %s/%s DEF %s/%s\n",f2s(lastEnemyCalculator:get_Attack()),f2s(lastEnemyCalculator:get_MagicAttack()),
                                                             f2s(lastEnemyCalculator:get_Defence()),f2s(lastEnemyCalculator:get_MagicDefence()))
             end
+            --enchant
+            --msg=msg.."\n"..f2s(lastEnemyCalculator["<EnchantStatusDamageFire>k__BackingField"])..f2s(lastEnemyCalculator["<EnchantStatusDamageIce>k__BackingField"])..f2s(lastEnemyCalculator["<EnchantStatusDamageThunder>k__BackingField"])..f2s(lastEnemyCalculator["<EnchantStatusDamageFire>k__BackingField"])
+            --msg=msg.."\n"..f2s(lastEnemyCalculator["<EnchantPhsycalFactor>k__BackingField"])..","..f2s(lastEnemyCalculator["<EnchantMagicalFactor>k__BackingField"]).."...\n"
             --debuff
             if config.showDebuff then
                 local debuffmsg=""
@@ -517,12 +527,27 @@ re.on_frame(function()
             end
             --
             if bodyparts~=nil and config.showBodyParts then
+                local regionStatusCtrl=lastEnemyHitController["<CachedRegionStatusCtrl>k__BackingField"]
                 local ct=bodyparts:get_Count()-1
                 for i=0,ct do
                     --region means body part
                     local regionStatus=bodyparts[i]
-                    local partMsg="Part "..regionStatus["<RegionNo>k__BackingField"].."- "
-                    partMsg=partMsg..string.format("HP: %s/%s ",f2s(regionStatus.Hp),f2s(regionStatus.MaxHp))
+                    local regionNo=regionStatus["<RegionNo>k__BackingField"]
+                    local partMsg="Part "..regionNo
+                    if regionStatusCtrl~=nil then
+                        local interRegionParam=regionStatusCtrl:getActiveRegionParam(regionNo)
+                        if interRegionParam~=nil then
+                            local regionType=RegionTypeEnum2Str[interRegionParam:get_RegionType()]
+                            if regionType~="Other" then
+                                partMsg=partMsg.."/"..regionType
+                            elseif regionNo==0 then --assume part 0 is always body,Chimera part 0 is other
+                                partMsg=partMsg.."/Body"
+                            end
+                        else--orge part 0 has no param
+                            partMsg=partMsg.."/Body"
+                        end
+                    end
+                    partMsg=partMsg..string.format("- HP: %s/%s ",f2s(regionStatus.Hp),f2s(regionStatus.MaxHp))
 
                     --PerChar.Threshold always 100?
                     local param=regionStatus["DamageReactionThreshold"].PerChar
@@ -537,9 +562,48 @@ re.on_frame(function()
                         maxBlow=param.Blown[param.Blown:get_Count()-1].m_value
                     end
 
-                    if regionStatus.IsRegionReaction then
+                    if regionStatus.IsRegionReaction or true then
                         partMsg=partMsg..string.format("Lean: %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
                         partMsg=partMsg..string.format("Blow: %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                    end
+
+                    if regionStatusCtrl~=nil then
+                        local interRegionParam=regionStatusCtrl:getActiveRegionParam(regionStatus["<RegionNo>k__BackingField"])
+                        if interRegionParam~=nil then
+                            local regionType=RegionTypeEnum2Str[interRegionParam:get_RegionType()]
+                            if interRegionParam._DamageAdjustRatePys:get_Count()>=3 and interRegionParam._DamageAdjustRateMgc:get_Count()>=5 then
+                                if config.showPhysicDamageAbsorption then
+                                    partMsg=partMsg..
+                                        string.format("\n\tSlash %.2f Strike %.2f Shoot %.2f\n",
+                                            interRegionParam._DamageAdjustRatePys[0].m_value,interRegionParam._DamageAdjustRatePys[1].m_value,interRegionParam._DamageAdjustRatePys[2].m_value)
+                                end
+                                if  config.showMagicDamageAbsorption then
+                                    partMsg=partMsg..
+                                        string.format("\tMagic %.2f Fire %.2f Ice %.2f Thunder %.2f Light %.2f\n",
+                                            interRegionParam._DamageAdjustRateMgc[0].m_value,interRegionParam._DamageAdjustRateMgc[1].m_value,interRegionParam._DamageAdjustRateMgc[2].m_value,
+                                            interRegionParam._DamageAdjustRateMgc[3].m_value,interRegionParam._DamageAdjustRateMgc[4].m_value
+                                            )
+                                end
+                                if config.showKnockdownAbsorption then
+                                    partMsg=partMsg..
+                                        string.format("\tKnockown:Global %.2f\n",interRegionParam._ReactionRate)                                    
+                                end
+                                if config.showPhysicKnockdownAbsorption then
+                                    partMsg=partMsg..
+                                        string.format("\tKnockdown:Slash %.2f Strike %.2f Shoot %.2f\n",
+                                            interRegionParam._ReactionAdjustRatePys[0].m_value,interRegionParam._ReactionAdjustRatePys[1].m_value,interRegionParam._ReactionAdjustRatePys[2].m_value)
+                                end
+
+                                if  config.showMagicKnockdownAbsorption then
+                                    partMsg=partMsg..
+                                        string.format("\tKnockdown:Magic %.2f Fire %.2f Ice %.2f Thunder %.2f Light %.2f\n",
+                                            interRegionParam._ReactionAdjustRateMgc[0].m_value,interRegionParam._ReactionAdjustRateMgc[1].m_value,interRegionParam._ReactionAdjustRateMgc[2].m_value,
+                                            interRegionParam._ReactionAdjustRateMgc[3].m_value,interRegionParam._ReactionAdjustRateMgc[4].m_value
+                                            )
+                                end
+
+                            end
+                        end
                     end
                     msg=msg..partMsg.."\n"
                 end
