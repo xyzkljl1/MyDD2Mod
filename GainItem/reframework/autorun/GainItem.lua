@@ -7,7 +7,11 @@ local onClickFunc=nil
 local _config={
     {name="item",type="item",default=1},
     {name="count",type="int",default=1,min=1,max=99},
-    {name="Get",type="button",onClick=function() onClickFunc() end},
+    {name="SendToPlayer",type="button",onClick=function() onClickFunc("Player") end},{name="",type="sameline"},
+    {name="SendToStorage",type="button",onClick=function() onClickFunc("Storage") end},
+    {name="SendToPawn1",type="button",onClick=function() onClickFunc("Pawn",0) end},{name="",type="sameline"},
+    {name="SendToPawn2",type="button",onClick=function() onClickFunc("Pawn",1) end},{name="",type="sameline"},
+    {name="SendToPawn3",type="button",onClick=function() onClickFunc("Pawn",2) end},
 }
 
 local myapi = require("_XYZApi/_XYZApi")
@@ -18,65 +22,91 @@ local function Log(msg)
     log.info(modname..msg)
 end
 
+local Gold=93 -- item 1G
+local function OnChanged()
+    if config.item==Gold then 
+        _config[2].max=999999
+    else 
+        _config[2].max=99
+    end
+end
+
 --Should Add this to api
 local inited=false
 local font=nil
 local function Init()
     if font==nil then
         --reload font everytime,in case the font is not right on first init
-        font =myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
+        font = myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
     end
     if not inited then
-        myapi.DrawIt(modname,configfile,_config,config,nil,true,function() return font end)
+        myapi.DrawIt(modname,configfile,_config,config,OnChanged,true,function() return font end)
         inited=true
     end
 end
-sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),nil,Init)
-sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
-Init()
 
+--delay init
+local initFrameCt=0
+re.on_frame(function()
+    if initFrameCt<300 then
+        initFrameCt=initFrameCt+1
+        if initFrameCt==300 then
+            Log("Delay Init")
+            Init()
+            sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),nil,Init)
+            sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
+        end
+    end
+end)
 local Wakestone=77
 local WakestoneShards=78
 
-local tmpep=sdk.create_instance("app.ItemDefine.EnhanceParam"):add_ref()
-local function AddItem()
-
+local function AddItem(dest,index)
     local im=sdk.get_managed_singleton("app.ItemManager")
     local player_man=sdk.get_managed_singleton("app.CharacterManager")
     local player=player_man:get_ManualPlayer()
-    if im==nil or player_man==nil or player==nil then return end
+    if im==nil or player==nil then return end
 
     --Gather TreasureBox Talk DeadEnemy
     local type=sdk.find_type_definition("app.ItemManager.GetItemEventType"):get_field("TreasureBox"):get_data()
-    local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.Character, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean, System.Boolean)")
-    --local getItemMethod2=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.ItemDefine.EnhanceParam, app.CharacterID, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType, System.Boolean)")
+    local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.CharacterID, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType)")
 
+    local storageid=player:get_CharaID()
+    if dest=="Pawn" then
+        local pawns=sdk.get_managed_singleton("app.PawnManager"):get_PartyPawnList()
+        if pawns:get_Count()<=index then return end
+        local pawnchara=pawns[index]:get_CachedCharacter()    
+        if pawnchara==nil then return end
+        storageid=pawnchara:get_CharaID()
+    elseif dest=="Storage" then
+        storageid=65535
+    end
+    Log("Get Item")
     --wakestone shards->wakestone causes crash.Can't  fix it.
     -- so just remove shards and give wakestone
     if config.item == WakestoneShards then
         --for funcs has overload ,must use get_method
-        local getNumMethod=im:get_type_definition():get_method("getHaveNum(System.Int32, app.Character)")
-        local deleteMethod=im:get_type_definition():get_method("deleteItem(System.Int32, System.Int32, app.Character)")
-        local ct=getNumMethod:call(im,WakestoneShards,player)
+        local getNumMethod=im:get_type_definition():get_method("getHaveNum(System.Int32, app.CharacterID)")
+        local deleteMethod=im:get_type_definition():get_method("deleteItem(System.Int32, System.Int32, app.CharacterID)")
+        local ct=getNumMethod:call(im,WakestoneShards,storageid)
         local total_ct=math.floor(config.count)+ct
         local stone_ct=math.floor(total_ct/3)
         local left_ct=total_ct-stone_ct*3
 
         if left_ct >ct then
             Log("Add Shards "..tostring(left_ct-ct))
-            getItemMethod:call(im,WakestoneShards,left_ct-ct,player,true,false,false,1,false,false)
+            getItemMethod:call(im,WakestoneShards,left_ct-ct,storageid,true,false,false,1)
         elseif left_ct<ct then
             Log("Reduce Shards "..tostring(ct-left_ct))
-            deleteMethod:call(im,WakestoneShards,ct-left_ct,player)
+            deleteMethod:call(im,WakestoneShards,ct-left_ct,storageid)
         end
         if stone_ct>0 then
-            getItemMethod:call(im,Wakestone,stone_ct,player,true,false,false,1,false,false)           
+            getItemMethod:call(im,Wakestone,stone_ct,storageid,true,false,false,1)        
         end
         Log("Modify WakeStoneShards "..ct.."/"..total_ct.."/"..left_ct)
     else
-        getItemMethod:call(im,math.floor(config.item),math.floor(config.count),player,true,false,false,1,false,false)
-        --getItemMethod2:call(im,math.floor(config.item),math.floor(config.count),tmpep,65535,true,false,false,1,false)
-    end
+        getItemMethod:call(im,math.floor(config.item),math.floor(config.count),storageid,true,false,false,1)
+    end        
 end
 
 onClickFunc=AddItem
