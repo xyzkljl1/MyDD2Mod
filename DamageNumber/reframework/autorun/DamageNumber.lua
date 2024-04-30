@@ -635,19 +635,35 @@ re.on_frame(function()
                 --PerChar.Threshold always 100?
                 local param=regionStatus["DamageReactionThreshold"].PerChar
 
-                local maxLean=0
+                                local maxLean=0
                 local maxBlow=0
+                local maxLeanLv=0
+                local maxBlownLv=0
+                local leanLv=regionStatus["<ReactionLeanLevel>k__BackingField"]
+                local blownLv=regionStatus["<ReactionBlownLevel>k__BackingField"]
                 --max Lean/Blow can have several level,seems only the last have effect?
+                if param.Lean ~=nil and param.Lean:get_Count()>leanLv and leanLv>=0 then
+                    maxLean=param.Lean[leanLv].m_value
+                end
                 if param.Lean ~=nil and param.Lean:get_Count()>0 then
-                    maxLean=param.Lean[param.Lean:get_Count()-1].m_value
+                    maxLeanLv=param.Lean:get_Count()-1
+                end
+
+                if param.Blown ~=nil and param.Blown:get_Count()>blownLv and blownLv>=0 then
+                    maxBlow=param.Blown[blownLv].m_value
                 end
                 if param.Blown ~=nil and param.Blown:get_Count()>0 then
-                    maxBlow=param.Blown[param.Blown:get_Count()-1].m_value
+                    maxBlownLv=param.Blown:get_Count()-1
                 end
 
                 if regionStatus.IsRegionReaction then
-                    partMsg=partMsg..string.format("Lean- %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
-                    partMsg=partMsg..string.format("Blow- %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                    if maxLeanLv>0 or maxBlownLv>0 then
+                        partMsg=partMsg..string.format("Lean(Lv%d/%d)- %s/%s ",leanLv,maxLeanLv,f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
+                        partMsg=partMsg..string.format("Blow(Lv%d/%d)- %s/%s ",blownLv,maxBlownLv,f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                    else
+                        partMsg=partMsg..string.format("Lean- %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
+                        partMsg=partMsg..string.format("Blow- %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                    end
                 end
 
                 msg=msg..partMsg.."\n"
