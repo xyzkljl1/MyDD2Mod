@@ -394,7 +394,7 @@ end
 local ElementTypeEnum2Str,_=Enum2Map("app.AttackUserData.ElementType")
 local StatusConditionEnum2Str,_=Enum2Map("app.StatusConditionDef.StatusConditionEnum")
 local RegionTypeEnum2Str,_=Enum2Map("app.IntermediateRegionParam.RegionTypeEnum",0)
-
+local DamageTypeEnum2Str,_=Enum2Map("app.AttackUserData.DamageTypeEnum",0)
 
 local WeakpointEnum2Str=GetWeakpointEnumMap()
 
@@ -579,6 +579,15 @@ re.on_frame(function()
                         else
                             partMsg=partMsg..string.format("Lean- %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
                             partMsg=partMsg..string.format("Blow- %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                        end
+                    end
+
+                    local continuousReactionCtrl=lastEnemyHitController["<ContinuousReactionCtrl>k__BackingField"]
+                    if continuousReactionCtrl~=nil then
+                        local prev=continuousReactionCtrl["<ContinuousReactionDmgType>k__BackingField"]
+                        if DamageTypeEnum2Str[prev]~=nil then
+                            local next=lastEnemyHitController["<CommonHitParamProp>k__BackingField"].ContinuousReactionParam:getNextStageDmgType(prev)
+                            partMsg=partMsg..string.format("\nContinuousReaction:%s->%s\n",DamageTypeEnum2Str[prev],DamageTypeEnum2Str[next],continuousReactionCtrl["<ReReactionLv>k__BackingField"])
                         end
                     end
 
