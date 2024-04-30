@@ -481,7 +481,7 @@ re.on_frame(function()
             --CharaName HP
             local charaName=lastEnemyCharacter:get_CharaIDString()
             local charaName= charaID2EnemyName[charaName] or charaName
-            local hp=lastEnemyCharacter:get_Hp()        
+            local hp=lastEnemyCharacter:get_Hp()
             msg=msg..charaName..string.format("    %s/%s\n",f2s(lastEnemyCharacter:get_Hp()),f2s(lastEnemyCharacter:get_ReducedMaxHp()))
             --Weakpoint
             if config.showWeakpoint then
@@ -554,17 +554,32 @@ re.on_frame(function()
 
                     local maxLean=0
                     local maxBlow=0
-                    --max Lean/Blow can have several level,seems only the last have effect?
-                    if param.Lean ~=nil and param.Lean:get_Count()>0 then
-                        maxLean=param.Lean[param.Lean:get_Count()-1].m_value
+                    local maxLeanLv=0
+                    local maxBlownLv=0
+                    local leanLv=regionStatus["<ReactionLeanLevel>k__BackingField"]
+                    local blownLv=regionStatus["<ReactionBlownLevel>k__BackingField"]
+                    if param.Lean ~=nil and param.Lean:get_Count()>leanLv and leanLv>=0 then
+                        maxLean=param.Lean[leanLv].m_value
                     end
-                    if param.Blown ~=nil and param.Blown:get_Count()>0 then
-                        maxBlow=param.Blown[param.Blown:get_Count()-1].m_value
+                    if param.Lean ~=nil and param.Lean:get_Count()>0 then
+                        maxLeanLv=param.Lean:get_Count()-1
                     end
 
-                    if regionStatus.IsRegionReaction or true then
-                        partMsg=partMsg..string.format("Lean: %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
-                        partMsg=partMsg..string.format("Blow: %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                    if param.Blown ~=nil and param.Blown:get_Count()>blownLv and blownLv>=0 then
+                        maxBlow=param.Blown[blownLv].m_value
+                    end
+                    if param.Blown ~=nil and param.Blown:get_Count()>0 then
+                        maxBlownLv=param.Blown:get_Count()-1
+                    end
+
+                    if regionStatus.IsRegionReaction then
+                        if maxLeanLv>0 or maxBlownLv>0 then
+                            partMsg=partMsg..string.format("Lean(Lv%d/%d)- %s/%s ",leanLv,maxLeanLv,f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
+                            partMsg=partMsg..string.format("Blow(Lv%d/%d)- %s/%s ",blownLv,maxBlownLv,f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                        else
+                            partMsg=partMsg..string.format("Lean- %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
+                            partMsg=partMsg..string.format("Blow- %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                        end
                     end
 
                     if regionStatusCtrl~=nil then

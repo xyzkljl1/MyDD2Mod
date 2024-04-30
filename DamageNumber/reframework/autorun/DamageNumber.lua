@@ -514,7 +514,7 @@ local function onDamageReactionTriggered(args,msg)
     if not config.showDamageReaction then return end
     local damageInfo=this["<DamageInfo>k__BackingField"]
     if damageInfo.DamageType>0 then
-        local hitDamageType=DamageTypeEnum2Str[damageInfo.DamageType]
+        local hitDamageType=DamageTypeEnum2Str[damageInfo.DamageActType]
         hitDamageType=string.gsub(hitDamageType,"Hitback_","")
         hitDamageType=string.gsub(hitDamageType,"Blown_","")
         --hitDamageType=string.gsub(hitDamageType,"Hitdown","")
