@@ -13,6 +13,9 @@ using BinEditor;
 using System.Text;
 using Microsoft.VisualBasic;
 using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
+using System.Configuration;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 if (false)
 {
@@ -433,7 +436,111 @@ if(false)
 
 userdata.LoadTypeDefine();
 
+//ghidra decompiler
+if (false)
+{
+    var TypeDefineFuncAddressName2FuncName = new Dictionary<string, string>();
+    {
+        var lines = File.ReadAllLines("H:\\SteamLibrary\\steamapps\\common\\Dragons Dogma 2\\dump.idc");
+        foreach (var line in lines)
+            if (line.Contains("MakeNameEx"))
+            {
+                var tmp = line.Substring(line.IndexOf('(') + 1);
+                var address = tmp.Substring(0, tmp.IndexOf(",")).Replace("0x", "");
+                tmp = tmp.Substring(tmp.IndexOf("\"") + 1);
+                var name = tmp.Substring(0, tmp.IndexOf("\""));
+                TypeDefineFuncAddressName2FuncName[$"FUN_{address.ToLower()}"] = name;
+            }
+    }
+    { 
+        var lines = File.ReadAllLines("E:\\OtherGame\\DragonDogma2\\reverse\\1.c");
+        Regex rg = new Regex("FUN_[0-9a-f]+");
+        int ct = 0;
+        for (int i = 0; i < lines.Length; ++i)
+        {
+            var line = lines[i];
+            var matches = rg.Matches(line);
+            foreach (Match match in matches)
+                if (TypeDefineFuncAddressName2FuncName.ContainsKey(match.Value))
+                {
+                    lines[i] = line.Remove(match.Index, match.Length).Insert(match.Index, TypeDefineFuncAddressName2FuncName[match.Value]);
+                }
+            ct++;
+            if(ct%100==0)
+                Console.WriteLine($"{ct}_{lines.Length}");
+        }
+        File.WriteAllLines("E:\\OtherGame\\DragonDogma2\\reverse\\replaced.c", lines);
+    }
+}
+if(false)
+{
+    var lines=File.ReadAllLines("E:\\OtherGame\\DragonDogma2\\reverse\\replaced.c");
+    int last_line = 0;
+    int file_ct = 1;
+    for (int i = 0; i < lines.Length; ++i)
+    {
+        var line = lines[i];
+        if(line.StartsWith("void"))
+        {
+            if(i-last_line>=3000)
+            {
+                File.WriteAllLines($"E:\\OtherGame\\DragonDogma2\\reverse\\split\\{file_ct}.c", lines[last_line..i]);
+                file_ct++;
+                last_line = i;
+            }
+        }
+    }
+    if (lines.Length-last_line>0)
+    {
+        File.WriteAllLines($"E:\\OtherGame\\DragonDogma2\\reverse\\split\\{file_ct}.c", lines[last_line..lines.Length]);
+    }
+}
+if(true)
+{
+    var map=new Dictionary<string, string>();
+    {
+        var lines = File.ReadAllLines("H:\\SteamLibrary\\steamapps\\common\\Dragons Dogma 2\\address.list");
+        foreach (var line in lines)
+        {
+            var eles=line.Split(' ');
+            if (eles.Length==3)
+            {
+                var classname = eles[0];
+                if(classname.StartsWith("app") || classname.StartsWith("via"))
+                {
+                    while (classname.Contains("."))
+                        classname = classname.Substring(classname.IndexOf(".")+1);
+                    var valuename = eles[1].Replace("<", "_").Replace(">", "_");
+                    var address = eles[2];
+                    map[$"{classname} + {address}"] = $"{classname}.{valuename}";
+
+                }
+            }
+        }
+    }
+    {
+        var filename = "E:\\OtherGame\\DragonDogma2\\reverse\\manual\\callbackDamageReaction.cs";
+        var lines = File.ReadAllLines(filename);
+        Regex regex = new Regex("\\*\\((ulonglong|longlong|undefined[0-9]+)\\*\\)\\(([a-zA-Z]+ \\+ 0x[0-9a-f]+)\\)");
+        for (int i = 0; i < lines.Length; ++i)
+        {
+            var line = lines[i];
+            foreach (Match match in regex.Matches(line))
+            {
+                var v = match.Groups[2].Value;
+                if (map.ContainsKey(v))
+                {
+                    lines[i] = line.Replace(match.Value, map[v]);
+                }
+            }
+        }
+        File.WriteAllLines(filename,lines);
+
+    }
+}
+
 //ActionRate
+if (false)
 {
     //    var y=IsInitialized();
     var jsonDoc = new Dictionary<string,object>();

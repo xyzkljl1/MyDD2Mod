@@ -278,7 +278,7 @@ namespace BinEditor
 
                     foreach (var i in v)
                     {
-                        tmp = BitConverter.GetBytes(i);
+                        tmp = BitConverter.GetBytes((short)i);
                         System.Array.Copy(tmp, 0x0, bytes, offset, 0x1);
                         offset += 0x1;
                     }
@@ -454,7 +454,7 @@ namespace BinEditor
 
                     foreach (var i in v)
                     {
-                        tmp = BitConverter.GetBytes(i);
+                        tmp = BitConverter.GetBytes((short)i);
                         System.Array.Copy(tmp, 0x0, bytes, offset, 0x1);
                         offset += 0x1;
                     }

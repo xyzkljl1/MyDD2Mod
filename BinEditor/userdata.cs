@@ -66,6 +66,7 @@ namespace BinEditor
 
         static Dictionary<string, TypeDefine> TypeDefineMap = new Dictionary<string, TypeDefine>();
         static Dictionary<int, TypeDefine> TypeDefineEnumMap = new Dictionary<int, TypeDefine>();
+
         public static void LoadTypeDefine()
         {
             var text = File.ReadAllText("E:\\OtherGame\\DragonDogma2\\RE_RSZ\\rszdd2.json");
@@ -75,7 +76,6 @@ namespace BinEditor
                 var name= pair.Value["name"]!.ToString();
                 if (name == "") continue;
                 var typeDefine=new TypeDefine();
-                var x = pair.Value["crc"]!.ToString();
                 typeDefine.CRC = (int)new System.ComponentModel.Int32Converter().ConvertFromString("0x"+pair.Value["crc"]!.ToString())!;
                 typeDefine.TypeEnum = (int)new System.ComponentModel.Int32Converter().ConvertFromString("0x" + pair.Name!.ToString())!;
                 typeDefine.Name = pair.Value["name"]!.ToString();
