@@ -497,43 +497,85 @@ if(false)
 }
 if(true)
 {
-    var map=new Dictionary<string, string>();
+    var map = new Dictionary<string, Dictionary<string, string>>();
+    var short2fullname = new Dictionary<string, string>();
+    var class2parent=new Dictionary<string, string>();
     {
         var lines = File.ReadAllLines("H:\\SteamLibrary\\steamapps\\common\\Dragons Dogma 2\\address.list");
         foreach (var line in lines)
         {
             var eles=line.Split(' ');
-            if (eles.Length==3)
+            if (eles.Length==5)
             {
                 var classname = eles[0];
                 if(classname.StartsWith("app") || classname.StartsWith("via"))
                 {
-                    while (classname.Contains("."))
-                        classname = classname.Substring(classname.IndexOf(".")+1);
+                    {
+                        var shortname = classname;
+                        while (shortname.Contains("."))
+                            shortname = shortname.Substring(shortname.IndexOf(".") + 1);
+                        if (!short2fullname.ContainsKey(classname))
+                            short2fullname[shortname] = classname;
+                        else
+                            short2fullname[classname] = "_Dup";
+                    }
+
                     var valuename = eles[1].Replace("<", "_").Replace(">", "_");
                     var address = eles[2];
-                    map[$"{classname} + {address}"] = $"{classname}.{valuename}";
-
+                    var valuetype = eles[3];
+                    var parent = eles[4];
+                    if (!map.ContainsKey(classname))
+                        map[classname] = new Dictionary<string, string>();
+                    map[classname][address]=valuename;
+                    map[classname][valuename] = valuetype;
+                    class2parent[classname] = parent;
                 }
             }
         }
     }
     {
-        var filename = "E:\\OtherGame\\DragonDogma2\\reverse\\manual\\callbackDamageReaction.cs";
+        var filename = "E:\\OtherGame\\DragonDogma2\\reverse\\manual\\getReactionDamageType.cs";
         var lines = File.ReadAllLines(filename);
-        Regex regex = new Regex("\\*\\((ulonglong|longlong|undefined[0-9]+)\\*\\)\\(([a-zA-Z]+ \\+ 0x[0-9a-f]+)\\)");
-        for (int i = 0; i < lines.Length; ++i)
-        {
-            var line = lines[i];
-            foreach (Match match in regex.Matches(line))
+        Regex regex = new Regex("\\*\\((uint|byte|char|int|ulonglong|longlong|undefined[0-9]+)\\*\\)\\(([a-zA-Z_\\.]+)[ ]*\\+[ ]*(0x[0-9a-f]+)\\)");
+        for(int j=0;j<4 ;j++)
+            for (int i = 0; i < lines.Length; ++i)
             {
-                var v = match.Groups[2].Value;
-                if (map.ContainsKey(v))
+                var line = lines[i];
+                foreach (Match match in regex.Matches(line))
                 {
-                    lines[i] = line.Replace(match.Value, map[v]);
+                    var varname = match.Groups[2].Value.Split(".");
+                    var address = match.Groups[3].Value;
+                    if (!short2fullname.ContainsKey(varname[0])) break;
+                    var classname = short2fullname[varname[0]];
+                    foreach(var middlename in varname[1..])
+                    {
+                        if (!map.ContainsKey(classname)) break;
+                        if (!map[classname].ContainsKey(middlename))
+                        {
+                            var parent = classname;
+                            while (class2parent.ContainsKey(parent)&& !map[parent].ContainsKey(middlename))
+                                parent = class2parent[parent];
+                            if (map.ContainsKey(parent) && map[parent].ContainsKey(middlename))
+                                classname = map[parent][middlename];
+                            else
+                                classname = "..";
+                        }
+                        else
+                            classname = map[classname][middlename];
+                    }
+                    if (!map.ContainsKey(classname)) break;
+                    while (!map[classname].ContainsKey(address))
+                    {
+                        var parent = class2parent[classname];
+                        classname= parent;
+                        if (!map.ContainsKey(parent)) break;
+                    }
+                    if (!map.ContainsKey(classname)) break;
+
+                    var dest = $"{match.Groups[2].Value}.{map[classname][address]}";
+                    lines[i] = line.Replace(match.Value,dest);
                 }
             }
-        }
         File.WriteAllLines(filename,lines);
 
     }
