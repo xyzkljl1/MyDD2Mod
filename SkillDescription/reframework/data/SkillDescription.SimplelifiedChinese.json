@@ -424,7 +424,7 @@
     "83": {
       "name": "Job08_FrostBlock",
       "hintJP": "氷塊魔槍",
-      "format": "x{CS_氷塊}\n基于蓄力时间获得最多+11.5伤害倍率"
+      "format": "x{CS_氷塊},基于消耗耐力百分比获得至多+11.5伤害倍率\n50%/70%/95%时获得+3.5/6.0/11.5倍率"
     },
   "84": {
     "name": "Job08_ThunderChain",
@@ -459,7 +459,7 @@
     "90": {
       "name": "Job08_SeriesArrow",
       "hintJP": "無尽魔矢",
-      "format": "x{無尽魔矢} per Hit"
+      "format": "x{無尽魔矢} per Hit, 根据锁定数获得+1.0~10.0伤害倍率\n倍率=f(锁定数i)=0.0022634*i*i*i-0.0387458*i*i+0.3729923*i+0.0084169"
     },
     "91": {
       "name": "Job08_SpiritArrow",

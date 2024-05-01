@@ -427,7 +427,7 @@
     "83": {
       "name": "Job08_FrostBlock",
       "hintJP": "氷塊魔槍",
-      "format": "x{CS_氷塊}\nGain up to +11.5 Damage Rate when Charge"
+      "format": "x{CS_氷塊},Gain DamageRate based on consumed stamina percent.\nGain +3.5/6.0/11.5(Max) when 50%/70%/95% stamina consumed"
     },
   "84": {
     "name": "Job08_ThunderChain",
@@ -462,7 +462,7 @@
     "90": {
       "name": "Job08_SeriesArrow",
       "hintJP": "無尽魔矢",
-      "format": "x{無尽魔矢} per Hit"
+      "format": "x{無尽魔矢} per Hit,Gain +1.0~10.0 DamageRate based on lock-on count\nRate=f(i)=0.0022634*i*i*i-0.0387458*i*i+0.3729923*i+0.0084169"
     },
     "91": {
       "name": "Job08_SpiritArrow",
