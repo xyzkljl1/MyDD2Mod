@@ -36,6 +36,7 @@ local _config={
     {name="precisevalue",type="bool",default=false,label="Show Precise Value"},
     {name="showDamageAtkDefAbsorption",type="bool",default=false,label="Show Final Atk&Def&AbsorptionRate for player's attack"},
     {name="showDamageReactionLevel",type="bool",default=false,label="Show Damage Reaction Level"},
+    {name="showHitBodyPart",type="bool",default=false,label="Show Hit Body Part"},
 
     {name="Damage Filter",type="mutualbox"},
     {name="showenemydamage",type="bool",default=true,label="Show Damage Taken By Enemy"},{name="",type="sameline"},
@@ -180,33 +181,8 @@ for k,v in pairs(PhysicsAttrSettingType2Str) do
     if v=="Blow" then PhysicsAttrSettingType2Str[k]="Strike" end
 end
 
-local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
-    local msg=""
-    msg=f2s(damageInfo.Damage)
-
-    if config.showDamageComposition then
-        local _msg=""
-        if damageInfo.SlashDamage > 0 then _msg=_msg.." Slash:"..f2s(damageInfo.SlashDamage) end
-        if damageInfo.BlowDamage > 0 then _msg=_msg.." Strike:"..f2s(damageInfo.BlowDamage) end
-        if damageInfo.ShootDamage > 0 then _msg=_msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
-        if damageInfo.MagicDamage > 0 then _msg=_msg.." Magic:"..f2s(damageInfo.MagicDamage) end
-        if damageInfo.EnchantDamage > 0 then _msg=_msg.." Enchant:"..f2s(damageInfo.EnchantDamage).."*"..f2s2(damageInfo.EnchantRate) end
-        if damageInfo.NonMagicElementDamage > 0 then _msg=_msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage) end
-        if damageInfo.FixedDamage > 0 then _msg=_msg.." Fixed:"..f2s(damageInfo.FixedDamage) end
-        if _msg  ~=nil then
-            msg=msg.."/".._msg
-        end
-    end
-
-    if config.showActionRate and AttackUserData~=nil then
-        msg=string.format("%s [%s]",msg, f2s2(AttackUserData.ActionRate))
-    end
-
-    -- compare float to 1 seems to be okay?
-    if damageInfo.DamageRate ~=1 and config.showmultiplier==true then
-        msg=msg.." (x"..f2s2(damageInfo.DamageRate) ..")"
-    end
-
+local function Common2Message(character,damageInfo,AttackUserData,_msg)
+    local msg=_msg
     if config.showDamageType and AttackUserData~=nil then
         local typeMsg=""
         --print(isPlayerAttackHit,damageInfo.Damage,AttackUserData.DamageValue,AttackUserData.ActionAttackValue,AttackUserData.ActionRate,AttackUserData.AttackType)
@@ -238,6 +214,47 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         end
     end
 
+    if damageInfo.Damage > config.bigcap and config.showBigcapPostfix then
+        msg=msg.." ! "
+    end
+
+    if config.showHitBodyPart then
+        msg=msg.." BodyPart."..tostring(damageInfo.RegionNo)
+    end
+        
+    if config.showDamageReactionLevel then
+        msg=msg..string.format(" ReactionLv.%d ",damageInfo.DmgReactionLv)
+    end
+    return msg
+end
+
+local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
+    local msg=""
+    msg=f2s(damageInfo.Damage)
+
+    if config.showDamageComposition then
+        local _msg=""
+        if damageInfo.SlashDamage > 0 then _msg=_msg.." Slash:"..f2s(damageInfo.SlashDamage) end
+        if damageInfo.BlowDamage > 0 then _msg=_msg.." Strike:"..f2s(damageInfo.BlowDamage) end
+        if damageInfo.ShootDamage > 0 then _msg=_msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
+        if damageInfo.MagicDamage > 0 then _msg=_msg.." Magic:"..f2s(damageInfo.MagicDamage) end
+        if damageInfo.EnchantDamage > 0 then _msg=_msg.." Enchant:"..f2s(damageInfo.EnchantDamage).."*"..f2s2(damageInfo.EnchantRate) end
+        if damageInfo.NonMagicElementDamage > 0 then _msg=_msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage) end
+        if damageInfo.FixedDamage > 0 then _msg=_msg.." Fixed:"..f2s(damageInfo.FixedDamage) end
+        if _msg  ~=nil then
+            msg=msg.."/".._msg
+        end
+    end
+
+    if config.showActionRate and AttackUserData~=nil then
+        msg=string.format("%s [%s]",msg, f2s2(AttackUserData.ActionRate))
+    end
+
+    -- compare float to 1 seems to be okay?
+    if damageInfo.DamageRate ~=1 and config.showmultiplier==true then
+        msg=msg.." (x"..f2s2(damageInfo.DamageRate) ..")"
+    end
+
     if config.showDamageAtkDefAbsorption and isPlayerAttackHit then
         local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
         if damageTmpInfo~=nil then
@@ -249,9 +266,7 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         end
     end
 
-    if damageInfo.Damage > config.bigcap and config.showBigcapPostfix then
-        msg=msg.." ! "
-    end
+    msg=Common2Message(character,damageInfo,AttackUserData,msg)
 
     if config.showlefthp and character:get_Hp() > 0 then
         msg=msg.." -> "..f2s(character:get_Hp()-damageInfo.Damage)
@@ -259,19 +274,28 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
     return msg
 end
 
-local function KnockdownNumber2Message(character,damageInfo,AttackUserData)
-    local msg=""
+local function KnockdownNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
+    local msg=""--string.format("(%s/%s/%s)",f2s2(damageInfo.DamageReactionSubBelowThresholdRate),f2s2(damageInfo.DamageReaction),f2s2(AttackUserData.DmgReactionValue))
     local ldamage=damageInfo:get_LeanReaction()
     local bdamage=damageInfo:get_BlownReaction()
+    --damage reaction*lean/blownrate is added to enemy in updateDamageReaction,but getReactionDamageType subs the damagereaction*lean/blownrate*DamageReactionSubBelowThresholdRate if this attack doesn't reach knockdown threshold after that.
+    --OverThresholdType is set inside getReactionDamageType too
+    local postrate=1
+    local overthreshold=(damageInfo.OverThresholdType>0)
+    if not overthreshold then
+        postrate=1-damageInfo.DamageReactionSubBelowThresholdRate
+        ldamage=ldamage*postrate
+        bdamage=bdamage*postrate
+    end
 
     if ldamage<=config.ignorecap and bdamage<= config.ignorecap then
         return nil
     end
 
     if ldamage~=bdamage then
-        msg=string.format("$L%s/B%s",f2s(ldamage),f2s(bdamage))
+        msg=msg..string.format("$L%s/B%s",f2s(ldamage),f2s(bdamage))
     else
-        msg=string.format("$%s",f2s(ldamage))        
+        msg=msg..string.format("$%s",f2s(ldamage))
     end
 
     if config.showActionRate and AttackUserData~=nil then
@@ -279,16 +303,29 @@ local function KnockdownNumber2Message(character,damageInfo,AttackUserData)
     end
 
     -- compare float to 1 seems to be okay?
-    if (damageInfo.LeanReactionRate ~=1 or damageInfo.BlownReactionRate~=1) and config.showmultiplier==true then
+    if (damageInfo.LeanReactionRate ~=1 or damageInfo.BlownReactionRate~=1 or postrate~=1) and config.showmultiplier==true then
         if damageInfo.LeanReactionRate==damageInfo.BlownReactionRate then
-            msg=msg.." (x"..f2s2(damageInfo.LeanReactionRate) ..")"
+            msg=msg..string.format(" (x%s)",f2s2(damageInfo.LeanReactionRate))
         else
-            msg=msg.." (Lx"..f2s2(damageInfo.LeanReactionRate) .."/Bx"..f2s2(damageInfo.BlownReactionRate)..")"
+            msg=msg..string.format(" (Lx%s/Bx%s)",f2s2(damageInfo.LeanReactionRate),f2s2(damageInfo.BlownReactionRate))
+        end
+        if postrate~=1 then
+            msg=msg..string.format(" (ut/x%s)",f2s2(postrate))
         end
     end
-    if damageInfo.Damage > config.bigcap and config.showBigcapPostfix then
-        msg=msg.." ! "
+
+    if config.showDamageAtkDefAbsorption and isPlayerAttackHit and mainplayer~=nil then
+        local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
+        if damageTmpInfo~=nil and damageTmpInfo["Knockdown_Msg"]~=nil then
+            local tmpMsg=damageTmpInfo["Knockdown_Msg"]
+            if postrate~=1 then
+                tmpMsg=tmpMsg.."xBelowThreshold"..f2s2(postrate)
+            end
+            msg=string.format("%s <Knockdown=%s>",msg,tmpMsg)
+        end
     end
+    
+    msg=Common2Message(character,damageInfo,AttackUserData,msg)
     return msg
 end
 
@@ -363,7 +400,7 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
             damageNumber.msg=DamageNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
         end
         if config.showKnockdownDamage then
-            damageNumber.msg2=KnockdownNumber2Message(character,damageInfo,AttackUserData)
+            damageNumber.msg2=KnockdownNumber2Message(character,damageInfo,AttackUserData,isPlayerAttackHit)
         end
     else    --damage reaction Type
         damageNumber.msg=reactionMsg
@@ -412,20 +449,14 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
     return damageNumber
 end
 
-local function AddDamageNumberAfter(damageNumber,damageInfo)
+local function AddDamageNumberPost(damageNumber,damageInfo)
     if damageNumber ==nil or damageInfo==nil then return end
-    
-    if config.showDamageReactionLevel then
-        damageNumber.msg=damageNumber.msg..string.format(" ReactionLv.%d ",damageInfo.DmgReactionLv)
-    end
-
     if damageNumber.msg~=nil then
         Log("Add Damage Number "..tostring(damageNumber.finalDamage).."in("..f2s2(damageNumber.pos.x)..","..f2s2(damageNumber.pos.y)..","..f2s2(damageNumber.pos.z).."): ".. damageNumber.msg)
     end
     if damageNumber.msg2~=nil then
         Log("Add Damage Number "..tostring(damageNumber.finalDamage).."in("..f2s2(damageNumber.pos2.x)..","..f2s2(damageNumber.pos2.y)..","..f2s2(damageNumber.pos2.z).."): ".. damageNumber.msg2)
     end
-
 end
 
 local function AddDamageTmpInfoBeforeCalcDef(damageInfo)
@@ -467,12 +498,87 @@ local function AddDamageTmpInfoAfterCalcAbsorption(damageInfo)
 end
 
 
+local function AddDamageTmpInfoAfterCalcReactionAttack(playerDamageCalculator,damageInfo)
+    if damageInfo==nil then return end
+    local address=damageInfo:get_address()
+    local damageTmpInfo=damageTmpInfos[address]
+    if damageTmpInfo==nil then return end
+
+    local LeftWeapon=sdk.find_type_definition("app.AttackUserData.AttackWeaponTypeEnum"):get_field("LeftWeapon"):get_data()
+    local msg=""
+    local shellGen=playerDamageCalculator.Human["<ShellInstantiateInfoGenerator>k__BackingField"]
+    local playerAttackParameter = nil
+    if shellGen ~=nil then
+        local humanShellInstantiateInfo =shellGen:getShellInfo(damageInfo)
+        playerAttackParameter=humanShellInstantiateInfo and humanShellInstantiateInfo["<AttackParam>k__BackingField"]
+    end
+    playerAttackParameter = playerAttackParameter or playerDamageCalculator.AttackParam
+
+    local playerAttackDefenceStatus =playerAttackParameter["<Status>k__BackingField"];
+
+    msg="Char"..f2s2(playerAttackDefenceStatus["<Blow>k__BackingField"])
+    if playerAttackParameter["<PossessionIncreaseStatus>k__BackingField"] ~= nil then
+        msg=msg.."+Possession"..f2s2(playerAttackParameter["<PossessionIncreaseStatus>k__BackingField"]._Blow/10.0)
+    end
+    if playerAttackDefenceStatus["<ArmorReactionAttack>k__BackingField"] ~=0 then
+        msg=msg.."+Armor"..f2s2(playerAttackDefenceStatus["<ArmorReactionAttack>k__BackingField"])
+    end
+
+    local attackUserData = damageInfo["<AttackUserData>k__BackingField"]
+    local weaponAttack=0
+    if attackUserData.AttackWeaponTypeAttackValue < LeftWeapon then
+        weaponAttack = playerAttackDefenceStatus["<RightWeaponReactionAttack>k__BackingField"];
+    elseif attackUserData.AttackWeaponTypeAttackValue == LeftWeapon then
+        weaponAttack = playerAttackDefenceStatus["<LeftWeaponReactionAttack>k__BackingField"];
+    end
+    if weaponAttack ~=0 then
+        msg=msg.."+Weapon"..f2s2(weaponAttack)
+    end
+    msg=string.format("(%s)",msg)
+    local changed=false
+    if playerAttackDefenceStatus["<BlowFactor>k__BackingField"]~=1 then
+        msg=msg.."xCharAtkMulti"..f2s2(playerAttackDefenceStatus["<BlowFactor>k__BackingField"])
+        changed=true
+    end
+    if attackUserData.ActionDmgReactionValue ~=0 then
+        msg=msg.."+ActFix"..f2s2(attackUserData.ActionDmgReactionValue)
+        changed=true
+    end
+    if changed then msg=string.format("(%s)",msg) end
+    changed=false
+
+    if attackUserData.DmgReactionRate~=1 then
+        msg=msg.."xActionRate"..f2s2(attackUserData.DmgReactionRate)        
+    end
+
+    if damageInfo.PhysicsCorrectionRateReaction~=1 then
+        msg=msg.."xPhy"..f2s2(damageInfo.PhysicsCorrectionRateReaction)        
+    end
+    if playerAttackDefenceStatus["<ReactionAttackMultipleFactor>k__BackingField"]~=1 then
+        msg=msg.."xCharMulti"..f2s2(playerAttackDefenceStatus["<ReactionAttackMultipleFactor>k__BackingField"])        
+    end
+    if playerAttackDefenceStatus["<ReactionAttackAddFactor>k__BackingField"]~=0 then
+        msg=msg.."+CharAdd"..f2s2(playerAttackDefenceStatus["<ReactionAttackAddFactor>k__BackingField"])        
+    end
+
+    damageTmpInfo["Knockdown_Msg"]=msg
+    damageTmpInfo["Knockdown_ATK"]=damageInfo.DamageReaction
+end
+
+local function AddDamageTmpInfoAfterCalcReaction(damageInfo)
+    if damageInfo==nil then return end
+    local address=damageInfo:get_address()
+    local damageTmpInfo=damageTmpInfos[address]
+    if damageTmpInfo==nil then return end
+    if damageTmpInfo["Knockdown_ATK"]==nil or damageTmpInfo["Knockdown_ATK"]==0 then return end
+    damageTmpInfo["Knockdown_Msg"]=string.format("(%s)xAbsorption%s",damageTmpInfo["Knockdown_Msg"],f2s2(damageInfo.DamageReaction/damageTmpInfo["Knockdown_ATK"]))
+end
+
 --app.Character:onCalcDamageEnd 
 --onDamageCalcEnd is shit,onDamageHit don't have damage number
 --sdk.find_type_definition("app.PlayerDamageCalculator"):get_method("damageCalcEnd(app.HitController.DamageInfo)"),
 local tmpUpdateDamageDamageInfo=nil
-local tmpUpdateDamageDamageNumber=nil
-
+local tmpUpdateDamageHitController=nil
 sdk.hook(
     --contains DOT
     sdk.find_type_definition("app.HitController"):get_method("updateDamage"),
@@ -480,10 +586,11 @@ sdk.hook(
         local this=sdk.to_managed_object(args[2])
         local damageInfo=sdk.to_managed_object(args[3])
         tmpUpdateDamageDamageInfo=damageInfo
-        tmpUpdateDamageDamageNumber=AddDamageNumber(this:get_CachedCharacter(),damageInfo)
+        tmpUpdateDamageHitController=this
     end,
     function()
-        AddDamageNumberAfter(tmpUpdateDamageDamageNumber,tmpUpdateDamageDamageInfo)        
+        local tmpUpdateDamageDamageNumber=AddDamageNumber(tmpUpdateDamageHitController:get_CachedCharacter(),tmpUpdateDamageDamageInfo)
+        AddDamageNumberPost(tmpUpdateDamageDamageNumber,tmpUpdateDamageDamageInfo)        
         tmpUpdateDamageDamageInfo=nil
         tmpUpdateDamageDamageNumber=nil
     end
@@ -495,37 +602,69 @@ local tmpDamageInfoArg=nil
 sdk.hook(
     sdk.find_type_definition("app.ExceptPlayerDamageCalculator"):get_method("calcDamageValueDefence(app.HitController.DamageInfo)"),
     function(args)
-        if config.showDamageAtkDefAbsorption then
+        if config.showDamageAtkDefAbsorption and config.showDamage then
             local damageInfo =sdk.to_managed_object(args[3])
             AddDamageTmpInfoBeforeCalcDef(damageInfo)
             tmpDamageInfoArg=damageInfo
         end
     end,
     function()
-        if config.showDamageAtkDefAbsorption then
+        if config.showDamageAtkDefAbsorption and config.showDamage then
             AddDamageTmpInfoAfterCalcDef(tmpDamageInfoArg)
         end
         tmpDamageInfoArg=nil
     end
 )
 
-local tmpDamageInfoArg=nil
+local tmpDamageInfoArg2=nil
+local tmpDamageInfoArg2this=nil
+sdk.hook(
+    sdk.find_type_definition("app.PlayerDamageCalculator"):get_method("calcDamageRactionValueAttack(app.HitController.DamageInfo)"),
+    function(args)
+        if config.showDamageAtkDefAbsorption and config.showKnockdownDamage then
+            tmpDamageInfoArg2=sdk.to_managed_object(args[3])
+            tmpDamageInfoArg2this=sdk.to_managed_object(args[2])
+        end
+    end,
+    function()
+        if config.showDamageAtkDefAbsorption and config.showKnockdownDamage and tmpDamageInfoArg2 ~=nil then
+            AddDamageTmpInfoAfterCalcReactionAttack(tmpDamageInfoArg2this,tmpDamageInfoArg2)
+        end
+        tmpDamageInfoArg2this=nil
+        tmpDamageInfoArg2=nil
+end)
+
+local tmpDamageInfoArg3=nil
 sdk.hook(
     sdk.find_type_definition("app.HitController"):get_method("calcRegionDamageRate(app.HitController.DamageInfo)"),
     function(args)
         if config.showDamageAtkDefAbsorption then
             local damageInfo =sdk.to_managed_object(args[3])
             AddDamageTmpInfoBeforeCalcAbsorption(damageInfo)
-            tmpDamageInfoArg=damageInfo
+            tmpDamageInfoArg3=damageInfo
         end
     end,
     function()
         if config.showDamageAtkDefAbsorption then
-            AddDamageTmpInfoAfterCalcAbsorption(tmpDamageInfoArg)
+            AddDamageTmpInfoAfterCalcAbsorption(tmpDamageInfoArg3)
         end
-        tmpDamageInfoArg=nil
+        tmpDamageInfoArg3=nil
     end
 )
+local tmpDamageInfoArg4=nil
+sdk.hook(sdk.find_type_definition("app.HitController"):get_method("calcDamageReaction"),
+    function(args)
+        if config.showDamageAtkDefAbsorption and config.showKnockdownDamage then
+            tmpDamageInfoArg4=sdk.to_managed_object(args[3])
+        end
+    end,
+    function ()
+        if config.showDamageAtkDefAbsorption and config.showKnockdownDamage and tmpDamageInfoArg4 ~=nil then
+            AddDamageTmpInfoAfterCalcReaction(tmpDamageInfoArg4)
+        end
+        tmpDamageInfoArg4=nil
+end)
+
 
 local function onDamageReactionTriggered(args,msg)
     local this=sdk.to_managed_object(args[2])
@@ -638,3 +777,4 @@ refreshplayer()
 --try load api and draw ui
 local myapi = prequire("_XYZApi/_XYZApi")
 if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,OnChanged) end
+
