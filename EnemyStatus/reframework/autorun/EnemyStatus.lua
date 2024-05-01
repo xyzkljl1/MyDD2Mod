@@ -495,12 +495,9 @@ re.on_frame(function()
             end
             local reactionTrack=lastEnemyCharacter["<ReactionSeqTrack>k__BackingField"]
             if reactionTrack~=nil then
-                msg=msg.."      Damage/Knockdown Rate multipilir of current action: x"..reactionTrack.ReductionDamage.."/"..reactionTrack.ReductionReaction
-                if reactionTrack["<ActiveTrackFlags>k__BackingField"]>0 then
-                    msg=msg.."("..SubtracksEnum2Str[reactionTrack["<ActiveTrackFlags>k__BackingField"]]..")"
-                end
+                msg=msg..string.format("      Damage/Knockdown Rate multipilir of current action: x%.2f/%.2f",reactionTrack.ReductionDamage,reactionTrack.ReductionReaction)
             end
-            msg=msg.."\n      DamageRate when can't move: +"..lastEnemyCharacter["<DamageFactorOnEnableFinishingMove>k__BackingField"]
+            msg=msg..string.format("\n      DamageRate when can't move: +%.2f",lastEnemyCharacter["<DamageFactorOnEnableFinishingMove>k__BackingField"]-1)
             --lastEnemyCharacter["<DamageFactorOnEnableFinishingMove>k__BackingField"]=3.0
 
             --ATK/DEF
