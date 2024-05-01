@@ -20,7 +20,6 @@ local _config={
     {name="Mode",type="mutualbox"},
     {name="showDamage",type="bool",default=true,label="Show Damage"},
     {name="showKnockdownDamage",type="bool",default=false,label="Show Knockdown Damage!"},
-    {name="showMeter",type="bool",default=true,label="Show BodyPart & Knockdown Meter"},
     {name="showDamageReaction",type="bool",default=true,label="Show Shrink/Blown,etc"},
 
     {name="Form",type="mutualbox"},
@@ -44,15 +43,13 @@ local _config={
     {name="shownonplayerdealandtakendamage",type="bool",default=true,label="Show Non Player Damage"},{name="",type="sameline"},
     {name="showNonBossEnemyTakenDamage",type="bool",default=true,label="Show Damage Taken By Non-Boss Enemy"},
     {name="showDOT",type="bool",default=true,label="Show Dot&Fall Damage"},
-    {name="showOnlyBossOnMeter",type="bool",default=true},
-
+    
     {name="bigcap",type="int",default=1200,min=0,max=1000000,label="Big Cap",widthscale=0.4},
     {name="",type="sameline"},
     {name="ignorecap",type="int",default=-1,min=-1,max=1000000,label="Ignore Cap",widthscale=0.4},
 
     {name="Other",type="mutualbox"},
     {name="showBattleLogOnScreen",type="bool",default=false,label="Show BattleLogOnScreen"},
-    {name="MeterPos",type="intN",default={20,200},min=-300,max=8000},
 }
 
 --merge config file to default config
@@ -91,8 +88,6 @@ local damageFieldsInDamageInfo={
     ["NonMagicElement"]="NonMagicElementDamage"
 }
 
-local lastEnemyHitController=nil
-local lastEnemyGO=nil
 local guiManager=sdk.get_managed_singleton("app.GuiManager")
 
 local colorDelta=math.floor(0xff000000/(config.time-1))&0xff000000
@@ -336,12 +331,6 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
     local isPlayerTakenHit = (mainplayer == character)
     local isBossTakenHit=character:get_IsBoss()
     local isEnemy=character:get_EnemyController():get_IsHostileArisen()
-
-    --Record enemy,before ignorecap
-    if isEnemy and (isBossTakenHit or not config.showOnlyBossOnMeter)then
-        lastEnemyGO=character:get_GameObject()
-        lastEnemyHitController=character:get_Hit()
-    end
 
     local ofx=(math.random(7)-4)*config.rndoffset
     local ofy=(math.random(7)-4)*config.rndoffset
@@ -626,68 +615,6 @@ re.on_frame(function()
             battleLog.lines=0
         end
         imgui.pop_font(font)
-    end
-
-    --Draw meter
-    --Dont use get_IsNoDie
-    if config.showMeter and lastEnemyGO~=nil and lastEnemyGO:get_Valid()==true and lastEnemyGO:get_DrawSelf() 
-            and guiManager:get_IsLoadGui()==false and lastEnemyHitController:get_IsDie()==false then
-        --imgui.push_font(font)
-        local msg=""
-        local bodyparts=lastEnemyHitController.RegionData
-        if bodyparts~=nil then
-            local ct=bodyparts:get_Count()-1
-
-            --sdk.find_type_definition("app.GUIBase"):get_method("getName(app.CharacterID)"):call(nil, characterId)
-            --lastEnemyHitController:get_CachedCharacter():get_Name()
-            msg=msg..lastEnemyGO:get_Name().."\n"
-            for i=0,ct do
-                --region means body part
-                local regionStatus=bodyparts[i]
-                local partMsg="Part "..regionStatus["<RegionNo>k__BackingField"]..": "
-                partMsg=partMsg..string.format("HP-%s/%s ",f2s(regionStatus.Hp),f2s(regionStatus.MaxHp))
-
-                --PerChar.Threshold always 100?
-                local param=regionStatus["DamageReactionThreshold"].PerChar
-
-                local maxLean=0
-                local maxBlow=0
-                local maxLeanLv=0
-                local maxBlownLv=0
-                local leanLv=regionStatus["<ReactionLeanLevel>k__BackingField"]
-                local blownLv=regionStatus["<ReactionBlownLevel>k__BackingField"]
-                if param.Lean ~=nil and param.Lean:get_Count()>leanLv and leanLv>=0 then
-                    maxLean=param.Lean[leanLv].m_value
-                end
-                if param.Lean ~=nil and param.Lean:get_Count()>0 then
-                    maxLeanLv=param.Lean:get_Count()-1
-                end
-
-                if param.Blown ~=nil and param.Blown:get_Count()>blownLv and blownLv>=0 then
-                    maxBlow=param.Blown[blownLv].m_value
-                end
-                if param.Blown ~=nil and param.Blown:get_Count()>0 then
-                    maxBlownLv=param.Blown:get_Count()-1
-                end
-
-                if regionStatus.IsRegionReaction then
-                    if maxLeanLv>0 or maxBlownLv>0 then
-                        partMsg=partMsg..string.format("Lean(Lv%d/%d)- %s/%s ",leanLv,maxLeanLv,f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
-                        partMsg=partMsg..string.format("Blow(Lv%d/%d)- %s/%s ",blownLv,maxBlownLv,f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
-                    else
-                        partMsg=partMsg..string.format("Lean- %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
-                        partMsg=partMsg..string.format("Blow- %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
-                    end
-                end
-
-                msg=msg..partMsg.."\n"
-            end
-            local size=imgui.calc_text_size(msg)
-            draw.filled_rect(config.MeterPos[1]-5, config.MeterPos[2]-5, size.x +5,size.y+5, 0x77555555)
-            draw.text(msg,config.MeterPos[1],config.MeterPos[2],0xffffffff)
-            --print(lastEnemyGO:get_Valid(),lastEnemyGO:get_DrawSelf(),guiManager:get_IsLoadGui())
-        end
-        --imgui.pop_font()
     end
 end)
 
