@@ -493,9 +493,19 @@ re.on_frame(function()
                 end
                 --msg=msg..tostring(lastEnemyCalculator["<WeakPointSettings>k__BackingField"]).."/"..tostring(lastEnemyCalculator["<ResistSettings>k__BackingField"])
             end
+            local reactionTrack=lastEnemyCharacter["<ReactionSeqTrack>k__BackingField"]
+            if reactionTrack~=nil then
+                msg=msg.."      Damage/Knockdown Rate multipilir of current action: x"..reactionTrack.ReductionDamage.."/"..reactionTrack.ReductionReaction
+                if reactionTrack["<ActiveTrackFlags>k__BackingField"]>0 then
+                    msg=msg.."("..SubtracksEnum2Str[reactionTrack["<ActiveTrackFlags>k__BackingField"]]..")"
+                end
+            end
+            msg=msg.."\n      DamageRate when can't move: +"..lastEnemyCharacter["<DamageFactorOnEnableFinishingMove>k__BackingField"]
+            --lastEnemyCharacter["<DamageFactorOnEnableFinishingMove>k__BackingField"]=3.0
+
             --ATK/DEF
             if config.showATKDEF then
-                msg=msg..string.format("      ATK %s/%s DEF %s/%s\n",f2s(lastEnemyCalculator:get_Attack()),f2s(lastEnemyCalculator:get_MagicAttack()),
+                msg=msg..string.format("\n      ATK %s/%s DEF %s/%s\n",f2s(lastEnemyCalculator:get_Attack()),f2s(lastEnemyCalculator:get_MagicAttack()),
                                                             f2s(lastEnemyCalculator:get_Defence()),f2s(lastEnemyCalculator:get_MagicDefence()))
             end
             --enchant
@@ -654,7 +664,6 @@ re.on_frame(function()
                         msg=msg..string.format("\n\tContinuous Reaction(Overwrite Base Reaction Type):%s->%s",DamageTypeEnum2Str[prev],DamageTypeEnum2Str[next],continuousReactionCtrl["<ReReactionLv>k__BackingField"])
                     end
                 end
-
                 
                 local reactionData=lastEnemyCharacter.DmgReaction["<ComDmgReactionData>k__BackingField"]
                 if reactionData~=nil then
