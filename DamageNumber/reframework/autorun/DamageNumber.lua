@@ -36,6 +36,7 @@ local _config={
     {name="showBigcapPostfix",type="bool",default=true,label="Show ! after big number"},
     {name="precisevalue",type="bool",default=false,label="Show Precise Value"},
     {name="showDamageAtkDefAbsorption",type="bool",default=false,label="Show Final Atk&Def&AbsorptionRate for player's attack"},
+    {name="showDamageReactionLevel",type="bool",default=false,label="Show Damage Reaction Level"},
 
     {name="Damage Filter",type="mutualbox"},
     {name="showenemydamage",type="bool",default=true,label="Show Damage Taken By Enemy"},{name="",type="sameline"},
@@ -223,9 +224,19 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         if AttackUserData.PhysicsAttrSettingTypeValue > 0 then
             typeMsg=typeMsg.."/"..PhysicsAttrSettingType2Str[AttackUserData.PhysicsAttrSettingTypeValue]
         end
-        if AttackUserData.DamageType > 0 then
-            typeMsg=typeMsg.."/"..DamageTypeEnum2Str[AttackUserData.DamageType]
+        --DamageInfo.DamageActType is passed in CommonDamageReaction and modified by replaceDamageActType(),then decide the damage reaction
+        --so final DamageActType is more meaningful than DamageType/DamageTypeLean/DamageTypeBlown in damageinfo or attackuserdata
+        --but DamageInfo.DamageActType is setted after updateDamage
+        --if damageInfo.DamageActType > 0 then
+        --    typeMsg=typeMsg.."/"..DamageTypeEnum2Str[damageInfo.DamageActType]
+        --end
+        if AttackUserData.DamageTypeLean > 0 then
+            typeMsg=typeMsg.."/"..DamageTypeEnum2Str[AttackUserData.DamageTypeLean]
         end
+        if AttackUserData.DamageTypeBlown > 0 then
+            typeMsg=typeMsg.."/"..DamageTypeEnum2Str[AttackUserData.DamageTypeBlown]
+        end
+
         typeMsg=string.gsub(typeMsg,"^/","")
         if typeMsg~="" then
             msg=msg.." {"..typeMsg.."}"
@@ -241,6 +252,10 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
                 end
             end
         end
+    end
+
+    if config.showDamageReactionLevel then
+        msg=msg..string.format(" ReactionLv.%d ",damageInfo.DmgReactionLv)
     end
 
     if damageInfo.Damage > config.bigcap and config.showBigcapPostfix then
@@ -471,7 +486,7 @@ sdk.hook(
 )
 
 --(player's) attack is calced in PlayerDamageCalculator and set to DamageInfo.xxdamage,then minused by defence in ExceptPlayerDamageCalculator.calcDamageValueDefence
---thread.get_hook_storage() not working,get nil in postHook as long as another script hooks the same function
+--thread.get_hook_storage()'s bug is fixed recently.But I don't believe users know how to update.So not using thread.
 local tmpDamageInfoArg=nil
 sdk.hook(
     sdk.find_type_definition("app.ExceptPlayerDamageCalculator"):get_method("calcDamageValueDefence(app.HitController.DamageInfo)"),
@@ -635,13 +650,12 @@ re.on_frame(function()
                 --PerChar.Threshold always 100?
                 local param=regionStatus["DamageReactionThreshold"].PerChar
 
-                                local maxLean=0
+                local maxLean=0
                 local maxBlow=0
                 local maxLeanLv=0
                 local maxBlownLv=0
                 local leanLv=regionStatus["<ReactionLeanLevel>k__BackingField"]
                 local blownLv=regionStatus["<ReactionBlownLevel>k__BackingField"]
-                --max Lean/Blow can have several level,seems only the last have effect?
                 if param.Lean ~=nil and param.Lean:get_Count()>leanLv and leanLv>=0 then
                     maxLean=param.Lean[leanLv].m_value
                 end

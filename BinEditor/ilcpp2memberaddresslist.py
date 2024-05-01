@@ -15,10 +15,11 @@ def main(il2cpp_path = None):
         if "fields" in entry:
             for field_name, field_entry in entry["fields"].items():
                 if "offset_from_base" in field_entry:
-                    if "parent" in entry:
-                        out_lines.append(class_name+" "+field_name+" "+str(field_entry["offset_from_base"])+" "+field_entry["type"]+" "+str(entry["parent"])+"\n")
-                    else:
-                        out_lines.append(class_name+" "+field_name+" "+str(field_entry["offset_from_base"])+" "+field_entry["type"]+" "+"nil"+"\n")
+                    if (not "flags" in field_entry) or not "Static" in field_entry["flags"]:
+                        if "parent" in entry:
+                            out_lines.append(class_name+" "+field_name+" "+str(field_entry["offset_from_base"])+" "+field_entry["type"]+" "+str(entry["parent"])+"\n")
+                        else:
+                            out_lines.append(class_name+" "+field_name+" "+str(field_entry["offset_from_base"])+" "+field_entry["type"]+" "+"nil"+"\n")
 
     with open("address.list", "w", encoding="utf8") as f:
         f.writelines(out_lines)
