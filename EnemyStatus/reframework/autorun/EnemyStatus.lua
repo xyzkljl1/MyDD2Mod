@@ -25,6 +25,7 @@ local _config={
     {name="showKnockdownAbsorption",type="bool",default=true},
     {name="showPhysicKnockdownAbsorption",type="bool",default=false},
     {name="showMagicKnockdownAbsorption",type="bool",default=false},
+    {name="showDamageReactionData",type="bool",default=true},
 
     {name="Hotkey",type="mutualbox"},
     {name="switchEnable",type="hotkey",default="Alpha5",actionName="switchEnableEnemyStatus19054u3"},
@@ -344,21 +345,6 @@ local function f2s2(float)
     return string.format("%.2f",float)
 end
 
-local function Enum2Map(typeName,from)
-    from=from or 1
-    local id2name={}
-    local name2id={}
-    local fields=sdk.find_type_definition(typeName):get_fields()
-    for _,field in pairs(fields) do
-        local value=field:get_data()
-        if value~=nil and value >= from and id2name[value]==nil then
-            id2name[value]=field:get_name()
-            name2id[field:get_name()]=value
-            --print(field:get_name(),value)
-        end
-    end
-    return id2name,name2id
-end
 local function GetWeakpointEnumMap()
     local type=sdk.find_type_definition("app.CharacterDamageCalculator.CharacterWeakpointType")
     local enum2str={}
@@ -391,11 +377,10 @@ local function GetWeakpointEnumMap()
     return ret
 end
 
-local ElementTypeEnum2Str,_=Enum2Map("app.AttackUserData.ElementType")
-local StatusConditionEnum2Str,_=Enum2Map("app.StatusConditionDef.StatusConditionEnum")
-local RegionTypeEnum2Str,_=Enum2Map("app.IntermediateRegionParam.RegionTypeEnum",0)
-local DamageTypeEnum2Str,_=Enum2Map("app.AttackUserData.DamageTypeEnum",0)
-
+local ElementTypeEnum2Str,_=myapi.Enum2Map("app.AttackUserData.ElementType")
+local StatusConditionEnum2Str,_=myapi.Enum2Map("app.StatusConditionDef.StatusConditionEnum")
+local RegionTypeEnum2Str,_=myapi.Enum2Map("app.IntermediateRegionParam.RegionTypeEnum",0)
+local DamageTypeEnum2Str,_=myapi.Enum2Map("app.AttackUserData.DamageTypeEnum",0)
 local WeakpointEnum2Str=GetWeakpointEnumMap()
 
 local function SetEnemyCache(damageCalculator)
@@ -461,7 +446,16 @@ sdk.hook(
     end,
     nil
 )
+local MsgCache={}
+local function GetMsgCache(key)
+    return MsgCache[key] and MsgCache[key].msg
+end
+local function SetMsgCache(key,msg)
+    MsgCache[key]={msg=msg,lifetime=30}
+    Log("SetCache")
+end
 
+local frame_ct=0
 re.on_frame(function()
     if hk.check_hotkey("switchEnableEnemyStatus19054u3",false,true) then
         config.enable=not config.enable
@@ -525,7 +519,7 @@ re.on_frame(function()
                     msg=msg..debuffmsg.."\n"
                 end
             end
-            --
+            --bodyparts
             if bodyparts~=nil and config.showBodyParts then
                 local regionStatusCtrl=lastEnemyHitController["<CachedRegionStatusCtrl>k__BackingField"]
                 local ct=bodyparts:get_Count()-1
@@ -577,20 +571,10 @@ re.on_frame(function()
                             partMsg=partMsg..string.format("Lean(Lv%d/%d)- %s/%s ",leanLv,maxLeanLv,f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
                             partMsg=partMsg..string.format("Blow(Lv%d/%d)- %s/%s ",blownLv,maxBlownLv,f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
                         else
-                            partMsg=partMsg..string.format("Lean- %s/%s ",f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
-                            partMsg=partMsg..string.format("Blow- %s/%s ",f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
+                            partMsg=partMsg..string.format("Lean(Lv%d)- %s/%s ",leanLv,f2s(regionStatus["<ReactionLeanPoint>k__BackingField"]),f2s(maxLean or -1))
+                            partMsg=partMsg..string.format("Blow(Lv%d)- %s/%s ",blownLv,f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
                         end
                     end
-
-                    local continuousReactionCtrl=lastEnemyHitController["<ContinuousReactionCtrl>k__BackingField"]
-                    if continuousReactionCtrl~=nil then
-                        local prev=continuousReactionCtrl["<ContinuousReactionDmgType>k__BackingField"]
-                        if DamageTypeEnum2Str[prev]~=nil then
-                            local next=lastEnemyHitController["<CommonHitParamProp>k__BackingField"].ContinuousReactionParam:getNextStageDmgType(prev)
-                            partMsg=partMsg..string.format("\nContinuousReaction:%s->%s\n",DamageTypeEnum2Str[prev],DamageTypeEnum2Str[next],continuousReactionCtrl["<ReReactionLv>k__BackingField"])
-                        end
-                    end
-
                     if regionStatusCtrl~=nil then
                         local interRegionParam=regionStatusCtrl:getActiveRegionParam(regionStatus["<RegionNo>k__BackingField"])
                         if interRegionParam~=nil then
@@ -632,10 +616,86 @@ re.on_frame(function()
                     msg=msg..partMsg.."\n"
                 end
             end
+            --reactiondatas
+            if config.showDamageReactionData then
+                msg=msg.."ReactionData:"
+                local convertData=lastEnemyHitController.ConvertDamageTypeData
+                if convertData~=nil then
+                    local cachekey=string.format("%s_convert",lastEnemyCharacter:get_address())
+                    local convertMsg=GetMsgCache(cachekey)
+                    if convertMsg==nil then
+                        local dest2srcmap={}
+                        convertMsg="\n\tAttack Reaction Type->Base Reaction Type:"
+                        local datas=convertData.ConvertDatas
+                        for datai=0,datas:get_Count()-1 do
+                            local dest=DamageTypeEnum2Str[datas[datai].ToDamageType]
+                            local src=DamageTypeEnum2Str[datas[datai].FromDamageType]
+                            if dest2srcmap[dest]==nil then dest2srcmap[dest]={} end
+                            table.insert(dest2srcmap[dest],src)
+                        end
+                        for dest,srclist in pairs(dest2srcmap) do
+                            convertMsg=convertMsg.."\n\t\t"
+                            if srclist[dest]==nil then table.insert(srclist,dest) end
+                            for _,src in pairs(srclist) do
+                                convertMsg=convertMsg..src..","
+                            end
+                            convertMsg=string.gsub(convertMsg,",$","").."->"..dest
+                        end
+                        SetMsgCache(cachekey,convertMsg)
+                    end
+                    msg=msg..convertMsg
+                end
+                
+                local continuousReactionCtrl=lastEnemyHitController["<ContinuousReactionCtrl>k__BackingField"]
+                if continuousReactionCtrl~=nil then
+                    local prev=continuousReactionCtrl["<ContinuousReactionDmgType>k__BackingField"]
+                    if DamageTypeEnum2Str[prev]~=nil then
+                        local next=lastEnemyHitController["<CommonHitParamProp>k__BackingField"].ContinuousReactionParam:getNextStageDmgType(prev)
+                        msg=msg..string.format("\n\tContinuous Reaction(Overwrite Base Reaction Type):%s->%s",DamageTypeEnum2Str[prev],DamageTypeEnum2Str[next],continuousReactionCtrl["<ReReactionLv>k__BackingField"])
+                    end
+                end
+
+                
+                local reactionData=lastEnemyCharacter.DmgReaction["<ComDmgReactionData>k__BackingField"]
+                if reactionData~=nil then
+                    local cachekey=string.format("%s_react",lastEnemyCharacter:get_address())
+                    local reactMsg=GetMsgCache(cachekey)
+                    if reactMsg==nil then
+                        reactMsg="\n\tBase Reaction Type->Final Reaction Type(Ground/Fly/Down):"
+                        local tableList=reactionData._ConvertDamageTableList
+                        local tableListCount=tableList:get_Count()
+                        for lv=0,tableListCount-1 do
+                            reactMsg=reactMsg..string.format("\n\t\tLv %d:",lv)
+                            local dataList=tableList[lv]._ConvertDamageTable
+                            for datai=0,dataList:get_Count()-1 do
+                                local data= dataList[datai]
+                                if data._AfterTypeForGround >=0 or data._AfterTypeForAir >=0 or data._AfterTypeForDown>=0 then
+                                    reactMsg=reactMsg..string.format("\n\t\t\t%s ->%s/%s/%s",DamageTypeEnum2Str[data._SourceType],DamageTypeEnum2Str[data._AfterTypeForGround] or "_",DamageTypeEnum2Str[data._AfterTypeForAir] or "_",DamageTypeEnum2Str[data._AfterTypeForDown] or "_")
+                                end
+                            end
+                        end
+                        SetMsgCache(cachekey,reactMsg)
+                    end
+                    msg=msg..reactMsg
+                end
+            end
             local size=imgui.calc_text_size(msg)
             draw.filled_rect(config.position[1]-5, config.position[2]-5, size.x +5,size.y+5, config.backgroundcolor)
             draw.text(msg,config.position[1],config.position[2],config.color)
             imgui.pop_font()
+        end
+    end
+
+    --ClearMsgCache
+    frame_ct=frame_ct+1
+    if frame_ct>600 then
+        frame_ct=0
+        for k,v in pairs(MsgCache) do
+            v.lifetime=v.lifetime-1
+            if v.lifetime<0 then
+                MsgCache[k]=nil
+                Log("DeleteMsgCache")
+            end
         end
     end
 end)
