@@ -249,10 +249,6 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         end
     end
 
-    if config.showDamageReactionLevel then
-        msg=msg..string.format(" ReactionLv.%d ",damageInfo.DmgReactionLv)
-    end
-
     if damageInfo.Damage > config.bigcap and config.showBigcapPostfix then
         msg=msg.." ! "
     end
@@ -413,12 +409,23 @@ local function AddDamageNumber(character,damageInfo,reactionMsg)
 
     --should match color disappear time
     damageNumbers[damageNumber]=config.time
+    return damageNumber
+end
+
+local function AddDamageNumberAfter(damageNumber,damageInfo)
+    if damageNumber ==nil or damageInfo==nil then return end
+    
+    if config.showDamageReactionLevel then
+        damageNumber.msg=damageNumber.msg..string.format(" ReactionLv.%d ",damageInfo.DmgReactionLv)
+    end
+
     if damageNumber.msg~=nil then
         Log("Add Damage Number "..tostring(damageNumber.finalDamage).."in("..f2s2(damageNumber.pos.x)..","..f2s2(damageNumber.pos.y)..","..f2s2(damageNumber.pos.z).."): ".. damageNumber.msg)
     end
     if damageNumber.msg2~=nil then
         Log("Add Damage Number "..tostring(damageNumber.finalDamage).."in("..f2s2(damageNumber.pos2.x)..","..f2s2(damageNumber.pos2.y)..","..f2s2(damageNumber.pos2.z).."): ".. damageNumber.msg2)
     end
+
 end
 
 local function AddDamageTmpInfoBeforeCalcDef(damageInfo)
@@ -463,15 +470,23 @@ end
 --app.Character:onCalcDamageEnd 
 --onDamageCalcEnd is shit,onDamageHit don't have damage number
 --sdk.find_type_definition("app.PlayerDamageCalculator"):get_method("damageCalcEnd(app.HitController.DamageInfo)"),
+local tmpUpdateDamageDamageInfo=nil
+local tmpUpdateDamageDamageNumber=nil
+
 sdk.hook(
     --contains DOT
     sdk.find_type_definition("app.HitController"):get_method("updateDamage"),
     function(args)
         local this=sdk.to_managed_object(args[2])
         local damageInfo=sdk.to_managed_object(args[3])
-        AddDamageNumber(this:get_CachedCharacter(),damageInfo)
+        tmpUpdateDamageDamageInfo=damageInfo
+        tmpUpdateDamageDamageNumber=AddDamageNumber(this:get_CachedCharacter(),damageInfo)
     end,
-    nil
+    function()
+        AddDamageNumberAfter(tmpUpdateDamageDamageNumber,tmpUpdateDamageDamageInfo)        
+        tmpUpdateDamageDamageInfo=nil
+        tmpUpdateDamageDamageNumber=nil
+    end
 )
 
 --(player's) attack is calced in PlayerDamageCalculator and set to DamageInfo.xxdamage,then minused by defence in ExceptPlayerDamageCalculator.calcDamageValueDefence
@@ -511,7 +526,6 @@ sdk.hook(
         tmpDamageInfoArg=nil
     end
 )
-
 
 local function onDamageReactionTriggered(args,msg)
     local this=sdk.to_managed_object(args[2])
