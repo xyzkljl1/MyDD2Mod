@@ -427,7 +427,7 @@
     "83": {
       "name": "Job08_FrostBlock",
       "hintJP": "氷塊魔槍",
-      "format": "x{CS_氷塊},Gain DamageRate based on consumed stamina percent.\nGain +3.5/6.0/11.5(Max) when 50%/70%/95% stamina consumed"
+      "format": "x{CS_氷塊},Gain DamageRate based on charge percent.\nGain +3.5/6.0/11.5(Max) when 50%/70%/95% charge"
     },
   "84": {
     "name": "Job08_ThunderChain",
