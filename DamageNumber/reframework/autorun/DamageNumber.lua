@@ -219,7 +219,7 @@ local function Common2Message(character,damageInfo,AttackUserData,_msg)
     end
 
     if config.showHitBodyPart then
-        msg=msg.." BodyPart."..tostring(damageInfo.RegionNo)
+        msg=msg.." BodyPart."..tostring(damageInfo.RegionNo).."-"..tostring(damageInfo.RegionStatusNo)
     end
         
     if config.showDamageReactionLevel then
