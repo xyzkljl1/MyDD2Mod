@@ -20,11 +20,8 @@ local _config={
     {name="showBodyParts",type="bool",default=true},
     {name="showDebuff",type="bool",default=true},
     {name="showATKDEF",type="bool",default=true},
-    {name="showPhysicDamageAbsorption",type="bool",default=true},
-    {name="showMagicDamageAbsorption",type="bool",default=true},
+    {name="showDamageAbsorption",type="bool",default=true},
     {name="showKnockdownAbsorption",type="bool",default=true},
-    {name="showPhysicKnockdownAbsorption",type="bool",default=false},
-    {name="showMagicKnockdownAbsorption",type="bool",default=false},
     {name="showDamageReactionData",type="bool",default=true},
 
     {name="Hotkey",type="mutualbox"},
@@ -39,7 +36,7 @@ local mainplayerGO=nil
 local enemyCache={count=0}
 local lastEnemy=nil
 local guiManager=sdk.get_managed_singleton("app.GuiManager")
-
+--local getNameMethod=sdk.find_type_definition("app.GUIBase"):get_method("getName(app.CharacterID)")
 local font = imgui.load_font(config.font, config.fontsize)
 
 --from shadowcookie
@@ -424,7 +421,6 @@ local function SetEnemy(character,damageInfo)
     end
 end
 
-
 sdk.hook(
     sdk.find_type_definition("app.ExceptPlayerDamageCalculator"):get_method("calcDamageValueDefence"),
     function (args)
@@ -446,16 +442,7 @@ sdk.hook(
     end,
     nil
 )
-local MsgCache={}
-local function GetMsgCache(key)
-    return MsgCache[key] and MsgCache[key].msg
-end
-local function SetMsgCache(key,msg)
-    MsgCache[key]={msg=msg,lifetime=30}
-    Log("SetCache")
-end
 
-local frame_ct=0
 re.on_frame(function()
     if hk.check_hotkey("switchEnableEnemyStatus19054u3",false,true) then
         config.enable=not config.enable
@@ -474,7 +461,9 @@ re.on_frame(function()
 
             --CharaName HP
             local charaName=lastEnemyCharacter:get_CharaIDString()
-            local charaName= charaID2EnemyName[charaName] or charaName
+            local charaName= charaID2EnemyName[charaName] or charaName 
+            
+            lastEnemyCharacter:get_CharaID()
             local hp=lastEnemyCharacter:get_Hp()
             msg=msg..charaName..string.format("    %s/%s\n",f2s(lastEnemyCharacter:get_Hp()),f2s(lastEnemyCharacter:get_ReducedMaxHp()))
             --Weakpoint
@@ -535,19 +524,6 @@ re.on_frame(function()
                     local regionStatus=bodyparts[i]
                     local regionNo=regionStatus["<RegionNo>k__BackingField"]
                     local partMsg="Part "..regionNo
-                    if regionStatusCtrl~=nil then
-                        local interRegionParam=regionStatusCtrl:getActiveRegionParam(regionNo)
-                        if interRegionParam~=nil then
-                            local regionType=RegionTypeEnum2Str[interRegionParam:get_RegionType()]
-                            if regionType~="Other" then
-                                partMsg=partMsg.."/"..regionType
-                            elseif regionNo==0 then --assume part 0 is always body,Chimera part 0 is other
-                                partMsg=partMsg.."/Body"
-                            end
-                        else--orge part 0 has no param
-                            partMsg=partMsg.."/Body"
-                        end
-                    end
                     partMsg=partMsg..string.format("- HP: %s/%s ",f2s(regionStatus.Hp),f2s(regionStatus.MaxHp))
 
                     --PerChar.Threshold always 100?
@@ -582,45 +558,50 @@ re.on_frame(function()
                             partMsg=partMsg..string.format("Blow(Lv%d)- %s/%s ",blownLv,f2s(regionStatus["<ReactionBlownPoint>k__BackingField"]),f2s(maxBlow or -1))
                         end
                     end
-                    if regionStatusCtrl~=nil then
-                        local interRegionParam=regionStatusCtrl:getActiveRegionParam(regionStatus["<RegionNo>k__BackingField"])
-                        if interRegionParam~=nil then
-                            local regionType=RegionTypeEnum2Str[interRegionParam:get_RegionType()]
-                            if interRegionParam._DamageAdjustRatePys:get_Count()>=3 and interRegionParam._DamageAdjustRateMgc:get_Count()>=5 then
-                                if config.showPhysicDamageAbsorption then
-                                    partMsg=partMsg..
-                                        string.format("\n\tSlash %.2f Strike %.2f Shoot %.2f\n",
-                                            interRegionParam._DamageAdjustRatePys[0].m_value,interRegionParam._DamageAdjustRatePys[1].m_value,interRegionParam._DamageAdjustRatePys[2].m_value)
-                                end
-                                if  config.showMagicDamageAbsorption then
-                                    partMsg=partMsg..
-                                        string.format("\tMagic %.2f Fire %.2f Ice %.2f Thunder %.2f Light %.2f\n",
-                                            interRegionParam._DamageAdjustRateMgc[0].m_value,interRegionParam._DamageAdjustRateMgc[1].m_value,interRegionParam._DamageAdjustRateMgc[2].m_value,
-                                            interRegionParam._DamageAdjustRateMgc[3].m_value,interRegionParam._DamageAdjustRateMgc[4].m_value
-                                            )
-                                end
-                                if config.showKnockdownAbsorption then
-                                    partMsg=partMsg..
-                                        string.format("\tKnockown:Global %.2f\n",interRegionParam._ReactionRate)                                    
-                                end
-                                if config.showPhysicKnockdownAbsorption then
-                                    partMsg=partMsg..
-                                        string.format("\tKnockdown:Slash %.2f Strike %.2f Shoot %.2f\n",
-                                            interRegionParam._ReactionAdjustRatePys[0].m_value,interRegionParam._ReactionAdjustRatePys[1].m_value,interRegionParam._ReactionAdjustRatePys[2].m_value)
-                                end
+                    msg=msg..partMsg.."\n"
+                end
+                --regionNo is different thing with regionStatusNo.Max regionstatusno is much more than regionno.
+                --RegionStatusCtrl/IntermediateRegionXX use regionStatusNo/RegionStatus use regionNo.
+                --can't find the map from regionNo to regionStatus No.
+                if regionStatusCtrl~=nil then
+                    local interRegionStatusParam=regionStatusCtrl._PrioParam
+                    if config.showDamageAbsorption or config.showKnockdownAbsorption then
+                        local partMsg="\nAbsorptionStatus:"..interRegionStatusParam:get_StatusId().."\nDamageAbsorption(Slash/Strike/Shoot||Magic/Fire/Ice/Thunder/Light):"
+                        local interParams=interRegionStatusParam._IntermediateRegionParams
+                        for i=0,interParams:get_Count()-1 do
+                            local interRegionParam=regionStatusCtrl:getActiveRegionParam(i)
+                            if interRegionParam~=nil then
+                                local regionType=RegionTypeEnum2Str[interRegionParam:get_RegionType()]
+                                partMsg=partMsg.."\nP"..i
+                                if interRegionParam._DamageAdjustRatePys:get_Count()>=3 and interRegionParam._DamageAdjustRateMgc:get_Count()>=5 then
+                                    if config.showDamageAbsorption then
+                                        partMsg=partMsg..
+                                            string.format("\n\t%.2f/ %.2f/ %.2f || ",
+                                                interRegionParam._DamageAdjustRatePys[0].m_value,interRegionParam._DamageAdjustRatePys[1].m_value,interRegionParam._DamageAdjustRatePys[2].m_value)
+                                        partMsg=partMsg..
+                                            string.format("%.2f/ %.2f/ %.2f/ %.2f/ %.2f",
+                                                interRegionParam._DamageAdjustRateMgc[0].m_value,interRegionParam._DamageAdjustRateMgc[1].m_value,interRegionParam._DamageAdjustRateMgc[2].m_value,
+                                                interRegionParam._DamageAdjustRateMgc[3].m_value,interRegionParam._DamageAdjustRateMgc[4].m_value
+                                                )
+                                    end
+                                    if config.showKnockdownAbsorption then
+                                        partMsg=partMsg..
+                                            string.format("\n\t%.2f/ %.2f/ %.2f || ",
+                                                interRegionParam._ReactionAdjustRatePys[0].m_value,interRegionParam._ReactionAdjustRatePys[1].m_value,interRegionParam._ReactionAdjustRatePys[2].m_value)
+                                        partMsg=partMsg..
+                                            string.format("%.2f/ %.2f/ %.2f/ %.2f/ %.2f (Knockdown)",
+                                                interRegionParam._ReactionAdjustRateMgc[0].m_value,interRegionParam._ReactionAdjustRateMgc[1].m_value,interRegionParam._ReactionAdjustRateMgc[2].m_value,
+                                                interRegionParam._ReactionAdjustRateMgc[3].m_value,interRegionParam._ReactionAdjustRateMgc[4].m_value
+                                                )
+                                        partMsg=partMsg..
+                                            string.format("\n\tKnockown Global %.2f",interRegionParam._ReactionRate)                                    
+                                    end
 
-                                if  config.showMagicKnockdownAbsorption then
-                                    partMsg=partMsg..
-                                        string.format("\tKnockdown:Magic %.2f Fire %.2f Ice %.2f Thunder %.2f Light %.2f\n",
-                                            interRegionParam._ReactionAdjustRateMgc[0].m_value,interRegionParam._ReactionAdjustRateMgc[1].m_value,interRegionParam._ReactionAdjustRateMgc[2].m_value,
-                                            interRegionParam._ReactionAdjustRateMgc[3].m_value,interRegionParam._ReactionAdjustRateMgc[4].m_value
-                                            )
                                 end
-
                             end
                         end
+                        msg=msg..partMsg.."\n\n"
                     end
-                    msg=msg..partMsg.."\n"
                 end
             end
             --reactiondatas
@@ -629,7 +610,7 @@ re.on_frame(function()
                 local convertData=lastEnemyHitController.ConvertDamageTypeData
                 if convertData~=nil then
                     local cachekey=string.format("%s_convert",lastEnemyCharacter:get_address())
-                    local convertMsg=GetMsgCache(cachekey)
+                    local convertMsg=enemyCache[lastEnemy][cachekey]
                     if convertMsg==nil then
                         local dest2srcmap={}
                         convertMsg="\n\tAttack Reaction Type->Base Reaction Type:"
@@ -648,7 +629,7 @@ re.on_frame(function()
                             end
                             convertMsg=string.gsub(convertMsg,",$","").."->"..dest
                         end
-                        SetMsgCache(cachekey,convertMsg)
+                        enemyCache[lastEnemy][cachekey]=convertMsg
                     end
                     msg=msg..convertMsg
                 end
@@ -665,7 +646,7 @@ re.on_frame(function()
                 local reactionData=lastEnemyCharacter.DmgReaction["<ComDmgReactionData>k__BackingField"]
                 if reactionData~=nil then
                     local cachekey=string.format("%s_react",lastEnemyCharacter:get_address())
-                    local reactMsg=GetMsgCache(cachekey)
+                    local reactMsg=enemyCache[lastEnemy][cachekey]
                     if reactMsg==nil then
                         reactMsg="\n\tBase Reaction Type->Final Reaction Type(Ground/Fly/Down):"
                         local tableList=reactionData._ConvertDamageTableList
@@ -680,7 +661,7 @@ re.on_frame(function()
                                 end
                             end
                         end
-                        SetMsgCache(cachekey,reactMsg)
+                        enemyCache[lastEnemy][cachekey]=reactMsg
                     end
                     msg=msg..reactMsg
                 end
@@ -692,18 +673,6 @@ re.on_frame(function()
         end
     end
 
-    --ClearMsgCache
-    frame_ct=frame_ct+1
-    if frame_ct>600 then
-        frame_ct=0
-        for k,v in pairs(MsgCache) do
-            v.lifetime=v.lifetime-1
-            if v.lifetime<0 then
-                MsgCache[k]=nil
-                Log("DeleteMsgCache")
-            end
-        end
-    end
 end)
 
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,refreshplayer)

@@ -495,7 +495,7 @@ if(false)
         File.WriteAllLines($"E:\\OtherGame\\DragonDogma2\\reverse\\split\\{file_ct}.c", lines[last_line..lines.Length]);
     }
 }
-if(false)
+if(true)
 {
     var map = new Dictionary<string, Dictionary<string, string>>();
     var short2fullname = new Dictionary<string, string>();
@@ -534,7 +534,7 @@ if(false)
         }
     }
     {
-        var filename = "E:\\OtherGame\\DragonDogma2\\reverse\\manual\\DamageValue.cs";
+        var filename = "E:\\OtherGame\\DragonDogma2\\reverse\\manual\\setDamageReaction.cs";
         var lines = File.ReadAllLines(filename);
         Regex regex = new Regex("\\*\\((bool|float|uint|byte|char|int|ulonglong|longlong|undefined[0-9]*)[ ]*[\\*]*\\*\\)\\(([a-zA-Z_\\.]+)[ ]*\\+[ ]*([x0-9a-f]+)\\)");
         for(int j=0;j<4 ;j++)
@@ -587,7 +587,7 @@ if(false)
 }
 
 //ActionRate
-if (true)
+if (false)
 {
     //    var y=IsInitialized();
     var jsonDoc = new Dictionary<string,object>();
@@ -641,6 +641,12 @@ if (true)
 
                 var hint= (instance.dynamicValues["v0"] as string)!;
                 var ar= (instance.dynamicValues["ActionRate"] as float?);
+                var actionvalue=(instance.dynamicValues["PhysicsAttrSettingTypeValue"] as int?);
+                if (actionvalue!=0)
+                {
+                    if (actionvalue>5)
+                        Console.WriteLine("2");
+                }
                 if (hint2ARDic.ContainsKey(hint)&& hint2ARDic[hint]==ar)//相同的值只写一遍
                     continue;
                 hint2ARDic[hint] = (float)ar!;
@@ -728,7 +734,7 @@ if (true)
         }
     }
 //    File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\PlayerActionRate3.txt", debugText);
-    var jsonText = JsonConvert.SerializeObject(jsonDoc);
+//    var jsonText = JsonConvert.SerializeObject(jsonDoc);
     //Console.WriteLine(jsonText);
     //File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\SkillDescription\\reframework\\data\\SkillDescription.Para.json", jsonText);
 }
