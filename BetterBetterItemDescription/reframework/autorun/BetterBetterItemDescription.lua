@@ -32,6 +32,7 @@ local guiManager=sdk.get_managed_singleton("app.GuiManager")
 --Cache of expaned Item Description
 local ItemDescCache={}
 local SkillDescCache={}
+local SkillName2Id={}
 
 
 local function Log(...)
@@ -386,6 +387,28 @@ local function Init()
     prevInitLanguage=lng
     ItemDescCache={}
     SkillDescCache={}
+
+    --Init SkillName2Id
+    SkillName2Id={}
+
+    local messageManager=sdk.get_managed_singleton("app.MessageManager")
+    local type=sdk.find_type_definition("app.Character.JobEnum")
+    local fields=type:get_fields()
+    local guiManager=sdk.get_managed_singleton("app.GuiManager")
+    for _,field in pairs(fields) do
+        if field:get_data()~=nil and field:get_data()>0 then
+            local job=field:get_data()                       
+            local abilitys=guiManager:getAbilitySets(job)
+            local iter=abilitys:GetEnumerator()
+            iter:MoveNext()
+            while iter:get_Current():get_Value()~=nil do
+                local ability=iter:get_Current():get_Value()
+                local skillName= messageManager:getMessage(ability:get_AbilityName())
+                SkillName2Id[skillName]=ability:get_AbilityID()
+                iter:MoveNext()
+            end
+        end
+    end
 end
 
 
@@ -657,6 +680,9 @@ end
 
 
 local tmpJobWindow=nil
+local tmpStatusWindow=nil
+local tmpSkillInfo=nil
+local messageManager=sdk.get_managed_singleton("app.MessageManager")
 --Job NormalSkill CustomSkill Ability other
 local MainContentsInfoKindAbility=sdk.find_type_definition("app.ui040101_00.MainContentsInfo.Kind"):get_field("Ability"):get_data()
 local MainContentsInfoKindOther=sdk.find_type_definition("app.ui040101_00.MainContentsInfo.Kind"):get_field("Other"):get_data()
@@ -725,6 +751,26 @@ sdk.hook(
         end
     end
 )
+--Status UI
+sdk.hook(sdk.find_type_definition("app.ui060601_01"):get_method("setupSkillDetail(app.ui060601_01.SkillInfo)"),
+function(args)
+    tmpStatusWindow=sdk.to_managed_object(args[2])
+    tmpSkillInfo=sdk.to_managed_object(args[3])
+end,
+function()
+    if tmpStatusWindow~=nil then
+        local originalMessage= messageManager:getMessage(tmpStatusWindow.Movie.TxtDetail:get_MessageId())
+        --DispType 1:customskill 2:normal 3:augment
+        if tmpSkillInfo.DispType==3 then
+            local nameText=messageManager:getMessage(tmpSkillInfo.NameId)
+            if SkillName2Id[nameText]~=nil then
+                tmpStatusWindow.Movie.TxtDetail:set_Message(GetOrAddSkillDesc(originalMessage,SkillName2Id[nameText]))
+            end
+        end
+        tmpStatusWindow=nil
+        tmpSkillInfo=nil
+    end
+end)
 
 
 --try load api and draw ui
