@@ -1,447 +1,488 @@
 {
-    "AbilityFormat": {
-        "10": {
-            "format": "+{v1} Max Stamina",
-            "hint": "固定値(150.000000,0.000000)"
-        },
-        "11": {
-            "format": "x{v1} Oil Cost/x{v2} Range",
-            "hint": "1:燃料の消費速度倍率　2:照らす範囲(0.660000,2.000000)"
-        },
-        "12": {
-            "format": "+{v1} Damage Rate",
-            "hint": "攻撃倍率加算値(0.050000,0.000000)"
-        },
-        "13": {
-            "format": "cliff:x{v1}/Other:x{v2}",
-            "hint": "1：段差登り、2：しがみつき・しゃがみ(1.100000,1.100000)"
-        },
-        "14": {
-            "format": "Gain {v2}%+{v1} MagDEF",
-            "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
-        },
-        "15": {
-            "format": "+{v1}% Recover Amount",
-            "hint": "増加回復量(％)(10.000000,0.000000)"
-        },
-        "16": {
-            "format": "x{v1} Duration",
-            "hint": "効果時間倍率(0.700000,0.000000)"
-        },
-        "17": {
-            "format": "x{v1} Duration",
-            "hint": "効果時間倍率(1.200000,0.000000)"
-        },
-        "18": {
-            "format": "+{v1} Recover Rate",
-            "hint": "加算倍率を入力(0.100000,0.000000)"
-        },
-        "19": {
-            "format": "x{v1} Hate Mutliplier",
-            "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
-        },
-        "20": {
-            "format": "Recover {v1}%~{v2}% of Max HP",
-            "hint": "トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"
-        },
-        "21": {
-            "format": "x{v1} Stamina Cost Mutliplier",
-            "hint": "(0.800000,0.000000)"
-        },
-        "22": {
-            "format": "x{v1} Stamina Cost Mutliplier",
-            "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
-        },
-        "23": {
-            "format": "Gain {v2}%+{v1} Strength",
-            "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
-        },
-        "24": {
-            "format": "Gain {v2}%+{v1} MaxHP",
-            "hint": "HPの上限値 + Value(200.000000,0.000000)"
-        },
-        "25": {
-            "format": "x{v1} Mutliplier",
-            "hint": "組み付き時の押し引き力 * Value(1.500000,0.000000)"
-        },
-        "26": {
-            "format": "+{v1}% Guard Damage Rate",
-            "hint": "ガード削り攻撃力 + Value%(30.000000,0.000000)"
-        },
-        "27": {
-            "format": "+{v1}% Knockdown power",
-            "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
-        },
-        "28": {
-            "format": "x{v1} MaxHP loss",
-            "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
-        },
-        "29": {
-            "format": "+{v1}% debilitation",
-            "hint": "状態異常与蓄積値 + Value%(20.000000,0.000000)"
-        },
-        "30": {
-            "format": "{v1}/{v2}",
-            "hint": "(75.000000,90.000000)"
-        },
-        "31": {
-            "format": "+{v1}% Knockdown Resist",
-            "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
-        },
-        "32": {
-            "format": "+{v1}% Damage",
-            "hint": "弱点属性による与ダメージ + Value%(5.000000,0.000000)"
-        },
-        "33": {
-            "format": "{v2}%+{v1} MagATK",
-            "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
-        },
-        "34": {
-            "format": "x{v1} Move Speed",
-            "hint": "持ち上げ、担ぎ上げ時の移動速度xValue(1.100000,0.000000)"
-        },
-        "35": {
-            "format": "x{v1} Gold",
-            "hint": "金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"
-        },
-        "36": {
-            "format": "Gain {v2}% ATK in Day(4:00~20:00)\n{v2}% MagATK in Night(18:00~6:00)",
-            "hint": "日中（4時～20時）、物理攻撃力+ 夜間（18時～6時）、魔法攻撃力+ １：固定値　２：割合値(%)(0.000000,5.000000)"
-        },
-        "37": {
-            "format": "x{v1} Amount",
-            "hint": "リム決勝を入手したときのリム獲得量xValue(1.050000,0.000000)"
-        },
-        "38": {
-            "format": "x{v1} Cost",
-            "hint": "ダッシュ中のスタミナ消費量×Value(0.900000,0.000000)"
-        },
-        "39": {
-            "format": "Gain {v2}%+{v1} DEF/MagDEF",
-            "hint": "ポーンの物理防御力/魔法防御力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
-        },
-        "4": {
-            "format": "x{v1} Mutliplier",
-            "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
-        },
-        "40": {
-            "format": "Recover {v1}% Stamina",
-            "hint": "敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"
-        },
-        "41": {
-            "format": "x{v1} Chance",
-            "hint": "(1.200000,0.000000)"
-        },
-        "42": {
-            "format": "Gain {v2}%+{v1} ATK/MagATK",
-            "hint": "ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
-        },
-        "43": {
-            "format": "-{v1} seconds",
-            "hint": "ポーン蘇生にかかる時間 -Value(秒)(1.000000,0.000000)"
-        },
-        "44": {
-            "format": "{v1}",
-            "hint": "(1.500000,0.000000)"
-        },
-        "45": {
-            "format": "{v1}% Trigger",
-            "hint": "調合時にアイテム作成個数+1個になる確率Value％(15.000000,0.000000)"
-        },
-        "46": {
-            "format": "x{v1} Chance to be attacked",
-            "hint": "襲撃確率 * Value(0.350000,0.000000)"
-        },
-        "47": {
-            "format": "x{v1} Enemy Sight Range",
-            "hint": "敵の視界センサー * Value(0.850000,0.000000)"
-        },
-        "48": {
-            "format": "Gain x{v1} Favorability",
-            "hint": "NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"
-        },
-        "49": {
-            "format": "x{v1} Cost",
-            "hint": "カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"
-        },
-        "5": {
-            "format": "Gain {v2}%+{v1} DEF",
-            "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
-        },
-        "50": {
-            "format": "-{v1} Weight Level When Moving",
-            "hint": "移動時の重量ランクをValue段階下げる(1.000000,0.000000)"
-        },
-        "6": {
-            "format": "Gain {v2}%+{v1} Max Weight",
-            "hint": "最大重量加算値(10.000000,0.000000)"
-        },
-        "7": {
-            "format": "Lift up +{v1} seconds.Pin Down +{v2} seconds",
-            "hint": "1：担ぎ上げ、2：押さえつけ。単位は秒(2.000000,2.000000)"
-        },
-        "8": {
-            "format": "{v1} seconds faster from Down.{v2} seconds faster from Crawling",
-            "hint": "1：ダウン、2：這いずり。単位は秒(0.300000,1.000000)"
-        },
-        "9": {
-            "format": "+{v1} Damage Rate",
-            "hint": "攻撃倍率加算値(0.100000,0.000000)"
-        }
+  "WeaponSpecialFormat": {
+    "SpecialEfficacy":
+    {
+      "enable":true,
+      "format":"+{v1} Damage Rate to certain enemies",
+      "hint":"对特定敌人增伤"
     },
-    "FieldFormat": {
-      "_AddStatus": {
-        "enable": true,
-        "format": "Add %s Status",
-        "map": [
-          "Posion"
-        ],
-        "type": "Enum"
-      },
-      "_Buff": {
-        "enable": true,
-        "format": {
-          "AttackFactor": "+%s%% Attack ",
-          "DefenceFactor": "+%s%% Defense ",
-          "StatusConditionResistFactor": "+%s%% Status Resist",
-          "StaminaRecoverFactor": "%s%% Stamina Recover",
-          "Sec": "for %s seconds"
-        },
-        "type": "Buff"
-      },
-        "_Blow": "%s Knockdown",
-        "_BlowGuard": "%s Knockdown Guard",
-        "_BlowResistRate": "%s%% Knockdown Resist",
-        "_BuyPrice": {
-            "enable": false,
-            "format": "BuyPrice %s.",
-            "type": "String"
-        },
-        "_Category": {
-            "enable": false,
-            "format": "Cat %s",
-            "map": [
-                "Material",
-                "Other",
-                "Equip"
-            ],
-            "type": "Enum"
-        },
-        "_DarkDefence": "%s%% Dark Debuff Resist",
-        "_ElementStore": "%s%% Element Enchant",
-        "_FireDefence": "%s%% Fire Damage Reduce",
-        "_FireResist": "%s%% Fire Debuff Resist",
-        "_HealBlackHp": "Heal %s MAXHP.",
-        "_HealStamina": "Recover %s Stamina",
-        "_HealWhiteHp": "Heal %s HP.",
-        "_IceDefence": "%s%% Ice Damage Reduce",
-        "_IceResist": "%s%% Ice Debuff Resist",
-        "_Id": {
-            "enable": false,
-            "format": "Id %s.",
-            "type": "String"
-        },
-        "_LightDefence": "%s%% Light Damage Reduce",
-        "_MagicAttack": "%s MagATK",
-        "_MagicDefence": "%s MagDEF",
-        "_OilResist": "%s%% Oil Resist",
-        "_OilStore": "%s Oil Store",
-        "_PhysicalAttack": "%s ATK",
-        "_PhysicalDefence": "%s PhyDEF",
-        "_PoisonResist": "%s%% Poison Resist",
-        "_PoisonStore": "%s PoisonStore",
-        "_SellPrice": {
-            "enable": false,
-            "format": "SellPrice %s.",
-            "type": "String"
-        },
-        "_ShakeResistRate": "%s%% Shake Resist",
-        "_SilentResist": "%s%% Silent Resist",
-        "_SilentStore": "%s Silent Store",
-        "_SlashDefenceRate": "%s%% Slash Reduce",
-        "_SleepResist": "%s%% Sleep Resist",
-        "_SleepStore": "%s Sleep Store",
-        "_StoneResist": "%s%% Stone Resist",
-        "_StoneStore": "%s Stone Store",
-        "_StrikeDefenceRate": "%s%% Strike Reduce",
-        "_StrikeStore": "%s Unconsicious Store",
-        "_SubCategory": {
-            "enable": false,
-            "format": "Cat %s",
-            "map": [
-                "Buff",
-                "Material",
-                "Special",
-                "Quest",
-                "Book",
-                "Arrow",
-                "CustomSkill",
-                "PawnSkill",
-                "MagicBook",
-                "Online"
-            ],
-            "type": "Enum"
-        },
-        "_ThunderDefence": "%s%% Thunder Damage Reduce",
-        "_ThunderResist": "%s%% Thunder Debuff Resist",
-        "_UseEffect": {
-            "enable": false,
-            "format": "Effect %s",
-            "map": [
-                "Heal",
-                "RecoverStamina",
-                "Status"
-            ],
-            "type": "Enum"
-        },
-        "_WaterResist": "%s%% Water Resist",
-        "_WaterStore": "%s Water Store"
+    "1010": {
+      "enable": true,
+      "format": "+{v1}% stackable BaseATK per hit,at max +{v2}%",
+      "hint": "wp00_007_00,龙之信条,每次攻击获得基础攻击倍率"
     },
-    "RingSpecialFormat": {
-        "1": {
-            "enable": true,
-            "format": "+{v1} MaxHP",
-            "hint": "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"
-        },
-        "10": {
-            "enable": true,
-            "format": "{v1}% Faster Cast",
-            "hint": "(3533,Ring of Articulacy,15,0,0)"
-        },
-        "11": {
-            "enable": true,
-            "format": "{v1}% Faster Cast but lose {v2}% Max HP",
-            "hint": "(3534,Ring of Recitation,25,20,0)"
-        },
-        "12": {
-            "enable": true,
-            "format": "+{v1} Knockdown Resist",
-            "hint": "(3535,Ring of Resolution,100,0,0)"
-        },
-        "13": {
-            "enable": true,
-            "format": "-{v1}% Stamina Cost",
-            "hint": "(3536,Ring of Grit,25,0,0)"
-        },
-        "14": {
-            "enable": true,
-            "format": "Gain {v1} ATK in {v2} seconds",
-            "hint": "(3537,Ring of Requital,15,10,0)"
-        },
-        "15": {
-            "enable": false,
-            "format": "{v1} {v2} {v3}",
-            "hint": "(3538,Ring of Brawn,0,0,0)"
-        },
-        "16": {
-            "enable": true,
-            "format": "Slight Heal for {v2} seconds when taken damage over {v1}% MaxHP",
-            "hint": "(3539,Ring of Benevolence,25,3,0)"
-        },
-        "17": {
-            "enable": true,
-            "format": "Gain {v2} ATK when under {v1}% HP",
-            "hint": "(3540,Ring of Recompense,25,100,0)"
-        },
-        "18": {
-            "enable": true,
-            "format": "Gain {v2} ATK when HP no less than {v1}%",
-            "hint": "(3541,Ring of Predominance,100,10,0)"
-        },
-        "2": {
-            "enable": true,
-            "format": "+{v1} Max Stamina",
-            "hint": "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"
-        },
-        "20": {
-            "enable": false,
-            "format": "{v1} {v2} {v3}",
-            "hint": "(3543,Ring of Disfavor,1,0,0)"
-        },
-        "21": {
-            "enable": true,
-            "format": "+{v1} Stamina Recover",
-            "hint": "(3544,Ring of Quickening,10,0,0)"
-        },
-        "22": {
-            "enable": true,
-            "format": "+{v1} Knockdown Power",
-            "hint": "(3545,Ring of Vehemence,100,0,0)"
-        },
-        "23": {
-            "enable": false,
-            "format": "{v1} {v2} {v3}",
-            "hint": "(3548,Ring of Proximity,0,0,0)"
-        },
-        "24": {
-            "enable": true,
-            "format": "+{v1}%/{v2}% Deal/Taken Damage",
-            "hint": "(3549,Ring of Gallantry,25,25,0)"
-        },
-        "25": {
-            "enable": true,
-            "format": "+{v1}% Damage from behind",
-            "hint": "(3550,Ring of Skullduggery,20,0,0)"
-        },
-        "26": {
-            "enable": true,
-            "format": "Pawn gains {v1} DEF in {v2} seconds",
-            "hint": "(3551,Ring of Reassurance,50,20,0)"
-        },
-        "27": {
-            "enable": true,
-            "format": "+{v1}% recover amount",
-            "hint": "(3552,Ring of Amplification,10,0,0)"
-        },
-        "28": {
-            "enable": false,
-            "format": "{v1} {v2} {v3}",
-            "hint": "(3553,Turquoise Ring,0,0,0)"
-        },
-        "29": {
-            "enable": false,
-            "format": "{v1} {v2} {v3}",
-            "hint": "(3554,Ring of Derision,0,0,0)"
-        },
-        "3": {
-            "enable": true,
-            "format": "+{v1} Max Weight",
-            "hint": "(3506,Ring of Profusion,10,0,0)(3505,Ring of Accrual,5,0,0)"
-        },
-        "30": {
-            "enable": true,
-            "format": "Gain +{v1}% Favorability.",
-            "hint": "(3555,Eternal Bond,10,0,0)"
-        },
-        "4": {
-            "enable": true,
-            "format": "+{v1}/{v2}/{v3} Max HP/Max Stamina/Max Weight",
-            "hint": "(3507,Ring of Triumph,100,100,5)"
-        },
-        "5": {
-            "enable": true,
-            "format": "+{v1} ATK",
-            "hint": "(3508,Ring of Aggression,30,0,0)"
-        },
-        "6": {
-            "enable": true,
-            "format": "+{v1} Magic ATK",
-            "hint": "(3510,Ring of Percipience,30,0,0)"
-        },
-        "7": {
-            "enable": true,
-            "format": "+{v1}% EXP Gain",
-            "hint": "(3530,Ring of Ambition,50,0,0)"
-        },
-        "8": {
-            "enable": true,
-            "format": "+{v1}% DCP Gain",
-            "hint": "(3531,Ring of Endeavor,50,0,0)"
-        },
-        "9": {
-            "enable": true,
-            "format": "Heal {v1} HP On Kill",
-            "hint": "(3532,Ring of Regeneration,50,0,0)"
-        }
+    "1207": {
+      "enable": true,
+      "format": "**+0~10% BaseATK beyond 25% HP. +300% BaseATK under 25% HP",
+      "hint": "龙之信条大剑,根据(1-ReducedHpRatio)获得基础攻击倍率，参数是1/1实在找不到规律，代码也看不懂，实测是损失(0,75%)血量时获得约(0,0.1),损失75%以上时跃升至4.0"
+    },
+    "1413": {
+      "enable": false,
+      "hint": "探测匕首,1/1,推测(1,1)的都是实际不使用参数计算？"
+    },
+    "1804": {
+      "enable": true,
+      "format": "+{v1}% EXP",
+      "hint": "美杜莎魔弓箭，(300,400),第二个参数不知道干什么用的"
+    },
+    "1906": {
+      "enable": true,
+      "format": "Take +{v1}% More Damage. Heal {v2} HP per second",
+      "hint": "圣木魔弓，固定回血，给敌人加DamageRate"
+    },
+    "2010": {
+      "enable": true,
+      "format": "+{v1}% BaseATK per hit,no more than +{v2}%",
+      "hint": "林德蠕龙的尖牙"
+    },
+    "2103": {
+      "enable": false,
+      "hint": "梦想路，50/50,攻击加金钱,不知道什么意思"
+    },
+    "2210": {
+      "enable": false,
+      "hint": "庇佑护盾，200/0,意义不明"
     }
+  },
+  "AbilityFormat": {
+    "10": {
+      "format": "+{v1} Max Stamina",
+      "hint": "固定値(150.000000,0.000000)"
+    },
+    "11": {
+      "format": "x{v1} Oil Cost/x{v2} Range",
+      "hint": "1:燃料の消費速度倍率　2:照らす範囲(0.660000,2.000000)"
+    },
+    "12": {
+      "format": "+{v1} Damage Rate",
+      "hint": "攻撃倍率加算値(0.050000,0.000000)"
+    },
+    "13": {
+      "format": "cliff:x{v1}/Other:x{v2}",
+      "hint": "1：段差登り、2：しがみつき・しゃがみ(1.100000,1.100000)"
+    },
+    "14": {
+      "format": "Gain {v2}%+{v1} MagDEF",
+      "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
+    },
+    "15": {
+      "format": "+{v1}% Recover Amount",
+      "hint": "増加回復量(％)(10.000000,0.000000)"
+    },
+    "16": {
+      "format": "x{v1} Duration",
+      "hint": "効果時間倍率(0.700000,0.000000)"
+    },
+    "17": {
+      "format": "x{v1} Duration",
+      "hint": "効果時間倍率(1.200000,0.000000)"
+    },
+    "18": {
+      "format": "+{v1} Recover Rate",
+      "hint": "加算倍率を入力(0.100000,0.000000)"
+    },
+    "19": {
+      "format": "x{v1} Hate Mutliplier",
+      "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
+    },
+    "20": {
+      "format": "Recover {v1}%~{v2}% of Max HP",
+      "hint": "トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"
+    },
+    "21": {
+      "format": "x{v1} Stamina Cost Mutliplier",
+      "hint": "(0.800000,0.000000)"
+    },
+    "22": {
+      "format": "x{v1} Stamina Cost Mutliplier",
+      "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
+    },
+    "23": {
+      "format": "Gain {v2}%+{v1} Strength",
+      "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "24": {
+      "format": "Gain {v2}%+{v1} MaxHP",
+      "hint": "HPの上限値 + Value(200.000000,0.000000)"
+    },
+    "25": {
+      "format": "x{v1} Mutliplier",
+      "hint": "組み付き時の押し引き力 * Value(1.500000,0.000000)"
+    },
+    "26": {
+      "format": "+{v1}% Guard Damage Rate",
+      "hint": "ガード削り攻撃力 + Value%(30.000000,0.000000)"
+    },
+    "27": {
+      "format": "+{v1}% Knockdown power",
+      "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
+    },
+    "28": {
+      "format": "x{v1} MaxHP loss",
+      "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
+    },
+    "29": {
+      "format": "+{v1}% debilitation",
+      "hint": "状態異常与蓄積値 + Value%(20.000000,0.000000)"
+    },
+    "30": {
+      "format": "{v1}/{v2}",
+      "hint": "(75.000000,90.000000)"
+    },
+    "31": {
+      "format": "+{v1}% Knockdown Resist",
+      "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
+    },
+    "32": {
+      "format": "+{v1}% Damage",
+      "hint": "弱点属性による与ダメージ + Value%(5.000000,0.000000)"
+    },
+    "33": {
+      "format": "{v2}%+{v1} MagATK",
+      "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "34": {
+      "format": "x{v1} Move Speed",
+      "hint": "持ち上げ、担ぎ上げ時の移動速度xValue(1.100000,0.000000)"
+    },
+    "35": {
+      "format": "x{v1} Gold",
+      "hint": "金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"
+    },
+    "36": {
+      "format": "Gain {v2}% ATK in Day(4:00~20:00)\n{v2}% MagATK in Night(18:00~6:00)",
+      "hint": "日中（4時～20時）、物理攻撃力+ 夜間（18時～6時）、魔法攻撃力+ １：固定値　２：割合値(%)(0.000000,5.000000)"
+    },
+    "37": {
+      "format": "x{v1} Amount",
+      "hint": "リム決勝を入手したときのリム獲得量xValue(1.050000,0.000000)"
+    },
+    "38": {
+      "format": "x{v1} Cost",
+      "hint": "ダッシュ中のスタミナ消費量×Value(0.900000,0.000000)"
+    },
+    "39": {
+      "format": "Gain {v2}%+{v1} DEF/MagDEF",
+      "hint": "ポーンの物理防御力/魔法防御力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "4": {
+      "format": "x{v1} Mutliplier",
+      "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
+    },
+    "40": {
+      "format": "Recover {v1}% Stamina",
+      "hint": "敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"
+    },
+    "41": {
+      "format": "x{v1} Chance",
+      "hint": "(1.200000,0.000000)"
+    },
+    "42": {
+      "format": "Gain {v2}%+{v1} ATK/MagATK",
+      "hint": "ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
+    },
+    "43": {
+      "format": "-{v1} seconds",
+      "hint": "ポーン蘇生にかかる時間 -Value(秒)(1.000000,0.000000)"
+    },
+    "44": {
+      "format": "{v1}",
+      "hint": "(1.500000,0.000000)"
+    },
+    "45": {
+      "format": "{v1}% Trigger",
+      "hint": "調合時にアイテム作成個数+1個になる確率Value％(15.000000,0.000000)"
+    },
+    "46": {
+      "format": "x{v1} Chance to be attacked",
+      "hint": "襲撃確率 * Value(0.350000,0.000000)"
+    },
+    "47": {
+      "format": "x{v1} Enemy Sight Range",
+      "hint": "敵の視界センサー * Value(0.850000,0.000000)"
+    },
+    "48": {
+      "format": "Gain x{v1} Favorability",
+      "hint": "NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"
+    },
+    "49": {
+      "format": "x{v1} Cost",
+      "hint": "カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"
+    },
+    "5": {
+      "format": "Gain {v2}%+{v1} DEF",
+      "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
+    },
+    "50": {
+      "format": "-{v1} Weight Level When Moving",
+      "hint": "移動時の重量ランクをValue段階下げる(1.000000,0.000000)"
+    },
+    "6": {
+      "format": "Gain {v2}%+{v1} Max Weight",
+      "hint": "最大重量加算値(10.000000,0.000000)"
+    },
+    "7": {
+      "format": "Lift up +{v1} seconds.Pin Down +{v2} seconds",
+      "hint": "1：担ぎ上げ、2：押さえつけ。単位は秒(2.000000,2.000000)"
+    },
+    "8": {
+      "format": "{v1} seconds faster from Down.{v2} seconds faster from Crawling",
+      "hint": "1：ダウン、2：這いずり。単位は秒(0.300000,1.000000)"
+    },
+    "9": {
+      "format": "+{v1} Damage Rate",
+      "hint": "攻撃倍率加算値(0.100000,0.000000)"
+    }
+  },
+  "FieldFormat": {
+    "_AddStatus": {
+      "enable": true,
+      "format": "Add %s Status",
+      "map": [
+        "Posion"
+      ],
+      "type": "Enum"
+    },
+    "_Blow": "%s Knockdown",
+    "_BlowGuard": "%s Knockdown Guard",
+    "_BlowResistRate": "%s%% Knockdown Resist",
+    "_BuyPrice": {
+      "enable": false,
+      "format": "BuyPrice %s.",
+      "type": "String"
+    },
+    "_Category": {
+      "enable": false,
+      "format": "Cat %s",
+      "map": [
+        "Material",
+        "Other",
+        "Equip"
+      ],
+      "type": "Enum"
+    },
+    "_DarkDefence": "%s%% Dark Debuff Resist",
+    "_ElementStore": "%s%% Element Enchant",
+    "_FireDefence": "%s%% Fire Damage Reduce",
+    "_FireResist": "%s%% Fire Debuff Resist",
+    "_HealBlackHp": "Heal %s MAXHP.",
+    "_HealStamina": "Recover %s Stamina",
+    "_HealWhiteHp": "Heal %s HP.",
+    "_IceDefence": "%s%% Ice Damage Reduce",
+    "_IceResist": "%s%% Ice Debuff Resist",
+    "_Id": {
+      "enable": false,
+      "format": "Id %s.",
+      "type": "String"
+    },
+    "_LightDefence": "%s%% Light Damage Reduce",
+    "_MagicAttack": "%s MagATK",
+    "_MagicDefence": "%s MagDEF",
+    "_OilResist": "%s%% Oil Resist",
+    "_OilStore": "%s Oil Store",
+    "_PhysicalAttack": "%s ATK",
+    "_PhysicalDefence": "%s PhyDEF",
+    "_PoisonResist": "%s%% Poison Resist",
+    "_PoisonStore": "%s PoisonStore",
+    "_SellPrice": {
+      "enable": false,
+      "format": "SellPrice %s.",
+      "type": "String"
+    },
+    "_ShakeResistRate": "%s%% Shake Resist",
+    "_SilentResist": "%s%% Silent Resist",
+    "_SilentStore": "%s Silent Store",
+    "_SlashDefenceRate": "%s%% Slash Reduce",
+    "_SleepResist": "%s%% Sleep Resist",
+    "_SleepStore": "%s Sleep Store",
+    "_StoneResist": "%s%% Stone Resist",
+    "_StoneStore": "%s Stone Store",
+    "_StrikeDefenceRate": "%s%% Strike Reduce",
+    "_StrikeStore": "%s Unconsicious Store",
+    "_SubCategory": {
+      "enable": false,
+      "format": "Cat %s",
+      "map": [
+        "Buff",
+        "Material",
+        "Special",
+        "Quest",
+        "Book",
+        "Arrow",
+        "CustomSkill",
+        "PawnSkill",
+        "MagicBook",
+        "Online"
+      ],
+      "type": "Enum"
+    },
+    "_ThunderDefence": "%s%% Thunder Damage Reduce",
+    "_ThunderResist": "%s%% Thunder Debuff Resist",
+    "_UseEffect": {
+      "enable": false,
+      "format": "Effect %s",
+      "map": [
+        "Heal",
+        "RecoverStamina",
+        "Status"
+      ],
+      "type": "Enum"
+    },
+    "_WaterResist": "%s%% Water Resist",
+    "_WaterStore": "%s Water Store"
+  },
+  "RingSpecialFormat": {
+    "1": {
+      "enable": true,
+      "format": "+{v1} MaxHP",
+      "hint": "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"
+    },
+    "10": {
+      "enable": true,
+      "format": "{v1}% Faster Cast",
+      "hint": "(3533,Ring of Articulacy,15,0,0)"
+    },
+    "11": {
+      "enable": true,
+      "format": "{v1}% Faster Cast but lose {v2}% Max HP",
+      "hint": "(3534,Ring of Recitation,25,20,0)"
+    },
+    "12": {
+      "enable": true,
+      "format": "+{v1} Knockdown Resist",
+      "hint": "(3535,Ring of Resolution,100,0,0)"
+    },
+    "13": {
+      "enable": true,
+      "format": "-{v1}% Stamina Cost",
+      "hint": "(3536,Ring of Grit,25,0,0)"
+    },
+    "14": {
+      "enable": true,
+      "format": "Gain {v1} ATK in {v2} seconds",
+      "hint": "(3537,Ring of Requital,15,10,0)"
+    },
+    "15": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3538,Ring of Brawn,0,0,0)"
+    },
+    "16": {
+      "enable": true,
+      "format": "Slight Heal for {v2} seconds when taken damage over {v1}% MaxHP",
+      "hint": "(3539,Ring of Benevolence,25,3,0)"
+    },
+    "17": {
+      "enable": true,
+      "format": "Gain {v2} ATK when under {v1}% HP",
+      "hint": "(3540,Ring of Recompense,25,100,0)"
+    },
+    "18": {
+      "enable": true,
+      "format": "Gain {v2} ATK when HP no less than {v1}%",
+      "hint": "(3541,Ring of Predominance,100,10,0)"
+    },
+    "2": {
+      "enable": true,
+      "format": "+{v1} Max Stamina",
+      "hint": "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"
+    },
+    "20": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3543,Ring of Disfavor,1,0,0)"
+    },
+    "21": {
+      "enable": true,
+      "format": "+{v1} Stamina Recover",
+      "hint": "(3544,Ring of Quickening,10,0,0)"
+    },
+    "22": {
+      "enable": true,
+      "format": "+{v1} Knockdown Power",
+      "hint": "(3545,Ring of Vehemence,100,0,0)"
+    },
+    "23": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3548,Ring of Proximity,0,0,0)"
+    },
+    "24": {
+      "enable": true,
+      "format": "+{v1}%/{v2}% Deal/Taken Damage",
+      "hint": "(3549,Ring of Gallantry,25,25,0)"
+    },
+    "25": {
+      "enable": true,
+      "format": "+{v1}% Damage from behind",
+      "hint": "(3550,Ring of Skullduggery,20,0,0)"
+    },
+    "26": {
+      "enable": true,
+      "format": "Pawn gains {v1} DEF in {v2} seconds",
+      "hint": "(3551,Ring of Reassurance,50,20,0)"
+    },
+    "27": {
+      "enable": true,
+      "format": "+{v1}% recover amount",
+      "hint": "(3552,Ring of Amplification,10,0,0)"
+    },
+    "28": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3553,Turquoise Ring,0,0,0)"
+    },
+    "29": {
+      "enable": false,
+      "format": "{v1} {v2} {v3}",
+      "hint": "(3554,Ring of Derision,0,0,0)"
+    },
+    "3": {
+      "enable": true,
+      "format": "+{v1} Max Weight",
+      "hint": "(3506,Ring of Profusion,10,0,0)(3505,Ring of Accrual,5,0,0)"
+    },
+    "30": {
+      "enable": true,
+      "format": "Gain +{v1}% Favorability.",
+      "hint": "(3555,Eternal Bond,10,0,0)"
+    },
+    "4": {
+      "enable": true,
+      "format": "+{v1}/{v2}/{v3} Max HP/Max Stamina/Max Weight",
+      "hint": "(3507,Ring of Triumph,100,100,5)"
+    },
+    "5": {
+      "enable": true,
+      "format": "+{v1} ATK",
+      "hint": "(3508,Ring of Aggression,30,0,0)"
+    },
+    "6": {
+      "enable": true,
+      "format": "+{v1} Magic ATK",
+      "hint": "(3510,Ring of Percipience,30,0,0)"
+    },
+    "7": {
+      "enable": true,
+      "format": "+{v1}% EXP Gain",
+      "hint": "(3530,Ring of Ambition,50,0,0)"
+    },
+    "8": {
+      "enable": true,
+      "format": "+{v1}% DCP Gain",
+      "hint": "(3531,Ring of Endeavor,50,0,0)"
+    },
+    "9": {
+      "enable": true,
+      "format": "Heal {v1} HP On Kill",
+      "hint": "(3532,Ring of Regeneration,50,0,0)"
+    }
+  },
+  "ItemBuffFormat": {
+    "AttackFactor": "+%s%% Attack ",
+    "DefenceFactor": "+%s%% Defense ",
+    "StatusConditionResistFactor": "+%s%% Status Resist",
+    "StaminaRecoverFactor": "%s%% Stamina Recover",
+    "Sec": "for %s seconds"
+  }
 }

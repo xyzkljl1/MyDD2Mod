@@ -32,6 +32,7 @@ local guiManager=sdk.get_managed_singleton("app.GuiManager")
 --Cache of expaned Item Description
 local ItemDescCache={}
 local SkillDescCache={}
+local WeaponCharaMsgCache={}
 local SkillName2Id={}
 
 
@@ -46,7 +47,6 @@ local ItemParamTypes={
     "app.ItemEquipParam",
     "app.ItemWeaponParam",
     "app.ItemArmorParam",
-
 }
 local FieldFormat={
     --ItemCommonParam
@@ -154,6 +154,25 @@ local FieldFormat={
     --_SpecialValue3=nil,
 }
 
+local ItemBuffFormat={
+    ["AttackFactor"]="+%s%% Attack ",
+    ["DefenceFactor"]="+%s%% Defense ",
+    ["StatusConditionResistFactor"]= "+%s%% Status Resist",
+    ["StaminaRecoverFactor"]= "%s%% Stamina Recover",
+    ["Sec"]= "for %s seconds"
+}
+
+local WeaponSpecialFormat={
+    [1010]={enable=true,format="+{v1}% BaseATK per hit,no more than +{v2}%",hint="wp00_007_00,龙之信条,每次攻击获得基础攻击倍率"},
+    [2010]={enable=true,format="+{v1}% BaseATK per hit,no more than +{v2}%",hint="林德蠕龙的尖牙"},
+    [1207]={enable=true,format="**+0~10% BaseATK beyond 25% HP. +300% BaseATK under 25% HP",hint="龙之信条大剑,根据(1-ReducedHpRatio)获得基础攻击倍率，参数是1/1实在找不到规律，代码也看不懂，实测是损失(0,75%)血量时获得约(0,0.1),损失75%以上时跃升至4.0"},
+    [1804]={enable=true,format="+{v1}% EXP",hint="美杜莎魔弓箭，(300,400),第二个参数不知道干什么用的"},
+    [1413]={enable=false,hint="探测匕首,1/1,推测(1,1)的都是实际不使用参数计算？"},
+    [1906]={enable=true,format="Take +{v1}% More Damage. Heal {v2} HP per second",hint="圣木魔弓，固定回血，给敌人加DamageRate"},
+    [2103]={enable=false,hint="梦想路，50/50,攻击加金钱,不知道什么意思"},
+    [2210]={enable=false,hint="庇佑护盾，200/0,意义不明"},
+    ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
+}
 local RingSpecialFormat={
     [1]= {enable= true,format= "+{v1} MaxHP",hint= "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"},
     [2]= {enable= true,format= "+{v1} Max Stamina",hint= "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"},
@@ -315,41 +334,41 @@ local function printRings()
     end
 end
 --[[
-[0]="Japanese"
-[1]="English",
-[2]="French",
-[3]="Italian",
-[4]="German",
-[5]="Spanish",
-[6]="Russian",
-[7]="Polish",
-[8]="Dutch",
-[9]="Portuguese",
-[10]="PortugueseBr",
-[11]="Korean",
-[12]="TransitionalChinese",
-[13]="SimplelifiedChinese",
-[14]="Finnish",
-[15]="Swedish",
-[16]="Danish",
-[17]="Norwegian",
-[18]="Czech",
-[19]="Hungarian",
-[20]="Slovak",
-[21]="Arabic",
-[22]="Turkish",
-[23]="Bulgarian",
-[24]="Greek",
-[25]="Romanian",
-[26]="Thai",
-[27]="Ukrainian",
-[28]="Vietnamese",
-[29]="Indonesian",
-[30]="Fiction",
-[31]="Hindi",
-[32]="LatinAmericanSpanish",
-[33]="Max",
-[33]="Unknown",
+    [0]="Japanese"
+    [1]="English",
+    [2]="French",
+    [3]="Italian",
+    [4]="German",
+    [5]="Spanish",
+    [6]="Russian",
+    [7]="Polish",
+    [8]="Dutch",
+    [9]="Portuguese",
+    [10]="PortugueseBr",
+    [11]="Korean",
+    [12]="TransitionalChinese",
+    [13]="SimplelifiedChinese",
+    [14]="Finnish",
+    [15]="Swedish",
+    [16]="Danish",
+    [17]="Norwegian",
+    [18]="Czech",
+    [19]="Hungarian",
+    [20]="Slovak",
+    [21]="Arabic",
+    [22]="Turkish",
+    [23]="Bulgarian",
+    [24]="Greek",
+    [25]="Romanian",
+    [26]="Thai",
+    [27]="Ukrainian",
+    [28]="Vietnamese",
+    [29]="Indonesian",
+    [30]="Fiction",
+    [31]="Hindi",
+    [32]="LatinAmericanSpanish",
+    [33]="Max",
+    [33]="Unknown",
 ]]--
 local prevInitLanguage=""
 local function Init()
@@ -369,15 +388,18 @@ local function Init()
     local tmp=json.load_file(filename)
     if tmp~=nil and tmp.FieldFormat~=nil then
         FieldFormat=tmp.FieldFormat
-        RingSpecialFormat={}
+        ItemBuffFormat=tmp.ItemBuffFormat
+        WeaponSpecialFormat={}
         --convert string key to int
-        for k,v in pairs(tmp.RingSpecialFormat) do
+        for k,v in pairs(tmp.WeaponSpecialFormat or {}) do            
+            WeaponSpecialFormat[tonumber(k) or k]=v
+        end
+        RingSpecialFormat={}
+        for k,v in pairs(tmp.RingSpecialFormat or {}) do
             RingSpecialFormat[tonumber(k)]=v
         end
-
         AbilityFormat={}
-        --convert string key to int
-        for k,v in pairs(tmp.AbilityFormat) do
+        for k,v in pairs(tmp.AbilityFormat or {}) do
             AbilityFormat[tonumber(k)]=v
         end
         Log("Load From",filename)
@@ -387,6 +409,7 @@ local function Init()
     prevInitLanguage=lng
     ItemDescCache={}
     SkillDescCache={}
+    WeaponCharaMsgCache=nil
 
     --Init SkillName2Id
     SkillName2Id={}
@@ -418,7 +441,6 @@ sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSa
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
 --Init()
 
-
 local function float2stringEX(v)
     if v-math.floor(v)<0.0001 then
         return tostring(math.floor(v))
@@ -429,10 +451,16 @@ end
 --printRings()
 --printEnum("app.ItemEquipCategory")
 --printEnum("via.Language")
-
+local function Join(...)
+    local ret=""
+    for k,v in ipairs{...} do
+        if ret~="" and v~="" then ret=ret.."/" end
+        ret=ret..v
+    end
+    return ret
+end
 local function TranslateFields(param,paramtype)
     local ret=""
-    local tmpLine=""
     --get_fields only return sub class's field,need pass in type to appoint certain type
     local fields=paramtype:get_fields()
     --Iterate fields and convert to string
@@ -475,19 +503,15 @@ local function TranslateFields(param,paramtype)
             --Log("Ignore "..fieldname)
             --Log(string.format("%s=nil,",fieldname))
         end
-        if fieldMsg~="" then
-            if tmpLine~="" then tmpLine=tmpLine.."/" end
-            tmpLine=tmpLine..fieldMsg
-            if string.len(tmpLine) >config.newlinewidth then 
-                ret=ret..tmpLine.."\n" 
-                tmpLine=""
-            end
-        end
+        ret=Join(ret,fieldMsg)
     end
-    if paramtype:get_full_name()=="app.ItemDataParam" and FieldFormat["_Buff"]~=nil and FieldFormat["_Buff"].enable~=false then
+    return ret
+end
+local function TranslateItemBuff(param)
+    if ItemBuffFormat~=nil then
         local player=sdk.get_managed_singleton("app.CharacterManager"):get_ManualPlayer()
         local buffParam=player:get_Human():get_Param().SpecialBuffParam
-        local format=FieldFormat["_Buff"].format
+        local format=ItemBuffFormat
         local itemBuffParam=buffParam:getItemParam(param._Id)
         if itemBuffParam~=nil then
             local msg=""
@@ -504,16 +528,10 @@ local function TranslateFields(param,paramtype)
                 msg=msg..string.format(format.StaminaRecoverFactor,tostring(itemBuffParam.StaminaRecoverFactor))
             end
             msg=msg..string.format(format.Sec,float2stringEX(itemBuffParam.Sec))
-            if tmpLine~="" then tmpLine=tmpLine.."/" end
-            tmpLine=tmpLine..msg
-            if string.len(tmpLine) >config.newlinewidth then 
-                ret=ret..tmpLine.."\n" 
-                tmpLine=""
-            end
+            return msg
         end
     end
-    ret=ret..tmpLine
-    return ret
+    return ""
 end
 local function TranslateRingSP(param)
     local sp=param._Special
@@ -523,6 +541,46 @@ local function TranslateRingSP(param)
     ret=string.gsub(ret,"{v2}",tostring(param._SpecialValue2))
     ret=string.gsub(ret,"{v3}",tostring(param._SpecialValue3))
     return ret
+end
+
+local function TranslateWeaponSP(param)
+    local ret=""
+    if WeaponSpecialFormat and param._Id and WeaponSpecialFormat[param._Id] and WeaponSpecialFormat[param._Id].enable then
+        local im=sdk.get_managed_singleton("app.ItemManager")
+        local addiParam=im:get_WeaponAdditionalDataDict():get_Item(param._WeaponId)
+        if addiParam~=nil then
+            local msg=WeaponSpecialFormat[param._Id].format
+            msg=string.gsub(msg,"{v1}",tostring(addiParam:get_SpecialValue1Prop()))
+            msg=string.gsub(msg,"{v2}",tostring(addiParam:get_SpecialValue2Prop()))
+            ret=Join(ret,msg)
+        end
+    end    
+    if WeaponSpecialFormat and WeaponSpecialFormat["SpecialEfficacy"] and WeaponSpecialFormat["SpecialEfficacy"].enable then
+        local im=sdk.get_managed_singleton("app.ItemManager")
+        if weaponCharaDamageMsgCache==nil then
+            weaponCharaDamageMsgCache={}
+            local weaponCharaParams=im:get_WeaponSpecialEfficacyParamProp()
+            for i=0,weaponCharaParams:get_Count()-1 do
+                local idlist= weaponCharaParams[i]:get_WeaponIDListProp()
+                local msg=WeaponSpecialFormat["SpecialEfficacy"].format
+                msg=string.gsub(msg,"{v1}",tostring(weaponCharaParams[i]:get_AttackRateProp()))
+                for j=0,idlist:get_Count()-1 do
+                    local id=idlist[j].value__
+                    weaponCharaDamageMsgCache[id]=Join((weaponCharaDamageMsgCache[id] or ""),msg)
+                end
+            end
+        end
+        ret=Join(ret, weaponCharaDamageMsgCache[param._WeaponId] or "")
+    end
+    return ret
+end
+local function isWeapon(param)
+    if param==nil then return false end
+    return param:get_type_definition():is_a("app.ItemWeaponParam") 
+end
+local function isItem(param)
+    if param==nil then return false end
+    return param:get_type_definition():is_a("app.ItemDataParam") 
 end
 
 local function isRing(param)
@@ -542,28 +600,11 @@ local function isRing(param)
     return false
 end
 local function isRingOrItem(param)
-    if param==nil then return false end
-    if param:get_type_definition():is_a("app.ItemDataParam") then return true end
-    if isRing(param)==true then return true end
-    return false
+    return (isRing(param)==true or isItem(param)==true)
 end
 
-local function GetItemDetail(itemCommonParam)
-    local ret=""
-    local itemParam=itemCommonParam:get_ItemParam()
-    if config.ignoreArmorAndWeapon and not isRingOrItem(itemCommonParam) then return "" end
-    for _,type in pairs(ItemParamTypes) do
-        if itemCommonParam:get_type_definition():is_a(type) then
-            ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type))
-        end
-    end
-    if isRing(itemCommonParam) then
-        ret=ret..TranslateRingSP(itemCommonParam)
-    end
-    return ret
-end
-
-local function ReWrapText(originalMessage)
+local function ReWrapText(originalMessage,bareRate)
+    local maxwidth=math.floor((bareRate or 1.0)*config.newlinewidth+0.5)
     originalMessage=string.gsub(originalMessage,"\r\n"," ")
     local newMessage=""
     local width=0
@@ -571,7 +612,7 @@ local function ReWrapText(originalMessage)
     for i=1,#originalMessage do
         width=width+1
         local c=originalMessage:byte(i)
-        if c==string.byte(" ") and width>config.newlinewidth then
+        if c==string.byte(" ") and width>maxwidth then
             --print("SSS2",last_start,width,originalMessage)
             if newMessage~="" then newMessage=newMessage.."\r\n" end
             newMessage=newMessage..string.sub(originalMessage,last_start,last_start+width-1)
@@ -585,6 +626,27 @@ local function ReWrapText(originalMessage)
     end
 
     return newMessage
+end
+
+local function GetItemDetail(itemCommonParam)
+    local ret=""
+    local itemParam=itemCommonParam:get_ItemParam()
+    if config.ignoreArmorAndWeapon and not isRingOrItem(itemCommonParam) then return "" end
+    for _,type in pairs(ItemParamTypes) do
+        if itemCommonParam:get_type_definition():is_a(type) then
+            ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type))
+        end
+    end
+    if isRing(itemCommonParam) then
+        ret=Join(ret,TranslateRingSP(itemCommonParam))
+    end
+    if isWeapon(itemCommonParam) then
+        ret=Join(ret,TranslateWeaponSP(itemCommonParam))
+    end
+    if isItem(itemCommonParam) then
+        ret=Join(ret,TranslateItemBuff(itemCommonParam))
+    end
+    return ReWrapText(ret,1.05)
 end
 
 local function GetOrAddItemDesc(originalMessage,itemCommonParam)
@@ -625,7 +687,6 @@ local function GetAbilityDetail(player,Id)
     return ret
 end
 
-
 local function GetOrAddSkillDesc(originalMessage,Id)
     --if tmpStr~=nil then return tmpStr end
     if SkillDescCache[Id] ==nil then
@@ -645,7 +706,6 @@ local function GetOrAddSkillDesc(originalMessage,Id)
     --Log(SkillDescCache[Id])
     return sdk.create_managed_string(SkillDescCache[Id])
 end
-
 
 local tmpItemWindow=nil
 local tmpItem=nil
@@ -669,7 +729,6 @@ sdk.hook(
         end
     end
 )
-
 
 local function LogTypeMethods(game_object)
     x=game_object:get_type_definition():get_methods()
@@ -780,4 +839,4 @@ local function prequire(...)
     return nil
 end
 local myapi = prequire("_XYZApi/_XYZApi")
-if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,function() ItemDescCache={} SkillDescCache={} end) end
+if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,function() ItemDescCache={} SkillDescCache={} WeaponCharaMsgCache=nil end) end

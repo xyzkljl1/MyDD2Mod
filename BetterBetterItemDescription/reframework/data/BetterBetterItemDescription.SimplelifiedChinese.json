@@ -1,21 +1,54 @@
 {
+  "WeaponSpecialFormat": {
+    "SpecialEfficacy": {
+      "enable": true,
+      "format": "对特定敌人+{v1}伤害倍率",
+      "hint": "对特定敌人增伤"
+    },
+    "1010": {
+      "enable": true,
+      "format": "每次攻击获得+{v1}%可叠加的基础攻击力，不超过+{v2}%",
+      "hint": "wp00_007_00,龙之信条,每次攻击获得基础攻击倍率"
+    },
+    "1207": {
+      "enable": true,
+      "format": "**高于25%血量时获得+0~10%基础攻击力.低于25%血量时获得+300%基础攻击力",
+      "hint": "龙之信条大剑,根据(1-ReducedHpRatio)获得基础攻击倍率，参数是1/1实在找不到规律，代码也看不懂，实测是损失(0,75%)血量时获得约(0,0.1),损失75%以上时跃升至4.0"
+    },
+    "1413": {
+      "enable": false,
+      "hint": "探测匕首,1/1,推测(1,1)的都是实际不使用参数计算？"
+    },
+    "1804": {
+      "enable": true,
+      "format": "+{v1}% EXP",
+      "hint": "美杜莎魔弓箭，(300,400),第二个参数不知道干什么用的"
+    },
+    "1906": {
+      "enable": true,
+      "format": "承受+{v1}%伤害/每秒恢复{v2}HP",
+      "hint": "圣木魔弓，固定回血，给敌人加DamageRate"
+    },
+    "2010": {
+      "enable": true,
+      "format": "每次攻击获得+{v1}%可叠加的基础攻击力，不超过+{v2}%",
+      "hint": "林德蠕龙的尖牙"
+    },
+    "2103": {
+      "enable": false,
+      "hint": "梦想路，50/50,攻击加金钱,不知道什么意思"
+    },
+    "2210": {
+      "enable": false,
+      "hint": "庇佑护盾，200/0,意义不明"
+    }
+  },
   "FieldFormat": {
     "_BlowResistRate": "%s%% 击退抵抗",
     "_BuyPrice": {
       "enable": false,
       "format": "BuyPrice %s.",
       "type": "String"
-    },
-    "_Buff": {
-      "enable": true,
-      "format": {
-        "AttackFactor": "+%s%% 攻击 ",
-        "DefenceFactor": "+%s%% 防御 ",
-        "StatusConditionResistFactor": "+%s%% 异常抵抗",
-        "StaminaRecoverFactor": "%s%% 耐力恢复",
-        "Sec": ",持续%s秒"
-      },
-      "type": "Buff"
     },
     "_Category": {
       "enable": false,
@@ -28,7 +61,7 @@
       "type": "Enum"
     },
     "_ElementStore": "%s%% 元素附魔",
-    "_Blow": "击退",
+    "_Blow": "%s 击退",
     "_BlowGuard": "%s 击退防御",
     "_StrikeStore": "%s 昏厥附魔",
     "_PoisonStore": "%s 毒附魔",
@@ -446,5 +479,13 @@
       "format": "+{v1} 伤害倍率",
       "hint": "攻撃倍率加算値(0.100000,0.000000)"
     }
+  },
+  "ItemBuffFormat": {
+
+    "AttackFactor": "+%s%% 攻击 ",
+    "DefenceFactor": "+%s%% 防御 ",
+    "StatusConditionResistFactor": "+%s%% 异常抵抗",
+    "StaminaRecoverFactor": "%s%% 耐力恢复",
+    "Sec": ",持续%s秒"
   }
 }
