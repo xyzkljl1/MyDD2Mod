@@ -6,6 +6,17 @@
       "format": "BuyPrice %s.",
       "type": "String"
     },
+    "_Buff": {
+      "enable": true,
+      "format": {
+        "AttackFactor": "+%s%% 攻击 ",
+        "DefenceFactor": "+%s%% 防御 ",
+        "StatusConditionResistFactor": "+%s%% 异常抵抗",
+        "StaminaRecoverFactor": "%s%% 耐力恢复",
+        "Sec": ",持续%s秒"
+      },
+      "type": "Buff"
+    },
     "_Category": {
       "enable": false,
       "format": "类别 %s",

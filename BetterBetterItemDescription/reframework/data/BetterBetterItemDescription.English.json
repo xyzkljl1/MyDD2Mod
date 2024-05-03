@@ -190,14 +190,25 @@
         }
     },
     "FieldFormat": {
-        "_AddStatus": {
-            "enable": true,
-            "format": "Add %s Status",
-            "map": [
-                "Posion"
-            ],
-            "type": "Enum"
+      "_AddStatus": {
+        "enable": true,
+        "format": "Add %s Status",
+        "map": [
+          "Posion"
+        ],
+        "type": "Enum"
+      },
+      "_Buff": {
+        "enable": true,
+        "format": {
+          "AttackFactor": "+%s%% Attack ",
+          "DefenceFactor": "+%s%% Defense ",
+          "StatusConditionResistFactor": "+%s%% Status Resist",
+          "StaminaRecoverFactor": "%s%% Stamina Recover",
+          "Sec": "for %s seconds"
         },
+        "type": "Buff"
+      },
         "_Blow": "%s Knockdown",
         "_BlowGuard": "%s Knockdown Guard",
         "_BlowResistRate": "%s%% Knockdown Resist",

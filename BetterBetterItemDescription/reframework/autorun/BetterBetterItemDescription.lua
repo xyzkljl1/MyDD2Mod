@@ -191,62 +191,62 @@ local RingSpecialFormat={
 }
 
 local AbilityFormat={
---Fighter 1
-[4]={format="x{v1} Mutliplier",hint="固定ヘイト値 * Value(2.000000,0.000000)"},
-[5]={format="Gain {v2}%+{v1} DEF",hint="１：固定値　２：割合値(%)(45.000000,30.000000)"},
-[6]={format="Gain {v2}%+{v1} Max Weight",hint="最大重量加算値(10.000000,0.000000)"},
-[7]={format="Lift up +{v1} seconds.Pin Down +{v2} seconds",hint="1：担ぎ上げ、2：押さえつけ。単位は秒(2.000000,2.000000)"},
-[8]={format="{v1} seconds faster from Down.{v2} seconds faster from Crawling",hint="1：ダウン、2：這いずり。単位は秒(0.300000,1.000000)"},
---Archer 2
-[9]={format="+{v1} Damage Rate",hint="攻撃倍率加算値(0.100000,0.000000)"},
-[10]={format="+{v1} Max Stamina",hint="固定値(150.000000,0.000000)"},
-[11]={format="x{v1} Oil Cost/x{v2} Range",hint="1:燃料の消費速度倍率　2:照らす範囲(0.660000,2.000000)"},
-[12]={format="+{v1} Damage Rate",hint="攻撃倍率加算値(0.050000,0.000000)"},
-[13]={format="cliff:x{v1}/Other:x{v2}",hint="1：段差登り、2：しがみつき・しゃがみ(1.100000,1.100000)"},
---Mage 3
-[14]={format="Gain {v2}%+{v1} MagDEF",hint="１：固定値　２：割合値(%)(45.000000,30.000000)"},
-[15]={format="+{v1}% Recover Amount",hint="増加回復量(％)(10.000000,0.000000)"},
-[16]={format="x{v1} Duration",hint="効果時間倍率(0.700000,0.000000)"},
-[17]={format="x{v1} Duration",hint="効果時間倍率(1.200000,0.000000)"},
-[18]={format="+{v1} Recover Rate",hint="加算倍率を入力(0.100000,0.000000)"},
---Thief 4
-[19]={format="x{v1} Hate Mutliplier",hint="固定ヘイト値 * Value(0.850000,0.000000)"},
-[20]={format="Recover {v1}%~{v2}% of Max HP",hint="トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"},
-[21]={format="x{v1} Stamina Cost Mutliplier",hint="(0.800000,0.000000)"},
-[22]={format="x{v1} Stamina Cost Mutliplier",hint="しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"},
-[23]={format="Gain {v2}%+{v1} Strength",hint="１：固定値　２：割合値(%)(30.000000,0.000000)"},
---Warrior 5
-[24]={format="Gain {v2}%+{v1} MaxHP",hint="HPの上限値 + Value(200.000000,0.000000)"},
-[25]={format="x{v1} Mutliplier",hint="組み付き時の押し引き力 * Value(1.500000,0.000000)"},
-[26]={format="+{v1}% Guard Damage Rate",hint="ガード削り攻撃力 + Value%(30.000000,0.000000)"},
-[27]={format="+{v1}% Knockdown power",hint="吹き飛ばし力 + Value%(15.000000,0.000000)"},
-[28]={format="x{v1} MaxHP loss",hint="黒ゲージ蓄積量×Value(0.950000,0.000000)"},
---Sorcerer 6
-[29]={format="+{v1}% debilitation",hint="状態異常与蓄積値 + Value%(20.000000,0.000000)"},
-[30]={format="{v1}/{v2}",hint="(75.000000,90.000000)"},
-[31]={format="+{v1}% Knockdown Resist",hint="吹き飛ばし耐性 + Value%(30.000000,0.000000)"},
-[32]={format="+{v1}% Damage",hint="弱点属性による与ダメージ + Value%(5.000000,0.000000)"},
-[33]={format="{v2}%+{v1} MagATK",hint="１：固定値　２：割合値(%)(30.000000,0.000000)"},
---7
-[34]={format="x{v1} Move Speed",hint="持ち上げ、担ぎ上げ時の移動速度xValue(1.100000,0.000000)"},
-[35]={format="x{v1} Gold",hint="金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"},
-[36]={format="Gain {v2}% ATK in Day(4:00~20:00)\n{v2}% MagATK in Night(18:00~6:00)",hint="日中（4時～20時）、物理攻撃力+ 夜間（18時～6時）、魔法攻撃力+ １：固定値　２：割合値(%)(0.000000,5.000000)"},
-[37]={format="x{v1} Amount",hint="リム決勝を入手したときのリム獲得量xValue(1.050000,0.000000)"},
-[38]={format="x{v1} Cost",hint="ダッシュ中のスタミナ消費量×Value(0.900000,0.000000)"},
---8
-[39]={format="Gain {v2}%+{v1} DEF/MagDEF",hint="ポーンの物理防御力/魔法防御力+ １：固定値　２：割合値(%)(30.000000,0.000000)"},
-[40]={format="Recover {v1}% Stamina",hint="敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"},
-[41]={format="x{v1} Chance",hint="(1.200000,0.000000)"},
-[42]={format="Gain {v2}%+{v1} ATK/MagATK",hint="ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"},
-[43]={format="-{v1} seconds",hint="ポーン蘇生にかかる時間 -Value(秒)(1.000000,0.000000)"},
---9
-[44]={format="{v1}",hint="(1.500000,0.000000)"},
-[45]={format="{v1}% Trigger",hint="調合時にアイテム作成個数+1個になる確率Value％(15.000000,0.000000)"},
-[46]={format="x{v1} Chance to be attacked",hint="襲撃確率 * Value(0.350000,0.000000)"},
-[47]={format="x{v1} Enemy Sight Range",hint="敵の視界センサー * Value(0.850000,0.000000)"},
-[48]={format="Gain x{v1} Favorability",hint="NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"},
-[49]={format="x{v1} Cost",hint="カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"},
-[50]={format="-{v1} Weight Level When Moving",hint="移動時の重量ランクをValue段階下げる(1.000000,0.000000)"},
+    --Fighter 1
+    [4]={format="x{v1} Mutliplier",hint="固定ヘイト値 * Value(2.000000,0.000000)"},
+    [5]={format="Gain {v2}%+{v1} DEF",hint="１：固定値　２：割合値(%)(45.000000,30.000000)"},
+    [6]={format="Gain {v2}%+{v1} Max Weight",hint="最大重量加算値(10.000000,0.000000)"},
+    [7]={format="Lift up +{v1} seconds.Pin Down +{v2} seconds",hint="1：担ぎ上げ、2：押さえつけ。単位は秒(2.000000,2.000000)"},
+    [8]={format="{v1} seconds faster from Down.{v2} seconds faster from Crawling",hint="1：ダウン、2：這いずり。単位は秒(0.300000,1.000000)"},
+    --Archer 2
+    [9]={format="+{v1} Damage Rate",hint="攻撃倍率加算値(0.100000,0.000000)"},
+    [10]={format="+{v1} Max Stamina",hint="固定値(150.000000,0.000000)"},
+    [11]={format="x{v1} Oil Cost/x{v2} Range",hint="1:燃料の消費速度倍率　2:照らす範囲(0.660000,2.000000)"},
+    [12]={format="+{v1} Damage Rate",hint="攻撃倍率加算値(0.050000,0.000000)"},
+    [13]={format="cliff:x{v1}/Other:x{v2}",hint="1：段差登り、2：しがみつき・しゃがみ(1.100000,1.100000)"},
+    --Mage 3
+    [14]={format="Gain {v2}%+{v1} MagDEF",hint="１：固定値　２：割合値(%)(45.000000,30.000000)"},
+    [15]={format="+{v1}% Recover Amount",hint="増加回復量(％)(10.000000,0.000000)"},
+    [16]={format="x{v1} Duration",hint="効果時間倍率(0.700000,0.000000)"},
+    [17]={format="x{v1} Duration",hint="効果時間倍率(1.200000,0.000000)"},
+    [18]={format="+{v1} Recover Rate",hint="加算倍率を入力(0.100000,0.000000)"},
+    --Thief 4
+    [19]={format="x{v1} Hate Mutliplier",hint="固定ヘイト値 * Value(0.850000,0.000000)"},
+    [20]={format="Recover {v1}%~{v2}% of Max HP",hint="トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"},
+    [21]={format="x{v1} Stamina Cost Mutliplier",hint="(0.800000,0.000000)"},
+    [22]={format="x{v1} Stamina Cost Mutliplier",hint="しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"},
+    [23]={format="Gain {v2}%+{v1} Strength",hint="１：固定値　２：割合値(%)(30.000000,0.000000)"},
+    --Warrior 5
+    [24]={format="Gain {v2}%+{v1} MaxHP",hint="HPの上限値 + Value(200.000000,0.000000)"},
+    [25]={format="x{v1} Mutliplier",hint="組み付き時の押し引き力 * Value(1.500000,0.000000)"},
+    [26]={format="+{v1}% Guard Damage Rate",hint="ガード削り攻撃力 + Value%(30.000000,0.000000)"},
+    [27]={format="+{v1}% Knockdown power",hint="吹き飛ばし力 + Value%(15.000000,0.000000)"},
+    [28]={format="x{v1} MaxHP loss",hint="黒ゲージ蓄積量×Value(0.950000,0.000000)"},
+    --Sorcerer 6
+    [29]={format="+{v1}% debilitation",hint="状態異常与蓄積値 + Value%(20.000000,0.000000)"},
+    [30]={format="{v1}/{v2}",hint="(75.000000,90.000000)"},
+    [31]={format="+{v1}% Knockdown Resist",hint="吹き飛ばし耐性 + Value%(30.000000,0.000000)"},
+    [32]={format="+{v1}% Damage",hint="弱点属性による与ダメージ + Value%(5.000000,0.000000)"},
+    [33]={format="{v2}%+{v1} MagATK",hint="１：固定値　２：割合値(%)(30.000000,0.000000)"},
+    --7
+    [34]={format="x{v1} Move Speed",hint="持ち上げ、担ぎ上げ時の移動速度xValue(1.100000,0.000000)"},
+    [35]={format="x{v1} Gold",hint="金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"},
+    [36]={format="Gain {v2}% ATK in Day(4:00~20:00)\n{v2}% MagATK in Night(18:00~6:00)",hint="日中（4時～20時）、物理攻撃力+ 夜間（18時～6時）、魔法攻撃力+ １：固定値　２：割合値(%)(0.000000,5.000000)"},
+    [37]={format="x{v1} Amount",hint="リム決勝を入手したときのリム獲得量xValue(1.050000,0.000000)"},
+    [38]={format="x{v1} Cost",hint="ダッシュ中のスタミナ消費量×Value(0.900000,0.000000)"},
+    --8
+    [39]={format="Gain {v2}%+{v1} DEF/MagDEF",hint="ポーンの物理防御力/魔法防御力+ １：固定値　２：割合値(%)(30.000000,0.000000)"},
+    [40]={format="Recover {v1}% Stamina",hint="敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"},
+    [41]={format="x{v1} Chance",hint="(1.200000,0.000000)"},
+    [42]={format="Gain {v2}%+{v1} ATK/MagATK",hint="ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"},
+    [43]={format="-{v1} seconds",hint="ポーン蘇生にかかる時間 -Value(秒)(1.000000,0.000000)"},
+    --9
+    [44]={format="{v1}",hint="(1.500000,0.000000)"},
+    [45]={format="{v1}% Trigger",hint="調合時にアイテム作成個数+1個になる確率Value％(15.000000,0.000000)"},
+    [46]={format="x{v1} Chance to be attacked",hint="襲撃確率 * Value(0.350000,0.000000)"},
+    [47]={format="x{v1} Enemy Sight Range",hint="敵の視界センサー * Value(0.850000,0.000000)"},
+    [48]={format="Gain x{v1} Favorability",hint="NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"},
+    [49]={format="x{v1} Cost",hint="カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"},
+    [50]={format="-{v1} Weight Level When Moving",hint="移動時の重量ランクをValue段階下げる(1.000000,0.000000)"},
 }
 
 local function printEnum(enumName)
@@ -396,6 +396,12 @@ sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneTyp
 --Init()
 
 
+local function float2stringEX(v)
+    if v-math.floor(v)<0.0001 then
+        return tostring(math.floor(v))
+    end
+    return string.format("%.2f",v)
+end
 --printJobAbility()
 --printRings()
 --printEnum("app.ItemEquipCategory")
@@ -449,6 +455,34 @@ local function TranslateFields(param,paramtype)
         if fieldMsg~="" then
             if tmpLine~="" then tmpLine=tmpLine.."/" end
             tmpLine=tmpLine..fieldMsg
+            if string.len(tmpLine) >config.newlinewidth then 
+                ret=ret..tmpLine.."\n" 
+                tmpLine=""
+            end
+        end
+    end
+    if paramtype:get_full_name()=="app.ItemDataParam" and FieldFormat["_Buff"]~=nil and FieldFormat["_Buff"].enable~=false then
+        local player=sdk.get_managed_singleton("app.CharacterManager"):get_ManualPlayer()
+        local buffParam=player:get_Human():get_Param().SpecialBuffParam
+        local format=FieldFormat["_Buff"].format
+        local itemBuffParam=buffParam:getItemParam(param._Id)
+        if itemBuffParam~=nil then
+            local msg=""
+            if itemBuffParam.AttackFactor~=0 then
+                msg=msg..string.format(format.AttackFactor,tostring(itemBuffParam.AttackFactor))
+            end
+            if itemBuffParam.DefenceFactor~=0 then
+                msg=msg..string.format(format.DefenceFactor,tostring(itemBuffParam.DefenceFactor))
+            end
+            if itemBuffParam.StatusConditionResistFactor~=0 then
+                msg=msg..string.format(format.StatusConditionResistFactor,tostring(itemBuffParam.StatusConditionResistFactor))
+            end
+            if itemBuffParam.StaminaRecoverFactor~=0 then
+                msg=msg..string.format(format.StaminaRecoverFactor,tostring(itemBuffParam.StaminaRecoverFactor))
+            end
+            msg=msg..string.format(format.Sec,float2stringEX(itemBuffParam.Sec))
+            if tmpLine~="" then tmpLine=tmpLine.."/" end
+            tmpLine=tmpLine..msg
             if string.len(tmpLine) >config.newlinewidth then 
                 ret=ret..tmpLine.."\n" 
                 tmpLine=""
@@ -553,13 +587,6 @@ local function GetOrAddItemDesc(originalMessage,itemCommonParam)
     --can't cache managed_string ,causes crash
     --Log(ItemDescCache[Id])
     return sdk.create_managed_string(ItemDescCache[Id])
-end
-
-local function float2stringEX(v)
-    if v-math.floor(v)<0.0001 then
-        return tostring(math.floor(v))
-    end
-    return string.format("%.2f",v)
 end
 
 local function GetAbilityDetail(player,Id)
