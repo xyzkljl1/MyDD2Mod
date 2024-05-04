@@ -174,8 +174,8 @@
       "hint": "(3537,Ring of Requital,15,10,0)"
     },
     "15": {
-      "enable": false,
-      "format": "{v1} {v2} {v3}",
+      "enable": true,
+      "format": "**基于负重获得最多20%基础攻击力，低于0负重时无效",
       "hint": "(3538,Ring of Brawn,0,0,0)"
     },
     "16": {
@@ -486,6 +486,8 @@
     "DefenceFactor": "+%s%% 防御 ",
     "StatusConditionResistFactor": "+%s%% 异常抵抗",
     "StaminaRecoverFactor": "%s%% 耐力恢复",
-    "Sec": ",持续%s秒"
+    "Sec": ",持续%s秒",
+    "MaxHpDamageFactor": "-%s%% 最大血量损失",
+    "Camp": "露营:"
   }
 }

@@ -363,8 +363,8 @@
       "hint": "(3537,Ring of Requital,15,10,0)"
     },
     "15": {
-      "enable": false,
-      "format": "{v1} {v2} {v3}",
+      "enable": true,
+      "format": "**Gain at max 20% BaseAtk based on weight. No effect under 0.0 weight.",
       "hint": "(3538,Ring of Brawn,0,0,0)"
     },
     "16": {
@@ -481,8 +481,10 @@
   "ItemBuffFormat": {
     "AttackFactor": "+%s%% Attack ",
     "DefenceFactor": "+%s%% Defense ",
-    "StatusConditionResistFactor": "+%s%% Status Resist",
-    "StaminaRecoverFactor": "%s%% Stamina Recover",
-    "Sec": "for %s seconds"
+    "StatusConditionResistFactor": "+%s%% Status Resist ",
+    "StaminaRecoverFactor": "%s%% Stamina Recover ",
+    "Sec": "for %s seconds",
+    "MaxHpDamageFactor":"-%s%% MaxHP Loss",
+    "Camp":"Camp:"
   }
 }

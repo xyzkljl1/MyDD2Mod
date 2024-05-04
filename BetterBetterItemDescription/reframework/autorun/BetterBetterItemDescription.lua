@@ -28,13 +28,16 @@ for key,para in pairs(_config) do
 end
 config= recurse_def_settings(config, json.load_file(configfile) or {})
 
-local guiManager=sdk.get_managed_singleton("app.GuiManager")
 --Cache of expaned Item Description
 local ItemDescCache={}
 local SkillDescCache={}
 local WeaponCharaMsgCache={}
 local SkillName2Id={}
+local RewarpOnNonSpace=true
 
+local guiManager=nil
+local characterManager=nil
+local messageManager=nil
 
 local function Log(...)
     print(...)
@@ -157,9 +160,11 @@ local FieldFormat={
 local ItemBuffFormat={
     ["AttackFactor"]="+%s%% Attack ",
     ["DefenceFactor"]="+%s%% Defense ",
-    ["StatusConditionResistFactor"]= "+%s%% Status Resist",
-    ["StaminaRecoverFactor"]= "%s%% Stamina Recover",
-    ["Sec"]= "for %s seconds"
+    ["StatusConditionResistFactor"]= "+%s%% Status Resist ",
+    ["StaminaRecoverFactor"]= "%s%% Stamina Recover ",
+    ["Sec"]= "for %s seconds",
+    ["MaxHpDamageFactor"]="-%s%% MaxHP Loss ",
+    ["Camp"]="Camp:"
 }
 
 local WeaponSpecialFormat={
@@ -375,6 +380,12 @@ local function Init()
     local om=sdk.get_managed_singleton("app.OptionManager")
     local optionItem=om._OptionItems:get_Item(sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data())
     local lng=optionItem:get_FixedValueModel():get_StringValue()
+
+    if lng=="Japanese" or lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Vietnamese" or lng=="Korean" then
+        RewarpOnNonSpace=true
+    else
+        RewarpOnNonSpace=false
+    end
     if lng==prevInitLanguage then
         Log("Ignore dup init")
         return
@@ -414,10 +425,12 @@ local function Init()
     --Init SkillName2Id
     SkillName2Id={}
 
-    local messageManager=sdk.get_managed_singleton("app.MessageManager")
+    guiManager=sdk.get_managed_singleton("app.GuiManager")
+    characterManager=sdk.get_managed_singleton("app.CharacterManager")    
+    messageManager=sdk.get_managed_singleton("app.MessageManager")
+
     local type=sdk.find_type_definition("app.Character.JobEnum")
     local fields=type:get_fields()
-    local guiManager=sdk.get_managed_singleton("app.GuiManager")
     for _,field in pairs(fields) do
         if field:get_data()~=nil and field:get_data()>0 then
             local job=field:get_data()                       
@@ -507,14 +520,17 @@ local function TranslateFields(param,paramtype)
     end
     return ret
 end
+
+--notice sdk.create_instance not work.
+local mycampBuffParam=ValueType.new(sdk.find_type_definition("app.HumanSpecialBuffDefine.Camp"))
 local function TranslateItemBuff(param)
     if ItemBuffFormat~=nil then
-        local player=sdk.get_managed_singleton("app.CharacterManager"):get_ManualPlayer()
+        local player=characterManager:get_ManualPlayer()
         local buffParam=player:get_Human():get_Param().SpecialBuffParam
         local format=ItemBuffFormat
         local itemBuffParam=buffParam:getItemParam(param._Id)
+        local msg=""
         if itemBuffParam~=nil then
-            local msg=""
             if itemBuffParam.AttackFactor~=0 then
                 msg=msg..string.format(format.AttackFactor,tostring(itemBuffParam.AttackFactor))
             end
@@ -528,8 +544,42 @@ local function TranslateItemBuff(param)
                 msg=msg..string.format(format.StaminaRecoverFactor,tostring(itemBuffParam.StaminaRecoverFactor))
             end
             msg=msg..string.format(format.Sec,float2stringEX(itemBuffParam.Sec))
-            return msg
         end
+        local drinkingBuffParam=buffParam:getDrinkingParam(param._Id)
+        if drinkingBuffParam~=nil then
+            if drinkingBuffParam.AttackFactor~=0 then
+                msg=msg..string.format(format.AttackFactor,tostring(drinkingBuffParam.AttackFactor))
+            end
+            if drinkingBuffParam.DefenceFactor~=0 then
+                msg=msg..string.format(format.DefenceFactor,tostring(drinkingBuffParam.DefenceFactor))
+            end
+            if drinkingBuffParam.StaminaRecoverFactor~=0 then
+                msg=msg..string.format(format.StaminaRecoverFactor,tostring(drinkingBuffParam.StaminaRecoverFactor))
+            end
+            msg=msg..string.format(format.Sec,float2stringEX(drinkingBuffParam.SecBuff))
+        end
+        --a static method
+        local getBuffMethod=sdk.find_type_definition("app.CampDefine"):get_method("tryGetBuff(app.ItemIDEnum, app.HumanSpecialBuffDefine.Camp)")
+        local success=getBuffMethod(nil,param._Id,mycampBuffParam)
+        if success then
+            local campBuff=buffParam:getCampParam(mycampBuffParam.value__)
+            if campBuff then
+                msg=msg..format.Camp
+                if campBuff.AttackFactor~=0 then
+                    msg=msg..string.format(format.AttackFactor,tostring(campBuff.AttackFactor))
+                end
+                if campBuff.DefenceFactor~=0 then
+                    msg=msg..string.format(format.DefenceFactor,tostring(campBuff.DefenceFactor))
+                end
+                if campBuff.StaminaFactor~=0 then
+                    msg=msg..string.format(format.StaminaRecoverFactor,tostring(campBuff.StaminaFactor))
+                end
+                if campBuff.MaxHpDamageFactor~=0 then
+                    msg=msg..string.format(format.MaxHpDamageFactor,tostring(campBuff.MaxHpDamageFactor))
+                end
+            end
+        end
+        return msg
     end
     return ""
 end
@@ -607,24 +657,19 @@ local function ReWrapText(originalMessage,bareRate)
     local maxwidth=math.floor((bareRate or 1.0)*config.newlinewidth+0.5)
     originalMessage=string.gsub(originalMessage,"\r\n"," ")
     local newMessage=""
-    local width=0
-    local last_start=1
-    for i=1,#originalMessage do
-        width=width+1
-        local c=originalMessage:byte(i)
-        if c==string.byte(" ") and width>maxwidth then
-            --print("SSS2",last_start,width,originalMessage)
+    local tmpLine=""
+    for utfChar in string.gmatch(originalMessage,"[%z\1-\127\194-\244][\128-\191]*") do
+        tmpLine=tmpLine..utfChar
+        if #tmpLine>maxwidth and (utfChar==" " or RewarpOnNonSpace) then
             if newMessage~="" then newMessage=newMessage.."\r\n" end
-            newMessage=newMessage..string.sub(originalMessage,last_start,last_start+width-1)
-            last_start=i+1
-            width=0
+            newMessage=newMessage..tmpLine
+            tmpLine=""
         end
     end
-    if width>0 then
+    if tmpLine~="" then
         if newMessage~="" then newMessage=newMessage.."\r\n" end
-        newMessage=newMessage..string.sub(originalMessage,last_start,last_start+width-1)
+        newMessage=newMessage..tmpLine
     end
-
     return newMessage
 end
 
@@ -741,7 +786,6 @@ end
 local tmpJobWindow=nil
 local tmpStatusWindow=nil
 local tmpSkillInfo=nil
-local messageManager=sdk.get_managed_singleton("app.MessageManager")
 --Job NormalSkill CustomSkill Ability other
 local MainContentsInfoKindAbility=sdk.find_type_definition("app.ui040101_00.MainContentsInfo.Kind"):get_field("Ability"):get_data()
 local MainContentsInfoKindOther=sdk.find_type_definition("app.ui040101_00.MainContentsInfo.Kind"):get_field("Other"):get_data()
