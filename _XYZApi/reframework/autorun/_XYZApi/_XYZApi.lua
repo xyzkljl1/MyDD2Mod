@@ -84,10 +84,12 @@ local function InitFromFile(_config,configfile,dontInitHotkey)
     --merge config file to default config
     local config = {} 
     for key,para in ipairs(_config) do
-        if type(para.default)=="table" then
-            config[para.name]=DeepCopyTable(para.default)
-        else
-            config[para.name]=para.default
+        if para.name~=nil then
+            if type(para.default)=="table" then
+                config[para.name]=DeepCopyTable(para.default)
+            else
+                config[para.name]=para.default
+            end
         end
     end
     config= recurse_def_settings(config, json.load_file(configfile) or {})
@@ -329,9 +331,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     local clicked=imgui.button(label..title_postfix)
                     if clicked==true and para.onClick ~=nil then
                         --will only trigger once when pressed
-                        triggeredButtons[key]=para.onClick
-                        --should mark to true?
-                        changed=true
+                        triggeredButtons[key]={func=para.onClick,para=nil}
+                        _changed=true
                     end
                 elseif para.type=="item" then
                     if para.enableSearch==true or para.enableSearch==nil then
@@ -411,6 +412,26 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         imgui.end_rect()
                         isInMutualBox=false
                     end
+                elseif para.type=="buttonN" then                   
+                    if #config[key]~=0 then
+                        imgui.begin_rect()
+                        imgui.text_colored(para.name..title_postfix,para.color or 0xff885533)
+                        for _,buttonpara in pairs(config[key]) do
+                            local clicked=imgui.button(buttonpara.name)
+                            --use para.OnClick,because buttonparas need to be saved into configfile
+                            if clicked==true and para.onClick ~=nil then
+                                --will only trigger once when pressed
+                                triggeredButtons[key]={func=para.onClick,para={buttonpara.index}}
+                                _changed=true
+                            end
+                        end
+                        imgui.end_rect()
+                    end
+                elseif para.type=="author" then
+                    imgui.text_colored(para.name or "\tAuthor: xyzkljl1",para.color or 0xffffffff)
+                end
+                if para.sameline==true then
+                    imgui.same_line()
                 end
 
                 if para.tip ~=nil and imgui.is_item_hovered() then
@@ -421,6 +442,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     imgui.pop_item_width()
                 end
             end
+            --Add an empty line to prevent the last setting ui's last line is not shown properly
+            imgui.text()
 
             if isInMutualBox then--end prev box
                 imgui.end_rect()
@@ -434,7 +457,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
 
         --should call before on change?
         for key,func in pairs(triggeredButtons) do 
-            func()
+            func.func(func.para)
         end
 
         if _changed==true then

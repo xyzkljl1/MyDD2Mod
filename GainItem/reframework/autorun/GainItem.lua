@@ -3,15 +3,25 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
 local onClickFunc=nil
+local onAddToFavList=nil
+local onFavListClick=nil
 
 local _config={
     {name="item",type="item",default=1},
     {name="count",type="int",default=1,min=1,max=99},
-    {name="SendToPlayer",type="button",onClick=function() onClickFunc("Player") end},{name="",type="sameline"},
+    {name="Add or Remove Item",type="mutualbox"},
+    {name="SendToPlayer",type="button",onClick=function() onClickFunc("Player") end,sameline=true},
     {name="SendToStorage",type="button",onClick=function() onClickFunc("Storage") end},
-    {name="SendToPawn1",type="button",onClick=function() onClickFunc("Pawn",0) end},{name="",type="sameline"},
-    {name="SendToPawn2",type="button",onClick=function() onClickFunc("Pawn",1) end},{name="",type="sameline"},
+    {name="SendToPawn1",type="button",onClick=function() onClickFunc("Pawn",0) end,sameline=true},
+    {name="SendToPawn2",type="button",onClick=function() onClickFunc("Pawn",1) end,sameline=true},
     {name="SendToPawn3",type="button",onClick=function() onClickFunc("Pawn",2) end},
+    {name="RemoveFromPlayer",type="button",onClick=function() onClickFunc("Player",nil,true) end},
+    {name="Favourite List",type="mutualbox"},
+    {name="AddToFavList",type="button",onClick=function() onAddToFavList() end,sameline=true},
+    {name="RemoveFromFavList",type="button",onClick=function() onRemoveFromFavList() end},
+    {name="FavList",type="buttonN",onClick=function(...) onFavListClick(...) end,default={}},
+    {type="mutualboxend"},
+    {type="author"}
 }
 
 local myapi = require("_XYZApi/_XYZApi")
@@ -61,11 +71,12 @@ end)
 local Wakestone=77
 local WakestoneShards=78
 
-local function AddItem(dest,index)
+local function AddItem(dest,index,remove)
     local im=sdk.get_managed_singleton("app.ItemManager")
     local player_man=sdk.get_managed_singleton("app.CharacterManager")
     local player=player_man:get_ManualPlayer()
     if im==nil or player==nil then return end
+    local isRemove=(remove==true)
 
     --Gather TreasureBox Talk DeadEnemy
     local type=sdk.find_type_definition("app.ItemManager.GetItemEventType"):get_field("TreasureBox"):get_data()
@@ -81,13 +92,12 @@ local function AddItem(dest,index)
     elseif dest=="Storage" then
         storageid=65535
     end
-    Log("Get Item")
+    local deleteMethod=im:get_type_definition():get_method("deleteItem(System.Int32, System.Int32, app.CharacterID)")
     --wakestone shards->wakestone causes crash.Can't  fix it.
     -- so just remove shards and give wakestone
-    if config.item == WakestoneShards then
+    if config.item == WakestoneShards and not isRemove then
         --for funcs has overload ,must use get_method
         local getNumMethod=im:get_type_definition():get_method("getHaveNum(System.Int32, app.CharacterID)")
-        local deleteMethod=im:get_type_definition():get_method("deleteItem(System.Int32, System.Int32, app.CharacterID)")
         local ct=getNumMethod:call(im,WakestoneShards,storageid)
         local total_ct=math.floor(config.count)+ct
         local stone_ct=math.floor(total_ct/3)
@@ -105,9 +115,47 @@ local function AddItem(dest,index)
         end
         Log("Modify WakeStoneShards "..ct.."/"..total_ct.."/"..left_ct)
     else
-        getItemMethod:call(im,math.floor(config.item),math.floor(config.count),storageid,true,false,false,1)
+        if isRemove then
+            deleteMethod:call(im,math.floor(config.item),math.floor(config.count),storageid)
+            Log("Remove Item")
+        else
+            getItemMethod:call(im,math.floor(config.item),math.floor(config.count),storageid,true,false,false,1)
+            Log("Get Item")
+        end
     end        
 end
 
 onClickFunc=AddItem
+onAddToFavList=function()
+    if config.item==nil then return end
+    local itemDict=sdk.get_managed_singleton("app.ItemManager"):get_ItemDataDict()
+    local item=itemDict:get_Item(config.item)
+    if item~=nil then
+        if config.FavList~=nil then
+            for _,v in pairs(config.FavList) do
+                if v.index==config.item then
+                    return
+                end
+            end
+        end
+        local favitem={
+            index=config.item,
+            name=config.item.." / "..item:get_Name()
+        }
+        config.FavList=config.FavList or {}
+        table.insert(config.FavList,favitem)
+    end
+end
 
+onRemoveFromFavList=function()
+    if config.item==nil or config.FavList==nil then return end
+    for k,v in pairs(config.FavList) do
+        if v.index==config.item then
+            config.FavList[k]=nil
+        end
+    end
+end
+
+onFavListClick=function(para)
+    if para[1]~=nil then config.item=para[1] end
+end
