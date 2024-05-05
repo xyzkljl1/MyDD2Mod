@@ -13,7 +13,7 @@ local _config={
     {name="para2",type="fontsize",default=29,widthscale=0.4},
 
     {name="Box1",type="mutualbox"},--box
-    {name="keyboardKey",type="hotkey",default="Alpha1",actionName="keyboardKey7784"},
+    {name="keyboardKey",type="hotkey",default="Alpha1",actionName="keyboardKey7784",sameline=true},
     {name="controllerKeyShoulder",type="hotkey",default="RT (R2)",actionName="controllerKeyShoulder7784"},
 
     --{name="",type="mutualboxend"},--start a new mutualbox will end the prev box automatically
