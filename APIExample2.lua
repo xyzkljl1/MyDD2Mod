@@ -1,6 +1,11 @@
 -------
 local modname="ExampleModUsingHotkeyAndInit"
 local configfile=modname..".json"
+
+
+local onAddToFavList=nil
+local onFavListClick=nil
+local onRemoveFromFavList=nil
 --settings
 local _config={
     {name="para1",type="font",default="simsun.ttc",widthscale=0.4},
@@ -69,6 +74,10 @@ local _config={
             ["Gm80_096_10"]="Also Black",
             }
     },
+    {name="AddToFavList",type="button",onClick=function() onAddToFavList() end,sameline=true},
+    {name="RemoveFromFavList",type="button",onClick=function() onRemoveFromFavList() end},
+    {name="FavList",type="buttonN",onClick=function(...) onFavListClick(...) end,default={}},
+
 }
 --Require
 --not like the other example,XYZAPI is necessary here.
@@ -88,6 +97,40 @@ re.on_frame(function()
     end
 
 end)
+
+onAddToFavList=function()
+    if config.item==nil then return end
+    local itemDict=sdk.get_managed_singleton("app.ItemManager"):get_ItemDataDict()
+    local item=itemDict:get_Item(config.item)
+    if item~=nil then
+        if config.FavList~=nil then
+            for _,v in pairs(config.FavList) do
+                if v.index==config.item then
+                    return
+                end
+            end
+        end
+        local favitem={
+            index=config.item,
+            name=config.item.." / "..item:get_Name()
+        }
+        config.FavList=config.FavList or {}
+        table.insert(config.FavList,favitem)
+    end
+end
+
+onRemoveFromFavList=function()
+    if config.item==nil or config.FavList==nil then return end
+    for k,v in pairs(config.FavList) do
+        if v.index==config.item then
+            config.FavList[k]=nil
+        end
+    end
+end
+
+onFavListClick=function(para)
+    if para[1]~=nil then config.item=para[1] end
+end
 
 --Draw UI
 myapi.DrawIt(modname,configfile,_config,config,OnChanged)

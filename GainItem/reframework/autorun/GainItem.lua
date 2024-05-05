@@ -5,6 +5,7 @@ log.info("["..modname.."]".."Start")
 local onClickFunc=nil
 local onAddToFavList=nil
 local onFavListClick=nil
+local onRemoveFromFavList=nil
 
 local _config={
     {name="item",type="item",default=1},
