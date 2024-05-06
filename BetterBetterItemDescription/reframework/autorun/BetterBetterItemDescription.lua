@@ -377,8 +377,14 @@ end
 ]]--
 local prevInitLanguage=""
 local function Init()
+    guiManager=sdk.get_managed_singleton("app.GuiManager")
+    characterManager=sdk.get_managed_singleton("app.CharacterManager")    
+    messageManager=sdk.get_managed_singleton("app.MessageManager")
+
     local om=sdk.get_managed_singleton("app.OptionManager")
-    local optionItem=om._OptionItems:get_Item(sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data())
+    local optionID=sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data()
+    if optionID==nil then return end
+    local optionItem=om._OptionItems:get_Item()
     local lng=optionItem:get_FixedValueModel():get_StringValue()
 
     if lng=="Japanese" or lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Vietnamese" or lng=="Korean" then
@@ -424,10 +430,6 @@ local function Init()
 
     --Init SkillName2Id
     SkillName2Id={}
-
-    guiManager=sdk.get_managed_singleton("app.GuiManager")
-    characterManager=sdk.get_managed_singleton("app.CharacterManager")    
-    messageManager=sdk.get_managed_singleton("app.MessageManager")
 
     local type=sdk.find_type_definition("app.Character.JobEnum")
     local fields=type:get_fields()
@@ -875,6 +877,15 @@ function()
     end
 end)
 
+local frame_ct=0
+re.on_frame(function()
+    if frame_ct<600 then
+        frame_ct=frame_ct+1
+        if frame_ct>=600 then
+            Init()
+        end
+    end
+end)
 
 --try load api and draw ui
 local function prequire(...)
