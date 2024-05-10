@@ -98,7 +98,7 @@
       "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
     },
     "23": {
-      "format": "Gain {v2}%+{v1} Strength",
+      "format": "Gain {v2}%+{v1} ATK",
       "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "24": {
@@ -364,8 +364,9 @@
     },
     "15": {
       "enable": true,
-      "format": "**Gain at max 20% BaseAtk based on weight. No effect under 0.0 weight.",
-      "hint": "(3538,Ring of Brawn,0,0,0)"
+      "format": "Gain +{v1}% BaseAtk under {t1} weight or +{v3}% BaseAtk under {t3} weight.(No effect under 0.0 weight)",
+      "hint": "(3538,Ring of Brawn,0,0,0)",
+      "curve": true
     },
     "16": {
       "enable": true,
@@ -374,12 +375,12 @@
     },
     "17": {
       "enable": true,
-      "format": "Gain {v2} ATK when under {v1}% HP",
+      "format": "Gain +{v2}% BaseATK when under {v1}% HP",
       "hint": "(3540,Ring of Recompense,25,100,0)"
     },
     "18": {
       "enable": true,
-      "format": "Gain {v2} ATK when HP no less than {v1}%",
+      "format": "Gain +{v1}% BaseATK when full HP",
       "hint": "(3541,Ring of Predominance,100,10,0)"
     },
     "2": {
@@ -403,9 +404,10 @@
       "hint": "(3545,Ring of Vehemence,100,0,0)"
     },
     "23": {
-      "enable": false,
-      "format": "{v1} {v2} {v3}",
-      "hint": "(3548,Ring of Proximity,0,0,0)"
+      "enable": true,
+      "format": "+{v1} BaseAtk in {t1} distance.+{v3} BaseAtk in {t3} distance.+{v5} BaseAtk in {t5} distance.",
+      "hint": "(3548,Ring of Proximity,0,0,0)",
+      "curve": true
     },
     "24": {
       "enable": true,

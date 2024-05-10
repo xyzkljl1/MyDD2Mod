@@ -193,18 +193,20 @@ local RingSpecialFormat={
     [12]= {enable= true,format= "+{v1} Knockdown Resist",hint= "(3535,Ring of Resolution,100,0,0)"},
     [13]= {enable= true,format= "-{v1}% Stamina Cost",hint= "(3536,Ring of Grit,25,0,0)"},
     [14]= {enable= true,format= "Gain {v1} ATK in {v2} seconds",hint= "(3537,Ring of Requital,15,10,0)"},
-
-    [15]= {enable= false,format= "{v1} {v2} {v3}",hint= "(3538,Ring of Brawn,0,0,0)"},
+    --curve in get_JewelryAdditionalDataDict,
+    [15]= {enable= false,format= "+{v1}% BaseAtk under {t1} weight or +{v3}% BaseAtk under {t3} weight.(No effect under 0.0 weight)",hint= "(3538,Ring of Brawn,0,0,0)",curve=true},
 
     [16]= {enable= true,format= "Slight Heal for {v2} seconds when taken damage over {v1}% MaxHP",hint= "(3539,Ring of Benevolence,25,3,0)"},
-    [17]= {enable= true,format= "Gain {v2} ATK when under {v1}% HP",hint= "(3540,Ring of Recompense,25,100,0)"},
-    [18]= {enable= true,format= "Gain {v2} ATK when HP no less than {v1}%",hint= "(3541,Ring of Predominance,100,10,0)"},
+    --see app_PlayerDamageCalculator___c__DisplayClass21_0___getJewelryPhysicalAttackStatusFactor_b__0817923
+    [17]= {enable= true,format= "+{v2}% BaseATK when under {v1}% HP",hint= "(3540,Ring of Recompense,25,100,0)"},
+    [18]= {enable= true,format= "+{v1}% BaseATK when full HP",hint= "(3541,Ring of Predominance,100,10,0), v2 is not used"},
     --容易成为目标
     [20]= {enable= false,format= "{v1} {v2} {v3}",hint= "(3543,Ring of Disfavor,1,0,0)"},
 
     [21]= {enable= true,format= "+{v1} Stamina Recover",hint= "(3544,Ring of Quickening,10,0,0)"},
     [22]= {enable= true,format= "+{v1} Knockdown Power",hint= "(3545,Ring of Vehemence,100,0,0)"},
-    [23]= {enable= false,format= "{v1} {v2} {v3}",hint= "(3548,Ring of Proximity,0,0,0)"},
+    --curve in get_JewelryAdditionalDataDict
+    [23]= {enable= false,format= "+{v1} BaseAtk in {t1} distance.+{v3} BaseAtk in {t3} distance.+{v5} BaseAtk in {t5} distance.",hint= "(3548,Ring of Proximity,0,0,0)",curve=true},
     
     [24]= {enable= true,format= "+{v1}%/{v2}% Deal/Taken Damage",hint= "(3549,Ring of Gallantry,25,25,0)"},
     [25]= {enable= true,format= "+{v1}% Damage",hint= "(3550,Ring of Skullduggery,20,0,0)"},
@@ -589,9 +591,29 @@ local function TranslateRingSP(param)
     local sp=param._Special
     if sp==nil or RingSpecialFormat[sp]==nil or RingSpecialFormat[sp].enable==false then return "" end
     local ret=RingSpecialFormat[sp].format
-    ret=string.gsub(ret,"{v1}",tostring(param._SpecialValue))
-    ret=string.gsub(ret,"{v2}",tostring(param._SpecialValue2))
-    ret=string.gsub(ret,"{v3}",tostring(param._SpecialValue3))
+    if RingSpecialFormat[sp].curve then        
+        local additionalData=sdk.get_managed_singleton("app.ItemManager"):get_JewelryAdditionalDataDict()[sp]
+        local curve=additionalData and additionalData.Curve
+        if curve then
+            local keyframeCount=curve:getKeysCount()
+            for i=0,keyframeCount-1 do
+                local wordt=string.format("{t%d}",i)
+                local wordv=string.format("{v%d}",i)
+                if string.find(ret,wordt) or string.find(ret,wordv) then
+                    local t=curve:getKeys(i):GetTime()
+                    local v=curve:getKeys(i).value --curve:evaluate(t)-- 用evaluate在分段跳变的边界上容易出错
+                    ret=string.gsub(ret,wordt,float2stringEX(t))
+                    ret=string.gsub(ret,wordv,float2stringEX(v))
+                end
+            end
+        else
+            ret=""
+        end
+    else
+        ret=string.gsub(ret,"{v1}",tostring(param._SpecialValue))
+        ret=string.gsub(ret,"{v2}",tostring(param._SpecialValue2))
+        ret=string.gsub(ret,"{v3}",tostring(param._SpecialValue3))
+    end
     return ret
 end
 
