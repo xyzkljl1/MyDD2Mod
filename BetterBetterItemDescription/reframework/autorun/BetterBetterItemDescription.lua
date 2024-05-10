@@ -172,7 +172,7 @@ local WeaponSpecialFormat={
     [1010]={enable=true,format="+{v1}% BaseATK per hit,no more than +{v2}%",hint="wp00_007_00,龙之信条,每次攻击获得基础攻击倍率"},
     --getMagicAttackFactorByEquip和getWeaponSpecialMagicAttackStatusFactor都里计算了wp08_007_00但是它们俩根本没被调用，实际是在app_PlayerDamageCalculator__calcMagicAttack777763里计算的
     --类似item也是在WeaponAdditionalParameter里的curve
-    [1610]={enable=true,curve=true,format="+{v0}~{v1}% BaseATK under {t1}% HP.+{v2}% BaseATK over {t2}% HP",hint="wp08_007_00,封魔大杖,根据血量获得攻击力"},
+    [1610]={enable=true,curve=true,format="+{v0}~{v1}% BaseMagicATK under {t1}% HP.+{v2}% BaseMagicATK over {t2}% HP",hint="wp08_007_00,封魔大杖,根据血量获得攻击力"},
     [2010]={enable=true,format="+{v1}% BaseATK per hit,no more than +{v2}%",hint="林德蠕龙的尖牙"},
     [1207]={enable=true,format="**+0~10% BaseATK beyond 25% HP. +300% BaseATK under 25% HP",hint="龙之信条大剑,根据(1-ReducedHpRatio)获得基础攻击倍率，参数是1/1实在找不到规律，代码也看不懂，实测是损失(0,75%)血量时获得约(0,0.1),损失75%以上时跃升至4.0"},
     [1804]={enable=true,format="+{v1}% EXP",hint="美杜莎魔弓箭，(300,400),第二个参数不知道干什么用的"},
