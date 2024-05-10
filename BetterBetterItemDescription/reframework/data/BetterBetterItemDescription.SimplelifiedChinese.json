@@ -178,7 +178,7 @@
     },
     "14": {
       "enable": true,
-      "format": "{v2}秒内获得{v1} ATK",
+      "format": "{v2}秒内获得+{v1}%ATK",
       "hint": "(3537,Ring of Requital,15,10,0)"
     },
     "15": {

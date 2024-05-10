@@ -366,7 +366,7 @@
     },
     "14": {
       "enable": true,
-      "format": "Gain {v1} ATK in {v2} seconds",
+      "format": "Gain +{v1}% ATK in {v2} seconds",
       "hint": "(3537,Ring of Requital,15,10,0)"
     },
     "15": {
