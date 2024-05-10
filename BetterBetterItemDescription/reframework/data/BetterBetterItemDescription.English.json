@@ -32,7 +32,7 @@
     },
     "1906": {
       "enable": true,
-      "format": "Take +{v1}% More Damage. Heal {v2} HP per second",
+      "format": "Give enemies extra x{v2} Damage Rate. Heal {v1} HP per second",
       "hint": "圣木魔弓，固定回血，给敌人加DamageRate"
     },
     "2010": {
