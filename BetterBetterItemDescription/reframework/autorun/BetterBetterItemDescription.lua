@@ -647,8 +647,8 @@ local function TranslateWeaponSP(param)
                 else
                     msg=""
                 end
+            elseif WeaponSpecialFormat[param._Id].wp10_003 then--梦想路，                
             --TODO
-            --elseif WeaponSpecialFormat[param._Id].wp10_003 then--梦想路，                
             else--Use special value
                 msg=string.gsub(msg,"{v1}",tostring(addiParam:get_SpecialValue1Prop()))
                 msg=string.gsub(msg,"{v2}",tostring(addiParam:get_SpecialValue2Prop()))
