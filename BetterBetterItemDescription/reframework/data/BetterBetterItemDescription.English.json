@@ -1,10 +1,9 @@
 {
   "WeaponSpecialFormat": {
-    "SpecialEfficacy":
-    {
-      "enable":true,
-      "format":"+{v1} Damage Rate to certain enemies",
-      "hint":"对特定敌人增伤"
+    "SpecialEfficacy": {
+      "enable": true,
+      "format": "+{v1} Damage Rate to certain enemies",
+      "hint": "对特定敌人增伤"
     },
     "1010": {
       "enable": true,
@@ -25,6 +24,12 @@
       "format": "+{v1}% EXP,+{v2}% Stamina Cost",
       "hint": "美杜莎魔弓箭，(300,400)"
     },
+    "1610": {
+      "enable": true,
+      "curve": true,
+      "format": "+{v0}~{v1}% BaseATK under {t1}% HP.+{v2}% BaseATK over {t2}% HP",
+      "hint": "封魔大杖，(5，100)"
+    },
     "1906": {
       "enable": true,
       "format": "Take +{v1}% More Damage. Heal {v2} HP per second",
@@ -36,8 +41,10 @@
       "hint": "林德蠕龙的尖牙"
     },
     "2103": {
-      "enable": false,
-      "hint": "梦想路，50/50,攻击加金钱,不知道什么意思"
+      "enable": true,
+      "format": "**Gain 10 Gold per Hit,not exceeding 3000.A little chance to get 100/1000/50000 Gold(Ignore cap)",
+      "wp10_003": true,
+      "hint": "梦想路，50/50,"
     },
     "2210": {
       "enable": false,

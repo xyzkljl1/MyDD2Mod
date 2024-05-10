@@ -534,7 +534,7 @@ if(true)
         }
     }
     {
-        var filename = "E:\\OtherGame\\DragonDogma2\\reverse\\manual\\setDamageReaction.cs";
+        var filename = "E:\\OtherGame\\DragonDogma2\\reverse\\manual\\DamageValue.cs";
         var lines = File.ReadAllLines(filename);
         Regex regex = new Regex("\\*\\((bool|float|uint|byte|char|int|ulonglong|longlong|undefined[0-9]*)[ ]*[\\*]*\\*\\)\\(([a-zA-Z_\\.]+)[ ]*\\+[ ]*([x0-9a-f]+)\\)");
         for(int j=0;j<4 ;j++)

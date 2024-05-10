@@ -5,7 +5,8 @@ log.info("["..modname.."]".."Start")
 local _config={
     {name="newlinewidth",type="int",default=20,min=1,max=250},
     {name="newlinewidthaffectoriginaltext",type="bool",default=true,label="NewLineWidthAlsoAffectOriginalText"},
-    {name="ignoreArmorAndWeapon",type="bool",default=false},
+    {name="ignoreArmorAndWeapon",type="bool",default=false,label="Ignore Status of Armor&Weapon"},
+    {name="ignoreArmorAndWeaponSpecialEffect",type="bool",default=false,label="Ignore Special Effect of Armor&Weapon"},
     {name="removeOriginalText",type="bool",default=true},
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
 }
@@ -169,12 +170,15 @@ local ItemBuffFormat={
 
 local WeaponSpecialFormat={
     [1010]={enable=true,format="+{v1}% BaseATK per hit,no more than +{v2}%",hint="wp00_007_00,龙之信条,每次攻击获得基础攻击倍率"},
+    --getMagicAttackFactorByEquip和getWeaponSpecialMagicAttackStatusFactor都里计算了wp08_007_00但是它们俩根本没被调用，实际是在app_PlayerDamageCalculator__calcMagicAttack777763里计算的
+    --类似item也是在WeaponAdditionalParameter里的curve
+    [1610]={enable=true,curve=true,format="+{v0}~{v1}% BaseATK under {t1}% HP.+{v2}% BaseATK over {t2}% HP",hint="wp08_007_00,封魔大杖,根据血量获得攻击力"},
     [2010]={enable=true,format="+{v1}% BaseATK per hit,no more than +{v2}%",hint="林德蠕龙的尖牙"},
     [1207]={enable=true,format="**+0~10% BaseATK beyond 25% HP. +300% BaseATK under 25% HP",hint="龙之信条大剑,根据(1-ReducedHpRatio)获得基础攻击倍率，参数是1/1实在找不到规律，代码也看不懂，实测是损失(0,75%)血量时获得约(0,0.1),损失75%以上时跃升至4.0"},
     [1804]={enable=true,format="+{v1}% EXP",hint="美杜莎魔弓箭，(300,400),第二个参数不知道干什么用的"},
     [1413]={enable=false,hint="探测匕首,1/1,推测(1,1)的都是实际不使用参数计算？"},
     [1906]={enable=true,format="Take +{v1}% More Damage. Heal {v2} HP per second",hint="圣木魔弓，固定回血，给敌人加DamageRate"},
-    [2103]={enable=false,hint="梦想路，50/50,攻击加金钱,不知道什么意思"},
+    [2103]={enable=true,wp10_003=true,format="Gain {v1} Gold per Hit,not exceeding {v2}.A little chance to get {v3} Gold(Ignore cap)",hint="梦想路，50/50,参数意义不明，实际在wp10_003_00Param"},
     [2210]={enable=false,hint="庇佑护盾，200/0,意义不明"},
     ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
 }
@@ -624,8 +628,31 @@ local function TranslateWeaponSP(param)
         local addiParam=im:get_WeaponAdditionalDataDict():get_Item(param._WeaponId)
         if addiParam~=nil then
             local msg=WeaponSpecialFormat[param._Id].format
-            msg=string.gsub(msg,"{v1}",tostring(addiParam:get_SpecialValue1Prop()))
-            msg=string.gsub(msg,"{v2}",tostring(addiParam:get_SpecialValue2Prop()))
+            if WeaponSpecialFormat[param._Id].curve then--use curve
+                local additionalData=im:get_WeaponAdditionalDataDict()[param._WeaponId]
+                local curve=additionalData and additionalData.Curve
+                print("!!",param._WeaponId,additionalData,curve)
+                if curve then
+                    local keyframeCount=curve:getKeysCount()
+                    for i=0,keyframeCount-1 do
+                        local wordt=string.format("{t%d}",i)
+                        local wordv=string.format("{v%d}",i)
+                        if string.find(msg,wordt) or string.find(msg,wordv) then
+                            local t=curve:getKeys(i):GetTime()
+                            local v=curve:getKeys(i).value --curve:evaluate(t)-- 用evaluate在分段跳变的边界上容易出错
+                            msg=string.gsub(msg,wordt,float2stringEX(t))
+                            msg=string.gsub(msg,wordv,float2stringEX(v))
+                        end
+                    end
+                else
+                    msg=""
+                end
+            --TODO
+            --elseif WeaponSpecialFormat[param._Id].wp10_003 then--梦想路，                
+            else--Use special value
+                msg=string.gsub(msg,"{v1}",tostring(addiParam:get_SpecialValue1Prop()))
+                msg=string.gsub(msg,"{v2}",tostring(addiParam:get_SpecialValue2Prop()))
+            end
             ret=Join(ret,msg)
         end
     end    
@@ -700,21 +727,24 @@ end
 local function GetItemDetail(itemCommonParam)
     local ret=""
     local itemParam=itemCommonParam:get_ItemParam()
-    if config.ignoreArmorAndWeapon and not isRingOrItem(itemCommonParam) then return "" end
-    for _,type in pairs(ItemParamTypes) do
-        if itemCommonParam:get_type_definition():is_a(type) then
-            ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type))
+    local bRingOrItem=isRingOrItem(itemCommonParam)
+    if bRingOrItem or not config.ignoreArmorAndWeapon then
+        for _,type in pairs(ItemParamTypes) do
+            if itemCommonParam:get_type_definition():is_a(type) then
+                ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type))
+            end
         end
+    end
+    if isWeapon(itemCommonParam) and not config.ignoreArmorAndWeaponSpecialEffect then
+        ret=Join(ret,TranslateWeaponSP(itemCommonParam))
     end
     if isRing(itemCommonParam) then
         ret=Join(ret,TranslateRingSP(itemCommonParam))
     end
-    if isWeapon(itemCommonParam) then
-        ret=Join(ret,TranslateWeaponSP(itemCommonParam))
-    end
     if isItem(itemCommonParam) then
         ret=Join(ret,TranslateItemBuff(itemCommonParam))
     end
+    
     return ReWrapText(ret,1.05)
 end
 
