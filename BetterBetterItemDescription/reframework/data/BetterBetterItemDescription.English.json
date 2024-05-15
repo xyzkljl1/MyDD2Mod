@@ -105,7 +105,7 @@
       "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
     },
     "23": {
-      "format": "Gain {v2}%+{v1} ATK",
+      "format": "Gain {v2}%+{v1} BaseATK",
       "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "24": {
@@ -129,7 +129,7 @@
       "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
     },
     "29": {
-      "format": "+{v1}% debilitation",
+      "format": "+{v1}% Debilitation Store",
       "hint": "状態異常与蓄積値 + Value%(20.000000,0.000000)"
     },
     "30": {
@@ -145,7 +145,7 @@
       "hint": "弱点属性による与ダメージ + Value%(5.000000,0.000000)"
     },
     "33": {
-      "format": "{v2}%+{v1} MagATK",
+      "format": "{v2}%+{v1} BaseMagATK",
       "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "34": {
@@ -157,7 +157,7 @@
       "hint": "金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"
     },
     "36": {
-      "format": "Gain {v2}% ATK in Day(4:00~20:00)\n{v2}% MagATK in Night(18:00~6:00)",
+      "format": "Gain {v2}% BaseATK in Day(4:00~20:00)\n{v2}% BaseMagATK in Night(18:00~6:00)",
       "hint": "日中（4時～20時）、物理攻撃力+ 夜間（18時～6時）、魔法攻撃力+ １：固定値　２：割合値(%)(0.000000,5.000000)"
     },
     "37": {
@@ -185,7 +185,7 @@
       "hint": "(1.200000,0.000000)"
     },
     "42": {
-      "format": "Gain {v2}%+{v1} ATK/MagATK",
+      "format": "Gain {v2}%+{v1} BaseATK/BaseMagATK",
       "hint": "ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "43": {
@@ -412,7 +412,7 @@
     },
     "23": {
       "enable": true,
-      "format": "+{v1} BaseAtk in {t1} distance.+{v3} BaseAtk in {t3} distance.+{v5} BaseAtk in {t5} distance.",
+      "format": "+{v1}% WeaponAtk in {t1} distance.+{v3}% WeaponAtk in {t3} distance.+{v5}% WeaponAtk in {t5} distance.",
       "hint": "(3548,Ring of Proximity,0,0,0)",
       "curve": true
     },
