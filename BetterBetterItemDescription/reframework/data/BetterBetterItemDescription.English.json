@@ -377,7 +377,7 @@
     },
     "16": {
       "enable": true,
-      "format": "Slight Heal for {v2} seconds when taken damage over {v1}% MaxHP",
+      "format": "Continuous Heal under {v1}% MaxHP",
       "hint": "(3539,Ring of Benevolence,25,3,0)"
     },
     "17": {

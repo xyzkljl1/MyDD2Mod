@@ -320,9 +320,10 @@ local getGimmickListMethod=sdk.find_type_definition("app.GimmickManager"):get_me
 local gimmick82_036=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_036"):get_data(nil)
 
 --check nearby gimmick instances each 90 frame
+--for some reason ,update() is never called after game update,use lateUpdate() instead
 local interval2=0
 sdk.hook(
-    sdk.find_type_definition("app.GimmickManager"):get_method("update()"),
+    sdk.find_type_definition("app.GimmickManager"):get_method("lateUpdate()"),
     function()
         --Log(battleManager:get_IsBattleMode())
         if config.disableOnBattle and battleManager:get_IsBattleMode() then return end
