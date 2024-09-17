@@ -318,9 +318,9 @@ sdk.hook(
 
 local getGimmickListMethod=sdk.find_type_definition("app.GimmickManager"):get_method("getGimmickList(app.GimmickID)")
 local gimmick82_036=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_036"):get_data(nil)
+local gimmick82_000=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_000"):get_data(nil)
 
 --check nearby gimmick instances each 90 frame
---for some reason ,update() is never called after game update,use lateUpdate() instead
 local interval2=0
 sdk.hook(
     sdk.find_type_definition("app.GimmickManager"):get_method("lateUpdate()"),
@@ -349,7 +349,8 @@ sdk.hook(
             end
             if config.lootDirectItem then
                 --iterate gimmick82_000
-                local gimmicks=gimmickManager:get_DirectItemGimmicks()
+                --local gimmicks=gimmickManager:get_DirectItemGimmicks()
+                local gimmicks=getGimmickListMethod(gimmickManager,gimmick82_000)
                 local g_ct=gimmicks:get_Count()-1
                 for i=0,g_ct do
                     --requestForceInteract每帧只能捡起一个物品？

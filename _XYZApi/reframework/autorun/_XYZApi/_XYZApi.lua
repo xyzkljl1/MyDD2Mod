@@ -496,6 +496,10 @@ local function LoadFontIfCJK(fontname,fontsize,fontrange)
         --for certain user,scripts are load too early that this func can't get optionID
         Log("Can't find optionID.Use Default Font")
         return font
+    end    
+    if om._OptionItems:ContainsKey(optionID) then
+        Log("Can't find _OptionItems[optionID].Use Default Font")
+        return font        
     end
     local optionItem=om._OptionItems:get_Item(optionID)
     local lng=optionItem:get_FixedValueModel():get_StringValue()
