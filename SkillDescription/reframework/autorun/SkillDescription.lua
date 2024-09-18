@@ -110,7 +110,12 @@ end
 local prevInitLanguage=""
 local function Init()
     local om=sdk.get_managed_singleton("app.OptionManager")
-    local optionItem=om._OptionItems:get_Item(sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data())
+    local lngID=sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data()
+    if not om._OptionItems:ContainsKey(lngID) then
+        Log("OptionManager Not Ready,abort"..tostring(lngID))
+        return        
+    end
+    local optionItem=om._OptionItems:get_Item(lngID)
     local lng=optionItem:get_FixedValueModel():get_StringValue()
     if lng==prevInitLanguage then
         Log("Ignore dup init")
