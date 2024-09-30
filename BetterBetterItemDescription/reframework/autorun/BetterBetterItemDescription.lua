@@ -390,6 +390,10 @@ local function Init()
     local om=sdk.get_managed_singleton("app.OptionManager")
     local optionID=sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data()
     if optionID==nil then return end
+    if not om._OptionItems:ContainsKey(optionID) then
+        Log("Can't find _OptionItems[optionID]")
+        return
+    end
     local optionItem=om._OptionItems:get_Item(optionID)
     local lng=optionItem:get_FixedValueModel():get_StringValue()
 

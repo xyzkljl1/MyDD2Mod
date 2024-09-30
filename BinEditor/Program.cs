@@ -495,7 +495,7 @@ if(false)
         File.WriteAllLines($"E:\\OtherGame\\DragonDogma2\\reverse\\split\\{file_ct}.c", lines[last_line..lines.Length]);
     }
 }
-if(true)
+if(false)
 {
     var map = new Dictionary<string, Dictionary<string, string>>();
     var short2fullname = new Dictionary<string, string>();
@@ -587,7 +587,7 @@ if(true)
 }
 
 //ActionRate
-if (false)
+if (true)
 {
     //    var y=IsInitialized();
     var jsonDoc = new Dictionary<string,object>();
@@ -734,9 +734,9 @@ if (false)
         }
     }
 //    File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\PlayerActionRate3.txt", debugText);
-//    var jsonText = JsonConvert.SerializeObject(jsonDoc);
+    var jsonText = JsonConvert.SerializeObject(jsonDoc);
     //Console.WriteLine(jsonText);
-    //File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\SkillDescription\\reframework\\data\\SkillDescription.Para.json", jsonText);
+ //   File.WriteAllText("E:\\OtherGame\\DragonDogma2\\MyDD2Mod\\SkillDescription\\reframework\\data\\SkillDescription.Para.json", jsonText);
 }
 
 string readIdList(byte[] bytes, ref int offset)
