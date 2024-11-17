@@ -61,12 +61,17 @@ sdk.hook(
 local function GetScreenSize()
     local om=sdk.get_managed_singleton("app.OptionManager")
     --app.OptionID.Resolution=93
+    if not om._OptionItems:ContainsKey(93) then
+        Log("Can't find _OptionItems[93].Delay GetScreenSize")
+        return 
+    end
     local optionItem=om._OptionItems:get_Item(93)
     local resolution=optionItem:get_FixedValueModel():get_StringValue()
     for k, v in string.gmatch(resolution, "(%w+)x(%w+)") do
        screen_w=k
        screen_h=v
     end
+    Log("GetScreenSize Done")
 end
 
 GetScreenSize()
@@ -89,6 +94,9 @@ re.on_frame(function()
         local message= tostring(math.floor(currentHitController:get_Hp())) .. " / " .. tostring(math.floor(currentHitController:get_ReducedMaxHp())) .. " ("..tostring(math.floor(100*(currentHitController:get_ReducedHpRate()))) .."%)"
         --Log(message)
         --Log(d2d.detail.get_max_updaterate())
+	if screen_w == 0 then 
+		GetScreenSize()
+	end
 
         local x0=screen_w/2-300+config.offsetX
         local y0=100+config.offsetY
