@@ -42,7 +42,7 @@ local defaultOffset={
     ["wp08"]={
         [1]={{-1,-0.5,0.0},{0,0,100},1.0}
     },
-    --ħ��ʿ
+    --ħ  ʿ
     ["wp09"]={
         [1]={{-1.05,-0.5,0.1},{0,0,100},1.0}
     },
@@ -174,18 +174,25 @@ local function ModifyOffsetSetting(offsetSetting)
             offset:write_float(offsetScaleOffset,targetOffset[3]*config.globalScale)
         end
     end
-
 end
-local function ModifyWeaponSetting()
-    local eqManager=sdk.get_managed_singleton("app.EquipmentManager")
-    local offsetSettings=eqManager.WeaponSetting.OffsetSettings
+local function ModifyWeaponSetting(wpSetting)
+    local offsetSettings=wpSetting.OffsetSettings
     local ct=offsetSettings:get_Count()-1
     for i=0,ct do
         ModifyOffsetSetting(offsetSettings[i])
     end
-    ModifyOffsetSetting(eqManager.WeaponSetting.DefaultSetting)
+    ModifyOffsetSetting(wpSetting.DefaultSetting)
 end
-ModifyWeaponSetting()
+local function ModifyMargedWeaponSetting()
+    local eqManager=sdk.get_managed_singleton("app.EquipmentManager")
+    local offsetSettings=eqManager.WeaponSetting.AdditionalSetting
+    local ct=offsetSettings:get_Count()-1
+    for i=0,ct do
+        ModifyWeaponSetting(offsetSettings[i])
+    end
+    ModifyWeaponSetting(eqManager.WeaponSetting.DefaultSetting)
+end
+ModifyMargedWeaponSetting()
 
 --to do
-myapi.DrawIt(modname,configfile,_config,config,ModifyWeaponSetting)
+myapi.DrawIt(modname,configfile,_config,config,ModifyMargedWeaponSetting)
