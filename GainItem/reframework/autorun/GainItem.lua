@@ -56,6 +56,25 @@ local function Init()
     end
 end
 
+-- skip Tome(eg.item118) to avoid crash
+local function BlockTutorial(args)
+	local storage = thread.get_hook_storage()
+	-- false means "keep it original", true means "Skip this"
+	storage["skip"] = false
+	-- 113 is Tome tutorial
+	-- when tome is gained, requestTutorial will be called twice,id will be 113 and x(eg.115).The second call doesn't matter.
+	if (sdk.to_int64(args[3]) & 0xFF) == 113 then
+		storage["skip"] = true
+		return sdk.PreHookResult.SKIP_ORIGINAL
+	end
+end
+local function BlockTutorialPost(retval)
+	if thread.get_hook_storage()["skip"] then
+		Log("Skip tome tutorial")
+		return sdk.to_ptr(true)
+	end
+end
+
 --delay init
 local initFrameCt=0
 re.on_frame(function()
@@ -66,11 +85,13 @@ re.on_frame(function()
             Init()
             sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),nil,Init)
             sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
+            sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("requestTutorial"),BlockTutorial,BlockTutorialPost)
         end
     end
 end)
 local Wakestone=77
 local WakestoneShards=78
+
 
 local function AddItem(dest,index,remove)
     local im=sdk.get_managed_singleton("app.ItemManager")
