@@ -66,9 +66,9 @@ end
 local function setLightColor(_light,r,g,b)
     local light=_light.LightComp
     local color=light:get_Color()
-    color.x=r
-    color.y=g
-    color.z=b
+    color.x=r*config.light
+    color.y=g*config.light
+    color.z=b*config.light
     light:set_Color(color)
 end
 
@@ -80,7 +80,7 @@ local function SetLightRange()
         for i=0,ct do
             local light=lights[i]
             --1/30 1/20 
-            --light.MasterLightIntensity=100 -- not work
+            --light.MasterLightIntensity=config.light -- still no work
             light.BaseEffectiveRange=config.range
         end
     end
@@ -108,15 +108,15 @@ local function SetLightColorCone()
         setLightColor(lights[0],config.spotLightColor[1]*1.0,config.spotLightColor[2]*1.0,config.spotLightColor[3]*1.0)
         setLightColor(lights[1],config.pointLightColor[1]*1.0,config.pointLightColor[2]*1.0,config.pointLightColor[3]*1.0)
         end
-
     end
 end
 
-sdk.hook(
-    sdk.find_type_definition("app.LanternController.LanternLightParam"):get_method("setLightIntensity(System.Single)"),
-    function(args) args[3]=light_ptr end,
-    nil
-)
+-- setLightIntensity is not called anymore ,use rgb*light instead
+--sdk.hook(
+--    sdk.find_type_definition("app.LanternController.LanternLightParam"):get_method("setLightIntensity(System.Single)"),
+--    function(args) args[3]=light_ptr end,
+--    nil
+--)
 
 local function Init()
     SetLightRange()
