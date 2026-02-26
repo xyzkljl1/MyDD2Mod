@@ -80,6 +80,13 @@ local function AddMessage(msg,pos)
     end
 end
 
+local function DistanceSq(l,r)
+    return (l.x-r.x)*(l.x-r.x)
+           +(l.y-r.z)*(l.y-r.y)
+           +(l.y-r.z)*(l.z-r.z)            
+end
+-- getDistanceSqFromPlayer for bodies(or maybe for everything) could also be 0.0,meaning invalid.
+-- seems it has a cache system.
 local function LootBody(deadBodyController)
     if deadBodyController==nil or (not sdk.is_managed_object(deadBodyController)) or deadBodyController:get_IsEnablePickup()==false then
         waitingBodyControllerList[deadBodyController]=nil
@@ -87,7 +94,7 @@ local function LootBody(deadBodyController)
     end
     
     local distance=deadBodyController.InteractiveObject:getDistanceSqFromPlayer(0)
-    if distance<rangeSq then
+    if distance~=0.0 and distance<rangeSq then
         local pos=getCharacterPos(deadBodyController.Chara)
         local ct=0
 
@@ -117,11 +124,7 @@ local function LootBody(deadBodyController)
 end
 
 
-local function DistanceSq(l,r)
-    return (l.x-r.x)*(l.x-r.x)
-           +(l.y-r.z)*(l.y-r.y)
-           +(l.y-r.z)*(l.z-r.z)            
-end
+
 
 local function LootBodyPart(dropPartsController)
     --don't use dropPartsController:get_DropWork():get_IsInteractEnable() 
@@ -174,8 +177,9 @@ local function LootBodyPart(dropPartsController)
 	    end
         --executeInteract不会让尾巴变为不可loot状态，不管调用多少次，每次都会获得一个物品，最后尾巴还可以正常loot一次才消失
         --需要调用unregisterInteractiveObject才能让尾巴结束可loot状态，但是如果一次都没调用executeInteract，unregisterInteractiveObject不会生效？
-        dropPartsController:unregisterInteractiveObject()
-
+        if maxNum>0 then
+            dropPartsController:unregisterInteractiveObject()
+        end
         AddMessage("Loot "..ct,pos)
         waitingBodyControllerList[dropPartsController]=nil
     end
