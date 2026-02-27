@@ -80,11 +80,20 @@ local function AddMessage(msg,pos)
     end
 end
 
-local function DistanceSq(l,r)
+local function DistanceSq(r)
+    local l = mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position()
     return (l.x-r.x)*(l.x-r.x)
-           +(l.y-r.z)*(l.y-r.y)
-           +(l.y-r.z)*(l.z-r.z)            
+           +(l.y-r.y)*(l.y-r.y)
+           +(l.z-r.z)*(l.z-r.z)
 end
+
+-- interactiveObject:getDistanceSqFromPlayer calc only x-z distance，same as gimmick:get_DistanceXZSqFromPlayer
+local function DistanceSqGimmick(gimmick)
+    -- some gimmic don't have root joint,such as a potato.
+    -- return DistanceSq(mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position(), gimmick:getJointByName("root"):get_Position())
+    return DistanceSq(gimmick:getPos(gimmick:get_GameObject()))
+end
+
 -- getDistanceSqFromPlayer for bodies(or maybe for everything) could also be 0.0,meaning invalid.
 -- seems it has a cache system.
 local function LootBody(deadBodyController)
@@ -94,6 +103,8 @@ local function LootBody(deadBodyController)
     end
     
     local distance=deadBodyController.InteractiveObject:getDistanceSqFromPlayer(0)
+    -- havn't found a way to calc x-y-z distance
+    -- local p = deadBodyController.InteractiveObject.Works._items[0].ParentJoint:get_Position()
     if distance~=0.0 and distance<rangeSq then
         local pos=getCharacterPos(deadBodyController.Chara)
         local ct=0
@@ -149,13 +160,13 @@ local function LootBodyPart(dropPartsController)
     -- context:get_Pos() is via.Positon, joint:get_Position() is via.vec3 ,can't minus; context:get_pos returns strange position
     --local disvec=mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position() - dropPartsController.PartsRoot:get_Position()
     --local distance=DistanceSq(mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position(),context:get_Pos())
-    local distance=DistanceSq(mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position(),dropPartsController.PartsRoot:get_Position())
+    local distance=DistanceSq(dropPartsController.PartsRoot:get_Position())
 
     --Log("2",distance,dropPartsController:getDropItemData().Item1,dropPartsController:getDropItemData().Item2,interObject:getDistanceSqFromPlayer(0),
     --    dropPartsController["<IsDropSetup>k__BackingField"],
     --    "--",dropPartsController.PartsRoot)
 
-    if distance<rangeSq then
+    if  distance~=0.0 and distance<rangeSq then
         --dropPartsController:startInteract(0,mainplayer)
         --Log("3",distance,dropPartsController:getDropItemData().Item1,dropPartsController:getDropItemData().Item2,interObject:getDistanceSqFromPlayer(0),
         --    interObject:getInteractPointPosition(0).x,interObject:getInteractPointPosition(0).y,interObject:getInteractPointPosition(0).z,
@@ -206,7 +217,7 @@ local function LootGm82_009(gimmick)
     if gimmick:isInteractEnable(0)==true then
         --gimmick:get_DistanceXZSqFromPlayer and FarDistanceSq/NearDistanceSq for some gimmick are fix value 
         --GM82_009_10 will trigger repeatly and distance is always 0.0
-        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        local distance=DistanceSqGimmick(gimmick) -- gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
         --local distance2=gimmick:get_DistanceXZSqFromPlayer()
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
@@ -221,7 +232,7 @@ end
 --丢弃的物品和怪物掉落的物品
 local function LootGm82_000_001(gimmick)
     if gimmick:isInteractEnable(0)==true then
-        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        local distance= DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
             Log("Loot Gimmick82_000_001",distance,gimmick:getItemId(),gimmick:getItemNum())
@@ -237,7 +248,7 @@ end
 --not include seeker's token:82_036
 local function LootGm82_000(gimmick)
     if gimmick:isInteractEnable(0)==true then
-        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        local distance = DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
             Log("Loot Gimmick82_000",distance,gimmick:getItemId(),gimmick:getItemNum())
@@ -258,7 +269,7 @@ end
 --seekers token
 local function LootGm82_036(gimmick)
     if gimmick:isInteractEnable(0)==true then
-        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        local distance = DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
             Log("Loot Gimmick82_036",distance,gimmick:get_IsGetFreeBit())
@@ -275,8 +286,12 @@ end
 --chest
 local function LootGm80_001(gimmick)
     if gimmick:isInteractEnable(0)==true then
-        local distance=gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        local distance = DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        --local dis2 = DistanceSq(mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position(),dropPartsController.PartsRoot:get_Position())
         --treat 0.0 disatance as invalid
+        --local p =gimmick:getJointByName("root"):get_Position()
+        --Log("--", mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position().x,mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position().y,mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position().z," /",distance, "..", DistanceSqGimmick(gimmick))
+
         if distance~=0.0 and distance<rangeSq then
             Log("Loot Chest",distance,gimmick:get_IsOpenedFreeBit())
             --requestForceInteract not work
