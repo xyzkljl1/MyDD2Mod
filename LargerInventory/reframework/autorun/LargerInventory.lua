@@ -22,6 +22,16 @@ sdk.hook(
     end
 )
 
+sdk.hook(
+    sdk.find_type_definition("app.ui040601_00"):get_method("checkCanTrade"),
+    nil,
+    function(retval)
+        --print("Check",sdk.to_int64(retval)&0x1)
+        return sdk.to_ptr(true)
+    end
+)
+
+
 --because countGetEnableNumNoLock is forced to return non-zero,items more than stack limit will disappear.Need to increase stack number
 local im=sdk.get_managed_singleton("app.ItemManager")
 local iter=im._ItemDataDict:GetEnumerator()
