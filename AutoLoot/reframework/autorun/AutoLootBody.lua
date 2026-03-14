@@ -25,11 +25,12 @@ local posDelta=2/(msgTime)
 local colorDelta=math.floor(0xff000000/msgTime)&0xff000000
 local rangeSq=config.range*config.range
 
-local mainplayer=nil
+local mainplayer=nil -- 暂时弃用
 local waitingBodyControllerList={}
 local lootMessageList={}
-local gimmickManager=sdk.get_managed_singleton("app.GimmickManager")
+local gimmickManager = sdk.get_managed_singleton("app.GimmickManager")
 local battleManager = sdk.get_managed_singleton("app.BattleManager")
+local playerManager=sdk.get_managed_singleton("app.CharacterManager")
 
 local font = imgui.load_font("times.ttf", config.messageFontsize)
 
@@ -41,8 +42,8 @@ local function Log(...)
 end
 
 local function refreshplayer()
-    local player_man=sdk.get_managed_singleton("app.CharacterManager")
-    mainplayer=player_man:get_ManualPlayer()
+    playerManager=sdk.get_managed_singleton("app.CharacterManager")
+    mainplayer=playerManager:get_ManualPlayer()
 end
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,
 function ()
@@ -81,7 +82,12 @@ local function AddMessage(msg,pos)
 end
 
 local function DistanceSq(r)
-    local l = mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position()
+    -- mainplayer会失效?
+    local player = playerManager:get_ManualPlayer()
+    if player == nil or player:get_GameObject() == nil then 
+        return 0
+    end
+    local l = player:get_GameObject():get_Transform():getJointByName("root"):get_Position()
     return (l.x-r.x)*(l.x-r.x)
            +(l.y-r.y)*(l.y-r.y)
            +(l.z-r.z)*(l.z-r.z)
@@ -124,7 +130,7 @@ local function LootBody(deadBodyController)
         --item over 99 will be gone and consume loot chance sometimes? but not consumeing loot chance sometimes?
 
 	    while deadBodyController:get_IsEnablePickup()==true and deadBodyController:isInteractEnable(0) and ct<50 and ct<maxNum do --prevent infinite loop,shouldn't happen?
-    		deadBodyController:executeInteract(0,mainplayer)
+    		deadBodyController:executeInteract(0, playerManager:get_ManualPlayer())
 		    ct=ct+1
             --break
 	    end
@@ -182,7 +188,7 @@ local function LootBodyPart(dropPartsController)
         Log("Start Loot Body Part",maxNum)
         --interObject:isInteractEnable(0) returns false
 	    while ct<20 and ct<maxNum do
-    		    dropPartsController:executeInteract(0,mainplayer)
+    		    dropPartsController:executeInteract(0, playerManager:get_ManualPlayer())
 		    ct=ct+1
             --break
 	    end
@@ -223,7 +229,7 @@ local function LootGm82_009(gimmick)
         if distance~=0.0 and distance<rangeSq then
             --call StartInteract only causes pickup action
             Log("Loot Gimmick82_009",distance)
-            gimmick:onExecuteInteractBase(0,mainplayer)
+            gimmick:onExecuteInteractBase(0, playerManager:get_ManualPlayer())
             AddMessage("Loot 1",gimmick:get_GameObject():get_Transform():get_Position())
         end
     end
@@ -238,7 +244,7 @@ local function LootGm82_000_001(gimmick)
             Log("Loot Gimmick82_000_001",distance,gimmick:getItemId(),gimmick:getItemNum())
             local msg="Loot "..gimmick:getItemNum() -- num became 0 after interact
             --executeInteract do nothing
-            gimmick:onStartInteractBase(0,mainplayer)
+            gimmick:onStartInteractBase(0, playerManager:get_ManualPlayer())
             AddMessage(msg,gimmick:get_GameObject():get_Transform():get_Position())
         end
     end
@@ -258,7 +264,7 @@ local function LootGm82_000(gimmick)
             --gimmick:onEndInteractBase(0,mainplayer)
             --gimmick:endInteract(0)
             --only this works,but each frame only work for one item?
-            gimmick:requestForceInteract(0,mainplayer)
+            gimmick:requestForceInteract(0, playerManager:get_ManualPlayer())
             AddMessage(msg,gimmick:get_GameObject():get_Transform():get_Position())
             return true
         end
@@ -275,7 +281,7 @@ local function LootGm82_036(gimmick)
             Log("Loot Gimmick82_036",distance,gimmick:get_IsGetFreeBit())
             --onEndInteractBase and requestForceInteract both works
             --gimmick:onEndInteractBase(0,mainplayer)
-            gimmick:requestForceInteract(0,mainplayer)
+            gimmick:requestForceInteract(0, playerManager:get_ManualPlayer())
             AddMessage("Loot Seeker's Token",gimmick:get_GameObject():get_Transform():get_Position())
             return true
         end
@@ -299,8 +305,8 @@ local function LootGm80_001(gimmick)
             --onStartInteractBase/open(false,player) force player go to open chest and change chest state without get the Item
             --open(true,player) change chest state
             --gimmick:onStartInteractBase(0,mainplayer)
-            gimmick:onExecuteInteractBase(0,mainplayer)
-            gimmick:open(true,mainplayer)
+            gimmick:onExecuteInteractBase(0, playerManager:get_ManualPlayer())
+            gimmick:open(true, playerManager:get_ManualPlayer())
             AddMessage("Loot Chest",gimmick:get_GameObject():get_Transform():get_Position())
             return true
         end
