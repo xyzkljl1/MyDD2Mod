@@ -101,13 +101,26 @@ end
 
 local function DD2_InitItemId()
     if isDD2()==false then return end
+
     -- imgui.combo seems not to sort by number index when there are many items.Use continuous index to force it sort
     itemNames={}
     local id2Name={}
     itemIds={}
     local im=sdk.get_managed_singleton("app.ItemManager")
-    local iter=im._ItemDataDict:GetEnumerator()
     --可以直接从app.ItemIDEnum取ID,但是里面有invalid物品
+    for _, entry in pairs(im._ItemDataDict._entries) do
+        if entry ~= nil and entry.value ~= nil then
+            local itemCommonParam = entry.value
+            local name = itemCommonParam:get_Name()
+            if name ~="Invalid" and name~=nil then
+                id2Name[itemCommonParam._Id]= string.format("%5d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
+                table.insert(itemIds, itemCommonParam._Id)
+            end
+        end
+    end
+
+--[[ -- for some reason ,GetEnumerator is broken?
+    local iter=im._ItemDataDict:GetEnumerator()
     iter:MoveNext()
     while iter:get_Current():get_Value()~=nil do
         local itemCommonParam=iter:get_Current():get_Value()
@@ -118,6 +131,8 @@ local function DD2_InitItemId()
         end
         iter:MoveNext()
     end
+]]--
+
     table.sort(itemIds)
 --    print("{")
     for _,id in pairs(itemIds) do
