@@ -448,7 +448,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
             if isInMutualBox then--end prev box
                 imgui.end_rect()
             end
-
+            imgui.end_rect()
 		    imgui.tree_pop()
         end        
         if isFontChanged then
