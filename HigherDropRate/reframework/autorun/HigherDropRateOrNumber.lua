@@ -15,12 +15,13 @@ local function ClearLog()
     --myLog = ""
 end
 local function ModifyDropData(itemDropDataDict)
-    local datas=itemDropDataDict:get_Values():GetEnumerator()
+    -- GetEnumerator/Get_Current/Get_Value not working
+    local datas=itemDropDataDict:get_Values():call('System.Collections.IEnumerable.GetEnumerator()')
     Log(tostring(datas:get_type_definition():get_full_name()))
 
     datas:MoveNext()
-    while datas:get_Current()~=nil do
-        local lotlist=datas:get_Current()._LotList
+    while datas._current~=nil do
+        local lotlist=datas._current._LotList
         if #lotlist > 1 then
             for i=0,#lotlist-1 do
                 if lotlist[i]._Num == 0 then

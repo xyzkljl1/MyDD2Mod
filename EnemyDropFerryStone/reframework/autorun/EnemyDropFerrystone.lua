@@ -171,10 +171,11 @@ local function Init()
     local CategoryQuest=sdk.find_type_definition("app.ItemSubCategory"):get_field("Quest"):get_data()
     local CategorySpecial=sdk.find_type_definition("app.ItemSubCategory"):get_field("Special"):get_data()
     local im=sdk.get_managed_singleton("app.ItemManager")
-    local iter=im._ItemDataDict:GetEnumerator()
+    -- GetEnumerator/Get_Current/Get_Value not working
+    local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()')
     iter:MoveNext()
-    while iter:get_Current():get_Value()~=nil do
-        local itemCommonParam=iter:get_Current():get_Value()
+    while iter._current.value~=nil do
+        local itemCommonParam=iter._current.value
         if itemCommonParam._SubCategory~=nil and (itemCommonParam._SubCategory==CategoryQuest or itemCommonParam._SubCategory == CategorySpecial) then
             QuestAndSpecialItemIds[itemCommonParam._Id]=""
             --print(itemCommonParam._Id,itemCommonParam:get_Name())

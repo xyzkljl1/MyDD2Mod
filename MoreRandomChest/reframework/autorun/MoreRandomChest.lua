@@ -119,10 +119,11 @@ function Init()
     itemIds={}
     local im=sdk.get_managed_singleton("app.ItemManager")
     --可以直接从app.ItemIDEnum取ID,但是里面有invalid物品
-    local iter=im._ItemDataDict:GetEnumerator()
+    -- GetEnumerator/Get_Current/Get_Value not working
+    local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()')
     iter:MoveNext()
-    while iter:get_Current():get_Value()~=nil do
-        local itemCommonParam=iter:get_Current():get_Value()
+    while iter._current.value~=nil do
+        local itemCommonParam=iter._current.value
         local name=itemCommonParam:get_Name()
         if name ~="Invalid" and name~=nil then
             if itemCommonParam._SubCategory==nil or (itemCommonParam._SubCategory ~= CategoryQuest) then

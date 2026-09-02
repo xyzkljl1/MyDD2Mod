@@ -12,10 +12,11 @@ local function ClearLog()
 end
 
 local function DoShopDatas(shopDatas)
-    local iter=shopDatas:GetEnumerator()
+    -- GetEnumerator/Get_Current/Get_Value not working
+    local iter=shopDatas:call('System.Collections.IEnumerable.GetEnumerator()')
     iter:MoveNext()
-    while iter:get_Current()~=nil do
-        local shopData=iter:get_Current()
+    while iter._current~=nil do
+        local shopData=iter._current
         local typeshopData=shopData:get_type_definition()
         if typeshopData:get_full_name() == "app.NpcShopInnParam" then
             shopData._Cost=0
@@ -34,10 +35,11 @@ sdk.hook(
     function()
         --data reseted when return to title
         local tm=sdk.get_managed_singleton("app.TalkEventManager")
-        local iter=tm._ShopTalkEventDataCatalog:GetEnumerator()
+        -- GetEnumerator/Get_Current/Get_Value not working
+        local iter=tm._ShopTalkEventDataCatalog:call('System.Collections.IEnumerable.GetEnumerator()')
         iter:MoveNext()
-        while iter:get_Current():get_Value()~=nil do
-            local shopDatas=iter:get_Current():get_Value()._CharacterShopData
+        while iter._current.value~=nil do
+            local shopDatas=iter._current.value._CharacterShopData
             --Log(tostring(shopDatas))
             DoShopDatas(shopDatas)
             iter:MoveNext()

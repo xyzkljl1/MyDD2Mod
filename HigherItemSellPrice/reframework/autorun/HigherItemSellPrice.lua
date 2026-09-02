@@ -31,10 +31,11 @@ local originalSellPrice={}
 --On setting Change
 local function OnChanged()
     local im=sdk.get_managed_singleton("app.ItemManager")
-    local iter=im._ItemDataDict:GetEnumerator()
+    -- GetEnumerator/Get_Current/Get_Value not working
+    local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()')
     iter:MoveNext()
-    while iter:get_Current():get_Value()~=nil do
-        local itemCommonParam=iter:get_Current():get_Value()
+    while iter._current.value~=nil do
+        local itemCommonParam=iter._current.value
         --93:gold,for some reason,gold sell price will affect how many gold monster  drops!
         if itemCommonParam._Id~=93 then
             if originalSellPrice[itemCommonParam._Id]==nil then
