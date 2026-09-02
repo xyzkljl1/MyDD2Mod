@@ -108,6 +108,7 @@ local function DD2_InitItemId()
     itemIds={}
     local im=sdk.get_managed_singleton("app.ItemManager")
     --可以直接从app.ItemIDEnum取ID,但是里面有invalid物品
+--[[
     for _, entry in pairs(im._ItemDataDict._entries) do
         if entry ~= nil and entry.value ~= nil then
             local itemCommonParam = entry.value
@@ -118,12 +119,13 @@ local function DD2_InitItemId()
             end
         end
     end
+]]--
 
---[[ -- for some reason ,GetEnumerator is broken?
-    local iter=im._ItemDataDict:GetEnumerator()
+    -- for some mysterious reason ,directly GetEnumerator not working,iter:get_Current():get_Value() not working too.
+    local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()')
     iter:MoveNext()
-    while iter:get_Current():get_Value()~=nil do
-        local itemCommonParam=iter:get_Current():get_Value()
+    while iter._current.value~=nil do
+        local itemCommonParam=iter._current.value
         local name=itemCommonParam:get_Name()
         if name ~="Invalid" and name~=nil then
             id2Name[itemCommonParam._Id]= string.format("%5d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
@@ -131,7 +133,7 @@ local function DD2_InitItemId()
         end
         iter:MoveNext()
     end
-]]--
+
 
     table.sort(itemIds)
 --    print("{")
