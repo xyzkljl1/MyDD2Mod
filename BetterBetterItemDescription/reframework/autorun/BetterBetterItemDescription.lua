@@ -322,11 +322,12 @@ end
 
 local function printRings()
     local im=sdk.get_managed_singleton("app.ItemManager")
-    local iter=im._ItemDataDict:GetEnumerator()
+    -- GetEnumerator/Get_Current/Get_Value not working
+    local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()')
     local dup={}
     iter:MoveNext()
-    while iter:get_Current():get_Value()~=nil do
-        local itemCommonParam=iter:get_Current():get_Value()
+    while iter._current.value~=nil do
+        local itemCommonParam=iter._current.value
         if itemCommonParam:get_type_definition():is_a("app.ItemArmorParam") 
             and itemCommonParam._EquipCategory==sdk.find_type_definition("app.ItemEquipCategory"):get_field("Jewelry"):get_data() then 
             if itemCommonParam._Special>0 then
@@ -447,10 +448,11 @@ local function Init()
         if field:get_data()~=nil and field:get_data()>0 then
             local job=field:get_data()                       
             local abilitys=guiManager:getAbilitySets(job)
-            local iter=abilitys:GetEnumerator()
+            -- GetEnumerator/Get_Current/Get_Value not working
+            local iter=abilitys:call('System.Collections.IEnumerable.GetEnumerator()')
             iter:MoveNext()
-            while iter:get_Current():get_Value()~=nil do
-                local ability=iter:get_Current():get_Value()
+            while iter._current.value~=nil do
+                local ability=iter._current.value
                 local skillName= messageManager:getMessage(ability:get_AbilityName())
                 SkillName2Id[skillName]=ability:get_AbilityID()
                 iter:MoveNext()

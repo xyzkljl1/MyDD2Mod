@@ -179,35 +179,39 @@ local function Init()
         if field:get_data()~=nil and field:get_data()>0 then
             local job=field:get_data()
             local actions=guiManager:getNormalActionData(job)
-            local iter=actions:GetEnumerator()
+            -- GetEnumerator/Get_Current/Get_Value not working
+            local iter=actions:call('System.Collections.IEnumerable.GetEnumerator()')
             iter:MoveNext()
-            while iter:get_Current():get_Value()~=nil do
-                local action=iter:get_Current():get_Value()
+            while iter._current.value~=nil do
+                local action=iter._current.value
                 local skillName= messageManager:getMessage(action._SkillName)
                 SkillName2Id[skillName]={type="Action",id=string.format("Job%02d_%d",job,action._ActionID)}
                 iter:MoveNext()
             end
 
             local actions=guiManager:getNormalSkillSets(job)
-            local iter=actions:GetEnumerator()
+            -- GetEnumerator/Get_Current/Get_Value not working
+            local iter=actions:call('System.Collections.IEnumerable.GetEnumerator()')
             iter:MoveNext()
-            while iter:get_Current():get_Value()~=nil do
-                local action=iter:get_Current():get_Value()
+            while iter._current.value~=nil do
+                local action=iter._current.value
                 local skillName= messageManager:getMessage(action._SkillName)
                 SkillName2Id[skillName]={type="Normal",id=action._SkillID}
                 iter:MoveNext()
             end
                        
             local actions=guiManager:getCustomSkillSets(job)
-            local iter=actions:GetEnumerator()
+            -- GetEnumerator/Get_Current/Get_Value not working
+            local iter=actions:call('System.Collections.IEnumerable.GetEnumerator()')
             iter:MoveNext()
-            while iter:get_Current():get_Value()~=nil do
-                local skills=iter:get_Current():get_Value()
+            while iter._current.value~=nil do
+                local skills=iter._current.value
 
-                local iter2=skills:GetEnumerator()
+                -- GetEnumerator/Get_Current/Get_Value not working
+                local iter2=skills:call('System.Collections.IEnumerable.GetEnumerator()')
                 iter2:MoveNext()
-                while iter2:get_Current():get_Value()~=nil do
-                    local skill=iter2:get_Current():get_Value()
+                while iter2._current.value~=nil do
+                    local skill=iter2._current.value
                     local skillName= messageManager:getMessage(skill._SkillName)
                     SkillName2Id[skillName]={type="Custom",id=skill._SkillID}
                     iter2:MoveNext()
