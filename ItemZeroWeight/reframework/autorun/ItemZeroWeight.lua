@@ -6,23 +6,19 @@ local function Log(msg)
     myLog = myLog .."\n".. msg
     log.info(modname..msg)
 end
-local function ClearLog()
-    draw.text(myLog,50,50,0xffEEEEFE)
-    --myLog = ""
+
+local itemManagerType=sdk.find_type_definition("app.ItemManager")
+local zeroFloat=sdk.float_to_ptr(0)
+local function ReturnZeroFloat(retval)
+    return zeroFloat
+end
+local function ReturnZeroInt(retval)
+    return sdk.to_ptr(0)
 end
 
-local im=sdk.get_managed_singleton("app.ItemManager")
--- GetEnumerator/Get_Current/Get_Value not working
-local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()')
-iter:MoveNext()
-while iter._current.value~=nil do
-    local itemCommonParam=iter._current.value
-    itemCommonParam._Weight=0
-    iter:MoveNext()
-end
+sdk.hook(itemManagerType:get_method("getStorageWeight(app.CharacterID)"),nil,ReturnZeroFloat)
+sdk.hook(itemManagerType:get_method("getStorageWeight(app.Character)"),nil,ReturnZeroFloat)
+sdk.hook(itemManagerType:get_method("getStorageWeightInt(app.CharacterID)"),nil,ReturnZeroInt)
 
 Log("Done")
 
---re.on_frame(function()
---    ClearLog()
---end)
