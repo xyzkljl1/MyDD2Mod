@@ -231,9 +231,12 @@ local function LootGm82_009(gimmick)
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
             --call StartInteract only causes pickup action
-            Log("Loot Gimmick82_009",distance)
+            Log("Loot Gimmick82_009/"..tostring(distance))
+            -- at somepoint, if you don't end it ,it will still be interactable
+            gimmick:onStartInteractBase(0, playerManager:get_ManualPlayer())
             gimmick:onExecuteInteractBase(0, playerManager:get_ManualPlayer())
-            AddMessage("Loot 1",gimmick:get_GameObject():get_Transform():get_Position())
+            gimmick:onEndInteractBase(0, playerManager:get_ManualPlayer())
+            AddMessage("Loot 1 ", gimmick:get_GameObject():get_Transform():get_Position())
         end
     end
 end
@@ -248,6 +251,8 @@ local function LootGm82_000_001(gimmick)
             local msg="Loot "..gimmick:getItemNum() -- num became 0 after interact
             --executeInteract do nothing
             gimmick:onStartInteractBase(0, playerManager:get_ManualPlayer())
+            gimmick:onExecuteInteractBase(0, playerManager:get_ManualPlayer())
+            gimmick:onEndInteractBase(0, playerManager:get_ManualPlayer())
             AddMessage(msg,gimmick:get_GameObject():get_Transform():get_Position())
         end
     end
