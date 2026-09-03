@@ -103,9 +103,12 @@ local function DD2_InitItemId()
     if isDD2()==false then return end
 
     -- imgui.combo seems not to sort by number index when there are many items.Use continuous index to force it sort
-    itemNames={}
+    itemNames=itemNames or {}
     local id2Name={}
-    itemIds={}
+    itemIds=itemIds or {}
+    for _,t in ipairs({itemNames,itemIds,itemIndex2itemId,itemId2itemIndex}) do
+        for k in pairs(t) do t[k]=nil end
+    end
     local im=sdk.get_managed_singleton("app.ItemManager")
     --可以直接从app.ItemIDEnum取ID,但是里面有invalid物品
 --[[
