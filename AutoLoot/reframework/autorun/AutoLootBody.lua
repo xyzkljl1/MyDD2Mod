@@ -60,6 +60,7 @@ local function getCharacterPos(char)
     local ground_joint=char:get_GameObject():get_Transform():getJointByName("root")
     -- no head enemy
     if joint == nil then
+        if ground_joint==nil then return char:get_GameObject():get_Transform():get_Position() end
         return ground_joint:get_Position()
     end
     --if head is too tall from ground, return the ground
@@ -119,9 +120,11 @@ local function LootBody(deadBodyController)
         local maxNum=deadBodyController.GatherContext._Num
         if deadBodyController.ItemDropInfo~=nil then
             local lotlist=deadBodyController.ItemDropInfo._LotList
-            for i=0,lotlist:get_Count()-1 do
-                if maxNum<lotlist[i]._Num then
-                    maxNum=lotlist[i]._Num
+            if lotlist~=nil then
+                for i=0,lotlist:get_Count()-1 do
+                    if maxNum<lotlist[i]._Num then
+                        maxNum=lotlist[i]._Num
+                    end
                 end
             end
         end
