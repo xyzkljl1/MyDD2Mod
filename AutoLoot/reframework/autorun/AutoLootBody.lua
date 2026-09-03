@@ -349,9 +349,11 @@ local gimmick82_036=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_03
 local gimmick82_000=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_000"):get_data(nil)
 
 --check nearby gimmick instances each 90 frame
+--changed from update() to lateUpdate() because update was never called since that version
+--changed back to update() becasue now lateupdate is never called
 local interval2=0
 sdk.hook(
-    sdk.find_type_definition("app.GimmickManager"):get_method("lateUpdate()"),
+    sdk.find_type_definition("app.GimmickManager"):get_method("update()"),
     function()
         --Log(battleManager:get_IsBattleMode())
         if config.disableOnBattle and battleManager:get_IsBattleMode() then return end
