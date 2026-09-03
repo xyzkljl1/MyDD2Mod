@@ -223,7 +223,7 @@ local function LootBodyOrBodyPart(controller)
 end
 
 local function LootGm82_009(gimmick)
-    if gimmick:isInteractEnable(0)==true then
+    if gimmick:isInteractEnable(0)==true and gimmick.IsGivedItem==false then
         --gimmick:get_DistanceXZSqFromPlayer and FarDistanceSq/NearDistanceSq for some gimmick are fix value 
         --GM82_009_10 will trigger repeatly and distance is always 0.0
         local distance=DistanceSqGimmick(gimmick) -- gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
@@ -231,9 +231,9 @@ local function LootGm82_009(gimmick)
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
             --call StartInteract only causes pickup action
-            Log("Loot Gimmick82_009/"..tostring(distance))
+            Log("Loot Gimmick82_009:"..tostring(gimmick.IsGivedItem).."/"..tostring(gimmick.TurnOn).."/"..tostring(gimmick.IsEnd))
             -- at somepoint, if you don't end it ,it will still be interactable
-            gimmick:onStartInteractBase(0, playerManager:get_ManualPlayer())
+            --gimmick:onStartInteractBase(0, playerManager:get_ManualPlayer())
             gimmick:onExecuteInteractBase(0, playerManager:get_ManualPlayer())
             gimmick:onEndInteractBase(0, playerManager:get_ManualPlayer())
             AddMessage("Loot 1 ", gimmick:get_GameObject():get_Transform():get_Position())
