@@ -33,6 +33,8 @@ local CustomSkillFormat={}
 local NormalSkillFormat={} -- in translation file,normalskill include actions(like normal attack)
 local SkillParameter={}
 local SkillName2Id={}
+local messageManager=nil
+local initialized=false
 
 local function Log(...)
     print(...)
@@ -110,8 +112,9 @@ end
 local prevInitLanguage=""
 local function Init()
     local om=sdk.get_managed_singleton("app.OptionManager")
+    if om==nil or om._OptionItems==nil then return end
     local lngID=sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data()
-    if not om._OptionItems:ContainsKey(lngID) then
+    if lngID==nil or not om._OptionItems:ContainsKey(lngID) then
         Log("OptionManager Not Ready,abort"..tostring(lngID))
         return        
     end
@@ -121,6 +124,7 @@ local function Init()
         Log("Ignore dup init")
         return
     end
+    initialized=false
 
     local filename=string.format("%s.%s.json",modname,lng)
     if config.specifyTransFile~="" then
@@ -163,7 +167,6 @@ local function Init()
         
     end
 
-    prevInitLanguage=lng
     CustomSkillDescCache={}
     NormalSkillDescCache={}
 
@@ -171,10 +174,11 @@ local function Init()
     SkillName2Id={}
     local xxx={}
 
-    local messageManager=sdk.get_managed_singleton("app.MessageManager")
+    messageManager=sdk.get_managed_singleton("app.MessageManager")
+    local guiManager=sdk.get_managed_singleton("app.GuiManager")
+    if messageManager==nil or guiManager==nil then return end
     local type=sdk.find_type_definition("app.Character.JobEnum")
     local fields=type:get_fields()
-    local guiManager=sdk.get_managed_singleton("app.GuiManager")
     for _,field in pairs(fields) do
         if field:get_data()~=nil and field:get_data()>0 then
             local job=field:get_data()
@@ -220,6 +224,8 @@ local function Init()
             end
         end
     end
+    prevInitLanguage=lng
+    initialized=true
 end
 
 --Init
@@ -279,7 +285,6 @@ local function GetOrAddSkillDesc(originalMessage,Id,isNormalSkill)
     return sdk.create_managed_string(SkillDescCache[originalMessage])
 end
 
-local messageManager=sdk.get_managed_singleton("app.MessageManager")
 local tmpJobWindow=nil
 --Job NormalSkill CustomSkill Ability other
 local MainContentsInfoKindNormalSkill=sdk.find_type_definition("app.ui040101_00.MainContentsInfo.Kind"):get_field("NormalSkill"):get_data()
@@ -288,6 +293,7 @@ local MainContentsInfoKindOther=sdk.find_type_definition("app.ui040101_00.MainCo
 
 
 local function BeforeUpdateSkillInfo(args)
+    if not initialized then return end
     local this=sdk.to_managed_object(args[2])
     tmpJobWindow=this
 end
@@ -340,6 +346,7 @@ end
 local tmpStatusWindow=nil
 local tmpSkillInfo=nil
 local function BeforeUpdateStatus(args)
+    if not initialized then return end
     local this=sdk.to_managed_object(args[2])
     local skillInfo=sdk.to_managed_object(args[3])
     tmpStatusWindow=this
@@ -371,7 +378,6 @@ sdk.hook(sdk.find_type_definition("app.ui040101_00"):get_method("setupSkillInfoW
 sdk.hook(sdk.find_type_definition("app.ui040101_00"):get_method("setupCustomSkillMenuStatus"),BeforeUpdateSkillInfo,AfterUpdateEquipCustomSkillInfo)--switch custom skill on right
 sdk.hook(sdk.find_type_definition("app.ui040101_00"):get_method("setupNormalSkillInfoWindow"),BeforeUpdateSkillInfo,AfterUpdateNormalSkillInfo)
 sdk.hook(sdk.find_type_definition("app.ui060601_01"):get_method("setupSkillDetail(app.ui060601_01.SkillInfo)"),BeforeUpdateStatus,AfterUpdateStatus)
-
 
 --try load api and draw ui
 local function prequire(...)

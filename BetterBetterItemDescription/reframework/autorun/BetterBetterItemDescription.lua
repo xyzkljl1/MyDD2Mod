@@ -39,6 +39,7 @@ local RewarpOnNonSpace=true
 local guiManager=nil
 local characterManager=nil
 local messageManager=nil
+local initialized=false
 
 local function Log(...)
     print(...)
@@ -389,6 +390,7 @@ local function Init()
     messageManager=sdk.get_managed_singleton("app.MessageManager")
 
     local om=sdk.get_managed_singleton("app.OptionManager")
+    if guiManager==nil or characterManager==nil or messageManager==nil or om==nil or om._OptionItems==nil then return end
     local optionID=sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data()
     if optionID==nil then return end
     if not om._OptionItems:ContainsKey(optionID) then
@@ -407,6 +409,7 @@ local function Init()
         Log("Ignore dup init")
         return
     end
+    initialized=false
 
     local filename=string.format("%s.%s.json",modname,lng)
     if config.specifyTransFile~="" then
@@ -434,7 +437,6 @@ local function Init()
     else
         Log("Invalid File,Use default")
     end
-    prevInitLanguage=lng
     ItemDescCache={}
     SkillDescCache={}
     WeaponCharaMsgCache=nil
@@ -459,6 +461,8 @@ local function Init()
             end
         end
     end
+    prevInitLanguage=lng
+    initialized=true
 end
 
 
@@ -818,6 +822,7 @@ sdk.hook(
     --sdk.find_type_definition("app.GUIBase.ItemWindowRef"):get_method("setup(app.ItemDefine.StorageData)"),
     sdk.find_type_definition("app.GUIBase.ItemWindowRef"):get_method("setup(app.ItemCommonParam, System.Int32, System.Boolean)"),
     function (args)
+        if not initialized then return end
         local this=sdk.to_managed_object(args[2])
         local itemCommonParam=sdk.to_managed_object(args[3])
         if itemCommonParam==nil or this ==nil then return end
@@ -855,6 +860,7 @@ sdk.hook(
     --sdk.find_type_definition("app.GUIBase.ItemWindowRef"):get_method("setup(app.ItemDefine.StorageData)"),
     sdk.find_type_definition("app.ui040101_00"):get_method("setupAbilityInfoWindow()"),
     function (args)
+        if not initialized then return end
         local this=sdk.to_managed_object(args[2])
         tmpJobWindow=this
     end,
@@ -895,6 +901,7 @@ sdk.hook(
     --sdk.find_type_definition("app.GUIBase.ItemWindowRef"):get_method("setup(app.ItemDefine.StorageData)"),
     sdk.find_type_definition("app.ui040101_00"):get_method("setupJobAbilityInfoWindow()"),
     function (args)
+        if not initialized then return end
         local this=sdk.to_managed_object(args[2])
         tmpJobWindow=this
     end,
@@ -917,6 +924,7 @@ sdk.hook(
 --Status UI
 sdk.hook(sdk.find_type_definition("app.ui060601_01"):get_method("setupSkillDetail(app.ui060601_01.SkillInfo)"),
 function(args)
+    if not initialized then return end
     tmpStatusWindow=sdk.to_managed_object(args[2])
     tmpSkillInfo=sdk.to_managed_object(args[3])
 end,
@@ -937,7 +945,7 @@ end)
 
 local frame_ct=0
 re.on_frame(function()
-    if frame_ct<600 then
+    if frame_ct < 500 and not initialized then
         frame_ct=frame_ct+1
         if frame_ct>=600 then
             Init()
