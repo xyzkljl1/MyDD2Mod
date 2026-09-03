@@ -102,7 +102,11 @@ local function AddItem(dest,index,remove)
 
     --Gather TreasureBox Talk DeadEnemy
     local type=sdk.find_type_definition("app.ItemManager.GetItemEventType"):get_field("TreasureBox"):get_data()
-    local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.CharacterID, System.Boolean, System.Boolean, System.Boolean, app.ItemManager.GetItemEventType)")
+    local option=sdk.find_type_definition("app.ItemDefine.GetItemOption"):get_field("Default"):get_data()
+    option.IsNotice=true
+    option.IsHistory=false
+    option.EventType=type
+    local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.CharacterID, app.ItemDefine.GetItemOption)")
 
     local storageid=player:get_CharaID()
     if dest=="Pawn" then
@@ -127,13 +131,13 @@ local function AddItem(dest,index,remove)
 
         if left_ct >ct then
             Log("Add Shards "..tostring(left_ct-ct))
-            getItemMethod:call(im,WakestoneShards,left_ct-ct,storageid,true,false,false,1)
+            getItemMethod:call(im,WakestoneShards,left_ct-ct,storageid,option)
         elseif left_ct<ct then
             Log("Reduce Shards "..tostring(ct-left_ct))
             deleteMethod:call(im,WakestoneShards,ct-left_ct,storageid)
         end
         if stone_ct>0 then
-            getItemMethod:call(im,Wakestone,stone_ct,storageid,true,false,false,1)        
+            getItemMethod:call(im,Wakestone,stone_ct,storageid,option)
         end
         Log("Modify WakeStoneShards "..ct.."/"..total_ct.."/"..left_ct)
     else
@@ -141,7 +145,7 @@ local function AddItem(dest,index,remove)
             deleteMethod:call(im,math.floor(config.item),math.floor(config.count),storageid)
             Log("Remove Item")
         else
-            getItemMethod:call(im,math.floor(config.item),math.floor(config.count),storageid,true,false,false,1)
+            getItemMethod:call(im,math.floor(config.item),math.floor(config.count),storageid,option)
             Log("Get Item")
         end
     end        
