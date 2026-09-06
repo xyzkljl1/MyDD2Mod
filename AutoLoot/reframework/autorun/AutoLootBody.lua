@@ -223,7 +223,7 @@ local function LootBodyOrBodyPart(controller)
 end
 
 local function LootGm82_009(gimmick)
-    if gimmick:isInteractEnable(0)==true and gimmick.IsGivedItem==false then
+    if gimmick:isInteractEnable(0)==true and gimmick:get_IsEndGather()==false then
         --gimmick:get_DistanceXZSqFromPlayer and FarDistanceSq/NearDistanceSq for some gimmick are fix value 
         --GM82_009_10 will trigger repeatly and distance is always 0.0
         local distance=DistanceSqGimmick(gimmick) -- gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
