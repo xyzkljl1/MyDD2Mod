@@ -601,25 +601,48 @@ local function TranslateItemBuff(param)
     end
     return ""
 end
--- TDB83 no longer exposes AnimationCurve.getKeys. Keep the key times used by
--- the descriptions as constants and get their values from the live curve.
-local curveKeyData={
-    ["weapon:1610"]={[0]={t=0},[1]={t=89},[2]={t=90}},
-    ["ring:15"]={[1]={t=10},[3]={t=20,x=19.999}},
-    ["ring:23"]={[1]={t=5},[3]={t=10},[5]={t=15}},
-}
 local curveWarnings={}
+local keyFrameType=sdk.find_type_definition("via.KeyFrame")
+
+-- TDB83 no longer exposes AnimationCurve.getKeys. Read its native KeyFrame
+-- array after verifying the complete current NativeArray layout.
+local function GetCurveKeys(curve)
+    local count=curve:getKeysCount()
+    if keyFrameType==nil or keyFrameType:get_valuetype_size()~=0x10 or count<1 or count>256 then
+        return nil,"keyFrameSize="..tostring(keyFrameType and keyFrameType:get_valuetype_size())..", count="..tostring(count)
+    end
+    local size=curve:get_object_size()
+    if size~=0x48 or curve:read_dword(0x10)~=count or
+       math.abs(curve:read_float(0x18)-curve:get_MaxTime())>=0.0001 or
+       math.abs(curve:read_float(0x1C)-curve:get_MinValue())>=0.0001 or
+       math.abs(curve:read_float(0x20)-curve:get_MaxValue())>=0.0001 or
+       curve:read_dword(0x40)~=count or
+       curve:read_dword(0x44)<count or curve:read_dword(0x44)>256 then return nil,"layout validation failed" end
+    local keyData=curve:read_qword(0x38)
+    if keyData<0x10000 or keyData>=0x800000000000 or keyData%8~=0 then return nil,"invalid key pointer "..tostring(keyData) end
+    local keys={}
+    for i=0,count-1 do
+        local key=sdk.to_valuetype(sdk.to_ptr(keyData+i*0x10),keyFrameType)
+        local t=key:call("GetTime")
+        local v=key.value
+        if t==nil or v==nil or t~=t or v~=v or (i>0 and t<keys[i-1].t) then return nil end
+        keys[i]={t=t,v=v}
+    end
+    if math.abs(keys[0].t-curve:get_MinTime())>=0.0001 or
+       math.abs(keys[count-1].t-curve:get_MaxTime())>=0.0001 then return nil end
+    return keys
+end
 
 local function FormatCurveDescription(template,param,referenceId)
     if not param then return "" end
     local ok,result=pcall(function()
-        local keys=curveKeyData[referenceId]
-        if not keys then error("Missing curve key constants") end
+        local keys,curveError=GetCurveKeys(param.Curve)
+        if not keys then error("Unsupported AnimationCurve memory layout: "..tostring(curveError)) end
         return (string.gsub(template,"{([tv])(%d+)}",function(component,index)
             local key=keys[tonumber(index)]
             if not key then error("Missing curve key "..index) end
             if component=="t" then return float2stringEX(key.t) end
-            return float2stringEX(param:getValue((key.x or key.t)*1.0))
+            return float2stringEX(key.v)
         end))
     end)
     if ok then return result end
