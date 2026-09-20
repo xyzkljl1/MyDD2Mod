@@ -100,10 +100,11 @@ local function AddItem(dest,index,remove)
     if im==nil or player==nil then return end
     local isRemove=(remove==true)
 
-    --Gather TreasureBox Talk DeadEnemy
-    local type=sdk.find_type_definition("app.ItemManager.GetItemEventType"):get_field("TreasureBox"):get_data()
+    --None Gather TreasureBox Talk DeadEnemy
+    local type=sdk.find_type_definition("app.ItemManager.GetItemEventType"):get_field("None"):get_data()
     local option=sdk.find_type_definition("app.ItemDefine.GetItemOption"):get_field("Default"):get_data()
     option.IsNotice=true
+    option.IsAddExtensionData=false
     option.IsHistory=false
     option.EventType=type
     local getItemMethod=im:get_type_definition():get_method("getItem(System.Int32, System.Int32, app.CharacterID, app.ItemDefine.GetItemOption)")
