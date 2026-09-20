@@ -601,28 +601,42 @@ local function TranslateItemBuff(param)
     end
     return ""
 end
+-- TDB83 no longer exposes AnimationCurve.getKeys. Keep the key times used by
+-- the descriptions as constants and get their values from the live curve.
+local curveKeyData={
+    ["weapon:1610"]={[0]={t=0},[1]={t=89},[2]={t=90}},
+    ["ring:15"]={[1]={t=10},[3]={t=20,x=19.999}},
+    ["ring:23"]={[1]={t=5},[3]={t=10},[5]={t=15}},
+}
+local curveWarnings={}
+
+local function FormatCurveDescription(template,param,referenceId)
+    if not param then return "" end
+    local ok,result=pcall(function()
+        local keys=curveKeyData[referenceId]
+        if not keys then error("Missing curve key constants") end
+        return (string.gsub(template,"{([tv])(%d+)}",function(component,index)
+            local key=keys[tonumber(index)]
+            if not key then error("Missing curve key "..index) end
+            if component=="t" then return float2stringEX(key.t) end
+            return float2stringEX(param:getValue((key.x or key.t)*1.0))
+        end))
+    end)
+    if ok then return result end
+    if not curveWarnings[referenceId] then
+        log.warn("["..modname.."] "..referenceId..": "..tostring(result))
+        curveWarnings[referenceId]=true
+    end
+    return ""
+end
+
 local function TranslateRingSP(param)
     local sp=param._Special
     if sp==nil or RingSpecialFormat[sp]==nil or RingSpecialFormat[sp].enable==false then return "" end
     local ret=RingSpecialFormat[sp].format
     if RingSpecialFormat[sp].curve then        
         local additionalData=sdk.get_managed_singleton("app.ItemManager"):get_JewelryAdditionalDataDict()[sp]
-        local curve=additionalData and additionalData.Curve
-        if curve then
-            local keyframeCount=curve:getKeysCount()
-            for i=0,keyframeCount-1 do
-                local wordt=string.format("{t%d}",i)
-                local wordv=string.format("{v%d}",i)
-                if string.find(ret,wordt) or string.find(ret,wordv) then
-                    local t=curve:getKeys(i):GetTime()
-                    local v=curve:getKeys(i).value --curve:evaluate(t)-- 用evaluate在分段跳变的边界上容易出错
-                    ret=string.gsub(ret,wordt,float2stringEX(t))
-                    ret=string.gsub(ret,wordv,float2stringEX(v))
-                end
-            end
-        else
-            ret=""
-        end
+        ret=FormatCurveDescription(ret,additionalData,"ring:"..tostring(sp))
     else
         ret=string.gsub(ret,"{v1}",tostring(param._SpecialValue))
         ret=string.gsub(ret,"{v2}",tostring(param._SpecialValue2))
@@ -639,24 +653,7 @@ local function TranslateWeaponSP(param)
         if addiParam~=nil then
             local msg=WeaponSpecialFormat[param._Id].format
             if WeaponSpecialFormat[param._Id].curve then--use curve
-                local additionalData=im:get_WeaponAdditionalDataDict()[param._WeaponId]
-                local curve=additionalData and additionalData.Curve
-                print("!!",param._WeaponId,additionalData,curve)
-                if curve then
-                    local keyframeCount=curve:getKeysCount()
-                    for i=0,keyframeCount-1 do
-                        local wordt=string.format("{t%d}",i)
-                        local wordv=string.format("{v%d}",i)
-                        if string.find(msg,wordt) or string.find(msg,wordv) then
-                            local t=curve:getKeys(i):GetTime()
-                            local v=curve:getKeys(i).value --curve:evaluate(t)-- 用evaluate在分段跳变的边界上容易出错
-                            msg=string.gsub(msg,wordt,float2stringEX(t))
-                            msg=string.gsub(msg,wordv,float2stringEX(v))
-                        end
-                    end
-                else
-                    msg=""
-                end
+                msg=FormatCurveDescription(msg,addiParam,"weapon:"..tostring(param._Id))
             elseif WeaponSpecialFormat[param._Id].wp10_003 then--梦想路，                
             --TODO
             else--Use special value
@@ -945,9 +942,10 @@ end)
 
 local frame_ct=0
 re.on_frame(function()
-    if frame_ct < 500 and not initialized then
+    if not initialized then
         frame_ct=frame_ct+1
         if frame_ct>=600 then
+            frame_ct=0
             Init()
         end
     end
