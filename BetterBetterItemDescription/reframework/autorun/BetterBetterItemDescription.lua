@@ -889,28 +889,15 @@ sdk.hook(
             local abilityId=nil
             local cursor=tmpJobWindow._Main_ContentsListCtrl:get_SelectedInfo()
             local rcursor=tmpJobWindow._Ability_EqListCtrl:get_SelectedInfo()
-            local rindex=tmpJobWindow._Ability_EqListCtrl:get_SelectedIndex()
-           
-            if tmpJobWindow._TxtAbilityInfoName:get_MessageId():ToString()~="00000000-0000-0000-0000-000000000000" then
-                --compare current ability name to selected abilitt in right list to check which list is active
-                local isInRight=false
-                local rAbilityDef=guiManager:getAbilityDefine(rcursor.AbilityID)
-                if rAbilityDef and rAbilityDef:get_AbilityName():ToString()==tmpJobWindow._TxtAbilityInfoName:get_MessageId():ToString() then
-                    isInRight=true
-                end
-                --selecting on left or just turn to right
-                --should show info in left
-                if not isInRight then
-                    if cursor.ContenstsType==MainContentsInfoKindAbility then
-                        abilityId=cursor.Ability.AbilityID
-                    end
-                else-- else show info in right
-                    abilityId=rcursor.AbilityID
-                end
-            
-                if abilityId~=nil and abilityId>0 then
-                    tmpJobWindow._TxtAbilityInfo:set_Message(GetOrAddSkillDesc(tmpJobWindow._TxtAbilityInfo:get_Message(),abilityId))
-                end
+
+            if tmpJobWindow._IsSelectEquipContents then
+                abilityId=rcursor and rcursor.AbilityID
+            elseif cursor and cursor.ContenstsType==MainContentsInfoKindAbility and cursor.Ability then
+                abilityId=cursor.Ability.AbilityID
+            end
+
+            if abilityId~=nil and abilityId>0 then
+                tmpJobWindow._TxtAbilityInfo:set_Message(GetOrAddSkillDesc(tmpJobWindow._TxtAbilityInfo:get_Message(),abilityId))
             end
             tmpJobWindow=nil
         end
