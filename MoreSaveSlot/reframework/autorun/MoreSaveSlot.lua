@@ -2,16 +2,27 @@ local modName = "MoreSaveSlot"
 local configFile = modName..".json"
 local slotCount = 20
 local customSlotBase = 100
--- Keep the existing 1-9 slot file IDs stable when adding more UI slots.
-local customSlotStride = 9
+-- Three native adventures use non-overlapping custom slots within 100-200.
+local customSlotGroupStride = slotCount - 1
 local nativeVisibleItemCount = 12
 local saveDataManagerType = sdk.find_type_definition("app.SaveDataManager")
 local config = json.load_file(configFile) or {saveSlot = 1, loadSlot = 1}
-local lastNativeSlot = 4
+local lastNativeSlot = tonumber(config.nativeSlot) or 4
+if lastNativeSlot < 4 or lastNativeSlot > 14 or (lastNativeSlot - 4) % 5 ~= 0 then
+    lastNativeSlot = 4
+end
 local slotStatus = {}
+local pendingSaveDetail
+local nativePreviewGui
+local nativePreviewChinese
+local latestSlot
+local nativeLabelsDirty = false
+local statusRefreshRequested = false
+local previewDataCache = {}
 
 config.saveSlot = math.max(1, math.min(slotCount, config.saveSlot or 1))
 config.loadSlot = math.max(1, math.min(slotCount, config.loadSlot or 1))
+config.slotDetails = config.slotDetails or {}
 
 local slotNames = {}
 for i = 1, slotCount do slotNames[i] = "Manual Save "..i end
@@ -30,37 +41,134 @@ end
 
 local function GetSlotId(nativeSlot, uiSlot)
     if uiSlot == 1 then return nativeSlot end
-    return customSlotBase + nativeSlot * customSlotStride + uiSlot - 2
+    return customSlotBase + math.floor(nativeSlot / 5) * customSlotGroupStride
+        + uiSlot - 2
+end
+
+local function GetFileTimestamp(slotId)
+    local manager = sdk.get_managed_singleton("app.SaveDataManager")
+    if manager == nil then return nil end
+    local ok, timestamp = pcall(function()
+        local list = manager:call(
+            "tempGetSaveFileDetailList(System.Int32, System.Int32)", slotId, 1)
+        local entry = list and list:get_Item(0)
+        if entry == nil or entry:call("get_IsEmptyData") then return nil end
+        local detail = entry:call("get_SaveFileDetail")
+        return detail and detail:call("get_LastUpdateTimeStamp") or nil
+    end)
+    return ok and timestamp or nil
+end
+
+local function SetNativeGroup(slotId)
+    if slotId < 0 or slotId >= 15 then return end
+    local nativeSlot = 4 + math.floor(slotId / 5) * 5
+    if nativeSlot == lastNativeSlot and config.nativeSlot == nativeSlot then return end
+    lastNativeSlot = nativeSlot
+    config.nativeSlot = nativeSlot
+    statusRefreshRequested = true
+    nativeLabelsDirty = true
+    json.dump_file(configFile, config)
+    Log("Selected native save group", math.floor(nativeSlot / 5) + 1)
+end
+
+local function DetectNativeGroup()
+    if config.nativeSlot ~= nil then return end
+    local latestTimestamp
+    local latestNativeSlot
+    for group = 0, 2 do
+        for uiSlot = 2, slotCount do
+            local storageSlot = customSlotBase + group * customSlotGroupStride + uiSlot - 2
+            local timestamp = tonumber(tostring(GetFileTimestamp(storageSlot)))
+            if timestamp ~= nil and (latestTimestamp == nil or timestamp > latestTimestamp) then
+                latestTimestamp = timestamp
+                latestNativeSlot = 4 + group * 5
+            end
+        end
+    end
+    if latestNativeSlot ~= nil then SetNativeGroup(latestNativeSlot) end
+end
+
+DetectNativeGroup()
+
+local function QueueSaveDetail(uiSlot, storageSlot)
+    local manager = sdk.get_managed_singleton("app.SaveDataManager")
+    local ok, detail = pcall(function()
+        local source = manager and manager:get_field("RefGameSaveSlotDetailData")
+        local contents = source and source:call("getDetailContents")
+        if contents == nil then return nil end
+        local memo = contents:get_field("Memo")
+        return {
+            playTime = contents:get_field("ActualPlayingTime"),
+            place = memo and tostring(memo) or ""
+        }
+    end)
+    if not ok then Log("Failed to capture save preview:", detail) end
+    pendingSaveDetail = {
+        uiSlot = uiSlot,
+        storageSlot = storageSlot,
+        previousTimestamp = GetFileTimestamp(storageSlot),
+        detail = ok and detail or nil
+    }
 end
 
 local function RedirectSlot(args, uiSlot, operation)
     local nativeSlot = sdk.to_int64(args[3])
+    SetNativeGroup(nativeSlot)
     if not IsManualSlot(nativeSlot) then return end
 
-    lastNativeSlot = nativeSlot
     local targetSlot = GetSlotId(nativeSlot, uiSlot)
     if targetSlot ~= nativeSlot then
         args[3] = sdk.to_ptr(targetSlot)
         Log(operation, "manual slot", uiSlot, "storage slot", nativeSlot, "->", targetSlot)
     end
+    return targetSlot
 end
 
 sdk.hook(saveDataManagerType:get_method("requestSave"), function(args)
-    RedirectSlot(args, config.saveSlot, "Save")
+    local targetSlot = RedirectSlot(args, config.saveSlot, "Save")
+    if targetSlot ~= nil then QueueSaveDetail(config.saveSlot, targetSlot) end
 end, nil)
 
 sdk.hook(saveDataManagerType:get_method("requestLoad"), function(args)
     RedirectSlot(args, config.loadSlot, "Load")
 end, nil)
 
-local function RefreshStatus()
+local function FinalizePendingSaveDetail()
+    if pendingSaveDetail == nil then return end
     local manager = sdk.get_managed_singleton("app.SaveDataManager")
     if manager == nil or manager:get_IsBusy() then return end
 
+    local timestamp = GetFileTimestamp(pendingSaveDetail.storageSlot)
+    if timestamp == nil or tostring(timestamp) == tostring(pendingSaveDetail.previousTimestamp) then return end
+    local detail = pendingSaveDetail.detail or {}
+    detail.timestamp = tostring(timestamp)
+    config.slotDetails[tostring(pendingSaveDetail.storageSlot)] = detail
+    slotStatus[pendingSaveDetail.uiSlot] = "Saved"
+    previewDataCache[pendingSaveDetail.storageSlot] = nil
+    latestSlot = pendingSaveDetail.uiSlot
+    nativeLabelsDirty = true
+    json.dump_file(configFile, config)
+    Log("Updated preview for manual slot", pendingSaveDetail.uiSlot)
+    pendingSaveDetail = nil
+end
+
+local function RefreshStatus()
+    local manager = sdk.get_managed_singleton("app.SaveDataManager")
+    if manager == nil or manager:get_IsBusy() then return false end
+    latestSlot = nil
+    previewDataCache = {}
+
+    local latestTimestamp
     for i = 1, slotCount do
         local storageSlot = GetSlotId(lastNativeSlot, i)
-        slotStatus[i] = manager:isExistSaveData(storageSlot) and "Saved" or "Empty"
+        local timestamp = tonumber(tostring(GetFileTimestamp(storageSlot)))
+        slotStatus[i] = timestamp ~= nil and "Saved" or "Empty"
+        if timestamp ~= nil and (latestTimestamp == nil or timestamp > latestTimestamp) then
+            latestTimestamp = timestamp
+            latestSlot = i
+        end
     end
+    return true
 end
 
 re.on_draw_ui(function()
@@ -73,7 +181,10 @@ re.on_draw_ui(function()
     changed, config.loadSlot = imgui.combo("Load from", config.loadSlot, slotNames)
     if changed then json.dump_file(configFile, config) end
 
-    if imgui.button("Refresh slot status") then RefreshStatus() end
+    if imgui.button("Refresh slot status") then
+        RefreshStatus()
+        nativeLabelsDirty = true
+    end
     for i = 1, slotCount do
         imgui.text(string.format("%02d  %s", i, slotStatus[i] or "Unknown"))
     end
@@ -116,19 +227,18 @@ local function IsChineseLanguage()
 end
 
 local function GetSlotLabel(slot)
-    local manager = sdk.get_managed_singleton("app.SaveDataManager")
-    local saved = false
-    if manager ~= nil then
-        local ok, exists = pcall(function() return manager:isExistSaveData(GetSlotId(lastNativeSlot, slot)) end)
-        saved = ok and exists
-    end
+    local saved = slotStatus[slot] == "Saved"
     if IsChineseLanguage() then
         return string.format("%s %s  存档位 %02d  [%s]",
-            slot == config.saveSlot and ">" or " ", nativeSaveCommandText,
+            slot == latestSlot and ">" or " ", nativeSaveCommandText,
             slot, saved and "已保存" or "空")
     end
     return string.format("%s Save and Continue  Slot %02d  [%s]",
-        slot == config.saveSlot and ">" or " ", slot, saved and "Saved" or "Empty")
+        slot == latestSlot and ">" or " ", slot, saved and "Saved" or "Empty")
+end
+
+local function GetNativeSlotLabel()
+    return latestSlot == 1 and "> "..nativeSaveCommandText or nativeSaveCommandText
 end
 
 local function NewValue(typeName, fields)
@@ -203,6 +313,7 @@ local function StyleNativeSaveItems(ctrl, compact)
 end
 
 local function FindGuiObject(root, name)
+    if root == nil then return nil end
     local child = root:call("get_Child")
     while child ~= nil do
         if tostring(child:call("get_Name")) == name then return child end
@@ -210,6 +321,29 @@ local function FindGuiObject(root, name)
         if found ~= nil then return found end
         child = child:call("get_Next")
     end
+end
+
+local function PreviewSlotForIndex(index)
+    if index == 0 or index == 1 then return 1 end
+    if index ~= nil and index >= 3 and index <= slotCount + 1 then return index - 1 end
+end
+
+local function GetCurrentListIndex(ctrl)
+    local rows = ctrl and ctrl:call("get_ItemList")
+    if rows ~= nil then
+        for i = 0, rows:get_size() - 1 do
+            local row = rows:get_element(i)
+            if row:call("get_IsSelected") then
+                return row:call("get_ListIndex")
+            end
+        end
+    end
+    return ctrl and ctrl:call("get_SelectedIndex")
+end
+
+local function BindNativePreview(gui)
+    nativePreviewGui = gui
+    nativePreviewChinese = IsChineseLanguage()
 end
 
 local function SetGuiObjectsVisible(root, names, visible)
@@ -253,9 +387,33 @@ local function ResizeNativeSaveGrid(gui, ctrl)
     nativeStyledCtrl = ctrl
 end
 
+local function RefreshNativeSaveListLabels()
+    if not nativeLabelsDirty or nativeStyledCtrl == nil then return end
+    local current = nativeStyledCtrl:call("get_InfoList")
+    if current == nil or current:get_size() < slotCount + 2 then return end
+
+    for i = 0, current:get_size() - 1 do
+        local info = current:get_element(i)
+        if i == 0 then
+            SetNativeText(info, GetNativeSlotLabel())
+        elseif i >= 3 and i <= slotCount + 1 then
+            SetNativeText(info, GetSlotLabel(i - 1))
+        end
+    end
+
+    nativeStyledCtrl:call("updateDisp()")
+    nativeLabelsDirty = false
+end
+
 re.on_frame(function()
+    FinalizePendingSaveDetail()
+    if statusRefreshRequested and RefreshStatus() then
+        statusRefreshRequested = false
+        nativeLabelsDirty = true
+    end
     if nativeStyledCtrl == nil then return end
-    local ok = pcall(function()
+    local ok, err = pcall(function()
+        RefreshNativeSaveListLabels()
         local rows = nativeStyledCtrl:call("get_ItemList")
         local rowOffset = nativeStyledCtrl:call("get_FSL"):call("get_ItemOffset").y
         for i = 0, rows:get_size() - 1 do
@@ -267,17 +425,22 @@ re.on_frame(function()
             row:get_field("MatBorderUnderLine"):call("set_Visible", true)
         end
     end)
-    if not ok then nativeStyledCtrl = nil end
+    if not ok then
+        Log("Native Save menu update failed:", err)
+        nativeStyledCtrl = nil
+        nativePreviewGui = nil
+    end
 end)
 
 local function ExtendNativeSaveList(gui)
     local ctrl = gui and gui.SaveListCtrl
     local original = ctrl and ctrl:call("get_InfoList")
     if original == nil or original:get_size() < 3 then return end
-    if IsChineseLanguage() then
-        local message = original:get_element(0):get_field("Msg")
-        if message ~= nil then nativeSaveCommandText = tostring(message) end
-    end
+    BindNativePreview(gui)
+    local message = original:get_element(0):get_field("Msg")
+    if message ~= nil then nativeSaveCommandText = tostring(message):gsub("^>%s*", "") end
+    RefreshStatus()
+    SetNativeText(original:get_element(0), GetNativeSlotLabel())
 
     local compact = false
     local ok, result = pcall(ExpandNativeSaveList, ctrl, nativeVisibleItemCount)
@@ -298,6 +461,8 @@ local function ExtendNativeSaveList(gui)
     end
 
     ctrl:call("makeList", list, 0)
+    nativeStyledCtrl = ctrl
+    nativeLabelsDirty = false
     local scaleOk, scaleError = pcall(StyleNativeSaveItems, ctrl, compact)
     if not scaleOk then Log("Failed to style native Save menu:", scaleError) end
     if compact then
@@ -310,14 +475,144 @@ end
 
 local ui060804Type = sdk.find_type_definition("app.ui060804")
 local creatingSaveMenu
+local currentPreviewSlot
+local previewTitleStrings = {}
+
+local function StartPreviewUpdate(args)
+    local gui = sdk.to_managed_object(args[2])
+    nativePreviewGui = gui
+    nativePreviewChinese = IsChineseLanguage()
+    currentPreviewSlot = gui and PreviewSlotForIndex(GetCurrentListIndex(gui.SaveListCtrl))
+end
+
+local function EndPreviewUpdate(retval)
+    return retval
+end
+
+local function GetPreviewString(text)
+    local value = previewTitleStrings[text]
+    if value == nil then
+        value = Retain(sdk.create_managed_string(text))
+        previewTitleStrings[text] = value
+    end
+    return value
+end
+
+local function GetPreviewData(storageSlot)
+    local cached = previewDataCache[storageSlot]
+    if cached ~= nil then return cached end
+
+    local manager = sdk.get_managed_singleton("app.SaveDataManager")
+    local ok, data = pcall(function()
+        local list = manager and manager:call(
+            "tempGetSaveFileDetailList(System.Int32, System.Int32)", storageSlot, 1)
+        local entry = list and list:get_Item(0)
+        if entry == nil or entry:call("get_IsEmptyData") then return {empty = true} end
+
+        local detail = entry:call("get_SaveFileDetail")
+        local stored = config.slotDetails[tostring(storageSlot)] or {}
+        local playTime = stored.playTime
+        local place = stored.place or ""
+        local encoded = tostring(detail:call("get_Detail") or "")
+        if encoded ~= "" then
+            local contents = sdk.create_instance("app.GameSaveSlotDetailContents", true)
+            contents:call(".ctor(System.String)", detail:call("get_Detail"))
+            playTime = contents:get_field("ActualPlayingTime")
+            place = tostring(contents:get_field("Memo") or place)
+        end
+        return {
+            empty = false,
+            playTime = playTime,
+            place = place,
+            timestamp = tonumber(tostring(detail:call("get_LastUpdateTimeStamp")))
+        }
+    end)
+    if not ok then
+        Log("Failed to read preview for storage slot", storageSlot, data)
+        data = {empty = GetFileTimestamp(storageSlot) == nil}
+    end
+    previewDataCache[storageSlot] = data
+    return data
+end
+
+local function FormatPlayTime(seconds)
+    seconds = math.max(0, math.floor(tonumber(seconds) or 0))
+    return string.format("%4d:%02d:%02d",
+        math.floor(seconds / 3600), math.floor(seconds / 60) % 60, seconds % 60)
+end
+
+local function FormatSaveTime(ticks)
+    if ticks == nil then return "" end
+    local time = os.date("!*t", math.floor(ticks / 10000000 - 62135596800))
+    return time and string.format("%d/%d/%d %d:%02d:%02d",
+        time.year, time.month, time.day, time.hour, time.min, time.sec) or ""
+end
+
+local function GetPreviewTitle(originalName, slot, storageSlot, empty)
+    local fileName = string.format("data%03dSlot.bin", storageSlot)
+    local name = nativePreviewChinese and "中途存档" or tostring(originalName or "Interim Save")
+    name = name:gsub("%s+%([Ss]lot%d+ data%d+Slot%.bin%)%s*%[[^%]]+%]$", "")
+        :gsub("%s+%([Ss]lot%d+ data%d+Slot%.bin%)$", "")
+    return GetPreviewString(string.format("%s (Slot%d %s)%s", name, slot, fileName,
+        empty and (nativePreviewChinese and " [空]" or " [Empty]") or ""))
+end
+
+for _, methodName in ipairs({"updateSaveDataInfo", "createSaveDataList"}) do
+    sdk.hook(ui060804Type:get_method(methodName), StartPreviewUpdate, EndPreviewUpdate)
+end
+
+-- Change only the data consumed by the native renderer; do not call UI methods here.
+local saveDataListItemType = sdk.find_type_definition("app.ui060804.SaveDataListItem")
+local previewInfoStack = {}
+sdk.hook(saveDataListItemType:get_method(
+    "updateDisp(app.ui060804.SaveDataListInfo)"), function(args)
+    local restore = {}
+    previewInfoStack[#previewInfoStack + 1] = restore
+    if currentPreviewSlot == nil then return end
+    local info = sdk.to_managed_object(args[3])
+    if info == nil or not info:get_field("IsChangeTarget") then return end
+
+    local storageSlot = GetSlotId(lastNativeSlot, currentPreviewSlot)
+    local data = GetPreviewData(storageSlot)
+    restore.info = info
+    restore.SaveSlotIndex = info:get_field("SaveSlotIndex")
+    restore.Name = info:get_field("Name")
+    restore.SaveTime = info:get_field("SaveTime")
+    restore.PlayTime = info:get_field("PlayTime")
+    restore.PlaceName = info:get_field("PlaceName")
+    restore.IsEmpty = info:get_field("IsEmpty")
+    info:set_field("Name", GetPreviewTitle(
+        info:get_field("Name"), currentPreviewSlot, storageSlot, data.empty))
+    info:set_field("SaveSlotIndex", storageSlot)
+    info:set_field("IsEmpty", data.empty)
+    if not data.empty then
+        info:set_field("PlayTime", GetPreviewString(FormatPlayTime(data.playTime)))
+        info:set_field("SaveTime", GetPreviewString(FormatSaveTime(data.timestamp)))
+        if data.place ~= "" then
+            info:set_field("PlaceName", GetPreviewString(data.place))
+        end
+    end
+end, function(retval)
+    local restore = table.remove(previewInfoStack)
+    if restore ~= nil and restore.info ~= nil then
+        restore.info:set_field("SaveSlotIndex", restore.SaveSlotIndex)
+        restore.info:set_field("Name", restore.Name)
+        restore.info:set_field("SaveTime", restore.SaveTime)
+        restore.info:set_field("PlayTime", restore.PlayTime)
+        restore.info:set_field("PlaceName", restore.PlaceName)
+        restore.info:set_field("IsEmpty", restore.IsEmpty)
+    end
+    return retval
+end)
+
 sdk.hook(ui060804Type:get_method("executeCommand"), function(args)
-    if sdk.to_int64(args[3]) ~= 1 then return end
+    local command = sdk.to_int64(args[3])
+    if command ~= 1 and command ~= 2 then return end
 
     local gui = sdk.to_managed_object(args[2])
     local ctrl = gui and gui.SaveListCtrl
-    local index = ctrl and ctrl:call("get_SelectedIndex")
-    local slot = index and index >= 3 and index <= slotCount + 1
-        and index - 1 or nil
+    local index = GetCurrentListIndex(ctrl)
+    local slot = command == 1 and PreviewSlotForIndex(index) or 1
     if slot == nil then return end
 
     config.saveSlot = slot
