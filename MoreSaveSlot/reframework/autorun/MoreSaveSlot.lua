@@ -85,8 +85,6 @@ Log("Loaded. Store slot", config.saveSlot, "Load slot", config.loadSlot)
 
 -- Add native slot selectors to the game's Save menu without replacing its commands.
 local nativeRefs = {}
-local nativeSlotByInfo = {}
-local nativeMenuItems = {}
 local nativeListLayouts = {}
 local nativeStyledCtrl
 local nativeSaveCommandText = "Save and Continue"
@@ -272,13 +270,6 @@ re.on_frame(function()
     if not ok then nativeStyledCtrl = nil end
 end)
 
-local function RefreshNativeSlotList(gui)
-    local state = nativeMenuItems[tostring(gui:get_address())]
-    if state == nil then return end
-    for slot = 2, slotCount do SetNativeText(state.items[slot], GetSlotLabel(slot)) end
-    pcall(function() state.ctrl:call("updateDisp()") end)
-end
-
 local function ExtendNativeSaveList(gui)
     local ctrl = gui and gui.SaveListCtrl
     local original = ctrl and ctrl:call("get_InfoList")
@@ -295,7 +286,6 @@ local function ExtendNativeSaveList(gui)
     local list = Retain(ctrl:call("newInfoList"))
     for i = 0, 2 do list:call("Add", original:get_element(i)) end
 
-    local items = {}
     for slot = 2, slotCount do
         local info = Retain(sdk.create_instance("app.ui060804.SaveListInfo", true))
         info:call(".ctor()")
@@ -304,12 +294,9 @@ local function ExtendNativeSaveList(gui)
         info:set_field("IsVisibleBorder", true)
         info:set_field("Command", 1)
         SetNativeText(info, GetSlotLabel(slot))
-        nativeSlotByInfo[tostring(info:get_address())] = slot
-        items[slot] = info
         list:call("Add", info)
     end
 
-    nativeMenuItems[tostring(gui:get_address())] = {ctrl = ctrl, items = items}
     ctrl:call("makeList", list, 0)
     local scaleOk, scaleError = pcall(StyleNativeSaveItems, ctrl, compact)
     if not scaleOk then Log("Failed to style native Save menu:", scaleError) end
@@ -323,6 +310,21 @@ end
 
 local ui060804Type = sdk.find_type_definition("app.ui060804")
 local creatingSaveMenu
+sdk.hook(ui060804Type:get_method("executeCommand"), function(args)
+    if sdk.to_int64(args[3]) ~= 1 then return end
+
+    local gui = sdk.to_managed_object(args[2])
+    local ctrl = gui and gui.SaveListCtrl
+    local index = ctrl and ctrl:call("get_SelectedIndex")
+    local slot = index and index >= 3 and index <= slotCount + 1
+        and index - 1 or nil
+    if slot == nil then return end
+
+    config.saveSlot = slot
+    json.dump_file(configFile, config)
+    Log("Selected native manual slot", slot)
+end, nil)
+
 sdk.hook(ui060804Type:get_method("createSaveList"), function(args)
     creatingSaveMenu = sdk.to_managed_object(args[2])
 end, function(retval)
@@ -332,18 +334,3 @@ end, function(retval)
     if not ok then Log("Failed to extend native Save menu:", err) end
     return retval
 end)
-
-sdk.hook(ui060804Type:get_method("executeSave"), function(args)
-    local gui = sdk.to_managed_object(args[2])
-    local ctrl = gui and gui.SaveListCtrl
-    local info = ctrl and ctrl:call("get_SelectedInfo")
-    local slot = info and nativeSlotByInfo[tostring(info:get_address())]
-    if slot == nil then return end
-
-    config.saveSlot = slot
-    json.dump_file(configFile, config)
-    RefreshNativeSlotList(gui)
-    ctrl:call("setSelect(System.Int32)", 0)
-    Log("Selected native manual slot", slot)
-    return sdk.PreHookResult.SKIP_ORIGINAL
-end, nil)
