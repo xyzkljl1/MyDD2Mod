@@ -97,6 +97,7 @@ local FieldFormat={
     _HealWhiteHp="Heal %s HP.",
     _HealBlackHp="Heal %s MAXHP.",
     _HealStamina="Recover %s Stamina",
+    _HealBlackStamina="Recover %s MAX Stamina",
     _UseAttr=nil,
     _AddStatus={enable=true,type="Enum",format="Add %s Status",map={[1]="Posion"}},
     _RemoveStatus=nil,
@@ -153,6 +154,7 @@ local FieldFormat={
     _StoneResist="%s%% Stone Resist",
     _WaterResist="%s%% Water Resist",
     _OilResist="%s%% Oil Resist",
+    _ColdResist="%s Cold Resist",
     --_Special=nil,
     --_SpecialValue=nil,
     --_SpecialValue2=nil,
@@ -839,12 +841,11 @@ end
 local tmpItemWindow=nil
 local tmpItem=nil
 sdk.hook(
-    --sdk.find_type_definition("app.GUIBase.ItemWindowRef"):get_method("setup(app.ItemDefine.StorageData)"),
-    sdk.find_type_definition("app.GUIBase.ItemWindowRef"):get_method("setup(app.ItemCommonParam, System.Int32, System.Boolean)"),
+    sdk.find_type_definition("app.GUIBase.ItemWindowRef"):get_method("setup(app.ItemDefine.StorageData, System.Int32, System.Boolean, System.Boolean)"),
     function (args)
         if not initialized then return end
         local this=sdk.to_managed_object(args[2])
-        local itemCommonParam=sdk.to_managed_object(args[3])
+        local itemCommonParam=sdk.to_valuetype(args[3],sdk.find_type_definition("app.ItemDefine.StorageData"))._ItemData
         if itemCommonParam==nil or this ==nil then return end
         tmpItemWindow=this
         tmpItem=itemCommonParam
