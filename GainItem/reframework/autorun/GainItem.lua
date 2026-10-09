@@ -26,7 +26,7 @@ local _config={
     {name="RemoveFromFavList",type="button",onClick=function() onRemoveFromFavList() end},
     {name="FavList",type="buttonN",onClick=function(...) onFavListClick(...) end,default={}},
     {type="mutualboxend"},
-    {type="author"}
+    {type="author",version="1.4.5"}
 }
 
 local myapi = require("_XYZApi/_XYZApi")
@@ -55,7 +55,7 @@ config.RelicJob=config.RelicJob or 9
 local function RefreshRelicOptions()
     local id=math.floor(config.item)
     local isFake=isFakeAppraisal:call(nil,id)
-    relicSelected=isFake or isAppraisal:call(nil,id)
+    relicSelected=id~=654 and id~=655 and (isFake or isAppraisal:call(nil,id))
     relicSourceOption.hide=true
     relicJobOption.hide=true
     if id~=relicItemId then
