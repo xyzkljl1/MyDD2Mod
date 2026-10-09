@@ -1,5 +1,5 @@
 ﻿local modname="_XYZAPI"
-local version="1.9.6"
+local version="1.9.7"
 local vecNames={
     ".x",
     ".y",
@@ -21,6 +21,7 @@ end
 local hk = prequire("Hotkeys/Hotkeys")
 local itemNames=nil
 local itemIds=nil
+local itemSearchOptions={}
 local itemIndex2itemId={}
 local itemId2itemIndex={}
 
@@ -111,18 +112,19 @@ local function DD2_InitItemId()
     itemIds=itemIds or {}
     local am=sdk.get_managed_singleton("app.ItemAppraisalManager")
     local settings=am and am:get_field("ItemSettingDict")
-    if settings==nil or settings:call("get_Count()")==0 then return end
 
     local itemDefine=sdk.find_type_definition("app.ItemDefine")
     local getFakeItemId=itemDefine:get_method("getFakeItemId(System.Int32)")
     local validRelics={[992]=true} -- Fixed appraisal item; no source variant is required.
-    local sources=settings:call("System.Collections.IEnumerable.GetEnumerator()")
-    while sources:MoveNext() do
-        local data=sources._current.value:get_field("data")
-        if data~=nil then
-            local source=data:get_field("itemId")
-            local display=getFakeItemId:call(nil,source)
-            if display>0 then validRelics[display]=true end
+    if settings~=nil then
+        local sources=settings:call("System.Collections.IEnumerable.GetEnumerator()")
+        while sources:MoveNext() do
+            local data=sources._current.value:get_field("data")
+            if data~=nil then
+                local source=data:get_field("itemId")
+                local display=getFakeItemId:call(nil,source)
+                if display>0 then validRelics[display]=true end
+            end
         end
     end
     for _,t in ipairs({itemNames,itemIds,itemIndex2itemId,itemId2itemIndex}) do
@@ -174,6 +176,7 @@ local function DD2_InitItemId()
 --        print(string.format("\"%d\":\"%s\",",id,id2Name[id]))
     end
 --    print("}")
+    for para in pairs(itemSearchOptions) do para.tmp_Items=nil end
     Log("Init Item List")
 end
 
@@ -402,6 +405,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             _changed=true
                         end
                     elseif para.type=="item" then
+                        itemSearchOptions[para]=true
                         if para.enableSearch==true or para.enableSearch==nil then
                             imgui.push_item_width(imgui.calc_item_width()*0.2)
                             --Two input_text with same label will share data
@@ -409,12 +413,12 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             imgui.pop_item_width()
                             imgui.same_line()
 
-                            if changed then
+                            if changed or para.tmp_Items==nil then
                                 para.tmp_Items={}
                                 para.itemIndex2itemId={}
                                 para.itemId2itemIndex={}
                                 Log("OnSerachInItem")
-                                if para.tmp_SearchText~="" then
+                                if para.tmp_SearchText~=nil and para.tmp_SearchText~="" then
                                     local lower=para.tmp_SearchText:lower()
                                     for k,id in pairs(itemIds) do
                                         if itemNames[k]:lower():find(lower) then
