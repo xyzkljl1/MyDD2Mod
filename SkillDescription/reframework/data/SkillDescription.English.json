@@ -412,7 +412,7 @@
     "80": {
       "name": "Job08_FlameLance",
       "hintJP": "咬炎魔矢",
-      "format": "x{CS_炎烽_弾}+{CS_炎烽_爆風_Lv2}"
+      "format": "x{CS_炎烽Lv1.2_弾_腰射ち}+{CS_炎烽Lv2_爆発_腰射ち}"
     },
     "81": {
       "name": "Job08_BurningLight",

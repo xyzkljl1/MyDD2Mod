@@ -238,6 +238,7 @@ local function GetSkillDetail(player,id,isNormalSkill)
     if isNormalSkill then formatList=NormalSkillFormat end
 
     local format=formatList[tostring(id)]
+    if format==nil then return "" end
     local ret=format.format
     for k,_ in ret:gmatch('{[^}]*}') do
         if SkillParameter[k]~=nil then
