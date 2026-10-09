@@ -492,7 +492,72 @@ local function Join(...)
     end
     return ret
 end
-local function TranslateFields(param,paramtype)
+local equipParamType=sdk.find_type_definition("app.EquipParam")
+local setEquipParam=equipParamType:get_method("setParam(app.ItemCommonParam, app.ItemDefine.EnhanceParam, app.ItemDefine.EquipmentAbilityParam)")
+local noEnhance=sdk.find_type_definition("app.ItemDefine.EnhanceParam"):get_field("None")
+local equipParams={}
+local plainAbility=ValueType.new(sdk.find_type_definition("app.ItemDefine.EquipmentAbilityParam"))
+local abilityFields={"Slot1","Slot2","Slot3","Slot4","IsAppraised","PhysicalParameter","MagicParameter","BlowParameter","WeightParameter"}
+local function GetEquipFields(param,ability,enhance)
+    if equipParams[1]==nil then
+        for i=1,4 do
+            equipParams[i]=equipParamType:create_instance()
+            equipParams[i]:add_ref()
+            equipParams[i]:call(".ctor()")
+        end
+    end
+    -- setParam accumulates; reset private objects before each calculation.
+    equipParams[1]:copyFrom(equipParams[3])
+    setEquipParam:call(equipParams[1],param,noEnhance:get_data(),ability)
+    local bonus=ability.Bonus
+    if bonus~=0 then
+        for _,field in ipairs(abilityFields) do
+            plainAbility:set_field(field,ability:get_field(field))
+        end
+        plainAbility:set_field("Bonus",0)
+        equipParams[2]:copyFrom(equipParams[3])
+        setEquipParam:call(equipParams[2],param,noEnhance:get_data(),plainAbility)
+    end
+    local enhanced=enhance._Num~=0
+    if enhanced then
+        equipParams[4]:copyFrom(equipParams[3])
+        setEquipParam:call(equipParams[4],param,enhance,ability)
+    end
+    local ret={}
+    local function stat(field,getter,randomField)
+        local base=equipParams[1]:call("get_"..getter)
+        local extra=bonus~=0 and (base-equipParams[2]:call("get_"..getter)) or 0
+        local value=enhanced and equipParams[4]:call("get_"..getter) or base
+        local upgrade=value-base
+        local random=randomField and ability:get_field(randomField) or 0
+        local format=FieldFormat[field]
+        ret[field]=""
+        if type(format)=="table" then format=format.enable and format.type=="String" and format.format or nil end
+        if value~=0 and format~=nil then
+            local details={}
+            local unit=format:find("%%",1,true) and "%" or ""
+            if random~=0 then details[#details+1]=string.format("%+d",random)..unit end
+            if extra~=0 then details[#details+1]=string.format("%+d",extra)..unit end
+            if upgrade~=0 then details[#details+1]=string.format("%+d",upgrade)..unit end
+            local number=tostring(value)..unit
+            if #details>0 then number=number.."("..table.concat(details,",")..")" end
+            ret[field]=string.format(format:gsub("%%s%%%%","%%s"),number)
+        end
+    end
+    local weapon=param._EquipCategory<=1
+    local shield=param._EquipCategory==1
+    stat(weapon and "_PhysicalAttack" or "_PhysicalDefence",weapon and (shield and "ShieldAttack" or "PhysicalAttack") or "PhysicalDefence","PhysicalParameter")
+    stat(weapon and "_MagicAttack" or "_MagicDefence",weapon and "MagicAttack" or "MagicDefence","MagicParameter")
+    stat(weapon and "_Blow" or "_BlowResistRate",weapon and (shield and "ShieldBlow" or "Blow") or "BlowResistRate","BlowParameter")
+    if enhanced then
+        if weapon then stat("_BlowGuard","BlowGuard") else stat("_ShakeResistRate","ShakeResistRate") end
+    end
+    if bonus==2048 then stat("_SlashDefenceRate","SlashDefenceRate") end
+    if bonus==4096 then stat("_StrikeDefenceRate","StrikeDefenceRate") end
+    if bonus==16 or bonus==32 or bonus==64 or bonus==128 then stat("_ElementStore","ElementStore") end
+    return ret
+end
+local function TranslateFields(param,paramtype,equipFields)
     local ret=""
     --get_fields only return sub class's field,need pass in type to appoint certain type
     local fields=paramtype:get_fields()
@@ -504,7 +569,10 @@ local function TranslateFields(param,paramtype)
         local fieldtype=field:get_type():get_full_name()
         local fieldMsg=""
         --lua don't have fucking continue!
-        if format ~=nil then
+        if equipFields~=nil and equipFields[fieldname]~=nil then
+            fieldMsg=equipFields[fieldname]
+            equipFields[fieldname]=nil
+        elseif format ~=nil then
             --check is zero
             local data=field:get_data(param)
             local isIgnore=true
@@ -756,16 +824,18 @@ local function ReWrapText(originalMessage,bareRate)
     return newMessage
 end
 
-local function GetItemDetail(itemCommonParam)
+local function GetItemDetail(itemCommonParam,ability,enhance)
     local ret=""
     local itemParam=itemCommonParam:get_ItemParam()
     local bRingOrItem=isRingOrItem(itemCommonParam)
     if bRingOrItem or not config.ignoreArmorAndWeapon then
+        local equipFields=ability and GetEquipFields(itemCommonParam,ability,enhance)
         for _,type in pairs(ItemParamTypes) do
             if itemCommonParam:get_type_definition():is_a(type) then
-                ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type))
+                ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type),equipFields)
             end
         end
+        for _,fieldMsg in pairs(equipFields or {}) do ret=Join(ret,fieldMsg) end
     end
     if isWeapon(itemCommonParam) and not config.ignoreArmorAndWeaponSpecialEffect then
         ret=Join(ret,TranslateWeaponSP(itemCommonParam))
@@ -780,29 +850,37 @@ local function GetItemDetail(itemCommonParam)
     return ReWrapText(ret,1.05)
 end
 
-local function GetOrAddItemDesc(originalMessage,itemCommonParam)
-    --if tmpStr~=nil then return tmpStr end
+local function GetOrAddItemDesc(originalMessage,storageData)
+    local itemCommonParam=storageData._ItemData
+    local ability=storageData._Ability
+    local enhance=storageData._Enhance
+    local uncached=itemCommonParam:get_IsEquip() and (ability.PhysicalParameter~=0 or ability.MagicParameter~=0
+        or ability.BlowParameter~=0 or ability.WeightParameter~=0 or ability.Bonus~=0 or enhance._Num~=0)
     local Id=itemCommonParam._Id
-    if ItemDescCache[Id] ==nil then
-        Log("Add Item Desc To Cache")
-        local appendtext=GetItemDetail(itemCommonParam)
+    local text=nil
+    if not uncached then text=ItemDescCache[Id] end
+    if text==nil then
+        local appendtext=GetItemDetail(itemCommonParam,uncached and ability or nil,enhance)
         if config.removeOriginalText then
             if appendtext~="" then
-                ItemDescCache[Id]=appendtext
+                text=appendtext
             else
-                ItemDescCache[Id]=originalMessage
+                text=originalMessage
             end
         else
             if appendtext~="" and config.newlinewidthaffectoriginaltext then
                 originalMessage=ReWrapText(originalMessage)
             end
-            ItemDescCache[Id]=string.format("%s\n%s",originalMessage,appendtext)
+            text=string.format("%s\n%s",originalMessage,appendtext)
         end
-        Log(ItemDescCache[Id])
+        if not uncached then
+            ItemDescCache[Id]=text
+            Log("Add Item Desc To Cache")
+            Log(text)
+        end
     end
     --can't cache managed_string ,causes crash
-    --Log(ItemDescCache[Id])
-    return sdk.create_managed_string(ItemDescCache[Id])
+    return sdk.create_managed_string(text)
 end
 
 local function GetAbilityDetail(player,Id)
@@ -845,10 +923,10 @@ sdk.hook(
     function (args)
         if not initialized then return end
         local this=sdk.to_managed_object(args[2])
-        local itemCommonParam=sdk.to_valuetype(args[3],sdk.find_type_definition("app.ItemDefine.StorageData"))._ItemData
-        if itemCommonParam==nil or this ==nil then return end
+        local storageData=sdk.to_valuetype(args[3],sdk.find_type_definition("app.ItemDefine.StorageData"))
+        if storageData._ItemData==nil or this ==nil then return end
         tmpItemWindow=this
-        tmpItem=itemCommonParam
+        tmpItem=storageData
     end,
     function ()
         if tmpItemWindow~=nil and tmpItem~=nil then
