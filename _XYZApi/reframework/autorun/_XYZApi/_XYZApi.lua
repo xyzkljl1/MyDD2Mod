@@ -106,6 +106,22 @@ local function DD2_InitItemId()
     itemNames=itemNames or {}
     local id2Name={}
     itemIds=itemIds or {}
+    local am=sdk.get_managed_singleton("app.ItemAppraisalManager")
+    local settings=am and am:get_field("ItemSettingDict")
+    if settings==nil or settings:call("get_Count()")==0 then return end
+
+    local itemDefine=sdk.find_type_definition("app.ItemDefine")
+    local getFakeItemId=itemDefine:get_method("getFakeItemId(System.Int32)")
+    local validRelics={[992]=true} -- Fixed appraisal item; no source variant is required.
+    local sources=settings:call("System.Collections.IEnumerable.GetEnumerator()")
+    while sources:MoveNext() do
+        local data=sources._current.value:get_field("data")
+        if data~=nil then
+            local source=data:get_field("itemId")
+            local display=getFakeItemId:call(nil,source)
+            if display>0 then validRelics[display]=true end
+        end
+    end
     for _,t in ipairs({itemNames,itemIds,itemIndex2itemId,itemId2itemIndex}) do
         for k in pairs(t) do t[k]=nil end
     end
@@ -129,9 +145,17 @@ local function DD2_InitItemId()
     iter:MoveNext()
     while iter._current.value~=nil do
         local itemCommonParam=iter._current.value
+        local id=itemCommonParam._Id
         local name=itemCommonParam:get_Name()
-        if name ~="Invalid" and name~=nil then
-            id2Name[itemCommonParam._Id]= string.format("%5d /%s",itemCommonParam._Id,itemCommonParam:get_Name())
+        if name~=nil then
+            name=name:gsub("<REF%s+([^<>%s]+)%s*>",function(key)
+                local guid=sdk.find_type_definition("via.gui.message"):get_method("getGuidByName(System.String)"):call(nil,key)
+                return sdk.find_type_definition("app.MessageManager"):get_method("getMessage(System.Guid)"):call(nil,guid)
+            end):gsub("<EQABI%s+[^>]*>","")
+        end
+        if name ~="Invalid" and name~=nil and name~="" and not name:find("#Rejected#",1,true)
+            and (validRelics[id] or id<50000 or id>=60000) then
+            id2Name[itemCommonParam._Id]= string.format("%5d /%s",itemCommonParam._Id,name)
             table.insert(itemIds,itemCommonParam._Id)
         end
         iter:MoveNext()
@@ -200,266 +224,269 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
             local isInMutualBox=false
 		    imgui.begin_rect()
             for _,para in ipairs (_config) do
-                local key = para.name
-                local actionName = para.actionName or key
-                local title_postfix=""
-                local pushed_item_width=false
-                if para.needrestart==true or para.type=="fontsize" or para.type=="font" then
-                    title_postfix=" (Need Restart To Apply)"
-                elseif para.needreentry==true then
-                    title_postfix=" (Need Return to Title to Apply)"
-                end
-                if para.widthscale~=nil then
-                    imgui.push_item_width(imgui.calc_item_width()*para.widthscale)
-                    pushed_item_width=true
-                end
-
-                local label=para.label or key
-
-                if para.type=="int" then
-        		    changed , config[key]= imgui.drag_int(label .. title_postfix, 
-                                                            config[key] or para.default or para.min or 0,
-                                                            para.step or 1 , para.min or 0, para.max or 100)
-                    _changed=changed or _changed
-                elseif para.type=="intPercent" then
-        		    changed , config[key]= imgui.drag_int(label .. title_postfix, 
-                                                            config[key] or para.default or para.min or 0,
-                                                            para.step or 1 , para.min or 0, para.max or 100)
-                    _changed=changed or _changed
-                elseif para.type=="fontsize" then
-                    changed , config[key]= imgui.drag_int(label .. title_postfix, 
-                                                            config[key] or para.default or para.min or 30,
-                                                            para.step or 1 , para.min or 1, para.max or 300)
-                    _changed=changed or _changed
-                elseif para.type=="intN" then
-                    --Start From 1!
-                    local width=para.width or 215
-                    imgui.push_item_width(width)
-                    for _k,_ in pairs (config[key]) do
-                        local vname=vecNames[_k] or ".".._k
-            		    changed , config[key][_k] = imgui.drag_int(key..vname .. title_postfix, 
-                                                             config[key][_k] or para.default or para.min or 0,
-                                                             para.step or 1 , para.min or 0, para.max or 100)
-                        _changed=changed or _changed
-                        imgui.same_line()
+                if para.hide~=true then
+                    local key = para.name
+                    local actionName = para.actionName or key
+                    local title_postfix=""
+                    local pushed_item_width=false
+                    if para.needrestart==true or para.type=="fontsize" or para.type=="font" then
+                        title_postfix=" (Need Restart To Apply)"
+                    elseif para.needreentry==true then
+                        title_postfix=" (Need Return to Title to Apply)"
                     end
-                    imgui.pop_item_width()
-                    imgui.new_line()
-                elseif para.type=="rgba4f" then -- float 4
-                    --Start From 1!
-                    local width=para.width or 130
-                    imgui.push_item_width(width)
-                    for _k,_ in pairs (config[key]) do
-                        local vname=vecNamesColor[_k] or ".".._k
-            		    changed , config[key][_k] = imgui.drag_float(label..vname .. title_postfix, 
-                                                                config[key][_k] or para.default or para.min or 0,
-                                                                para.step or 0.01 , para.min or 0.0, para.max or 1.0)
-                        _changed=changed or _changed
-                        imgui.same_line()
+                    if para.widthscale~=nil then
+                        imgui.push_item_width(imgui.calc_item_width()*para.widthscale)
+                        pushed_item_width=true
                     end
-                    imgui.pop_item_width()
-                    imgui.new_line()
-                elseif para.type=="boolList" then
-                	if imgui.tree_node(para.name..title_postfix) then
-                        if para.tmp_list==nil and para.default~=nil then
-                            para.tmp_list=DeepCopyTable(para.default)
+
+                    local label=para.label or key
+
+                    if para.type=="int" then
+                        changed , config[key]= imgui.drag_int(label .. title_postfix,
+                                                                config[key] or para.default or para.min or 0,
+                                                                para.step or 1 , para.min or 0, para.max or 100)
+                        _changed=changed or _changed
+                    elseif para.type=="intPercent" then
+                        changed , config[key]= imgui.drag_int(label .. title_postfix,
+                                                                config[key] or para.default or para.min or 0,
+                                                                para.step or 1 , para.min or 0, para.max or 100)
+                        _changed=changed or _changed
+                    elseif para.type=="fontsize" then
+                        changed , config[key]= imgui.drag_int(label .. title_postfix,
+                                                                config[key] or para.default or para.min or 30,
+                                                                para.step or 1 , para.min or 1, para.max or 300)
+                        _changed=changed or _changed
+                    elseif para.type=="intN" then
+                        --Start From 1!
+                        local width=para.width or 215
+                        imgui.push_item_width(width)
+                        for _k,_ in pairs (config[key]) do
+                            local vname=vecNames[_k] or ".".._k
+                            changed , config[key][_k] = imgui.drag_int(key..vname .. title_postfix,
+                                                                 config[key][_k] or para.default or para.min or 0,
+                                                                 para.step or 1 , para.min or 0, para.max or 100)
+                            _changed=changed or _changed
+                            imgui.same_line()
                         end
-                        if para.tmp_sortListKey==nil then
-                            para.tmp_sortListKey={}
-                            for _k,_ in pairs(para.tmp_list) do
-                                table.insert(para.tmp_sortListKey,_k)
+                        imgui.pop_item_width()
+                        imgui.new_line()
+                    elseif para.type=="rgba4f" then -- float 4
+                        --Start From 1!
+                        local width=para.width or 130
+                        imgui.push_item_width(width)
+                        for _k,_ in pairs (config[key]) do
+                            local vname=vecNamesColor[_k] or ".".._k
+                            changed , config[key][_k] = imgui.drag_float(label..vname .. title_postfix,
+                                                                    config[key][_k] or para.default or para.min or 0,
+                                                                    para.step or 0.01 , para.min or 0.0, para.max or 1.0)
+                            _changed=changed or _changed
+                            imgui.same_line()
+                        end
+                        imgui.pop_item_width()
+                        imgui.new_line()
+                    elseif para.type=="boolList" then
+                        if imgui.tree_node(para.name..title_postfix) then
+                            if para.tmp_list==nil and para.default~=nil then
+                                para.tmp_list=DeepCopyTable(para.default)
                             end
-                            table.sort(para.tmp_sortListKey)
+                            if para.tmp_sortListKey==nil then
+                                para.tmp_sortListKey={}
+                                for _k,_ in pairs(para.tmp_list) do
+                                    table.insert(para.tmp_sortListKey,_k)
+                                end
+                                table.sort(para.tmp_sortListKey)
+                            end
+
+                            imgui.push_item_width(imgui.calc_item_width()*0.5)
+                            local clicked=imgui.button("UncheckAll")
+                            if clicked==true then
+                                for _,_k in pairs(para.tmp_sortListKey) do
+                                    config[key][_k]=false
+                                end
+                                _changed=true
+                            end
+                            imgui.same_line()
+                            clicked =imgui.button("CheckAll")
+                            if clicked==true then
+                                config[key]=DeepCopyTable(para.tmp_list)
+                                _changed=true
+                                end
+                            imgui.pop_item_width()
+
+                            local checked=false
+                            for _,_k in pairs(para.tmp_sortListKey) do
+                                local _v=para.tmp_list[_k]
+                                changed, checked = imgui.checkbox(_k.." / ".._v, config[key][_k]~=false)
+                                _changed=changed or _changed
+                                if checked then config[key][_k]=_v
+                                --nil won't be saved,has to be false
+                                else config[key][_k]=false  end
+                            end
+                        end
+                    elseif para.type=="font" or para.type=="string" then
+                        changed , config[key]= imgui.input_text(label .. title_postfix, config[key] or para.default)
+                        _changed=changed or _changed
+                    elseif para.type=="hotkey" then
+                        if hk~=nil then
+                            changed = hk.hotkey_setter(actionName, nil, nil, label);
+                            config[key]=hk.hotkeys[actionName]
+                            _changed=changed or _changed
+                        else
+                            --this shouldn't happen,because if a mod need hotkey setting then itself will require hotkeys.lua
+                            imgui.text("Can't Modify "..label.." because lack of _ScriptCore")
+                        end
+                    elseif para.type=="bool" then
+                        --don't use "config[key] or default"
+                        if config[key] ~=nil then
+                            changed , config[key]= imgui.checkbox(label .. title_postfix, config[key])
+                        else
+                            changed , config[key]= imgui.checkbox(label .. title_postfix, para.default)
+                        end
+                        _changed=changed or _changed
+                    elseif para.type=="float" then
+                        changed , config[key]= imgui.drag_float(label .. title_postfix,
+                                                                config[key] or para.default or para.min or 0,
+                                                                para.step or 0.1 , para.min or 0, para.max)
+                        _changed=changed or _changed
+                    elseif para.type=="floatN" then
+                        --Start From 1!
+                        local width=para.width or 215
+                        imgui.push_item_width(width)
+                        for _k,_ in pairs (config[key]) do
+                            local vname=vecNames[_k] or ".".._k
+                            changed , config[key][_k] = imgui.drag_float(key..vname .. title_postfix,
+                                                                 config[key][_k] or para.default or para.min or 0,
+                                                                 para.step or 0.1 , para.min or 0, para.max)
+                            _changed=changed or _changed
+                            imgui.same_line()
+                        end
+                        imgui.pop_item_width()
+                        imgui.new_line()
+                    elseif para.type=="floatPercent" then
+                        changed , config[key]= imgui.drag_float(label .. title_postfix,
+                                                                config[key] or para.default or para.min or 0,
+                                                                para.step or 0.5 , para.min or 0, para.max or 100)
+                        _changed=changed or _changed
+                    elseif para.type=="rgba32" then
+                        imgui.push_item_width(imgui.calc_item_width()*0.45)
+                        changed,config[key]= imgui.color_picker(label .. title_postfix, config[key])
+                        _changed=changed or _changed
+                        imgui.pop_item_width()
+                    elseif para.type=="button" then
+                        local clicked=imgui.button(label..title_postfix)
+                        if clicked==true and para.onClick ~=nil then
+                            --will only trigger once when pressed
+                            triggeredButtons[key]={func=para.onClick,para=nil}
+                            _changed=true
+                        end
+                    elseif para.type=="item" then
+                        if para.enableSearch==true or para.enableSearch==nil then
+                            imgui.push_item_width(imgui.calc_item_width()*0.2)
+                            --Two input_text with same label will share data
+                            changed, para.tmp_SearchText = imgui.input_text("<-searh "..key .."(not sup IME) ", para.tmp_SearchText)
+                            imgui.pop_item_width()
+                            imgui.same_line()
+
+                            if changed then
+                                para.tmp_Items={}
+                                para.itemIndex2itemId={}
+                                para.itemId2itemIndex={}
+                                Log("OnSerachInItem")
+                                if para.tmp_SearchText~="" then
+                                    local lower=para.tmp_SearchText:lower()
+                                    for k,id in pairs(itemIds) do
+                                        if itemNames[k]:lower():find(lower) then
+                                            table.insert(para.tmp_Items, itemNames[k])
+                                            para.itemIndex2itemId[#para.tmp_Items]=id
+                                            para.itemId2itemIndex[id]=#para.tmp_Items
+                                        end
+                                    end
+                                else
+                                    para.tmp_Items=itemNames
+                                    para.itemIndex2itemId=itemIndex2itemId
+                                    para.itemId2itemIndex=itemId2itemIndex
+                                end
+                            end
+                        end
+                        if para.tmp_Items==nil then
+                            para.tmp_Items=itemNames
+                            para.itemIndex2itemId=itemIndex2itemId
+                            para.itemId2itemIndex=itemId2itemIndex
                         end
 
                         imgui.push_item_width(imgui.calc_item_width()*0.5)
-                        local clicked=imgui.button("UncheckAll")
-                        if clicked==true then
-                            for _,_k in pairs(para.tmp_sortListKey) do
-                                config[key][_k]=false
-                            end
-                            _changed=true
-                        end
-                        imgui.same_line()
-                        clicked =imgui.button("CheckAll")
-                        if clicked==true then 
-                            config[key]=DeepCopyTable(para.tmp_list) 
-                            _changed=true
-                            end
+                        changed, tmp_idx= imgui.combo(label .. title_postfix, para.itemId2itemIndex[config[key]] ,para.tmp_Items)
                         imgui.pop_item_width()
-
-                        local checked=false
-                        for _,_k in pairs(para.tmp_sortListKey) do
-                            local _v=para.tmp_list[_k]
-                            changed, checked = imgui.checkbox(_k.." / ".._v, config[key][_k]~=false)
-                            _changed=changed or _changed
-                            if checked then config[key][_k]=_v
-                            --nil won't be saved,has to be false
-                            else config[key][_k]=false  end
-                        end
-                    end
-                elseif para.type=="font" or para.type=="string" then
-        		    changed , config[key]= imgui.input_text(label .. title_postfix, config[key] or para.default)
-                    _changed=changed or _changed
-                elseif para.type=="hotkey" then
-                    if hk~=nil then
-                		changed = hk.hotkey_setter(actionName, nil, nil, label); 
-                        config[key]=hk.hotkeys[actionName]
-                        _changed=changed or _changed
-                    else
-                        --this shouldn't happen,because if a mod need hotkey setting then itself will require hotkeys.lua
-                        imgui.text("Can't Modify "..label.." because lack of _ScriptCore")
-                    end
-                elseif para.type=="bool" then
-                    --don't use "config[key] or default"
-                    if config[key] ~=nil then
-            		    changed , config[key]= imgui.checkbox(label .. title_postfix, config[key])
-                    else
-            		    changed , config[key]= imgui.checkbox(label .. title_postfix, para.default)
-                    end
-                    _changed=changed or _changed
-                elseif para.type=="float" then
-        		    changed , config[key]= imgui.drag_float(label .. title_postfix, 
-                                                            config[key] or para.default or para.min or 0,
-                                                            para.step or 0.1 , para.min or 0, para.max)
-                    _changed=changed or _changed
-                elseif para.type=="floatN" then
-                    --Start From 1!
-                    local width=para.width or 215
-                    imgui.push_item_width(width)
-                    for _k,_ in pairs (config[key]) do
-                        local vname=vecNames[_k] or ".".._k
-            		    changed , config[key][_k] = imgui.drag_float(key..vname .. title_postfix, 
-                                                             config[key][_k] or para.default or para.min or 0,
-                                                             para.step or 0.1 , para.min or 0, para.max)
-                        _changed=changed or _changed
-                        imgui.same_line()
-                    end
-                    imgui.pop_item_width()
-                    imgui.new_line()
-                elseif para.type=="floatPercent" then
-        		    changed , config[key]= imgui.drag_float(label .. title_postfix, 
-                                                            config[key] or para.default or para.min or 0,
-                                                            para.step or 0.5 , para.min or 0, para.max or 100)
-                    _changed=changed or _changed
-                elseif para.type=="rgba32" then
-                    imgui.push_item_width(imgui.calc_item_width()*0.45)
-                    changed,config[key]= imgui.color_picker(label .. title_postfix, config[key])
-                    _changed=changed or _changed
-                    imgui.pop_item_width()
-                elseif para.type=="button" then
-                    local clicked=imgui.button(label..title_postfix)
-                    if clicked==true and para.onClick ~=nil then
-                        --will only trigger once when pressed
-                        triggeredButtons[key]={func=para.onClick,para=nil}
-                        _changed=true
-                    end
-                elseif para.type=="item" then
-                    if para.enableSearch==true or para.enableSearch==nil then
-                        imgui.push_item_width(imgui.calc_item_width()*0.2)
-                        --Two input_text with same label will share data 
-                        changed, para.tmp_SearchText = imgui.input_text("<-searh "..key .."(not sup IME) ", para.tmp_SearchText)
-                        imgui.pop_item_width()
-                        imgui.same_line()
-
-                        if changed then
-                            para.tmp_Items={}
-                            para.itemIndex2itemId={}
-                            para.itemId2itemIndex={}
-                            Log("OnSerachInItem")
-                            if para.tmp_SearchText~="" then
-                                local lower=para.tmp_SearchText:lower()
-                                for k,id in pairs(itemIds) do
-                                    if itemNames[k]:lower():find(lower) then
-                                        table.insert(para.tmp_Items, itemNames[k])
-                                        para.itemIndex2itemId[#para.tmp_Items]=id
-                                        para.itemId2itemIndex[id]=#para.tmp_Items
-                                    end
-                                end
-                            else
-                                para.tmp_Items=itemNames
-                                para.itemIndex2itemId=itemIndex2itemId
-                                para.itemId2itemIndex=itemId2itemIndex
+                    
+                        --Log(config[key]," ",tmp_idx)
+                        local previousItem=config[key]
+                        config[key]=para.itemIndex2itemId[tmp_idx] or 1
+                        _changed=changed or config[key]~=previousItem or _changed
+                    elseif para.type=="stringComboBox" then
+                        if para.tmp_List==nil then
+                            para.tmp_List={}
+                            para.tmp_Index2Key={}
+                            para.tmp_Key2Index={}
+                            for k,v in pairs(para.list) do
+                                local id=#para.tmp_List+1
+                                local name=string.format("%s / %s",k,v)
+                                para.tmp_List[id]=name
+                                para.tmp_Index2Key[id]=k
+                                para.tmp_Key2Index[k]=id
                             end
                         end
-                    end
-                    if para.tmp_Items==nil then
-                        para.tmp_Items=itemNames
-                        para.itemIndex2itemId=itemIndex2itemId
-                        para.itemId2itemIndex=itemId2itemIndex                            
-                    end
 
-                    imgui.push_item_width(imgui.calc_item_width()*0.5)
-                    changed, tmp_idx= imgui.combo(label .. title_postfix, para.itemId2itemIndex[config[key]] ,para.tmp_Items)
-                    imgui.pop_item_width()
+                        --imgui.push_item_width(imgui.calc_item_width()*0.5)
+                        changed, tmp_idx= imgui.combo(label .. title_postfix, para.tmp_Key2Index[config[key]] ,para.tmp_List)
+                        --imgui.pop_item_width()
                     
-                    --Log(config[key]," ",tmp_idx)
-                    config[key]=para.itemIndex2itemId[tmp_idx] or 1
-                    _changed=changed or _changed
-                elseif para.type=="stringComboBox" then
-                    if para.tmp_List==nil then
-                        para.tmp_List={}
-                        para.tmp_Index2Key={}
-                        para.tmp_Key2Index={}
-                        for k,v in pairs(para.list) do
-                            local id=#para.tmp_List+1
-                            local name=string.format("%s / %s",k,v)
-                            para.tmp_List[id]=name
-                            para.tmp_Index2Key[id]=k
-                            para.tmp_Key2Index[k]=id
+                        --Log(config[key]," ",tmp_idx)
+                        config[key]=para.tmp_Index2Key[tmp_idx] or para.tmp_List[1]
+                        _changed=changed or _changed
+                    elseif para.type=="sameline" then
+                        imgui.same_line()
+                    elseif para.type=="mutualbox" then
+                        if isInMutualBox then--end prev box
+                            imgui.end_rect()
+                            isInMutualBox=false
                         end
-                    end
-
-                    --imgui.push_item_width(imgui.calc_item_width()*0.5)
-                    changed, tmp_idx= imgui.combo(label .. title_postfix, para.tmp_Key2Index[config[key]] ,para.tmp_List)
-                    --imgui.pop_item_width()
-                    
-                    --Log(config[key]," ",tmp_idx)
-                    config[key]=para.tmp_Index2Key[tmp_idx] or para.tmp_List[1]
-                    _changed=changed or _changed
-                elseif para.type=="sameline" then
-                    imgui.same_line()
-                elseif para.type=="mutualbox" then
-                    if isInMutualBox then--end prev box
-                        imgui.end_rect()
-                        isInMutualBox=false
-                    end
-                    imgui.begin_rect()
-                    imgui.text_colored(para.name,para.color or 0xff11aa33)
-                    isInMutualBox=true
-                elseif para.type=="mutualboxend" then
-                    if isInMutualBox then
-                        imgui.end_rect()
-                        isInMutualBox=false
-                    end
-                elseif para.type=="buttonN" then                   
-                    if #config[key]~=0 then
                         imgui.begin_rect()
-                        imgui.text_colored(para.name..title_postfix,para.color or 0xff885533)
-                        for _,buttonpara in pairs(config[key]) do
-                            local clicked=imgui.button(buttonpara.name)
-                            --use para.OnClick,because buttonparas need to be saved into configfile
-                            if clicked==true and para.onClick ~=nil then
-                                --will only trigger once when pressed
-                                triggeredButtons[key]={func=para.onClick,para={buttonpara.index}}
-                                _changed=true
-                            end
+                        imgui.text_colored(para.name,para.color or 0xff11aa33)
+                        isInMutualBox=true
+                    elseif para.type=="mutualboxend" then
+                        if isInMutualBox then
+                            imgui.end_rect()
+                            isInMutualBox=false
                         end
-                        imgui.end_rect()
+                    elseif para.type=="buttonN" then
+                        if #config[key]~=0 then
+                            imgui.begin_rect()
+                            imgui.text_colored(para.name..title_postfix,para.color or 0xff885533)
+                            for _,buttonpara in pairs(config[key]) do
+                                local clicked=imgui.button(buttonpara.name)
+                                --use para.OnClick,because buttonparas need to be saved into configfile
+                                if clicked==true and para.onClick ~=nil then
+                                    --will only trigger once when pressed
+                                    triggeredButtons[key]={func=para.onClick,para={buttonpara.index}}
+                                    _changed=true
+                                end
+                            end
+                            imgui.end_rect()
+                        end
+                    elseif para.type=="author" then
+                        imgui.text_colored(para.name or "\tAuthor: xyzkljl1",para.color or 0xffffffff)
                     end
-                elseif para.type=="author" then
-                    imgui.text_colored(para.name or "\tAuthor: xyzkljl1",para.color or 0xffffffff)
-                end
-                if para.sameline==true then
-                    imgui.same_line()
-                end
+                    if para.sameline==true then
+                        imgui.same_line()
+                    end
 
-                if para.tip ~=nil and imgui.is_item_hovered() then
-                    imgui.set_tooltip(para.tip)
-                end
+                    if para.tip ~=nil and imgui.is_item_hovered() then
+                        imgui.set_tooltip(para.tip)
+                    end
 
-                if pushed_item_width then
-                    imgui.pop_item_width()
+                    if pushed_item_width then
+                        imgui.pop_item_width()
+                    end
                 end
             end
             --Add an empty line to prevent the last setting ui's last line is not shown properly
