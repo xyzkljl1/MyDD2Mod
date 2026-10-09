@@ -298,6 +298,21 @@ local function LootGm82_036(gimmick)
 end
 
 --chest
+-- Open immediately only inside AutoLoot's own start interaction.
+local autoLootStartingChests={}
+sdk.hook(
+    sdk.find_type_definition("app.gm80_001"):get_method("open(System.Boolean, app.Character)"),
+    function(args)
+        local chestAddress=autoLootStartingChests[thread.get_id()]
+        if chestAddress and sdk.to_int64(args[2])==chestAddress
+            and (sdk.to_int64(args[3])&0xff)==0 then
+            args[3]=sdk.to_ptr(1)
+        end
+    end,
+    nil,
+    true
+)
+
 local function LootGm80_001(gimmick)
     if gimmick:isInteractEnable(0)==true then
         local distance = DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
@@ -312,9 +327,15 @@ local function LootGm80_001(gimmick)
             --onExecuteInteractBase get the item repeatly without changing chest state
             --onStartInteractBase/open(false,player) force player go to open chest and change chest state without get the Item
             --open(true,player) change chest state
-            --gimmick:onStartInteractBase(0,mainplayer)
+            local threadId=thread.get_id()
+            local previous=autoLootStartingChests[threadId]
+            autoLootStartingChests[threadId]=gimmick:get_address()
+            local ok,err=pcall(function()
+                gimmick:onStartInteractBase(0,mainplayer)
+            end)
+            autoLootStartingChests[threadId]=previous
+            if not ok then error(err,0) end
             gimmick:onExecuteInteractBase(0, playerManager:get_ManualPlayer())
-            gimmick:open(true, playerManager:get_ManualPlayer())
             AddMessage("Loot Chest",gimmick:get_GameObject():get_Transform():get_Position())
             return true
         end
