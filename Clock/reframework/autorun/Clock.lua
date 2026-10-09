@@ -1,6 +1,6 @@
 ﻿local modname="Clock"
 local configfile=modname..".json"
-log.info("["..modname.."]".."Start")
+log.info("["..modname.."]".."Start v1.6")
 --settings
 local _config={
     {name="Style",type="mutualbox"},
@@ -56,6 +56,9 @@ local function Log(msg)
     log.info(modname..msg)
 end
 
+local frameCount=0
+local msg=nil
+local size=nil
 re.on_frame(function()
     if hk~=nil and hk.check_hotkey("ClockEnable8293",false,true) then
         config.enable=not config.enable
@@ -64,7 +67,9 @@ re.on_frame(function()
     if config.disableInMenu and guiManager:get_IsLoadGui() then return end
 
     imgui.push_font(font)
-    local tm=sdk.get_managed_singleton("app.TimeManager")
+    frameCount=(frameCount+1)%10
+    if frameCount==1 then msg=nil end
+    local tm=frameCount==1 and sdk.get_managed_singleton("app.TimeManager") or nil
     if tm~=nil then
         local d=tm:get_InGameDay()
         local h=tm:get_InGameHour()
@@ -102,9 +107,11 @@ re.on_frame(function()
         msg=string.gsub(msg,"{D}", tostring(d))
         msg=string.gsub(msg,"{T}", state)
         msg=string.gsub(msg,"{a}", ampm)
+        size=imgui.calc_text_size(msg)
+    end
 
+    if msg~=nil then
         if config.showbackground ==true then
-            local size=imgui.calc_text_size(msg)
             draw.filled_rect(config.offset[1]-5, config.offset[2]-5, size.x +10,size.y+10, config.backgroundcolor)
         end
         draw.text(msg,config.offset[1],config.offset[2],config.color) 
