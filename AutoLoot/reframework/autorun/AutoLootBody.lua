@@ -2,6 +2,7 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
+    {type="author",version="1.4.10"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
@@ -10,6 +11,7 @@ local _config={
     {name="lootDirectItem",type="bool",default=true,label="Loot Non-Drop Item"},
     {name="lootGatherSpot",type="bool",default=true,label="Loot Gather Point"},
     {name="lootSeekerToken",type="bool",default=false,label="Loot Seeker's Token"},
+    {name="lootNorganDucat",type="bool",default=false,label="Loot Norgan Ducat"},
     {name="lootChest",type="bool",default=false,label="Loot Chest"},
 
     {name="disableOnBattle",type="bool",default=false,label="Disable During Battle"},
@@ -297,6 +299,21 @@ local function LootGm82_036(gimmick)
     return false
 end
 
+--norgan ducat
+local function LootGm83_169(gimmick)
+    if gimmick:isInteractEnable(0)==true then
+        local distance = DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
+        --treat 0.0 disatance as invalid
+        if distance~=0.0 and distance<rangeSq then
+            Log("Loot Gimmick83_169",distance,gimmick:get_IsGetFreeBit())
+            gimmick:requestForceInteract(0, playerManager:get_ManualPlayer())
+            AddMessage("Loot Norgan Ducat",gimmick:get_GameObject():get_Transform():get_Position())
+            return true
+        end
+    end
+    return false
+end
+
 --chest
 -- Open immediately only inside AutoLoot's own start interaction.
 local autoLootStartingChests={}
@@ -314,6 +331,10 @@ sdk.hook(
 )
 
 local function LootGm80_001(gimmick)
+    -- Leave the Sunken Spire event chest to the player for its native cutscene sequence.
+    if gimmick.GimmickParamId==301001 then
+        return false
+    end
     if gimmick:isInteractEnable(0)==true then
         local distance = DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
         --local dis2 = DistanceSq(mainplayer:get_GameObject():get_Transform():getJointByName("root"):get_Position(),dropPartsController.PartsRoot:get_Position())
@@ -372,7 +393,11 @@ sdk.hook(
 
 local getGimmickListMethod=sdk.find_type_definition("app.GimmickManager"):get_method("getGimmickList(app.GimmickID)")
 local gimmick82_036=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_036"):get_data(nil)
-local gimmick82_000=sdk.find_type_definition("app.GimmickID"):get_field("Gm82_000"):get_data(nil)
+local gimmick83_169=sdk.find_type_definition("app.GimmickID"):get_field("Gm83_169"):get_data(nil)
+local directItemGimmickIds={
+    sdk.find_type_definition("app.GimmickID"):get_field("Gm82_000"):get_data(nil),
+    sdk.find_type_definition("app.GimmickID"):get_field("Gm82_000_10"):get_data(nil),
+}
 
 --check nearby gimmick instances each 90 frame
 --changed from update() to lateUpdate() because update was never called since that version
@@ -404,15 +429,18 @@ sdk.hook(
                 end
             end
             if config.lootDirectItem then
-                --iterate gimmick82_000
-                --local gimmicks=gimmickManager:get_DirectItemGimmicks()
-                local gimmicks=getGimmickListMethod(gimmickManager,gimmick82_000)
-                local g_ct=gimmicks:get_Count()-1
-                for i=0,g_ct do
-                    --requestForceInteract每帧只能捡起一个物品？
-                    if LootGm82_000(gimmicks[i]) then
-                        break
+                -- Include fixed-position items; request at most one pickup across both lists.
+                local looted=false
+                for _,gimmickId in ipairs(directItemGimmickIds) do
+                    local gimmicks=getGimmickListMethod(gimmickManager,gimmickId)
+                    local g_ct=gimmicks:get_Count()-1
+                    for i=0,g_ct do
+                        if LootGm82_000(gimmicks[i]) then
+                            looted=true
+                            break
+                        end
                     end
+                    if looted then break end
                 end
             end
             if config.lootSeekerToken then
@@ -421,6 +449,16 @@ sdk.hook(
                 local g_ct=gimmicks:get_Count()-1
                 for i=0,g_ct do
                     if LootGm82_036(gimmicks[i]) then
+                        break
+                    end
+                end
+            end
+            if config.lootNorganDucat then
+                --iterate gimmick83_169
+                local gimmicks=getGimmickListMethod(gimmickManager,gimmick83_169)
+                local g_ct=gimmicks:get_Count()-1
+                for i=0,g_ct do
+                    if LootGm83_169(gimmicks[i]) then
                         break
                     end
                 end
