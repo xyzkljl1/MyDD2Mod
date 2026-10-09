@@ -496,7 +496,9 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             imgui.end_rect()
                         end
                     elseif para.type=="author" then
-                        imgui.text_colored(para.name or "\tAuthor: xyzkljl1",para.color or 0xffffffff)
+                        local text=para.name or "\tAuthor: xyzkljl1"
+                        if para.version~=nil then text=text.."  Version: "..tostring(para.version) end
+                        imgui.text_colored(text,para.color or 0xffffffff)
                     end
                     if para.sameline==true then
                         imgui.same_line()
