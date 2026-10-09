@@ -1,4 +1,5 @@
 ﻿local modname="_XYZAPI"
+local version="1.9.6"
 local vecNames={
     ".x",
     ".y",
@@ -30,6 +31,8 @@ local function Log(...)
         log.info("["..modname.."]"..tostring(v))
     end
 end
+
+Log("Initialized version "..version)
 
 local function isDD2()
     return reframework.get_game_name()=="dd2"
@@ -245,6 +248,25 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         changed , config[key]= imgui.drag_int(label .. title_postfix,
                                                                 config[key] or para.default or para.min or 0,
                                                                 para.step or 1 , para.min or 0, para.max or 100)
+                        _changed=changed or _changed
+                    elseif para.type=="uint32" then
+                        -- drag_int uses signed int32; text preserves all uint32 digits.
+                        local minimum=math.max(0,para.min or 0)
+                        local maximum=math.min(4294967295,para.max or 4294967295)
+                        local value=tonumber(config[key]) or para.default or minimum
+                        if value~=value then value=para.default or minimum end
+                        value=math.floor(math.max(minimum,math.min(maximum,value)))
+                        local edited,text=imgui.input_text(label .. title_postfix,string.format("%.0f",value))
+                        changed=false
+                        if edited and text:match("^%d+$") then
+                            local number=tonumber(text)
+                            if number then
+                                number=math.floor(math.max(minimum,math.min(maximum,number)))
+                                changed=number~=value
+                                value=number
+                            end
+                        end
+                        config[key]=value
                         _changed=changed or _changed
                     elseif para.type=="intPercent" then
                         changed , config[key]= imgui.drag_int(label .. title_postfix,
