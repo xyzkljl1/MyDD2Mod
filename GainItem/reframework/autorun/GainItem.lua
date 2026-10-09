@@ -141,21 +141,23 @@ local function Init()
     end
 end
 
--- skip Tome(eg.item118) to avoid crash
+-- Skip selected item tutorials to avoid crashes.
 local function BlockTutorial(args)
 	local storage = thread.get_hook_storage()
 	-- false means "keep it original", true means "Skip this"
 	storage["skip"] = false
 	-- 113 is Tome tutorial
 	-- when tome is gained, requestTutorial will be called twice,id will be 113 and x(eg.115).The second call doesn't matter.
-	if (sdk.to_int64(args[3]) & 0xFF) == 113 then
+	local tutorialId=sdk.to_int64(args[3]) & 0xffffffff
+	Log("Request tutorial "..tutorialId)
+	if tutorialId == 113 or tutorialId == 194 or tutorialId == 218 or tutorialId == 212 or tutorialId == 203 or tutorialId == 208 or tutorialId == 220 or tutorialId == 221 or tutorialId == 231 then
 		storage["skip"] = true
 		return sdk.PreHookResult.SKIP_ORIGINAL
 	end
 end
 local function BlockTutorialPost(retval)
 	if thread.get_hook_storage()["skip"] then
-		Log("Skip tome tutorial")
+		Log("Skip tutorial")
 		return sdk.to_ptr(true)
 	end
 end
