@@ -6,23 +6,26 @@ local customSlotBase = 100
 local customSlotGroupStride = slotCount - 1
 local nativeVisibleItemCount = 12
 local saveDataManagerType = sdk.find_type_definition("app.SaveDataManager")
-local config = json.load_file(configFile) or {saveSlot = 1, loadSlot = 1}
+local savedConfig = json.load_file(configFile) or {}
+-- Persist settings only. Legacy preview data is never used or written back.
+local config = {
+    saveSlot = savedConfig.saveSlot or 1,
+    loadSlot = savedConfig.loadSlot or 1,
+    nativeSlot = savedConfig.nativeSlot
+}
+savedConfig = nil
 local lastNativeSlot = tonumber(config.nativeSlot) or 4
 if lastNativeSlot < 4 or lastNativeSlot > 14 or (lastNativeSlot - 4) % 5 ~= 0 then
     lastNativeSlot = 4
 end
 local slotStatus = {}
-local pendingSaveDetail
-local nativePreviewGui
+local pendingSaveStatus
 local nativePreviewChinese
 local latestSlot
 local nativeLabelsDirty = false
-local statusRefreshRequested = false
-local previewDataCache = {}
 
 config.saveSlot = math.max(1, math.min(slotCount, config.saveSlot or 1))
 config.loadSlot = math.max(1, math.min(slotCount, config.loadSlot or 1))
-config.slotDetails = config.slotDetails or {}
 
 local slotNames = {}
 for i = 1, slotCount do slotNames[i] = "Manual Save "..i end
@@ -65,7 +68,6 @@ local function SetNativeGroup(slotId)
     if nativeSlot == lastNativeSlot and config.nativeSlot == nativeSlot then return end
     lastNativeSlot = nativeSlot
     config.nativeSlot = nativeSlot
-    statusRefreshRequested = true
     nativeLabelsDirty = true
     json.dump_file(configFile, config)
     Log("Selected native save group", math.floor(nativeSlot / 5) + 1)
@@ -90,30 +92,17 @@ end
 
 DetectNativeGroup()
 
-local function QueueSaveDetail(uiSlot, storageSlot)
-    local manager = sdk.get_managed_singleton("app.SaveDataManager")
-    local ok, detail = pcall(function()
-        local source = manager and manager:get_field("RefGameSaveSlotDetailData")
-        local contents = source and source:call("getDetailContents")
-        if contents == nil then return nil end
-        local memo = contents:get_field("Memo")
-        return {
-            playTime = contents:get_field("ActualPlayingTime"),
-            place = memo and tostring(memo) or ""
-        }
-    end)
-    if not ok then Log("Failed to capture save preview:", detail) end
-    pendingSaveDetail = {
+local function QueueSaveStatus(uiSlot, storageSlot)
+    pendingSaveStatus = {
         uiSlot = uiSlot,
         storageSlot = storageSlot,
-        previousTimestamp = GetFileTimestamp(storageSlot),
-        detail = ok and detail or nil
+        previousTimestamp = GetFileTimestamp(storageSlot)
     }
 end
 
-local function RedirectSlot(args, uiSlot, operation)
+local function RedirectSlot(args, uiSlot, operation, trackAnyGroup)
     local nativeSlot = sdk.to_int64(args[3])
-    SetNativeGroup(nativeSlot)
+    if trackAnyGroup or IsManualSlot(nativeSlot) then SetNativeGroup(nativeSlot) end
     if not IsManualSlot(nativeSlot) then return end
 
     local targetSlot = GetSlotId(nativeSlot, uiSlot)
@@ -126,37 +115,31 @@ end
 
 sdk.hook(saveDataManagerType:get_method("requestSave"), function(args)
     local targetSlot = RedirectSlot(args, config.saveSlot, "Save")
-    if targetSlot ~= nil then QueueSaveDetail(config.saveSlot, targetSlot) end
+    if targetSlot ~= nil then QueueSaveStatus(config.saveSlot, targetSlot) end
 end, nil)
 
 sdk.hook(saveDataManagerType:get_method("requestLoad"), function(args)
-    RedirectSlot(args, config.loadSlot, "Load")
+    RedirectSlot(args, config.loadSlot, "Load", true)
 end, nil)
 
-local function FinalizePendingSaveDetail()
-    if pendingSaveDetail == nil then return end
+local function FinalizePendingSaveStatus()
+    if pendingSaveStatus == nil then return end
     local manager = sdk.get_managed_singleton("app.SaveDataManager")
     if manager == nil or manager:get_IsBusy() then return end
 
-    local timestamp = GetFileTimestamp(pendingSaveDetail.storageSlot)
-    if timestamp == nil or tostring(timestamp) == tostring(pendingSaveDetail.previousTimestamp) then return end
-    local detail = pendingSaveDetail.detail or {}
-    detail.timestamp = tostring(timestamp)
-    config.slotDetails[tostring(pendingSaveDetail.storageSlot)] = detail
-    slotStatus[pendingSaveDetail.uiSlot] = "Saved"
-    previewDataCache[pendingSaveDetail.storageSlot] = nil
-    latestSlot = pendingSaveDetail.uiSlot
+    local timestamp = GetFileTimestamp(pendingSaveStatus.storageSlot)
+    if timestamp == nil or tostring(timestamp) == tostring(pendingSaveStatus.previousTimestamp) then return end
+    slotStatus[pendingSaveStatus.uiSlot] = "Saved"
+    latestSlot = pendingSaveStatus.uiSlot
     nativeLabelsDirty = true
-    json.dump_file(configFile, config)
-    Log("Updated preview for manual slot", pendingSaveDetail.uiSlot)
-    pendingSaveDetail = nil
+    Log("Updated status for manual slot", pendingSaveStatus.uiSlot)
+    pendingSaveStatus = nil
 end
 
 local function RefreshStatus()
     local manager = sdk.get_managed_singleton("app.SaveDataManager")
     if manager == nil or manager:get_IsBusy() then return false end
     latestSlot = nil
-    previewDataCache = {}
 
     local latestTimestamp
     for i = 1, slotCount do
@@ -193,6 +176,7 @@ re.on_draw_ui(function()
 end)
 
 Log("Loaded. Store slot", config.saveSlot, "Load slot", config.loadSlot)
+Log("Native previews use game summaries; extra-slot play time awaits a verified game API")
 
 -- Add native slot selectors to the game's Save menu without replacing its commands.
 local nativeRefs = {}
@@ -342,7 +326,6 @@ local function GetCurrentListIndex(ctrl)
 end
 
 local function BindNativePreview(gui)
-    nativePreviewGui = gui
     nativePreviewChinese = IsChineseLanguage()
 end
 
@@ -406,11 +389,7 @@ local function RefreshNativeSaveListLabels()
 end
 
 re.on_frame(function()
-    FinalizePendingSaveDetail()
-    if statusRefreshRequested and RefreshStatus() then
-        statusRefreshRequested = false
-        nativeLabelsDirty = true
-    end
+    FinalizePendingSaveStatus()
     if nativeStyledCtrl == nil then return end
     local ok, err = pcall(function()
         RefreshNativeSaveListLabels()
@@ -428,7 +407,6 @@ re.on_frame(function()
     if not ok then
         Log("Native Save menu update failed:", err)
         nativeStyledCtrl = nil
-        nativePreviewGui = nil
     end
 end)
 
@@ -480,7 +458,6 @@ local previewTitleStrings = {}
 
 local function StartPreviewUpdate(args)
     local gui = sdk.to_managed_object(args[2])
-    nativePreviewGui = gui
     nativePreviewChinese = IsChineseLanguage()
     currentPreviewSlot = gui and PreviewSlotForIndex(GetCurrentListIndex(gui.SaveListCtrl))
 end
@@ -499,9 +476,6 @@ local function GetPreviewString(text)
 end
 
 local function GetPreviewData(storageSlot)
-    local cached = previewDataCache[storageSlot]
-    if cached ~= nil then return cached end
-
     local manager = sdk.get_managed_singleton("app.SaveDataManager")
     local ok, data = pcall(function()
         local list = manager and manager:call(
@@ -510,42 +484,47 @@ local function GetPreviewData(storageSlot)
         if entry == nil or entry:call("get_IsEmptyData") then return {empty = true} end
 
         local detail = entry:call("get_SaveFileDetail")
-        local stored = config.slotDetails[tostring(storageSlot)] or {}
-        local playTime = stored.playTime
-        local place = stored.place or ""
-        local encoded = tostring(detail:call("get_Detail") or "")
-        if encoded ~= "" then
-            local contents = sdk.create_instance("app.GameSaveSlotDetailContents", true)
-            contents:call(".ctor(System.String)", detail:call("get_Detail"))
-            playTime = contents:get_field("ActualPlayingTime")
-            place = tostring(contents:get_field("Memo") or place)
-        end
+        local timestamp = tostring(detail:call("get_LastUpdateTimeStamp"))
         return {
             empty = false,
-            playTime = playTime,
-            place = place,
-            timestamp = tonumber(tostring(detail:call("get_LastUpdateTimeStamp")))
+            timestamp = tonumber(timestamp)
         }
     end)
     if not ok then
         Log("Failed to read preview for storage slot", storageSlot, data)
         data = {empty = GetFileTimestamp(storageSlot) == nil}
     end
-    previewDataCache[storageSlot] = data
     return data
 end
 
-local function FormatPlayTime(seconds)
-    seconds = math.max(0, math.floor(tonumber(seconds) or 0))
-    return string.format("%4d:%02d:%02d",
-        math.floor(seconds / 3600), math.floor(seconds / 60) % 60, seconds % 60)
+local function PadLike(value, sample)
+    return string.format("%0"..#sample.."d", value)
 end
 
-local function FormatSaveTime(ticks)
+local function FormatSaveTime(ticks, nativeValue)
     if ticks == nil then return "" end
     local time = os.date("!*t", math.floor(ticks / 10000000 - 62135596800))
-    return time and string.format("%d/%d/%d %d:%02d:%02d",
-        time.year, time.month, time.day, time.hour, time.min, time.sec) or ""
+    if time == nil then return "" end
+
+    -- Reuse the native preview's numeric layout, separators and zero padding.
+    local a, s1, b, s2, c, gap, h, s3, m, s4, sec =
+        tostring(nativeValue or ""):match(
+            "^(%d+)(%D)(%d+)(%D)(%d+)(%s+)(%d+)(%D)(%d+)(%D)(%d+)$")
+    if a ~= nil then
+        local first, second, third
+        if tonumber(a) > 31 then
+            first, second, third = time.year, time.month, time.day
+        elseif tonumber(c) > 31 then
+            first, second, third = time.month, time.day, time.year
+        end
+        if first ~= nil then
+            return PadLike(first, a)..s1..PadLike(second, b)..s2..PadLike(third, c)
+                ..gap..PadLike(time.hour, h)..s3..PadLike(time.min, m)
+                ..s4..PadLike(time.sec, sec)
+        end
+    end
+    return string.format("%d/%d/%d %d:%02d:%02d",
+        time.year, time.month, time.day, time.hour, time.min, time.sec)
 end
 
 local function GetPreviewTitle(originalName, slot, storageSlot, empty)
@@ -572,52 +551,77 @@ sdk.hook(saveDataListItemType:get_method(
     local info = sdk.to_managed_object(args[3])
     if info == nil or not info:get_field("IsChangeTarget") then return end
 
-    local storageSlot = GetSlotId(lastNativeSlot, currentPreviewSlot)
-    local data = GetPreviewData(storageSlot)
     restore.info = info
-    restore.SaveSlotIndex = info:get_field("SaveSlotIndex")
     restore.Name = info:get_field("Name")
+    restore.SaveSlotIndex = info:get_field("SaveSlotIndex")
     restore.SaveTime = info:get_field("SaveTime")
     restore.PlayTime = info:get_field("PlayTime")
     restore.PlaceName = info:get_field("PlaceName")
     restore.IsEmpty = info:get_field("IsEmpty")
+
+    if currentPreviewSlot == 1 then
+        local storageSlot = tonumber(tostring(restore.SaveSlotIndex)) or lastNativeSlot
+        if not IsManualSlot(storageSlot) then storageSlot = lastNativeSlot end
+        -- Preserve the native PlayTime and PlaceName supplied by the game's summary.
+        info:set_field("Name", GetPreviewTitle(
+            restore.Name, currentPreviewSlot, storageSlot, restore.IsEmpty))
+        return
+    end
+
+    local storageSlot = GetSlotId(lastNativeSlot, currentPreviewSlot)
+    local data = GetPreviewData(storageSlot)
+    -- No verified game-only reader exists for extra-slot time or location yet.
+    info:set_field("PlayTime", GetPreviewString("--:--:--"))
+    info:set_field("PlaceName", GetPreviewString(nativePreviewChinese and "未知" or "Unknown"))
     info:set_field("Name", GetPreviewTitle(
         info:get_field("Name"), currentPreviewSlot, storageSlot, data.empty))
     info:set_field("SaveSlotIndex", storageSlot)
     info:set_field("IsEmpty", data.empty)
     if not data.empty then
-        info:set_field("PlayTime", GetPreviewString(FormatPlayTime(data.playTime)))
-        info:set_field("SaveTime", GetPreviewString(FormatSaveTime(data.timestamp)))
-        if data.place ~= "" then
-            info:set_field("PlaceName", GetPreviewString(data.place))
-        end
+        info:set_field("SaveTime", GetPreviewString(
+            FormatSaveTime(data.timestamp, restore.SaveTime)))
     end
 end, function(retval)
     local restore = table.remove(previewInfoStack)
     if restore ~= nil and restore.info ~= nil then
-        restore.info:set_field("SaveSlotIndex", restore.SaveSlotIndex)
         restore.info:set_field("Name", restore.Name)
-        restore.info:set_field("SaveTime", restore.SaveTime)
-        restore.info:set_field("PlayTime", restore.PlayTime)
-        restore.info:set_field("PlaceName", restore.PlaceName)
-        restore.info:set_field("IsEmpty", restore.IsEmpty)
+        if restore.SaveSlotIndex ~= nil then
+            restore.info:set_field("SaveSlotIndex", restore.SaveSlotIndex)
+            restore.info:set_field("SaveTime", restore.SaveTime)
+            restore.info:set_field("PlayTime", restore.PlayTime)
+            restore.info:set_field("PlaceName", restore.PlaceName)
+            restore.info:set_field("IsEmpty", restore.IsEmpty)
+        end
     end
     return retval
 end)
 
 sdk.hook(ui060804Type:get_method("executeCommand"), function(args)
     local command = sdk.to_int64(args[3])
-    if command ~= 1 and command ~= 2 then return end
-
     local gui = sdk.to_managed_object(args[2])
     local ctrl = gui and gui.SaveListCtrl
     local index = GetCurrentListIndex(ctrl)
+
+    if command ~= 1 then
+        -- The menu is about to close; do not touch its controls during scene teardown.
+        nativeStyledCtrl = nil
+        currentPreviewSlot = nil
+        nativeListLayouts = {}
+    end
+
+    if command ~= 1 and command ~= 2 then return end
     local slot = command == 1 and PreviewSlotForIndex(index) or 1
     if slot == nil then return end
 
     config.saveSlot = slot
     json.dump_file(configFile, config)
     Log("Selected native manual slot", slot)
+end, nil)
+
+sdk.hook(ui060804Type:get_method("onDestroy"), function()
+    nativeStyledCtrl = nil
+    currentPreviewSlot = nil
+    nativeListLayouts = {}
 end, nil)
 
 sdk.hook(ui060804Type:get_method("createSaveList"), function(args)
