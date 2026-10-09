@@ -7,9 +7,13 @@ local onAddToFavList=nil
 local onFavListClick=nil
 local onRemoveFromFavList=nil
 
+local relicSourceOption={name="RelicSource",label="Relic: Source Variant",type="stringComboBox",list={},hide=true}
+local relicJobOption={name="RelicJob",label="Relic: Vocation",type="stringComboBox",list={},hide=true}
 local _config={
     {name="item",type="item",default=1},
     {name="count",type="int",default=1,min=1,max=99},
+    relicSourceOption,
+    relicJobOption,
     {name="Add or Remove Item",type="mutualbox"},
     {name="SendToPlayer",type="button",onClick=function() onClickFunc("Player") end,sameline=true},
     {name="SendToStorage",type="button",onClick=function() onClickFunc("Storage") end},
@@ -33,6 +37,84 @@ local function Log(msg)
     log.info(modname..msg)
 end
 
+local itemDefine=sdk.find_type_definition("app.ItemDefine")
+local appraisalDefine=sdk.find_type_definition("app.GUIAppraisalDefine")
+local getFakeItemId=itemDefine:get_method("getFakeItemId(System.Int32)")
+local isFakeAppraisal=itemDefine:get_method("isFakeAppraisalItemId(System.Int32)")
+local isAppraisal=appraisalDefine:get_method("isAppraisalItem(System.Int32)")
+local getJobName=sdk.find_type_definition("app.GUIBase"):get_method("getJobName(System.Int32)")
+local messageType=sdk.find_type_definition("via.gui.message")
+local getMessageId=messageType:get_method("getGuidByName(System.String)")
+local getMessage=messageType:get_method("get(System.Guid, via.Language)")
+local japanese=sdk.find_type_definition("via.Language"):get_field("Japanese"):get_data()
+local relicItemId=nil
+local relicSources={}
+local relicSelected=false
+config.RelicJob=config.RelicJob or 9
+
+local function RefreshRelicOptions()
+    local id=math.floor(config.item)
+    local isFake=isFakeAppraisal:call(nil,id)
+    relicSelected=isFake or isAppraisal:call(nil,id)
+    relicSourceOption.hide=true
+    relicJobOption.hide=true
+    if id~=relicItemId then
+        relicItemId=id
+        relicSources={}
+        relicSourceOption.list={}
+        relicSourceOption.tmp_List=nil
+    end
+    if not relicSelected then return end
+
+    if next(relicSources)==nil then
+        local am=sdk.get_managed_singleton("app.ItemAppraisalManager")
+        local fixed=am and am:get_field("FixedItemSettingDict")
+        if fixed and fixed:call("ContainsKey",id) then
+            -- Fixed appraisal items are granted directly without source/vocation metadata.
+            relicSelected=false
+            return
+        end
+        local settings=am and am:get_field("ItemSettingDict")
+        if settings==nil then return end
+        local iter=settings:call("System.Collections.IEnumerable.GetEnumerator()")
+        while iter:MoveNext() do
+            local data=iter._current.value:get_field("data")
+            if data~=nil then
+                local source=data:get_field("itemId")
+                if getFakeItemId:call(nil,source)==id or (source==id and not isFake) then
+                    relicSources[source]=data
+                    -- Intermediate relics have empty translated names; use their Japanese originals.
+                    local guid=getMessageId:call(nil,"item_name_"..source)
+                    relicSourceOption.list[source]=getMessage:call(nil,guid,japanese)
+                end
+            end
+        end
+    end
+    if relicSources[config.RelicSource]==nil then
+        config.RelicSource=nil
+        for source in pairs(relicSources) do
+            if config.RelicSource==nil or source<config.RelicSource then config.RelicSource=source end
+        end
+    end
+    local data=relicSources[config.RelicSource]
+    if data==nil then return end
+
+    relicJobOption.list={}
+    relicJobOption.tmp_List=nil
+    local firstJob=nil
+    for job=0,10 do
+        local candidates=data:call("getJobDataList(app.Character.JobEnum)",job)
+        if candidates~=nil and candidates:call("get_Count()")>0 then
+            relicJobOption.list[job]=job==0 and "Default (no vocation)" or getJobName:call(nil,job)
+            firstJob=firstJob or job
+        end
+    end
+    if relicJobOption.list[config.RelicJob]==nil then config.RelicJob=firstJob end
+    if firstJob==nil then return end
+    relicSourceOption.hide=false
+    relicJobOption.hide=false
+end
+
 local Gold=93 -- item 1G
 local function OnChanged()
     if config.item==Gold then 
@@ -40,12 +122,15 @@ local function OnChanged()
     else 
         _config[2].max=99
     end
+    RefreshRelicOptions()
 end
 
 --Should Add this to api
 local inited=false
 local font=nil
 local function Init()
+    relicItemId=nil
+    OnChanged()
     if font==nil then
         --reload font everytime,in case the font is not right on first init
         font = myapi.LoadFontIfCJK("simhei.ttf",nil,nil)
@@ -146,8 +231,23 @@ local function AddItem(dest,index,remove)
             deleteMethod:call(im,math.floor(config.item),math.floor(config.count),storageid)
             Log("Remove Item")
         else
-            getItemMethod:call(im,math.floor(config.item),math.floor(config.count),storageid,option)
-            Log("Get Item")
+            RefreshRelicOptions()
+            if relicSelected then
+                if relicSources[config.RelicSource]==nil or relicJobOption.list[config.RelicJob]==nil then
+                    Log("Relic metadata is not ready. Select a valid source variant and vocation.")
+                    return
+                end
+                option.IsAddExtensionData=true
+                option.ExtensionValue=config.RelicJob
+                -- Each relic needs its own source/job record in the game's metadata queue.
+                for _=1,math.floor(config.count) do
+                    getItemMethod:call(im,config.RelicSource,1,storageid,option)
+                end
+                Log(string.format("Get Item %d (source=%d, job=%d)",config.item,config.RelicSource,config.RelicJob))
+            else
+                getItemMethod:call(im,math.floor(config.item),math.floor(config.count),storageid,option)
+                Log("Get Item")
+            end
         end
     end        
 end
