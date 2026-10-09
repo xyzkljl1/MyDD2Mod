@@ -8,6 +8,7 @@ local needsAppraisal = false
 local function stop(err)
     failed, config.enabled = true, false
     log.error(TAG .. "Stopped: " .. tostring(err))
+    error(TAG .. "Stopped: " .. tostring(err), 0)
 end
 local function count(list) return list and list:call("get_Count()") or 0 end
 local function get(dict, key)
@@ -42,7 +43,7 @@ local function readRelic(im, owner, id)
         local queue = perOwner and get(perOwner, id)
         assert(queue and count(queue) == n, "Missing or incomplete relic metadata")
         -- Read only the head we will consume; no Lua snapshot or queue rotation.
-        local packed = queue:call("ToArray()"):get_element(0)
+        local packed = api.arrayItem:call(queue:call("ToArray()"), 0)
         if type(packed) ~= "number" then packed = packed:get_field("m_value") end
         assert(type(packed) == "number", "Invalid relic metadata")
         local source, job = intBox(), intBox()
@@ -93,6 +94,10 @@ local function prepareGrants(im, am, firstResult, owner, extension)
     -- Do not call ItemManager while holding the appraisal result lock.
     local reserved = {}
     for _, grant in ipairs(grants) do
+        local param = assert(api.itemData:call(im, grant.id), "Missing result item data: " .. grant.id)
+        -- Native applyItemImmediately converts Cash (64) and Rim (256) into
+        -- currency. These results never increase their inventory item count.
+        grant.currency = (api.attribute:call(param) & 0x140) ~= 0
         local space = api.capacity:call(im, grant.id, owner) - (reserved[grant.id] or 0)
         if space < grant.amount then return end
         reserved[grant.id] = (reserved[grant.id] or 0) + grant.amount
@@ -111,10 +116,14 @@ end
 local function deliverGrants(im, grants)
     for _, grant in ipairs(grants) do
         api.acquire:call(im, grant.option.AbilityInternal)
-        local before = api.have:call(im, grant.id, grant.owner)
+        local before = not grant.currency and api.have:call(im, grant.id, grant.owner)
         api.grant:call(im, grant.id, grant.amount, grant.owner, grant.option)
-        assert(api.have:call(im, grant.id, grant.owner) == before + grant.amount,
-            "Native result delivery mismatch; inspect log before further appraisal")
+        if not grant.currency then
+            local after = api.have:call(im, grant.id, grant.owner)
+            assert(after == before + grant.amount, string.format(
+                "Native result delivery mismatch item=%d amount=%d owner=%s before=%d after=%d",
+                grant.id, grant.amount, tostring(grant.owner), before, after))
+        end
     end
 end
 
@@ -201,6 +210,13 @@ local function initialize()
             capacity = "getGetEnableNum(System.Int32, app.CharacterID)",
             acquire = "acquireEquipmentAbility(app.ItemDefine.EquipmentAbilityParam)",
             storageList = "getStorageMasterList(app.CharacterID)",
+            itemData = "getItemData(System.Int32)",
+        },
+        ["app.ItemCommonParam"] = {
+            attribute = "get_Attribute()",
+        },
+        ["System.Array"] = {
+            arrayItem = "GetValue(System.Int32)",
         },
         ["app.ItemDefine"] = {
             fakeId = "getFakeItemId(System.Int32)",
@@ -288,6 +304,7 @@ local controls = {
         if failed then return end
         needsAppraisal = true
     end},
+    {type="author", version="1.1"},
 }
 local configfile = "AutoAppraise.json"
 config = myapi.InitFromFile(controls, configfile, true)
