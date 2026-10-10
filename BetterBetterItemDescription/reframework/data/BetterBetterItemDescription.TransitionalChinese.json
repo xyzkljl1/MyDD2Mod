@@ -52,7 +52,7 @@
     }
   },
   "FieldFormat": {
-    "_BlowResistRate": "%s%% 抗擊飛",
+    "_BlowResistRate": "+%s 擊退抗性",
     "_BuyPrice": {
       "enable": false,
       "format": "BuyPrice %s.",
@@ -114,12 +114,11 @@
       "format": "售價 %s.",
       "type": "String"
     },
-    "_ShakeResistRate": "%s%% 抗昏厥",
     "_SilentResist": "%s%% 抗沉默",
-    "_SlashDefenceRate": "%s%% 抗斬擊",
+    "_SlashDefenceRate": "%s%% 斬擊減傷",
     "_SleepResist": "%s%% 抗睡眠",
     "_StoneResist": "%s%% 抗石化",
-    "_StrikeDefenceRate": "%s%% 抗打擊",
+    "_StrikeDefenceRate": "%s%% 打擊減傷",
     "_SubCategory": {
       "enable": false,
       "format": "子類 %s",
@@ -152,6 +151,30 @@
     "_WaterResist": "%s%% 抗水異常"
   },
   "RingSpecialFormat": {
+    "42": {
+      "enable": true,
+      "format": "體力耗盡時恢復速度 +{v1}%"
+    },
+    "43": {
+      "enable": true,
+      "format": "吟唱速度 +{v1}%"
+    },
+    "44": {
+      "enable": true,
+      "format": "基礎物理攻擊力 +{v1}%"
+    },
+    "45": {
+      "enable": true,
+      "format": "基礎魔法攻擊力 +{v1}%"
+    },
+    "46": {
+      "enable": true,
+      "format": "衝刺體力消耗 -{v1}%"
+    },
+    "47": {
+      "enable": true,
+      "format": "物理防禦力、魔法防禦力 +{v1}%"
+    },
     "48": {
       "enable": true,
       "format": "金錢掉落+{v1}%，經驗-{v2}%"
@@ -162,7 +185,7 @@
     },
     "50": {
       "enable": true,
-      "format": "物理攻擊力+{v1}%"
+      "format": "基礎物理攻擊力 +{v1}%"
     },
     "51": {
       "enable": true,

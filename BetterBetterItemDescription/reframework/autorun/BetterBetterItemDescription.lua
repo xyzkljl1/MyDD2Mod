@@ -146,8 +146,7 @@ local FieldFormat={
     _ThunderResist="%s%% Thunder Debuff Resist",
     _LightDefence="%s%% Light Damage Reduce",
     _DarkDefence="%s%% Dark Debuff Resist",
-    _ShakeResistRate="%s%% Shake Resist",
-    _BlowResistRate="%s%% Knockdown Resist",
+    _BlowResistRate="+%s Knockdown Resist",
     _PoisonResist="%s%% Poison Resist",
     _SleepResist="%s%% Sleep Resist",
     _SilentResist="%s%% Silent Resist",
@@ -186,9 +185,15 @@ local WeaponSpecialFormat={
     ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
 }
 local RingSpecialFormat={
+    [42]={enable=true,format="Stamina recovery when exhausted +{v1}%"},
+    [43]={enable=true,format="Incantation speed +{v1}%"},
+    [44]={enable=true,format="Base physical attack +{v1}%"},
+    [45]={enable=true,format="Base magick attack +{v1}%"},
+    [46]={enable=true,format="Dashing stamina cost -{v1}%"},
+    [47]={enable=true,format="Physical and magick defense +{v1}%"},
     [48]={enable=true,format="Gold drops +{v1}%, EXP -{v2}%"},
     [49]={enable=true,format="Drop weight +{dr}%, drop times +{dc}"},
-    [50]={enable=true,format="Physical attack +{v1}%"},
+    [50]={enable=true,format="Base physical attack +{v1}%"},
     [51]={enable=true,format="Knockdown power +{v1}%"},
     [58]={enable=true,format="Restore stamina equal to factor * motion value. Factor: Fighter{sr1}/Archer{sr2}/Mage{sr3}/Thief{sr4}/Warrior{sr5}/Sorcerer{sr6}/Mystic Spearhand{sr7}/Magick Archer{sr8}/Trickster{sr9}. Cap: {sm4} (Magick Archer/Thief)/{sm1} (others)"},
     [59]={enable=true,format="Main pawn -100%, other pawns -50%"},
@@ -555,9 +560,7 @@ local function GetEquipFields(param,ability,enhance)
     stat(weapon and "_PhysicalAttack" or "_PhysicalDefence",weapon and (shield and "ShieldAttack" or "PhysicalAttack") or "PhysicalDefence","PhysicalParameter")
     stat(weapon and "_MagicAttack" or "_MagicDefence",weapon and "MagicAttack" or "MagicDefence","MagicParameter")
     stat(weapon and "_Blow" or "_BlowResistRate",weapon and (shield and "ShieldBlow" or "Blow") or "BlowResistRate","BlowParameter")
-    if enhanced then
-        if weapon then stat("_BlowGuard","BlowGuard") else stat("_ShakeResistRate","ShakeResistRate") end
-    end
+    if enhanced and weapon then stat("_BlowGuard","BlowGuard") end
     if bonus==2048 then stat("_SlashDefenceRate","SlashDefenceRate") end
     if bonus==4096 then stat("_StrikeDefenceRate","StrikeDefenceRate") end
     if bonus==16 or bonus==32 or bonus==64 or bonus==128 then stat("_ElementStore","ElementStore") end

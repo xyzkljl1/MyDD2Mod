@@ -190,7 +190,7 @@
         }
     },
     "FieldFormat": {
-        "_BlowResistRate": "%s%% Blow Resist",
+        "_BlowResistRate": "+%s Knockdown Resist",
         "_BuyPrice": {
             "enable": false,
             "format": "BuyPrice %s.",
@@ -233,7 +233,6 @@
             "format": "SellPrice %s.",
             "type": "String"
         },
-        "_ShakeResistRate": "%s%% Shake Resist",
         "_SilentResist": "%s%% Silent Resist",
         "_SlashDefenceRate": "%s%% Slash Reduce",
         "_SleepResist": "%s%% Sleep Resist",
@@ -271,6 +270,30 @@
         "_WaterResist": "%s%% Water Resist"
     },
     "RingSpecialFormat": {
+        "42": {
+            "enable": true,
+            "format": "سرعة استعادة القدرة على التحمل عند الإنهاك +{v1}%"
+        },
+        "43": {
+            "enable": true,
+            "format": "سرعة التلاوة +{v1}%"
+        },
+        "44": {
+            "enable": true,
+            "format": "الهجوم البدني الأساسي +{v1}%"
+        },
+        "45": {
+            "enable": true,
+            "format": "الهجوم السحري الأساسي +{v1}%"
+        },
+        "46": {
+            "enable": true,
+            "format": "استهلاك القدرة على التحمل أثناء الركض -{v1}%"
+        },
+        "47": {
+            "enable": true,
+            "format": "الدفاع البدني والسحري +{v1}%"
+        },
         "48": {
             "enable": true,
             "format": "الذهب الساقط +{v1}%، الخبرة -{v2}%"
@@ -281,7 +304,7 @@
         },
         "50": {
             "enable": true,
-            "format": "الهجوم البدني +{v1}%"
+            "format": "الهجوم البدني الأساسي +{v1}%"
         },
         "51": {
             "enable": true,

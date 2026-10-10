@@ -252,7 +252,7 @@
     },
     "_Blow": "%s Knockdown",
     "_BlowGuard": "%s Knockdown Guard",
-    "_BlowResistRate": "%s%% Knockdown Resist",
+    "_BlowResistRate": "+%s Knockdown Resist",
     "_BuyPrice": {
       "enable": false,
       "format": "BuyPrice %s.",
@@ -298,7 +298,6 @@
       "format": "SellPrice %s.",
       "type": "String"
     },
-    "_ShakeResistRate": "%s%% Shake Resist",
     "_SilentResist": "%s%% Silent Resist",
     "_SilentStore": "%s Silent Store",
     "_SlashDefenceRate": "%s%% Slash Reduce",
@@ -341,6 +340,30 @@
     "_WaterStore": "%s Water Store"
   },
   "RingSpecialFormat": {
+    "42": {
+      "enable": true,
+      "format": "Stamina recovery when exhausted +{v1}%"
+    },
+    "43": {
+      "enable": true,
+      "format": "Incantation speed +{v1}%"
+    },
+    "44": {
+      "enable": true,
+      "format": "Base physical attack +{v1}%"
+    },
+    "45": {
+      "enable": true,
+      "format": "Base magick attack +{v1}%"
+    },
+    "46": {
+      "enable": true,
+      "format": "Dashing stamina cost -{v1}%"
+    },
+    "47": {
+      "enable": true,
+      "format": "Physical and magick defense +{v1}%"
+    },
     "48": {
       "enable": true,
       "format": "Gold drops +{v1}%, EXP -{v2}%"
@@ -351,7 +374,7 @@
     },
     "50": {
       "enable": true,
-      "format": "Physical attack +{v1}%"
+      "format": "Base physical attack +{v1}%"
     },
     "51": {
       "enable": true,
