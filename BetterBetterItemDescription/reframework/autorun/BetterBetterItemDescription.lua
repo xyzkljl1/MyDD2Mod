@@ -3,6 +3,7 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
 local _config={
+    {type="author",version="1.9"},
     {name="newlinewidth",type="int",default=20,min=1,max=250},
     {name="newlinewidthaffectoriginaltext",type="bool",default=true,label="NewLineWidthAlsoAffectOriginalText"},
     {name="ignoreArmorAndWeapon",type="bool",default=false,label="Ignore Status of Armor&Weapon"},
@@ -25,7 +26,7 @@ local function recurse_def_settings(tbl, new_tbl)
 end
 local config = {} 
 for key,para in pairs(_config) do
-    config[para.name]=para.default
+    if para.name~=nil then config[para.name]=para.default end
 end
 config= recurse_def_settings(config, json.load_file(configfile) or {})
 
@@ -182,9 +183,11 @@ local WeaponSpecialFormat={
     [1906]={enable=true,format="Take +{v1}% More Damage. Heal {v2} HP per second",hint="圣木魔弓，固定回血，给敌人加DamageRate"},
     [2103]={enable=true,wp10_003=true,format="Gain {v1} Gold per Hit,not exceeding {v2}.A little chance to get {v3} Gold(Ignore cap)",hint="梦想路，50/50,参数意义不明，实际在wp10_003_00Param"},
     [2210]={enable=false,hint="庇佑护盾，200/0,意义不明"},
-    ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
+    ["SpecialEfficacy"]={enable=true,format="+{v1}% Damage Rate to certain enemies",hint="对特定敌人增伤"}
 }
 local RingSpecialFormat={
+    [10201]={enable=true,efficacy=true,format="+{v1}% Damage Rate to certain enemies"},
+    [10202]={enable=true,efficacy=true,format="+{v1}% Damage Rate to certain enemies"},
     [31]={enable=true,format="objects +{v1}%, bombs +{v2}%, characters +{v3}%"},
     [35]={enable=true,format="-{v1} HP/s"},
     [36]={enable=true,format="Day -{v1} HP/s, night +{v2} HP/s"},
@@ -739,9 +742,22 @@ end
 
 local function TranslateRingSP(param)
     local sp=param._Special
-    if sp==nil or RingSpecialFormat[sp]==nil or RingSpecialFormat[sp].enable==false then return "" end
-    local ret=RingSpecialFormat[sp].format
-    if RingSpecialFormat[sp].curve then        
+    local format=RingSpecialFormat[param._Id] or RingSpecialFormat[sp]
+    if format==nil or format.enable==false then return "" end
+    local ret=format.format
+    if format.efficacy then
+        local params=sdk.get_managed_singleton("app.ItemManager"):get_ArmorSpecialEfficacyParamProp()
+        for i=0,params:get_Count()-1 do
+            local entry=params[i]
+            local ids=entry:get_ItemIDListProp()
+            for j=0,ids:get_Count()-1 do
+                if ids[j].value__==param._Id then
+                    return (string.gsub(ret,"{v1}",tostring(entry:get_AttackRateProp())))
+                end
+            end
+        end
+        return ""
+    elseif format.curve then
         local additionalData=sdk.get_managed_singleton("app.ItemManager"):get_JewelryAdditionalDataDict()[sp]
         ret=FormatCurveDescription(ret,additionalData,"ring:"..tostring(sp))
     else

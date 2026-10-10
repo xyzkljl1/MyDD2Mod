@@ -2,7 +2,7 @@
   "WeaponSpecialFormat": {
     "SpecialEfficacy": {
       "enable": true,
-      "format": "+{v1} Damage Rate to certain enemies",
+      "format": "+{v1}% Damage Rate to certain enemies",
       "hint": "对特定敌人增伤"
     },
     "1010": {
@@ -340,6 +340,16 @@
     "_WaterStore": "%s Water Store"
   },
   "RingSpecialFormat": {
+    "10201": {
+      "enable": true,
+      "efficacy": true,
+      "format": "+{v1}% Damage Rate to certain enemies"
+    },
+    "10202": {
+      "enable": true,
+      "efficacy": true,
+      "format": "+{v1}% Damage Rate to certain enemies"
+    },
     "31": {
       "enable": true,
       "format": "objects +{v1}%, bombs +{v2}%, characters +{v3}%"

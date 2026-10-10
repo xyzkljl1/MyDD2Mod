@@ -270,6 +270,16 @@
         "_WaterResist": "%s%% Water Resist"
     },
     "RingSpecialFormat": {
+        "10201": {
+            "enable": true,
+            "efficacy": true,
+            "format": "+{v1}% ضرر ضد أعداء معينين"
+        },
+        "10202": {
+            "enable": true,
+            "efficacy": true,
+            "format": "+{v1}% ضرر ضد أعداء معينين"
+        },
         "31": {
             "enable": true,
             "format": "الأجسام +{v1}%، القنابل +{v2}%، الشخصيات +{v3}%"

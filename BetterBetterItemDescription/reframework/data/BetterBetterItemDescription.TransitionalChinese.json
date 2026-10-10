@@ -2,7 +2,7 @@
   "WeaponSpecialFormat": {
     "SpecialEfficacy": {
       "enable": true,
-      "format": "對特定敵人+{v1}傷害倍率",
+      "format": "對特定敵人+{v1}%傷害倍率",
       "hint": "对特定敌人增伤"
     },
     "1010": {
@@ -151,6 +151,16 @@
     "_WaterResist": "%s%% 抗水異常"
   },
   "RingSpecialFormat": {
+    "10201": {
+      "enable": true,
+      "efficacy": true,
+      "format": "對特定敵人+{v1}%傷害倍率"
+    },
+    "10202": {
+      "enable": true,
+      "efficacy": true,
+      "format": "對特定敵人+{v1}%傷害倍率"
+    },
     "31": {
       "enable": true,
       "format": "物體 +{v1}%，炸彈 +{v2}%，角色 +{v3}%"
