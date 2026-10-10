@@ -153,7 +153,7 @@ local FieldFormat={
     _StoneResist="%s%% Stone Resist",
     _WaterResist="%s%% Water Resist",
     _OilResist="%s%% Oil Resist",
-    _ColdResist="%s Cold Resist",
+    _ColdResist="%s%% Cold Resist",
     --_Special=nil,
     --_SpecialValue=nil,
     --_SpecialValue2=nil,
@@ -185,6 +185,10 @@ local WeaponSpecialFormat={
     ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
 }
 local RingSpecialFormat={
+    [31]={enable=true,format="objects +{v1}%, bombs +{v2}%, characters +{v3}%"},
+    [35]={enable=true,format="-{v1} HP/s"},
+    [36]={enable=true,format="Day -{v1} HP/s, night +{v2} HP/s"},
+    [41]={enable=true,format="Restore {v1}% of stamina consumed"},
     [42]={enable=true,format="Stamina recovery when exhausted +{v1}%"},
     [43]={enable=true,format="Incantation speed +{v1}%"},
     [44]={enable=true,format="Base physical attack +{v1}%"},
@@ -196,6 +200,7 @@ local RingSpecialFormat={
     [50]={enable=true,format="Base physical attack +{v1}%"},
     [51]={enable=true,format="Knockdown power +{v1}%"},
     [58]={enable=true,format="Restore stamina equal to factor * motion value. Factor: Fighter{sr1}/Archer{sr2}/Mage{sr3}/Thief{sr4}/Warrior{sr5}/Sorcerer{sr6}/Mystic Spearhand{sr7}/Magick Archer{sr8}/Trickster{sr9}. Cap: {sm4} (Magick Archer/Thief)/{sm1} (others)"},
+    [38]={enable=true,format="Main pawn -100%, other pawns -50%"},
     [59]={enable=true,format="Main pawn -100%, other pawns -50%"},
     [1]= {enable= true,format= "+{v1} MaxHP",hint= "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"},
     [2]= {enable= true,format= "+{v1} Max Stamina",hint= "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"},

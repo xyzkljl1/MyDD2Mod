@@ -287,7 +287,7 @@
     "_MagicAttack": "%s MagATK",
     "_MagicDefence": "%s MagDEF",
     "_OilResist": "%s%% Oil Resist",
-    "_ColdResist": "%s Cold Resist",
+    "_ColdResist": "%s%% Cold Resist",
     "_OilStore": "%s Oil Store",
     "_PhysicalAttack": "%s ATK",
     "_PhysicalDefence": "%s PhyDEF",
@@ -340,6 +340,22 @@
     "_WaterStore": "%s Water Store"
   },
   "RingSpecialFormat": {
+    "31": {
+      "enable": true,
+      "format": "objects +{v1}%, bombs +{v2}%, characters +{v3}%"
+    },
+    "35": {
+      "enable": true,
+      "format": "-{v1} HP/s"
+    },
+    "36": {
+      "enable": true,
+      "format": "Day -{v1} HP/s, night +{v2} HP/s"
+    },
+    "41": {
+      "enable": true,
+      "format": "Restore {v1}% of stamina consumed"
+    },
     "42": {
       "enable": true,
       "format": "Stamina recovery when exhausted +{v1}%"
@@ -383,6 +399,10 @@
     "58": {
       "enable": true,
       "format": "Restore stamina equal to factor * motion value. Factor: Fighter{sr1}/Archer{sr2}/Mage{sr3}/Thief{sr4}/Warrior{sr5}/Sorcerer{sr6}/Mystic Spearhand{sr7}/Magick Archer{sr8}/Trickster{sr9}. Cap: {sm4} (Magick Archer/Thief)/{sm1} (others)"
+    },
+    "38": {
+      "enable": true,
+      "format": "Main pawn -100%, other pawns -50%"
     },
     "59": {
       "enable": true,

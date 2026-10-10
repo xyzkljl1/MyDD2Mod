@@ -106,7 +106,7 @@
     "_MagicAttack": "%s 魔攻",
     "_MagicDefence": "%s 魔防",
     "_OilResist": "%s%% 抗浸油",
-    "_ColdResist": "%s 抗寒",
+    "_ColdResist": "%s%% 抗寒",
     "_PhysicalAttack": "%s 物攻",
     "_PhysicalDefence": "%s 物防",
     "_PoisonResist": "%s%% 抗追毒",
@@ -152,6 +152,22 @@
     "_WaterResist": "%s%% 抗水异常"
   },
   "RingSpecialFormat": {
+    "31": {
+      "enable": true,
+      "format": "物体 +{v1}%，炸弹 +{v2}%，角色 +{v3}%"
+    },
+    "35": {
+      "enable": true,
+      "format": "-{v1} HP/s"
+    },
+    "36": {
+      "enable": true,
+      "format": "白天 -{v1} HP/s, 夜间 +{v2} HP/s"
+    },
+    "41": {
+      "enable": true,
+      "format": "恢复已消耗体力的{v1}%"
+    },
     "42": {
       "enable": true,
       "format": "体力耗尽时恢复速度 +{v1}%"
@@ -195,6 +211,10 @@
     "58": {
       "enable": true,
       "format": "恢复等于系数×动作值的体力，系数：战士{sr1}/弓箭手{sr2}/法师{sr3}/盗贼{sr4}/斗士{sr5}/巫师{sr6}/魔剑士{sr7}/魔弓手{sr8}/幻术师{sr9}，不超过{sm4}（魔弓手、盗贼）/{sm1}（其它）"
+    },
+    "38": {
+      "enable": true,
+      "format": "主追随者-100%，其它追随者-50%"
     },
     "59": {
       "enable": true,

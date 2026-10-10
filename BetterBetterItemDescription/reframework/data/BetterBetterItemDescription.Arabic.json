@@ -224,7 +224,7 @@
         "_MagicAttack": "%s MagATK",
         "_MagicDefence": "%s MagDEF",
         "_OilResist": "%s%% Oil Resist",
-        "_ColdResist": "%s Cold Resist",
+        "_ColdResist": "%s%% Cold Resist",
         "_PhysicalAttack": "%s ATK",
         "_PhysicalDefence": "%s PhyDEF",
         "_PoisonResist": "%s%% Poison Resist",
@@ -270,6 +270,22 @@
         "_WaterResist": "%s%% Water Resist"
     },
     "RingSpecialFormat": {
+        "31": {
+            "enable": true,
+            "format": "الأجسام +{v1}%، القنابل +{v2}%، الشخصيات +{v3}%"
+        },
+        "35": {
+            "enable": true,
+            "format": "-{v1} HP/s"
+        },
+        "36": {
+            "enable": true,
+            "format": "نهارًا -{v1} HP/s, ليلًا +{v2} HP/s"
+        },
+        "41": {
+            "enable": true,
+            "format": "استعادة {v1}% من القدرة على التحمل المستهلكة"
+        },
         "42": {
             "enable": true,
             "format": "سرعة استعادة القدرة على التحمل عند الإنهاك +{v1}%"
@@ -313,6 +329,10 @@
         "58": {
             "enable": true,
             "format": "استعادة قدرة تحمل تساوي المعامل × قيمة الحركة، المعامل: المقاتل{sr1}/رامي السهام{sr2}/الساحر{sr3}/اللص{sr4}/المحارب{sr5}/المشعوذ{sr6}/حامل الرمح الغامض{sr7}/رامي السهام السحري{sr8}/المخادع{sr9}، الحد الأقصى: {sm4} (رامي السهام السحري/اللص)/{sm1} (البقية)"
+        },
+        "38": {
+            "enable": true,
+            "format": "التابع الرئيسي -100%، التوابع الآخرون -50%"
         },
         "59": {
             "enable": true,
