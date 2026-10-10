@@ -186,7 +186,7 @@ local WeaponSpecialFormat={
     ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
 }
 local RingSpecialFormat={
-    [59]={enable=true,format="When a pawn wears this ring and the Arisen wears the Ring of Master: revival time -100% for the main pawn, -50% for other pawns."},
+    [59]={enable=true,format="Main pawn -100%, other pawns -50%"},
     [1]= {enable= true,format= "+{v1} MaxHP",hint= "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"},
     [2]= {enable= true,format= "+{v1} Max Stamina",hint= "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"},
     [3]= {enable= true,format= "+{v1} Max Weight",hint= "(3506,Ring of Profusion,10,0,0)(3505,Ring of Accrual,5,0,0)"},
@@ -805,9 +805,17 @@ local function isRingOrItem(param)
     return (isRing(param)==true or isItem(param)==true)
 end
 
+local getMessageGuid=sdk.find_type_definition("via.gui.message"):get_method("getGuidByName(System.String)")
 local function ReWrapText(originalMessage,bareRate)
     local maxwidth=math.floor((bareRate or 1.0)*config.newlinewidth+0.5)
-    originalMessage=string.gsub(originalMessage,"\r\n"," ")
+    for _=1,4 do
+        local replaced
+        originalMessage,replaced=string.gsub(originalMessage,"<REF%s+([^<>%s]+)%s*>",function(name)
+            return messageManager:getMessage(getMessageGuid:call(nil,name))
+        end)
+        if replaced==0 then break end
+    end
+    originalMessage=string.gsub(originalMessage,"[\r\n]+"," ")
     local newMessage=""
     local tmpLine=""
     for utfChar in string.gmatch(originalMessage,"[%z\1-\127\194-\244][\128-\191]*") do
