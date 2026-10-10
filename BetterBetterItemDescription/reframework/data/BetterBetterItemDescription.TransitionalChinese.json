@@ -152,6 +152,26 @@
     "_WaterResist": "%s%% 抗水異常"
   },
   "RingSpecialFormat": {
+    "48": {
+      "enable": true,
+      "format": "金錢掉落+{v1}%，經驗-{v2}%"
+    },
+    "49": {
+      "enable": true,
+      "format": "掉落權重+{dr}%，掉落次數+{dc}"
+    },
+    "50": {
+      "enable": true,
+      "format": "物理攻擊力+{v1}%"
+    },
+    "51": {
+      "enable": true,
+      "format": "擊退力+{v1}%"
+    },
+    "58": {
+      "enable": true,
+      "format": "恢復等於係數×動作值的體力，係數：戰士{sr1}/弓箭手{sr2}/法師{sr3}/盜賊{sr4}/鬥士{sr5}/巫師{sr6}/魔劍士{sr7}/魔弓手{sr8}/幻術師{sr9}，不超過{sm4}（魔弓手、盜賊）/{sm1}（其它）"
+    },
     "59": {
       "enable": true,
       "format": "主隨從-100%，其它隨從-50%"

@@ -341,6 +341,26 @@
     "_WaterStore": "%s Water Store"
   },
   "RingSpecialFormat": {
+    "48": {
+      "enable": true,
+      "format": "Gold drops +{v1}%, EXP -{v2}%"
+    },
+    "49": {
+      "enable": true,
+      "format": "Drop weight +{dr}%, drop times +{dc}"
+    },
+    "50": {
+      "enable": true,
+      "format": "Physical attack +{v1}%"
+    },
+    "51": {
+      "enable": true,
+      "format": "Knockdown power +{v1}%"
+    },
+    "58": {
+      "enable": true,
+      "format": "Restore stamina equal to factor * motion value. Factor: Fighter{sr1}/Archer{sr2}/Mage{sr3}/Thief{sr4}/Warrior{sr5}/Sorcerer{sr6}/Mystic Spearhand{sr7}/Magick Archer{sr8}/Trickster{sr9}. Cap: {sm4} (Magick Archer/Thief)/{sm1} (others)"
+    },
     "59": {
       "enable": true,
       "format": "Main pawn -100%, other pawns -50%"

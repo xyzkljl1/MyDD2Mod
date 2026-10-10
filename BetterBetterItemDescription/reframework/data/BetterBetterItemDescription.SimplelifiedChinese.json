@@ -153,6 +153,26 @@
     "_WaterResist": "%s%% 抗水异常"
   },
   "RingSpecialFormat": {
+    "48": {
+      "enable": true,
+      "format": "金钱掉落+{v1}%，经验-{v2}%"
+    },
+    "49": {
+      "enable": true,
+      "format": "掉落权重+{dr}%，掉落次数+{dc}"
+    },
+    "50": {
+      "enable": true,
+      "format": "物理攻击力+{v1}%"
+    },
+    "51": {
+      "enable": true,
+      "format": "击退力+{v1}%"
+    },
+    "58": {
+      "enable": true,
+      "format": "恢复等于系数×动作值的体力，系数：战士{sr1}/弓箭手{sr2}/法师{sr3}/盗贼{sr4}/斗士{sr5}/巫师{sr6}/魔剑士{sr7}/魔弓手{sr8}/幻术师{sr9}，不超过{sm4}（魔弓手、盗贼）/{sm1}（其它）"
+    },
     "59": {
       "enable": true,
       "format": "主追随者-100%，其它追随者-50%"

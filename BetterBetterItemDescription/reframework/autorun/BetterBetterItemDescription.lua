@@ -186,6 +186,11 @@ local WeaponSpecialFormat={
     ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
 }
 local RingSpecialFormat={
+    [48]={enable=true,format="Gold drops +{v1}%, EXP -{v2}%"},
+    [49]={enable=true,format="Drop weight +{dr}%, drop times +{dc}"},
+    [50]={enable=true,format="Physical attack +{v1}%"},
+    [51]={enable=true,format="Knockdown power +{v1}%"},
+    [58]={enable=true,format="Restore stamina equal to factor * motion value. Factor: Fighter{sr1}/Archer{sr2}/Mage{sr3}/Thief{sr4}/Warrior{sr5}/Sorcerer{sr6}/Mystic Spearhand{sr7}/Magick Archer{sr8}/Trickster{sr9}. Cap: {sm4} (Magick Archer/Thief)/{sm1} (others)"},
     [59]={enable=true,format="Main pawn -100%, other pawns -50%"},
     [1]= {enable= true,format= "+{v1} MaxHP",hint= "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"},
     [2]= {enable= true,format= "+{v1} Max Stamina",hint= "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"},
@@ -735,6 +740,10 @@ local function TranslateRingSP(param)
         ret=string.gsub(ret,"{v1}",tostring(param._SpecialValue))
         ret=string.gsub(ret,"{v2}",tostring(param._SpecialValue2))
         ret=string.gsub(ret,"{v3}",tostring(param._SpecialValue3))
+        ret=string.gsub(ret,"{dr}",function() return tostring(sdk.get_managed_singleton("app.ItemManager"):get_JewelryAdditionalData().DropUpParam:findSetting(param._Id).DropRateUp) end)
+        ret=string.gsub(ret,"{dc}",function() return tostring(sdk.get_managed_singleton("app.ItemManager"):get_JewelryAdditionalData().DropUpParam:findSetting(param._Id).DropCountUp) end)
+        ret=string.gsub(ret,"{sr(%d+)}",function(job) return string.format("%g",sdk.get_managed_singleton("app.ItemManager"):get_JewelryAdditionalData().RecoverStaminaOnNormalAttackParam:getJobData(tonumber(job)).MultipleFactor) end)
+        ret=string.gsub(ret,"{sm(%d+)}",function(job) return string.format("%g",sdk.get_managed_singleton("app.ItemManager"):get_JewelryAdditionalData().RecoverStaminaOnNormalAttackParam:getJobData(tonumber(job)).MaxValue) end)
     end
     return ret
 end
