@@ -1,0 +1,50 @@
+RSZStructConstructor.hpp
+Json Parser
+dllmain.cpp
+README.md
+RSZStructConstructor.cpp
+AGENTS.md
+TODO.md
+
+# All root files; keep directories eligible for the rules below.
+/*
+!/*/
+
+# Dot-prefixed directories at any depth.
+.*/
+
+# Images and fonts.
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.webp
+*.svg
+*.ico
+*.tif
+*.tiff
+*.avif
+*.heic
+*.heif
+*.dds
+*.tga
+*.exr
+*.hdr
+*.psd
+*.ttf
+*.otf
+*.ttc
+*.woff
+*.woff2
+*.fon
+*.fnt
+
+# Mod data and local research.
+/*/reframework/data/*.json
+/DLCResearch/
+/ShowcaseVideos/
+/MoreSaveSlot/
+/TempProbes/
+/BetterItemDescription/
+/BinEditor/

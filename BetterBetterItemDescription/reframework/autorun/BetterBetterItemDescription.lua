@@ -186,6 +186,7 @@ local WeaponSpecialFormat={
     ["SpecialEfficacy"]={enable=true,format="+{v1} Damage Rate to certain enemies",hint="对特定敌人增伤"}
 }
 local RingSpecialFormat={
+    [59]={enable=true,format="When a pawn wears this ring and the Arisen wears the Ring of Master: revival time -100% for the main pawn, -50% for other pawns."},
     [1]= {enable= true,format= "+{v1} MaxHP",hint= "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"},
     [2]= {enable= true,format= "+{v1} Max Stamina",hint= "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"},
     [3]= {enable= true,format= "+{v1} Max Weight",hint= "(3506,Ring of Profusion,10,0,0)(3505,Ring of Accrual,5,0,0)"},

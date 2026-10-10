@@ -153,6 +153,10 @@
     "_WaterResist": "%s%% 抗水异常"
   },
   "RingSpecialFormat": {
+    "59": {
+      "enable": true,
+      "format": "追随者佩戴此戒指且觉醒者佩戴主人戒指时，复活时间：主追随者-100%，其它追随者-50%。"
+    },
     "1": {
       "enable": true,
       "format": "+{v1} 生命上限",

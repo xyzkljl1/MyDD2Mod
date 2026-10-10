@@ -152,6 +152,10 @@
     "_WaterResist": "%s%% 抗水異常"
   },
   "RingSpecialFormat": {
+    "59": {
+      "enable": true,
+      "format": "隨從佩戴此戒指且覺醒者佩戴主人戒指時，復活時間：主隨從-100%，其它隨從-50%。"
+    },
     "1": {
       "enable": true,
       "format": "+{v1} 生命上限",

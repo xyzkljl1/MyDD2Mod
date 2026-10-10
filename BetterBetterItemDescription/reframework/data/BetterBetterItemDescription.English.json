@@ -341,6 +341,10 @@
     "_WaterStore": "%s Water Store"
   },
   "RingSpecialFormat": {
+    "59": {
+      "enable": true,
+      "format": "When a pawn wears this ring and the Arisen wears the Ring of Master: revival time -100% for the main pawn, -50% for other pawns."
+    },
     "1": {
       "enable": true,
       "format": "+{v1} MaxHP",
