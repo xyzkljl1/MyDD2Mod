@@ -33,6 +33,7 @@ config= recurse_def_settings(config, json.load_file(configfile) or {})
 --Cache of expaned Item Description
 local ItemDescCache={}
 local SkillDescCache={}
+local EquipmentSkillDescCache={}
 local WeaponCharaMsgCache={}
 local SkillName2Id={}
 local RewarpOnNonSpace=true
@@ -302,6 +303,128 @@ local AbilityFormat={
     [50]={format="-{v1} Weight Level When Moving",hint="移動時の重量ランクをValue段階下げる(1.000000,0.000000)"},
 }
 
+local EquipmentAbilityFormat={
+    [47]={format="+{iceenc}% ice enchantment, +{v1} ice buildup (greatsword ×{sfenc5}/daggers ×{sfenc4}/bow ×{sfenc2}/duospear ×{sfenc7})",hint="Frosted Edge"},
+    [48]={format="{ex1}% chance to heal a base {ex2}% of damage dealt (weapon scaling)",hint="Aggressive Recovery",ex1={"RecoverOnAttackHitParam","Probability","ProbabilityBonus"},ex2={"RecoverOnAttackHitParam","BaseFactor","BaseFactorBonus"}},
+    [49]={format="Damage dealt +{v1}%; damage taken +{v2}%",hint="Battle Frenzy I"},
+    [50]={format="{r49}",hint="Battle Frenzy II"},
+    [51]={format="{r49}",hint="Battle Frenzy III"},
+    [52]={format="{r49}",hint="Battle Frenzy IV"},
+    [53]={format="Base poison buildup {ex1} (weapon/move scaling)\n{ex2} s cooldown after activation; up to {ex3} activations per target",hint="Blighting Strike",ex1={"PoisonAttackParameter","BaseFactor","BaseFactorBonus"},ex2={"PoisonAttackParameter","IntervalSec","IntervalSecBonus"},ex3={"PoisonAttackParameter","MaxActivationNum"}},
+    [54]={format="Base unconsciousness chance {ex1}% (weapon/move scaling)\n{ex2} s cooldown after activation; up to {ex3} activations per target",hint="Knockout Strike",ex1={"FaintAttackParameter","BaseFactor","BaseFactorBonus"},ex2={"FaintAttackParameter","IntervalSec","IntervalSecBonus"},ex3={"FaintAttackParameter","MaxActivationNum"}},
+    [55]={format="Stamina spent blocking -{v1}%",hint="Enduring Defense"},
+    [56]={format="True Deflect counter damage +{v1}%",hint="Deflected Impact"},
+    [58]={format="Shield attack damage +{v1}%",hint="Battering Shield"},
+    [59]={format="Damage against fiends +{v1}%",hint="Demon Counter I"},
+    [60]={format="Damage against fiends +{v1}%",hint="Demon Counter II"},
+    [61]={format="Damage against fiends +{v1}%",hint="Demon Counter III"},
+    [62]={format="Damage against aberrations +{v1}%",hint="Abomination Counter I"},
+    [63]={format="Damage against aberrations +{v1}%",hint="Abomination Counter II"},
+    [64]={format="Damage against aberrations +{v1}%",hint="Abomination Counter III"},
+    [65]={format="Damage against humanoids +{v1}%",hint="Humanoid Counter I"},
+    [66]={format="Damage against humanoids +{v1}%",hint="Humanoid Counter II"},
+    [67]={format="Damage against beasts +{v1}%",hint="Beast Counter I"},
+    [68]={format="Damage against beasts +{v1}%",hint="Beast Counter II"},
+    [69]={format="Damage against winged beasts +{v1}%",hint="Winged Beast Counter I"},
+    [70]={format="Damage against winged beasts +{v1}%",hint="Winged Beast Counter II"},
+    [71]={format="Damage against saurians +{v1}%",hint="Saurian Counter I"},
+    [72]={format="Damage against saurians +{v1}%",hint="Saurian Counter II"},
+    [73]={format="Damage against undead +{v1}%",hint="Spirit Counter I"},
+    [74]={format="Damage against undead +{v1}%",hint="Spirit Counter II"},
+    [75]={format="Max stamina +{v1}% of base; Magick/Magick Defense -{v2}%",hint="Gigantus's Vim"},
+    [76]={format="Jump height +{ex1}%\nAirborne physical hits: {ex2}% chance of +{ex3}% damage\nPhysical projectiles: {ex4}% chance of +{ex5}% damage",hint="Enhanced Jump",ex1={"JumpHeightAndJumpAttackUpParam","FactorJumpHeight"},ex2={"JumpHeightAndJumpAttackUpParam","ProbabilityJumpAttackUp","ProbabilityJumpAttackUpBonus"},ex3={"JumpHeightAndJumpAttackUpParam","FactorJumpAttackUp","FactorJumpAttackUpBonus"},ex4={"JumpHeightAndJumpAttackUpParam","ProbabilityPhysicalShellAttackUp","ProbabilityPhysicalShellAttackUpBonus"},ex5={"JumpHeightAndJumpAttackUpParam","FactorPhysicalShellAttackUp","FactorPhysicalShellAttackUpBonus"}},
+    [77]={format="{v1}% chance to nullify physical damage; retain {v2}% of base max HP",hint="Spectral Feint"},
+    [79]={format="Ice magick damage +{v2}%\nIn blizzards/froststorms: Defense/Magick Defense +{v1}",hint="Ice Elemental"},
+    [80]={format="Dragon damage taken -{ex1}%; {ex2}% chance to nullify magick damage\nIce counter buildup: {ex3}% of damage taken, minimum {ex4}\nCounter damage: {ex5}% of damage taken",hint="Frozen Soul",ex1={"IceCounterReduceDragonDamageNullifyMagicParam","ReduceDamageFactorS"},ex2={"IceCounterReduceDragonDamageNullifyMagicParam","NullifyMagicProbabilityS","NullifyMagicProbabilityBonus"},ex3={"IceCounterReduceDragonDamageNullifyMagicParam","CounterStatusConditionDamageFactor","CounterStatusConditionDamageFactorBonus"},ex4={"IceCounterReduceDragonDamageNullifyMagicParam","CounterMinStatusConditionDamage"},ex5={"IceCounterReduceDragonDamageNullifyMagicParam","CounterDamageFactor"}},
+    [81]={format="Dragon damage taken -{ex1}%; {ex2}% chance to nullify magick damage\nIce counter buildup: {ex3}% of damage taken, minimum {ex4}\nCounter damage: {ex5}% of damage taken",hint="Frozen Soul",ex1={"IceCounterReduceDragonDamageNullifyMagicParam","ReduceDamageFactorM"},ex2={"IceCounterReduceDragonDamageNullifyMagicParam","NullifyMagicProbabilityS","NullifyMagicProbabilityBonus"},ex3={"IceCounterReduceDragonDamageNullifyMagicParam","CounterStatusConditionDamageFactor","CounterStatusConditionDamageFactorBonus"},ex4={"IceCounterReduceDragonDamageNullifyMagicParam","CounterMinStatusConditionDamage"},ex5={"IceCounterReduceDragonDamageNullifyMagicParam","CounterDamageFactor"}},
+    [82]={format="Dragon damage taken -{ex1}%; {ex2}% chance to nullify magick damage\nIce counter buildup: {ex3}% of damage taken, minimum {ex4}\nCounter damage: {ex5}% of damage taken",hint="Frozen Soul",ex1={"IceCounterReduceDragonDamageNullifyMagicParam","ReduceDamageFactorL"},ex2={"IceCounterReduceDragonDamageNullifyMagicParam","NullifyMagicProbabilityS","NullifyMagicProbabilityBonus"},ex3={"IceCounterReduceDragonDamageNullifyMagicParam","CounterStatusConditionDamageFactor","CounterStatusConditionDamageFactorBonus"},ex4={"IceCounterReduceDragonDamageNullifyMagicParam","CounterMinStatusConditionDamage"},ex5={"IceCounterReduceDragonDamageNullifyMagicParam","CounterDamageFactor"}},
+    [83]={format="Dragon damage taken -{ex1}%; {ex2}% chance to nullify magick damage\nIce counter buildup: {ex3}% of damage taken, minimum {ex4}\nCounter damage: {ex5}% of damage taken",hint="Frozen Soul",ex1={"IceCounterReduceDragonDamageNullifyMagicParam","ReduceDamageFactorS"},ex2={"IceCounterReduceDragonDamageNullifyMagicParam","NullifyMagicProbabilityM","NullifyMagicProbabilityBonus"},ex3={"IceCounterReduceDragonDamageNullifyMagicParam","CounterStatusConditionDamageFactor","CounterStatusConditionDamageFactorBonus"},ex4={"IceCounterReduceDragonDamageNullifyMagicParam","CounterMinStatusConditionDamage"},ex5={"IceCounterReduceDragonDamageNullifyMagicParam","CounterDamageFactor"}},
+    [84]={format="Dragon damage taken -{ex1}%; {ex2}% chance to nullify magick damage\nIce counter buildup: {ex3}% of damage taken, minimum {ex4}\nCounter damage: {ex5}% of damage taken",hint="Frozen Soul",ex1={"IceCounterReduceDragonDamageNullifyMagicParam","ReduceDamageFactorM"},ex2={"IceCounterReduceDragonDamageNullifyMagicParam","NullifyMagicProbabilityM","NullifyMagicProbabilityBonus"},ex3={"IceCounterReduceDragonDamageNullifyMagicParam","CounterStatusConditionDamageFactor","CounterStatusConditionDamageFactorBonus"},ex4={"IceCounterReduceDragonDamageNullifyMagicParam","CounterMinStatusConditionDamage"},ex5={"IceCounterReduceDragonDamageNullifyMagicParam","CounterDamageFactor"}},
+    [85]={format="Dragon damage taken -{ex1}%; {ex2}% chance to nullify magick damage\nIce counter buildup: {ex3}% of damage taken, minimum {ex4}\nCounter damage: {ex5}% of damage taken",hint="Frozen Soul",ex1={"IceCounterReduceDragonDamageNullifyMagicParam","ReduceDamageFactorL"},ex2={"IceCounterReduceDragonDamageNullifyMagicParam","NullifyMagicProbabilityM","NullifyMagicProbabilityBonus"},ex3={"IceCounterReduceDragonDamageNullifyMagicParam","CounterStatusConditionDamageFactor","CounterStatusConditionDamageFactorBonus"},ex4={"IceCounterReduceDragonDamageNullifyMagicParam","CounterMinStatusConditionDamage"},ex5={"IceCounterReduceDragonDamageNullifyMagicParam","CounterDamageFactor"}},
+    [86]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorS"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorS"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [87]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorM"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorS"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [88]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorL"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorS"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [89]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorS"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorM"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [90]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorM"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorM"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [91]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorL"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorM"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [92]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorS"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorL"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [93]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorM"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorL"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [94]={format="Melee charge time -{ex1}%; damage from fiends -{ex2}%",hint="Wicked Knight",bonusFormat="Melee charge time -{ex1}%; charged damage +{ex3}%\nDamage from fiends -{ex2}%",ex1={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeSpeedFactorL"},ex2={"ChargeSpeedUpAndReduceDeamonDamageParam","ReduceDamageFactorL"},ex3={"ChargeSpeedUpAndReduceDeamonDamageParam","ChargeDamageFactorBonus"}},
+    [95]={format="Lightning damage taken +{v1}%",hint="Molten Spirit"},
+    [96]={format="Fall damage -{v1}%",hint="Cushioned Fall"},
+    [98]={format="Base self-healing: {v1}% of sell price, minimum {v2}\nNearby allies: {v3}% of self-healing",hint="Adventurous Appetite"},
+    [99]={format="Magick damage taken from fiends -{v1}%",hint="Fiendish Ward I"},
+    [100]={format="Magick damage taken from fiends -{v1}%",hint="Fiendish Ward II"},
+    [101]={format="Magick damage taken from fiends -{v1}%",hint="Fiendish Ward III"},
+    [102]={format="Item HP/stamina recovery +{v1}%",hint="Improved Efficacy"},
+    [103]={format="For {v1} s after combat starts: Defense/Magick Defense +{v2}%",hint="Bolstered Outset"},
+    [104]={format="Extra relic chance +{ex1} percentage points (party equipment stacks)",hint="Relic Hunter",ex1={"RelicDropRateUpParam","AdditionalProbability","AdditionalProbabilityBonus"}},
+    [105]={format="No stamina consumption for {v2} s after eating meat",hint="Carnivore"},
+    [107]={format="Grimoires: {v1}% chance of +{v2}% damage",hint="Arcane Wisdom"},
+    [108]={format="At critical HP: prone/crawling recovery delay -{v1}%",hint="Moribund Recovery"},
+    [109]={format="Instant recovery chance: {v1}%",hint="Precipitate Revival"},
+    [110]={format="Damage taken while prone/crawling -{v1}%",hint="Prone Defense"},
+    [111]={format="When staggered: {v2}% chance to recover {v1}% earlier",hint="Imperiled Reflexes"},
+    [112]={format="While poisoned: base poison buildup {ex1} (weapon/move scaling)\n{ex2} s cooldown after activation; up to {ex3} activations per target",hint="Blighted Retort",ex1={"PoisonAttackParameter","BaseFactorOnPoison","BaseFactorOnPoisonBonus"},ex2={"PoisonAttackParameter","IntervalSec","IntervalSecBonus"},ex3={"PoisonAttackParameter","MaxActivationNum"}},
+    [113]={format="For {v1} s after taking damage: Defense/Magick Defense +{v2}% (non-stacking)",hint="Siege Hardened"},
+    [116]={format="Damage taken at full HP -{v1}%",hint="Intact Fortitude"},
+    [117]={format="Clinging stamina consumption -{v1}%",hint="Climber's Agility"},
+    [118]={format="In darkness: Defense/Magick Defense +{v1}; in light: -{v2}",hint="Shadowbound"},
+    [120]={format="Natural sleep/frozen/unconsciousness duration -{v1}%",hint="Animated Recovery"},
+    [121]={format="Uphill stamina consumption/recovery penalties -{v1}%",hint="Hill Strider"},
+    [122]={format="Grappling/pushing/pulling stamina consumption -{v1}%",hint="Enduring Grip"},
+    [123]={format="After jumping with a tailwind: airborne damage +{v2}%",hint="Wind Rider"},
+    [125]={format="Airborne basic attack damage +{v1}%",hint="Leaping Strike"},
+    [126]={format="Max HP +{v1}% of base",hint="Health Boost I"},
+    [127]={format="Max HP +{v1}% of base",hint="Health Boost II"},
+    [128]={format="Max HP +{v1}% of base",hint="Health Boost III"},
+    [129]={format="Max stamina +{v1}% of base",hint="Stamina Boost I"},
+    [130]={format="Max stamina +{v1}% of base",hint="Stamina Boost II"},
+    [131]={format="Max stamina +{v1}% of base",hint="Stamina Boost III"},
+    [132]={format="Slashing resistance +{v1} percentage points",hint="Slashing Resistance I"},
+    [133]={format="Slashing resistance +{v1} percentage points",hint="Slashing Resistance II"},
+    [134]={format="Striking resistance +{v1} percentage points",hint="Striking Resistance I"},
+    [135]={format="Striking resistance +{v1} percentage points",hint="Striking Resistance II"},
+    [136]={format="Fire resistance +{v1} percentage points",hint="Fire Resistance I"},
+    [137]={format="Fire resistance +{v1} percentage points",hint="Fire Resistance II"},
+    [138]={format="Lightning resistance +{v1} percentage points",hint="Lightning Resistance I"},
+    [139]={format="Lightning resistance +{v1} percentage points",hint="Lightning Resistance II"},
+    [140]={format="Ice resistance +{v1} percentage points",hint="Ice Resistance I"},
+    [141]={format="Ice resistance +{v1} percentage points",hint="Ice Resistance II"},
+    [142]={format="Sprint stamina consumption -{v1}%",hint="Extended Dash"},
+    [143]={format="Physical-hit base status chance {ex1}% (weapon/move scaling)\nTorched/asleep/silenced/frostbite; {ex2} s cooldown, up to {ex3} activations per target",hint="Chaotic Strike",ex1={"RandomStatusOnPhysicalAttackParameter","BaseProbability","BaseProbabilityBonus"},ex2={"RandomStatusOnPhysicalAttackParameter","IntervalSec","IntervalSecBonus"},ex3={"RandomStatusOnPhysicalAttackParameter","MaxActivationNum"}},
+    [144]={format="{v1}% chance of +{v2}% magick damage",hint="Riotous Magick"},
+    [145]={format="Melee charge time -{v1}%",hint="Swift Strike I"},
+    [146]={format="Melee charge time -{v1}%",hint="Swift Strike II"},
+    [147]={format="Damage against brine-infested foes +{v1}%",hint="Corrupted Foe Counter I"},
+    [148]={format="Damage against brine-infested foes +{v1}%",hint="Corrupted Foe Counter II"},
+    [149]={format="Damage against brine-infested foes +{v1}%",hint="Corrupted Foe Counter III"},
+    [150]={format="After True Deflect: next attack damage +{v1}%",hint="Deflect Strike"},
+    [151]={format="Tusk Toss: charge time -{v1} s; damage +{v2}%",hint="Breakneck Toss"},
+    [152]={format="Empale damage +{v1}%",hint="Improved Empale"},
+    [153]={format="Bow weak-point damage +{v1}%",hint="Critical Shot"},
+    [154]={format="Fully charged Puncture Dart damage +{v1}%",hint="Full Bend"},
+    [155]={format="While incanting: damage taken -{v1}%; Knockdown Resistance +{v2}%",hint="Fortified Invocation"},
+    [156]={format="Anodyne lingering recovery +{v1} s",hint="Extended Recovery"},
+    [158]={format="Climbing speed +{v1}%",hint="Nimble Tread"},
+    [159]={format="Clinging attack damage +{v1}%",hint="Piercing Escalade"},
+    [160]={format="Chain of Blows input window +{v1} animation frames; combo damage +{v3}%",hint="Mighty Chain"},
+    [161]={format="Magike Cut bursts: damage +{v1}%; range +{v2} m",hint="Extended Burst"},
+    [162]={format="Winding Cut finisher at maximum speed: damage +{v1}%",hint="Vertiginous Strike"},
+    [163]={format="Magick Archer custom-skill healing +{v1}%",hint="Restorative Bolts"},
+    [164]={format="Magick-bow fire/ice/unconsciousness buildup +{v1}%",hint="Debilitating Bolts"},
+    [165]={format="{v1}% chance not to consume a grimoire",hint="Phantasmal Tome"},
+    [166]={format="Simulacrum max HP +{v1}%",hint="Perdurable Illusion"},
+    [167]={format="After consecutive hits while staggered, subsequent damage reduction:\n{ex1}% / {ex2}% / {ex3}% / {ex4}% / {ex5}%",hint="Equanimity",ex1={"ReduceDamageOnConsecutiveAttacksParam","ReduceDamageFactor.0"},ex2={"ReduceDamageOnConsecutiveAttacksParam","ReduceDamageFactor.1"},ex3={"ReduceDamageOnConsecutiveAttacksParam","ReduceDamageFactor.2"},ex4={"ReduceDamageOnConsecutiveAttacksParam","ReduceDamageFactor.3"},ex5={"ReduceDamageOnConsecutiveAttacksParam","ReduceDamageFactor.4"}},
+    [168]={format="For {ex1} s on entering critical HP: Strength/Magick +{ex2}%; Defense/Magick Defense +{ex3}%\nKnockdown power +{ex4}%; incoming stagger/knockback strength -{ex5}%",hint="Moribund Frenzy",ex1={"StatusUpOnLowHealthParam","DurationSec","BonusDurationSec"},ex2={"StatusUpOnLowHealthParam","Status.Attack"},ex3={"StatusUpOnLowHealthParam","Status.Defence"},ex4={"StatusUpOnLowHealthParam","Status.Blow"},ex5={"StatusUpOnLowHealthParam","Status.BlowResistance"}},
+    [169]={format="Loss-gauge buildup -{v1}%",hint="Survival Instinct"},
+    [170]={format="Struggle effort required -{v1}%",hint="Elusive"},
+    [171]={format="Breath damage -{v1}%; status buildup from breath -{v2}%",hint="Breath Resistance"},
+    [172]={format="When surrounded by at least {v1} enemies: Defense/Magick Defense +{v2}%",hint="Improved Odds"},
+    [173]={format="Damage taken while airborne -{v1}%",hint="Airborne Reflexes"},
+    [175]={format="Weapon knockdown power +{ex1}",hint="Forceful Strikes",ex1={"BlowUpParam","NormalJobParams.0.AdditionalBlow"}},
+}
+
 local function printEnum(enumName)
     local type=sdk.find_type_definition(enumName)
     local fields=type:get_fields()
@@ -454,12 +577,17 @@ local function Init()
         for k,v in pairs(tmp.AbilityFormat or {}) do
             AbilityFormat[tonumber(k)]=v
         end
+        EquipmentAbilityFormat={}
+        for k,v in pairs(tmp.EquipmentAbilityFormat or {}) do
+            EquipmentAbilityFormat[tonumber(k)]=v
+        end
         Log("Load From",filename)
     else
         Log("Invalid File,Use default")
     end
     ItemDescCache={}
     SkillDescCache={}
+    EquipmentSkillDescCache={}
     WeaponCharaMsgCache=nil
 
     --Init SkillName2Id
@@ -958,6 +1086,114 @@ local function GetOrAddSkillDesc(originalMessage,Id)
     return sdk.create_managed_string(SkillDescCache[Id])
 end
 
+local function GetEquipmentAbilityParamValue(para,field)
+    for key in string.gmatch(field,"[^.]+") do
+        if para==nil then return nil end
+        local index=tonumber(key)
+        if index~=nil then
+            para=para:get_element(index)
+        else
+            para=para:get_field(key)
+        end
+    end
+    return para
+end
+
+local function GetEquipmentAbilityDetail(Id,isBoost)
+    local format=EquipmentAbilityFormat[Id]
+    if format==nil then return "" end
+    local ref=string.match(format.format,"^{r(%d+)}$")
+    if ref~=nil then
+        format=EquipmentAbilityFormat[tonumber(ref)]
+        if format==nil then return "" end
+    end
+    local itemManager=sdk.get_managed_singleton("app.ItemManager")
+    if itemManager==nil then return "" end
+    isBoost=isBoost and itemManager:isEquipmentAbilityBonusAvailable(Id)
+    local ret=isBoost and format.bonusFormat or format.format
+    local missingParam=false
+    ret=string.gsub(ret,"{(ex%d+)}",function(key)
+        local fields=format[key]
+        if fields==nil then missingParam=true; return "" end
+        local para=itemManager:get_EquipmentAbilityData()
+        para=GetEquipmentAbilityParamValue(para,fields[1])
+        local field=isBoost and fields[3] or fields[2]
+        local value=GetEquipmentAbilityParamValue(para,field)
+        if value==nil then missingParam=true; return "" end
+        return float2stringEX(value)
+    end)
+    if missingParam then return "" end
+    local para=nil
+    if string.find(ret,"{v%d+}") or string.find(ret,"{sfenc%d+}") then
+        local abilityParam=itemManager.EquipmentAbilityFactors
+        if abilityParam==nil then return "" end
+        para=abilityParam:get_element(Id)
+        if para==nil then return "" end
+        local prefix=isBoost and "BonusValue" or "Value"
+        for i=1,3 do
+            local value=para:get_field(prefix..i)
+            ret=string.gsub(ret,"{v"..i.."}",float2stringEX(value))
+        end
+    end
+    if string.find(ret,"{iceenc}",1,true) or string.find(ret,"{sfenc%d+}") then
+        -- Job03Parameter.EnchantParam stores shared enchant parameters for all jobs.
+        local enchantParam=GetEquipmentAbilityParamValue(characterManager:get_HumanParam(),"JobParam.Job03Parameter.EnchantParam")
+        if enchantParam==nil then return "" end
+        ret=string.gsub(ret,"{iceenc}",function()
+            local baseData=enchantParam:getBaseData(2)
+            if baseData==nil then missingParam=true; return "" end
+            return string.format("%g",baseData.PhysicalFactor*100)
+        end)
+        ret=string.gsub(ret,"{sfenc(%d+)}",function(job)
+            local value=para:get_field(isBoost and "BonusValue1" or "Value1")
+            local jobData=enchantParam:getJobData(tonumber(job))
+            if jobData==nil or value<=0 then missingParam=true; return "" end
+            return string.format("%g",math.floor(value*math.max(jobData.StatusDamageFactor,0))/value)
+        end)
+        if missingParam then return "" end
+    end
+    return ret
+end
+
+local function GetOrAddEquipmentSkillDesc(originalMessage,Id,isBoost)
+    local cache=EquipmentSkillDescCache[Id]
+    if cache==nil or cache[isBoost]==nil then
+        local appendtext=GetEquipmentAbilityDetail(Id,isBoost)
+        if appendtext=="" then return sdk.create_managed_string(originalMessage) end
+        if cache==nil then
+            cache={}
+            EquipmentSkillDescCache[Id]=cache
+        end
+        cache[isBoost]=Id==47 and appendtext or string.format("%s\n%s",originalMessage,appendtext)
+    end
+    return sdk.create_managed_string(cache[isBoost])
+end
+
+local tmpEquipmentSkillWindow=nil
+local tmpEquipmentSkillId=nil
+local tmpEquipmentSkillBoost=false
+sdk.hook(
+    sdk.find_type_definition("app.GUIBase.EquipAbilityInfoRef"):get_method("setInfo(app.EquipmentAbilityID, System.Boolean)"),
+    function (args)
+        if not initialized then return end
+        local Id=sdk.to_int64(args[3])&0xff
+        if EquipmentAbilityFormat[Id]==nil then return end
+        tmpEquipmentSkillWindow=sdk.to_managed_object(args[2])
+        tmpEquipmentSkillId=Id
+        tmpEquipmentSkillBoost=(sdk.to_int64(args[4])&0xff)~=0
+    end,
+    function ()
+        if tmpEquipmentSkillWindow~=nil then
+            local text=tmpEquipmentSkillWindow.TxtDescription
+            local originalMessage=text:get_Message() or messageManager:getMessage(text:get_MessageId())
+            if originalMessage~=nil then
+                text:set_Message(GetOrAddEquipmentSkillDesc(originalMessage,tmpEquipmentSkillId,tmpEquipmentSkillBoost))
+            end
+            tmpEquipmentSkillWindow=nil
+        end
+    end
+)
+
 local tmpItemWindow=nil
 local tmpItem=nil
 sdk.hook(
@@ -1089,4 +1325,4 @@ local function prequire(...)
     return nil
 end
 local myapi = prequire("_XYZApi/_XYZApi")
-if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,function() ItemDescCache={} SkillDescCache={} WeaponCharaMsgCache=nil end) end
+if myapi~=nil then myapi.DrawIt(modname,configfile,_config,config,function() ItemDescCache={} SkillDescCache={} EquipmentSkillDescCache={} WeaponCharaMsgCache=nil end) end
