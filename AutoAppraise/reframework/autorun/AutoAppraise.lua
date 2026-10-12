@@ -116,9 +116,11 @@ end
 local function deliverGrants(im, grants)
     for _, grant in ipairs(grants) do
         api.acquire:call(im, grant.option.AbilityInternal)
-        local before = not grant.currency and api.have:call(im, grant.id, grant.owner)
+        -- Wakestone shards can be consumed immediately by native auto-combination.
+        local checkCount = not grant.currency and grant.id ~= 78
+        local before = checkCount and api.have:call(im, grant.id, grant.owner)
         api.grant:call(im, grant.id, grant.amount, grant.owner, grant.option)
-        if not grant.currency then
+        if checkCount then
             local after = api.have:call(im, grant.id, grant.owner)
             assert(after == before + grant.amount, string.format(
                 "Native result delivery mismatch item=%d amount=%d owner=%s before=%d after=%d",
@@ -272,7 +274,7 @@ local function initialize()
     ready = true
 end
 
-re.on_application_entry("UpdateBehavior", function()
+local function updateAppraisal()
     if failed or processing then return end
     if ready and not needsAppraisal then return end
     if not ready and not config.enabled and not needsAppraisal then return end
@@ -296,7 +298,16 @@ re.on_application_entry("UpdateBehavior", function()
     end)
     processing = false
     if not ok then stop(err) end
-end)
+end
+
+sdk.hook(
+    sdk.find_type_definition("app.ItemManager"):get_method("onUpdate()"),
+    nil,
+    function(retval)
+        updateAppraisal()
+        return retval
+    end
+)
 
 local controls = {
     {name="enabled", type="bool", label="Automatic appraisal", default=true},
@@ -304,7 +315,7 @@ local controls = {
         if failed then return end
         needsAppraisal = true
     end},
-    {type="author", version="1.1"},
+    {type="author", version="1.2"},
 }
 local configfile = "AutoAppraise.json"
 config = myapi.InitFromFile(controls, configfile, true)
