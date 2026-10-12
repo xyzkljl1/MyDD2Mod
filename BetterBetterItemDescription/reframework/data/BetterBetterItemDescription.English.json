@@ -51,6 +51,989 @@
       "hint": "庇佑护盾，200/0,意义不明"
     }
   },
+  "EquipmentAbilityFormat": {
+    "47": {
+      "format": "+{iceenc}% ice enchantment, +{v1} ice buildup (greatsword ×{sfenc5}/daggers ×{sfenc4}/bow ×{sfenc2}/duospear ×{sfenc7})",
+      "hint": "Frosted Edge"
+    },
+    "48": {
+      "format": "{ex1}% chance to heal a base {ex2}% of damage dealt (greatsword ×{ex3}/daggers ×{ex4}/bow ×{ex5}/magick bow ×{ex6}/censer ×{ex7})",
+      "hint": "Aggressive Recovery",
+      "ex1": [
+        "RecoverOnAttackHitParam",
+        "Probability",
+        "ProbabilityBonus"
+      ],
+      "ex2": [
+        "RecoverOnAttackHitParam",
+        "BaseFactor",
+        "BaseFactorBonus"
+      ],
+      "ex3": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex4": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex5": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex6": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex7": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "49": {
+      "format": "Damage dealt +{v1}%; damage taken +{v2}%",
+      "hint": "Battle Frenzy I"
+    },
+    "50": {
+      "format": "{r49}",
+      "hint": "Battle Frenzy II"
+    },
+    "51": {
+      "format": "{r49}",
+      "hint": "Battle Frenzy III"
+    },
+    "52": {
+      "format": "{r49}",
+      "hint": "Battle Frenzy IV"
+    },
+    "53": {
+      "format": "{ex1} poison buildup (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/staff ×{ex7}/archistaff ×{ex8}/magick bow ×{ex9}/censer ×{ex10}); {ex2} s cooldown, up to {ex3} activations per target",
+      "hint": "Blighting Strike",
+      "ex1": [
+        "PoisonAttackParameter",
+        "BaseFactor",
+        "BaseFactorBonus"
+      ],
+      "ex2": [
+        "PoisonAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "PoisonAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "PoisonAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "PoisonAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "PoisonAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "PoisonAttackParameter",
+        "JobDataList.2.MultipleFactor"
+      ],
+      "ex8": [
+        "PoisonAttackParameter",
+        "JobDataList.5.MultipleFactor"
+      ],
+      "ex9": [
+        "PoisonAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex10": [
+        "PoisonAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "54": {
+      "format": "{ex1}% unconsciousness chance (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/duospear ×{ex7}/magick bow ×{ex8}/censer ×{ex9}); {ex2} s cooldown, up to {ex3} activations per target",
+      "hint": "Knockout Strike",
+      "ex1": [
+        "FaintAttackParameter",
+        "BaseFactor",
+        "BaseFactorBonus"
+      ],
+      "ex2": [
+        "FaintAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "FaintAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "FaintAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "FaintAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "FaintAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "FaintAttackParameter",
+        "JobDataList.6.MultipleFactor"
+      ],
+      "ex8": [
+        "FaintAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex9": [
+        "FaintAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "55": {
+      "format": "-{v1}% Stamina Cost",
+      "hint": "Enduring Defense"
+    },
+    "56": {
+      "format": "+{v1}% Counter Damage",
+      "hint": "Deflected Impact"
+    },
+    "58": {
+      "format": "+{v1}% Damage",
+      "hint": "Battering Shield"
+    },
+    "59": {
+      "format": "+{v1}% Damage",
+      "hint": "Demon Counter I"
+    },
+    "60": {
+      "format": "+{v1}% Damage",
+      "hint": "Demon Counter II"
+    },
+    "61": {
+      "format": "+{v1}% Damage",
+      "hint": "Demon Counter III"
+    },
+    "62": {
+      "format": "+{v1}% Damage",
+      "hint": "Abomination Counter I"
+    },
+    "63": {
+      "format": "+{v1}% Damage",
+      "hint": "Abomination Counter II"
+    },
+    "64": {
+      "format": "+{v1}% Damage",
+      "hint": "Abomination Counter III"
+    },
+    "65": {
+      "format": "+{v1}% Damage",
+      "hint": "Humanoid Counter I"
+    },
+    "66": {
+      "format": "+{v1}% Damage",
+      "hint": "Humanoid Counter II"
+    },
+    "67": {
+      "format": "+{v1}% Damage",
+      "hint": "Beast Counter I"
+    },
+    "68": {
+      "format": "+{v1}% Damage",
+      "hint": "Beast Counter II"
+    },
+    "69": {
+      "format": "+{v1}% Damage",
+      "hint": "Winged Beast Counter I"
+    },
+    "70": {
+      "format": "+{v1}% Damage",
+      "hint": "Winged Beast Counter II"
+    },
+    "71": {
+      "format": "+{v1}% Damage",
+      "hint": "Saurian Counter I"
+    },
+    "72": {
+      "format": "+{v1}% Damage",
+      "hint": "Saurian Counter II"
+    },
+    "73": {
+      "format": "+{v1}% Damage",
+      "hint": "Spirit Counter I"
+    },
+    "74": {
+      "format": "+{v1}% Damage",
+      "hint": "Spirit Counter II"
+    },
+    "75": {
+      "format": "+{v1}% Base Max Stamina, -{v2}% Magick/Magick Defense",
+      "hint": "Gigantus's Vim"
+    },
+    "76": {
+      "format": "+{ex1}% Jump Height; ranged attacks: {ex4}% chance of +{ex5}% damage, airborne attacks: {ex2}% chance of +{ex3}% damage",
+      "hint": "Enhanced Jump",
+      "ex1": [
+        "JumpHeightAndJumpAttackUpParam",
+        "FactorJumpHeight"
+      ],
+      "ex2": [
+        "JumpHeightAndJumpAttackUpParam",
+        "ProbabilityJumpAttackUp",
+        "ProbabilityJumpAttackUpBonus"
+      ],
+      "ex3": [
+        "JumpHeightAndJumpAttackUpParam",
+        "FactorJumpAttackUp",
+        "FactorJumpAttackUpBonus"
+      ],
+      "ex4": [
+        "JumpHeightAndJumpAttackUpParam",
+        "ProbabilityPhysicalShellAttackUp",
+        "ProbabilityPhysicalShellAttackUpBonus"
+      ],
+      "ex5": [
+        "JumpHeightAndJumpAttackUpParam",
+        "FactorPhysicalShellAttackUp",
+        "FactorPhysicalShellAttackUpBonus"
+      ]
+    },
+    "77": {
+      "format": "Max HP becomes {v2}%, {v1}% chance to nullify damage",
+      "hint": "Spectral Feint"
+    },
+    "79": {
+      "format": "+{v2}% Ice Magick Damage, +{v1} Defense/Magick Defense",
+      "hint": "Ice Elemental"
+    },
+    "80": {
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityS",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "81": {
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityS",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "82": {
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityS",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "83": {
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityM",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "84": {
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityM",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "85": {
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityM",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "86": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorS"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "87": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorM"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "88": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorL"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "89": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorS"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "90": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorM"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "91": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorL"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "92": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorS"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "93": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorM"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "94": {
+      "format": "-{ex1}% charge time, -{ex2}% damage taken",
+      "hint": "Wicked Knight",
+      "bonusFormat": "-{ex1}% charge time, +{ex3}% charged attack damage, -{ex2}% damage taken",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorL"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "95": {
+      "format": "+{v1}% Lightning damage taken",
+      "hint": "Molten Spirit"
+    },
+    "96": {
+      "format": "-{v1}% Fall damage",
+      "hint": "Cushioned Fall"
+    },
+    "98": {
+      "format": "Heal for {v1}% of sell price (minimum {v2}); allies receive {v3}% of the effect",
+      "hint": "Adventurous Appetite"
+    },
+    "99": {
+      "format": "-{v1}% magick damage taken",
+      "hint": "Fiendish Ward I"
+    },
+    "100": {
+      "format": "-{v1}% magick damage taken",
+      "hint": "Fiendish Ward II"
+    },
+    "101": {
+      "format": "-{v1}% magick damage taken",
+      "hint": "Fiendish Ward III"
+    },
+    "102": {
+      "format": "+{v1}% recovery",
+      "hint": "Improved Efficacy"
+    },
+    "103": {
+      "format": "+{v2}% Defense/Magick Defense for {v1} s",
+      "hint": "Bolstered Outset"
+    },
+    "104": {
+      "format": "+{ex1}% chance of extra drops",
+      "hint": "Relic Hunter",
+      "ex1": [
+        "RelicDropRateUpParam",
+        "AdditionalProbability",
+        "AdditionalProbabilityBonus"
+      ]
+    },
+    "105": {
+      "format": "{v2} s",
+      "hint": "Carnivore"
+    },
+    "107": {
+      "format": "{v1}% chance of +{v2}% damage",
+      "hint": "Arcane Wisdom"
+    },
+    "108": {
+      "format": "At critical HP: -{v1}% prone/crawling recovery delay",
+      "hint": "Moribund Recovery"
+    },
+    "109": {
+      "format": "{v1}%",
+      "hint": "Precipitate Revival"
+    },
+    "110": {
+      "format": "-{v1}% damage taken",
+      "hint": "Prone Defense"
+    },
+    "111": {
+      "format": "{v2}% chance to recover {v1}% earlier",
+      "hint": "Imperiled Reflexes"
+    },
+    "112": {
+      "format": "{ex1} poison buildup (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/staff ×{ex7}/archistaff ×{ex8}/magick bow ×{ex9}/censer ×{ex10}); {ex2} s cooldown, up to {ex3} activations per target",
+      "hint": "Blighted Retort",
+      "ex1": [
+        "PoisonAttackParameter",
+        "BaseFactorOnPoison",
+        "BaseFactorOnPoisonBonus"
+      ],
+      "ex2": [
+        "PoisonAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "PoisonAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "PoisonAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "PoisonAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "PoisonAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "PoisonAttackParameter",
+        "JobDataList.2.MultipleFactor"
+      ],
+      "ex8": [
+        "PoisonAttackParameter",
+        "JobDataList.5.MultipleFactor"
+      ],
+      "ex9": [
+        "PoisonAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex10": [
+        "PoisonAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "113": {
+      "format": "+{v2}% Defense/Magick Defense for {v1} s",
+      "hint": "Siege Hardened"
+    },
+    "116": {
+      "format": "-{v1}% Damage taken",
+      "hint": "Intact Fortitude"
+    },
+    "117": {
+      "format": "-{v1}% Stamina consumption",
+      "hint": "Climber's Agility"
+    },
+    "118": {
+      "format": "+{v1}/-{v2} Defense/Magick Defense",
+      "hint": "Shadowbound"
+    },
+    "120": {
+      "format": "-{v1}% Natural sleep/frozen/unconsciousness duration",
+      "hint": "Animated Recovery"
+    },
+    "121": {
+      "format": "-{v1}% Uphill stamina consumption/recovery penalties",
+      "hint": "Hill Strider"
+    },
+    "122": {
+      "format": "-{v1}% Stamina consumption",
+      "hint": "Enduring Grip"
+    },
+    "123": {
+      "format": "+{v2}% Damage",
+      "hint": "Wind Rider"
+    },
+    "125": {
+      "format": "+{v1}% Damage",
+      "hint": "Leaping Strike"
+    },
+    "126": {
+      "format": "+{v1}% base max HP",
+      "hint": "Health Boost I"
+    },
+    "127": {
+      "format": "+{v1}% base max HP",
+      "hint": "Health Boost II"
+    },
+    "128": {
+      "format": "+{v1}% base max HP",
+      "hint": "Health Boost III"
+    },
+    "129": {
+      "format": "+{v1}% base max stamina",
+      "hint": "Stamina Boost I"
+    },
+    "130": {
+      "format": "+{v1}% base max stamina",
+      "hint": "Stamina Boost II"
+    },
+    "131": {
+      "format": "+{v1}% base max stamina",
+      "hint": "Stamina Boost III"
+    },
+    "132": {
+      "format": "+{v1}%",
+      "hint": "Slashing Resistance I"
+    },
+    "133": {
+      "format": "+{v1}%",
+      "hint": "Slashing Resistance II"
+    },
+    "134": {
+      "format": "+{v1}%",
+      "hint": "Striking Resistance I"
+    },
+    "135": {
+      "format": "+{v1}%",
+      "hint": "Striking Resistance II"
+    },
+    "136": {
+      "format": "+{v1}%",
+      "hint": "Fire Resistance I"
+    },
+    "137": {
+      "format": "+{v1}%",
+      "hint": "Fire Resistance II"
+    },
+    "138": {
+      "format": "+{v1}%",
+      "hint": "Lightning Resistance I"
+    },
+    "139": {
+      "format": "+{v1}%",
+      "hint": "Lightning Resistance II"
+    },
+    "140": {
+      "format": "+{v1}%",
+      "hint": "Ice Resistance I"
+    },
+    "141": {
+      "format": "+{v1}%",
+      "hint": "Ice Resistance II"
+    },
+    "142": {
+      "format": "-{v1}% Stamina consumption",
+      "hint": "Extended Dash"
+    },
+    "143": {
+      "format": "{ex1}% random status chance (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/duospear ×{ex7}/magick bow ×{ex8}/censer ×{ex9}); torched/asleep/silenced/frostbite; {ex2} s cooldown, up to {ex3} activations per target",
+      "hint": "Chaotic Strike",
+      "ex1": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "BaseProbability",
+        "BaseProbabilityBonus"
+      ],
+      "ex2": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.6.MultipleFactor"
+      ],
+      "ex8": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex9": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "144": {
+      "format": "{v1}% chance of +{v2}% damage",
+      "hint": "Riotous Magick"
+    },
+    "145": {
+      "format": "-{v1}% Melee charge time",
+      "hint": "Swift Strike I"
+    },
+    "146": {
+      "format": "-{v1}% Melee charge time",
+      "hint": "Swift Strike II"
+    },
+    "147": {
+      "format": "+{v1}% Damage",
+      "hint": "Corrupted Foe Counter I"
+    },
+    "148": {
+      "format": "+{v1}% Damage",
+      "hint": "Corrupted Foe Counter II"
+    },
+    "149": {
+      "format": "+{v1}% Damage",
+      "hint": "Corrupted Foe Counter III"
+    },
+    "150": {
+      "format": "+{v1}% Damage",
+      "hint": "Deflect Strike"
+    },
+    "151": {
+      "format": "-{v1} s charge time; +{v2}% damage",
+      "hint": "Breakneck Toss"
+    },
+    "152": {
+      "format": "+{v1}% Damage",
+      "hint": "Improved Empale"
+    },
+    "153": {
+      "format": "+{v1}% Damage",
+      "hint": "Critical Shot"
+    },
+    "154": {
+      "format": "When fully charged: +{v1}% damage",
+      "hint": "Full Bend"
+    },
+    "155": {
+      "format": "-{v1}% damage taken; +{v2}% Knockdown Resistance",
+      "hint": "Fortified Invocation"
+    },
+    "156": {
+      "format": "+{v1} s",
+      "hint": "Extended Recovery"
+    },
+    "158": {
+      "format": "+{v1}% Climbing speed",
+      "hint": "Nimble Tread"
+    },
+    "159": {
+      "format": "+{v1}% Damage",
+      "hint": "Piercing Escalade"
+    },
+    "160": {
+      "format": "+{v1} frames input window, +{v3}% combo damage",
+      "hint": "Mighty Chain"
+    },
+    "161": {
+      "format": "+{v1}% damage; +{v2} m range",
+      "hint": "Extended Burst"
+    },
+    "162": {
+      "format": "+{v1}% Damage",
+      "hint": "Vertiginous Strike"
+    },
+    "163": {
+      "format": "+{v1}% Recovery",
+      "hint": "Restorative Bolts"
+    },
+    "164": {
+      "format": "+{v1}% Torched/frozen/unconsciousness buildup",
+      "hint": "Debilitating Bolts"
+    },
+    "165": {
+      "format": "+{v1}%",
+      "hint": "Phantasmal Tome"
+    },
+    "166": {
+      "format": "+{v1}% Simulacrum max HP",
+      "hint": "Perdurable Illusion"
+    },
+    "167": {
+      "format": "Consecutive hits reduce damage by {ex1}%/{ex2}%/{ex3}%/{ex4}%/{ex5}% in sequence",
+      "hint": "Equanimity",
+      "ex1": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.0.m_value"
+      ],
+      "ex2": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.1.m_value"
+      ],
+      "ex3": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.2.m_value"
+      ],
+      "ex4": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.3.m_value"
+      ],
+      "ex5": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.4.m_value"
+      ]
+    },
+    "168": {
+      "format": "When near death (HP＜200 or HP＜25%), for {ex1} s: +{ex2}% Strength/Magick; +{ex3}% Defense/Magick Defense\n+{ex4}% Knockdown Power; -{ex5}% stagger/knockdown force taken",
+      "hint": "Moribund Frenzy",
+      "ex1": [
+        "StatusUpOnLowHealthParam",
+        "DurationSec",
+        "BonusDurationSec"
+      ],
+      "ex2": [
+        "StatusUpOnLowHealthParam",
+        "Status.Attack"
+      ],
+      "ex3": [
+        "StatusUpOnLowHealthParam",
+        "Status.Defence"
+      ],
+      "ex4": [
+        "StatusUpOnLowHealthParam",
+        "Status.Blow"
+      ],
+      "ex5": [
+        "StatusUpOnLowHealthParam",
+        "Status.BlowResistance"
+      ]
+    },
+    "169": {
+      "format": "-{v1}% Loss-gauge buildup",
+      "hint": "Survival Instinct"
+    },
+    "170": {
+      "format": "-{v1}% Struggle effort required",
+      "hint": "Elusive"
+    },
+    "171": {
+      "format": "-{v1}% Damage taken; -{v2}% status buildup taken",
+      "hint": "Breath Resistance"
+    },
+    "172": {
+      "format": "+{v2}% Defense/Magick Defense",
+      "hint": "Improved Odds"
+    },
+    "173": {
+      "format": "-{v1}% Damage taken",
+      "hint": "Airborne Reflexes"
+    },
+    "175": {
+      "format": "+{ex1} Knockdown Power",
+      "hint": "Forceful Strikes",
+      "ex1": [
+        "BlowUpParam",
+        "NormalJobParams.0.AdditionalBlow"
+      ]
+    }
+  },
   "AbilityFormat": {
     "10": {
       "format": "+{v1} Max Stamina",
@@ -269,7 +1252,18 @@
       "type": "Enum"
     },
     "_DarkDefence": "%s%% Dark Debuff Resist",
-    "_ElementStore": "%s%% Element Enchant",
+    "_Element": {
+      "enable": true,
+      "format": "+%s%% %s Enchant",
+      "map": [
+        "Fire",
+        "Ice",
+        "Lightning",
+        "Holy"
+      ],
+      "type": "Enum"
+    },
+    "_ElementStore": "%s Element Buildup Enchantment",
     "_FireDefence": "%s%% Fire Damage Reduce",
     "_FireResist": "%s%% Fire Debuff Resist",
     "_HealBlackHp": "Heal %s MAXHP.",

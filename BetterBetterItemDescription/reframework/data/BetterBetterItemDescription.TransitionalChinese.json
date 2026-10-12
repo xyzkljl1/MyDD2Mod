@@ -76,7 +76,18 @@
       ],
       "type": "Enum"
     },
-    "_ElementStore": "%s%% 元素附魔",
+    "_Element": {
+      "enable": true,
+      "format": "+%s%%%s附魔",
+      "map": [
+        "火",
+        "冰",
+        "雷",
+        "聖"
+      ],
+      "type": "Enum"
+    },
+    "_ElementStore": "%s元素異常附魔",
     "_Blow": "%s 擊飛",
     "_BlowGuard": "%s 擊飛防御",
     "_PoisonStore": "%s 毒附魔",
@@ -378,6 +389,989 @@
     }
   },
 
+  "EquipmentAbilityFormat": {
+    "47": {
+      "format": "+{iceenc}%冰附魔，+{v1}冰異常（大劍×{sfenc5}／匕首×{sfenc4}／弓×{sfenc2}／雙頭槍×{sfenc7}）",
+      "hint": "Frosted Edge"
+    },
+    "48": {
+      "format": "{ex1}%機率按造成傷害的{ex2}%恢復生命（大劍×{ex3}／匕首×{ex4}／弓×{ex5}／魔道弓×{ex6}／香爐×{ex7}）",
+      "hint": "Aggressive Recovery",
+      "ex1": [
+        "RecoverOnAttackHitParam",
+        "Probability",
+        "ProbabilityBonus"
+      ],
+      "ex2": [
+        "RecoverOnAttackHitParam",
+        "BaseFactor",
+        "BaseFactorBonus"
+      ],
+      "ex3": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex4": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex5": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex6": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex7": [
+        "RecoverOnAttackHitParam",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "49": {
+      "format": "造成的傷害 +{v1}%；受到的傷害 +{v2}%",
+      "hint": "Battle Frenzy I"
+    },
+    "50": {
+      "format": "{r49}",
+      "hint": "Battle Frenzy II"
+    },
+    "51": {
+      "format": "{r49}",
+      "hint": "Battle Frenzy III"
+    },
+    "52": {
+      "format": "{r49}",
+      "hint": "Battle Frenzy IV"
+    },
+    "53": {
+      "format": "{ex1}追毒累積（大劍×{ex4}／匕首×{ex5}／弓×{ex6}／法杖×{ex7}／大杖×{ex8}／魔道弓×{ex9}／香爐×{ex10}）；冷卻{ex2}秒，同一目標最多{ex3}次",
+      "hint": "Blighting Strike",
+      "ex1": [
+        "PoisonAttackParameter",
+        "BaseFactor",
+        "BaseFactorBonus"
+      ],
+      "ex2": [
+        "PoisonAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "PoisonAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "PoisonAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "PoisonAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "PoisonAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "PoisonAttackParameter",
+        "JobDataList.2.MultipleFactor"
+      ],
+      "ex8": [
+        "PoisonAttackParameter",
+        "JobDataList.5.MultipleFactor"
+      ],
+      "ex9": [
+        "PoisonAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex10": [
+        "PoisonAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "54": {
+      "format": "{ex1}%昏厥機率（大劍×{ex4}／匕首×{ex5}／弓×{ex6}／雙頭槍×{ex7}／魔道弓×{ex8}／香爐×{ex9}）；冷卻{ex2}秒，同一目標最多{ex3}次",
+      "hint": "Knockout Strike",
+      "ex1": [
+        "FaintAttackParameter",
+        "BaseFactor",
+        "BaseFactorBonus"
+      ],
+      "ex2": [
+        "FaintAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "FaintAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "FaintAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "FaintAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "FaintAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "FaintAttackParameter",
+        "JobDataList.6.MultipleFactor"
+      ],
+      "ex8": [
+        "FaintAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex9": [
+        "FaintAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "55": {
+      "format": "-{v1}% 體力消耗",
+      "hint": "Enduring Defense"
+    },
+    "56": {
+      "format": "+{v1}%反擊傷害",
+      "hint": "Deflected Impact"
+    },
+    "58": {
+      "format": "+{v1}%傷害",
+      "hint": "Battering Shield"
+    },
+    "59": {
+      "format": "+{v1}%傷害",
+      "hint": "Demon Counter I"
+    },
+    "60": {
+      "format": "+{v1}%傷害",
+      "hint": "Demon Counter II"
+    },
+    "61": {
+      "format": "+{v1}%傷害",
+      "hint": "Demon Counter III"
+    },
+    "62": {
+      "format": "+{v1}%傷害",
+      "hint": "Abomination Counter I"
+    },
+    "63": {
+      "format": "+{v1}%傷害",
+      "hint": "Abomination Counter II"
+    },
+    "64": {
+      "format": "+{v1}%傷害",
+      "hint": "Abomination Counter III"
+    },
+    "65": {
+      "format": "+{v1}%傷害",
+      "hint": "Humanoid Counter I"
+    },
+    "66": {
+      "format": "+{v1}%傷害",
+      "hint": "Humanoid Counter II"
+    },
+    "67": {
+      "format": "+{v1}%傷害",
+      "hint": "Beast Counter I"
+    },
+    "68": {
+      "format": "+{v1}%傷害",
+      "hint": "Beast Counter II"
+    },
+    "69": {
+      "format": "+{v1}%傷害",
+      "hint": "Winged Beast Counter I"
+    },
+    "70": {
+      "format": "+{v1}%傷害",
+      "hint": "Winged Beast Counter II"
+    },
+    "71": {
+      "format": "+{v1}%傷害",
+      "hint": "Saurian Counter I"
+    },
+    "72": {
+      "format": "+{v1}%傷害",
+      "hint": "Saurian Counter II"
+    },
+    "73": {
+      "format": "+{v1}%傷害",
+      "hint": "Spirit Counter I"
+    },
+    "74": {
+      "format": "+{v1}%傷害",
+      "hint": "Spirit Counter II"
+    },
+    "75": {
+      "format": "+{v1}% 基礎體力上限，-{v2}% 魔攻/魔防",
+      "hint": "Gigantus's Vim"
+    },
+    "76": {
+      "format": "+{ex1}% 跳躍高度；遠程攻擊{ex4}%機率+{ex5}%傷害，空中攻擊{ex2}%機率+{ex3}%傷害",
+      "hint": "Enhanced Jump",
+      "ex1": [
+        "JumpHeightAndJumpAttackUpParam",
+        "FactorJumpHeight"
+      ],
+      "ex2": [
+        "JumpHeightAndJumpAttackUpParam",
+        "ProbabilityJumpAttackUp",
+        "ProbabilityJumpAttackUpBonus"
+      ],
+      "ex3": [
+        "JumpHeightAndJumpAttackUpParam",
+        "FactorJumpAttackUp",
+        "FactorJumpAttackUpBonus"
+      ],
+      "ex4": [
+        "JumpHeightAndJumpAttackUpParam",
+        "ProbabilityPhysicalShellAttackUp",
+        "ProbabilityPhysicalShellAttackUpBonus"
+      ],
+      "ex5": [
+        "JumpHeightAndJumpAttackUpParam",
+        "FactorPhysicalShellAttackUp",
+        "FactorPhysicalShellAttackUpBonus"
+      ]
+    },
+    "77": {
+      "format": "生命上限變為{v2}%，{v1}%免疫傷害",
+      "hint": "Spectral Feint"
+    },
+    "79": {
+      "format": "+{v2}%冰屬性魔法傷害，+{v1} 物防/魔防",
+      "hint": "Ice Elemental"
+    },
+    "80": {
+      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityS",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "81": {
+      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityS",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "82": {
+      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityS",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "83": {
+      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityM",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "84": {
+      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityM",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "85": {
+      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "hint": "Frozen Soul",
+      "ex1": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex2": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "NullifyMagicProbabilityM",
+        "NullifyMagicProbabilityBonus"
+      ],
+      "ex3": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterStatusConditionDamageFactor",
+        "CounterStatusConditionDamageFactorBonus"
+      ],
+      "ex4": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterMinStatusConditionDamage"
+      ],
+      "ex5": [
+        "IceCounterReduceDragonDamageNullifyMagicParam",
+        "CounterDamageFactor"
+      ]
+    },
+    "86": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorS"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "87": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorM"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "88": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorL"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorS"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "89": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorS"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "90": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorM"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "91": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorL"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorM"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "92": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorS"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "93": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorM"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "94": {
+      "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
+      "hint": "Wicked Knight",
+      "bonusFormat": "-{ex1}%蓄力時間，+{ex3}%蓄力攻擊傷害，-{ex2}%受到的傷害",
+      "ex1": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeSpeedFactorL"
+      ],
+      "ex2": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ReduceDamageFactorL"
+      ],
+      "ex3": [
+        "ChargeSpeedUpAndReduceDeamonDamageParam",
+        "ChargeDamageFactorBonus"
+      ]
+    },
+    "95": {
+      "format": "+{v1}% 受到的雷屬性傷害",
+      "hint": "Molten Spirit"
+    },
+    "96": {
+      "format": "-{v1}% 掉落傷害",
+      "hint": "Cushioned Fall"
+    },
+    "98": {
+      "format": "回復等于{v1}%售價的生命(至少{v2})，同伴受到{v3}%的效果",
+      "hint": "Adventurous Appetite"
+    },
+    "99": {
+      "format": "-{v1}%受到的魔法傷害",
+      "hint": "Fiendish Ward I"
+    },
+    "100": {
+      "format": "-{v1}%受到的魔法傷害",
+      "hint": "Fiendish Ward II"
+    },
+    "101": {
+      "format": "-{v1}%受到的魔法傷害",
+      "hint": "Fiendish Ward III"
+    },
+    "102": {
+      "format": "+{v1}%回復量",
+      "hint": "Improved Efficacy"
+    },
+    "103": {
+      "format": "{v1}秒內+{v2}% 物防/魔防",
+      "hint": "Bolstered Outset"
+    },
+    "104": {
+      "format": "+{ex1}%概率額外掉落",
+      "hint": "Relic Hunter",
+      "ex1": [
+        "RelicDropRateUpParam",
+        "AdditionalProbability",
+        "AdditionalProbabilityBonus"
+      ]
+    },
+    "105": {
+      "format": "{v2}秒",
+      "hint": "Carnivore"
+    },
+    "107": {
+      "format": "{v1}% 概率+{v2}% 傷害",
+      "hint": "Arcane Wisdom"
+    },
+    "108": {
+      "format": "瀕死時，-{v1}% 倒地／匍匐的起身等待",
+      "hint": "Moribund Recovery"
+    },
+    "109": {
+      "format": "{v1}%",
+      "hint": "Precipitate Revival"
+    },
+    "110": {
+      "format": "-{v1}%受到的傷害",
+      "hint": "Prone Defense"
+    },
+    "111": {
+      "format": "{v2}% 概率提前 {v1}% 恢復行動",
+      "hint": "Imperiled Reflexes"
+    },
+    "112": {
+      "format": "{ex1}追毒累積（大劍×{ex4}／匕首×{ex5}／弓×{ex6}／法杖×{ex7}／大杖×{ex8}／魔道弓×{ex9}／香爐×{ex10}）；冷卻{ex2}秒，同一目標最多{ex3}次",
+      "hint": "Blighted Retort",
+      "ex1": [
+        "PoisonAttackParameter",
+        "BaseFactorOnPoison",
+        "BaseFactorOnPoisonBonus"
+      ],
+      "ex2": [
+        "PoisonAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "PoisonAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "PoisonAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "PoisonAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "PoisonAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "PoisonAttackParameter",
+        "JobDataList.2.MultipleFactor"
+      ],
+      "ex8": [
+        "PoisonAttackParameter",
+        "JobDataList.5.MultipleFactor"
+      ],
+      "ex9": [
+        "PoisonAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex10": [
+        "PoisonAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "113": {
+      "format": "{v1}秒內+{v2}% 物防/魔防",
+      "hint": "Siege Hardened"
+    },
+    "116": {
+      "format": "-{v1}% 受到的傷害",
+      "hint": "Intact Fortitude"
+    },
+    "117": {
+      "format": "-{v1}% 體力消耗",
+      "hint": "Climber's Agility"
+    },
+    "118": {
+      "format": "+{v1}/-{v2} 物防/魔防",
+      "hint": "Shadowbound"
+    },
+    "120": {
+      "format": "-{v1}% 睡眠／凍結／昏厥的自然持續時間",
+      "hint": "Animated Recovery"
+    },
+    "121": {
+      "format": "-{v1}% 上坡體力消耗與恢復懲罰",
+      "hint": "Hill Strider"
+    },
+    "122": {
+      "format": "-{v1}% 體力消耗",
+      "hint": "Enduring Grip"
+    },
+    "123": {
+      "format": "+{v2}% 傷害",
+      "hint": "Wind Rider"
+    },
+    "125": {
+      "format": "+{v1}% 傷害",
+      "hint": "Leaping Strike"
+    },
+    "126": {
+      "format": "+{v1}% 基礎生命上限",
+      "hint": "Health Boost I"
+    },
+    "127": {
+      "format": "+{v1}% 基礎生命上限",
+      "hint": "Health Boost II"
+    },
+    "128": {
+      "format": "+{v1}% 基礎生命上限",
+      "hint": "Health Boost III"
+    },
+    "129": {
+      "format": "+{v1}% 基礎體力上限",
+      "hint": "Stamina Boost I"
+    },
+    "130": {
+      "format": "+{v1}% 基礎體力上限",
+      "hint": "Stamina Boost II"
+    },
+    "131": {
+      "format": "+{v1}% 基礎體力上限",
+      "hint": "Stamina Boost III"
+    },
+    "132": {
+      "format": "+{v1}%",
+      "hint": "Slashing Resistance I"
+    },
+    "133": {
+      "format": "+{v1}%",
+      "hint": "Slashing Resistance II"
+    },
+    "134": {
+      "format": "+{v1}%",
+      "hint": "Striking Resistance I"
+    },
+    "135": {
+      "format": "+{v1}%",
+      "hint": "Striking Resistance II"
+    },
+    "136": {
+      "format": "+{v1}%",
+      "hint": "Fire Resistance I"
+    },
+    "137": {
+      "format": "+{v1}%",
+      "hint": "Fire Resistance II"
+    },
+    "138": {
+      "format": "+{v1}%",
+      "hint": "Lightning Resistance I"
+    },
+    "139": {
+      "format": "+{v1}%",
+      "hint": "Lightning Resistance II"
+    },
+    "140": {
+      "format": "+{v1}%",
+      "hint": "Ice Resistance I"
+    },
+    "141": {
+      "format": "+{v1}%",
+      "hint": "Ice Resistance II"
+    },
+    "142": {
+      "format": "-{v1}% 體力消耗",
+      "hint": "Extended Dash"
+    },
+    "143": {
+      "format": "{ex1}%隨機異常機率（大劍×{ex4}／匕首×{ex5}／弓×{ex6}／雙頭槍×{ex7}／魔道弓×{ex8}／香爐×{ex9}）；延燒／睡眠／沉默／凍傷；冷卻{ex2}秒，同一目標最多{ex3}次",
+      "hint": "Chaotic Strike",
+      "ex1": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "BaseProbability",
+        "BaseProbabilityBonus"
+      ],
+      "ex2": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "IntervalSec",
+        "IntervalSecBonus"
+      ],
+      "ex3": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "MaxActivationNum"
+      ],
+      "ex4": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.4.MultipleFactor"
+      ],
+      "ex5": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.3.MultipleFactor"
+      ],
+      "ex6": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.1.MultipleFactor"
+      ],
+      "ex7": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.6.MultipleFactor"
+      ],
+      "ex8": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.7.MultipleFactor"
+      ],
+      "ex9": [
+        "RandomStatusOnPhysicalAttackParameter",
+        "JobDataList.8.MultipleFactor"
+      ]
+    },
+    "144": {
+      "format": "{v1}% 概率+{v2}% 傷害",
+      "hint": "Riotous Magick"
+    },
+    "145": {
+      "format": "-{v1}% 近戰蓄力時間",
+      "hint": "Swift Strike I"
+    },
+    "146": {
+      "format": "-{v1}% 近戰蓄力時間",
+      "hint": "Swift Strike II"
+    },
+    "147": {
+      "format": "+{v1}% 傷害",
+      "hint": "Corrupted Foe Counter I"
+    },
+    "148": {
+      "format": "+{v1}% 傷害",
+      "hint": "Corrupted Foe Counter II"
+    },
+    "149": {
+      "format": "+{v1}% 傷害",
+      "hint": "Corrupted Foe Counter III"
+    },
+    "150": {
+      "format": "+{v1}% 傷害",
+      "hint": "Deflect Strike"
+    },
+    "151": {
+      "format": "-{v1} 秒 蓄力時間；+{v2}% 傷害",
+      "hint": "Breakneck Toss"
+    },
+    "152": {
+      "format": "+{v1}% 傷害",
+      "hint": "Improved Empale"
+    },
+    "153": {
+      "format": "+{v1}% 傷害",
+      "hint": "Critical Shot"
+    },
+    "154": {
+      "format": "蓄滿時，+{v1}% 傷害",
+      "hint": "Full Bend"
+    },
+    "155": {
+      "format": "-{v1}% 受到的傷害；+{v2}% 擊退抗性",
+      "hint": "Fortified Invocation"
+    },
+    "156": {
+      "format": "+{v1}秒",
+      "hint": "Extended Recovery"
+    },
+    "158": {
+      "format": "+{v1}% 攀爬速度",
+      "hint": "Nimble Tread"
+    },
+    "159": {
+      "format": "+{v1}% 傷害",
+      "hint": "Piercing Escalade"
+    },
+    "160": {
+      "format": "+{v1}幀判定窗口，+{v3}%連擊傷害",
+      "hint": "Mighty Chain"
+    },
+    "161": {
+      "format": "+{v1}% 傷害；+{v2} 米 射程",
+      "hint": "Extended Burst"
+    },
+    "162": {
+      "format": "+{v1}% 傷害",
+      "hint": "Vertiginous Strike"
+    },
+    "163": {
+      "format": "+{v1}% 回復量",
+      "hint": "Restorative Bolts"
+    },
+    "164": {
+      "format": "+{v1}% 延燒／凍結／昏厥累積量",
+      "hint": "Debilitating Bolts"
+    },
+    "165": {
+      "format": "+{v1}%",
+      "hint": "Phantasmal Tome"
+    },
+    "166": {
+      "format": "+{v1}% 幻影生命上限",
+      "hint": "Perdurable Illusion"
+    },
+    "167": {
+      "format": "連續受擊時依次減傷{ex1}%／{ex2}%／{ex3}%／{ex4}%／{ex5}%",
+      "hint": "Equanimity",
+      "ex1": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.0.m_value"
+      ],
+      "ex2": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.1.m_value"
+      ],
+      "ex3": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.2.m_value"
+      ],
+      "ex4": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.3.m_value"
+      ],
+      "ex5": [
+        "ReduceDamageOnConsecutiveAttacksParam",
+        "ReduceDamageFactor.4.m_value"
+      ]
+    },
+    "168": {
+      "format": "瀕死(HP＜200或HP＜25%)時{ex1}秒內：+{ex2}% 物攻／魔攻；+{ex3}% 物防／魔防\n+{ex4}% 擊退力；-{ex5}% 受到的后仰／擊飛強度",
+      "hint": "Moribund Frenzy",
+      "ex1": [
+        "StatusUpOnLowHealthParam",
+        "DurationSec",
+        "BonusDurationSec"
+      ],
+      "ex2": [
+        "StatusUpOnLowHealthParam",
+        "Status.Attack"
+      ],
+      "ex3": [
+        "StatusUpOnLowHealthParam",
+        "Status.Defence"
+      ],
+      "ex4": [
+        "StatusUpOnLowHealthParam",
+        "Status.Blow"
+      ],
+      "ex5": [
+        "StatusUpOnLowHealthParam",
+        "Status.BlowResistance"
+      ]
+    },
+    "169": {
+      "format": "-{v1}% 損傷槽增加量",
+      "hint": "Survival Instinct"
+    },
+    "170": {
+      "format": "-{v1}% 掙脫所需操作量",
+      "hint": "Elusive"
+    },
+    "171": {
+      "format": "-{v1}% 受到的傷害；-{v2}% 受到的異常累積",
+      "hint": "Breath Resistance"
+    },
+    "172": {
+      "format": "+{v2}% 物防／魔防",
+      "hint": "Improved Odds"
+    },
+    "173": {
+      "format": "-{v1}% 受到的傷害",
+      "hint": "Airborne Reflexes"
+    },
+    "175": {
+      "format": "+{ex1}擊退力",
+      "hint": "Forceful Strikes",
+      "ex1": [
+        "BlowUpParam",
+        "NormalJobParams.0.AdditionalBlow"
+      ]
+    }
+  },
   "AbilityFormat": {
     "10": {
       "format": "+{v1} 最大體力",
