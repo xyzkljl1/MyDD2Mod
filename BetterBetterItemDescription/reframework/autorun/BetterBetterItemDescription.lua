@@ -305,7 +305,7 @@ local AbilityFormat={
 
 local EquipmentAbilityFormat={
     [47]={format="+{iceenc}% ice enchantment, +{v1} ice buildup (greatsword ×{sfenc5}/daggers ×{sfenc4}/bow ×{sfenc2}/duospear ×{sfenc7})",hint="Frosted Edge"},
-    [48]={format="{ex1}% chance to heal a base {ex2}% of damage dealt (weapon scaling)",hint="Aggressive Recovery",ex1={"RecoverOnAttackHitParam","Probability","ProbabilityBonus"},ex2={"RecoverOnAttackHitParam","BaseFactor","BaseFactorBonus"}},
+    [48]={format="{ex1}% chance to heal a base {ex2}% of damage dealt (greatsword ×{ex3}/daggers ×{ex4}/bow ×{ex5}/magick bow ×{ex6}/censer ×{ex7})",hint="Aggressive Recovery",ex1={"RecoverOnAttackHitParam","Probability","ProbabilityBonus"},ex2={"RecoverOnAttackHitParam","BaseFactor","BaseFactorBonus"},ex3={"RecoverOnAttackHitParam","JobDataList.4.MultipleFactor"},ex4={"RecoverOnAttackHitParam","JobDataList.3.MultipleFactor"},ex5={"RecoverOnAttackHitParam","JobDataList.1.MultipleFactor"},ex6={"RecoverOnAttackHitParam","JobDataList.7.MultipleFactor"},ex7={"RecoverOnAttackHitParam","JobDataList.8.MultipleFactor"}},
     [49]={format="Damage dealt +{v1}%; damage taken +{v2}%",hint="Battle Frenzy I"},
     [50]={format="{r49}",hint="Battle Frenzy II"},
     [51]={format="{r49}",hint="Battle Frenzy III"},
@@ -973,8 +973,8 @@ local function isRingOrItem(param)
 end
 
 local getMessageGuid=sdk.find_type_definition("via.gui.message"):get_method("getGuidByName(System.String)")
-local function ReWrapText(originalMessage,bareRate)
-    local maxwidth=math.floor((bareRate or 1.0)*config.newlinewidth+0.5)
+local function ReWrapText(originalMessage,maxwidth)
+    maxwidth=maxwidth or config.newlinewidth
     for _=1,4 do
         local replaced
         originalMessage,replaced=string.gsub(originalMessage,"<REF%s+([^<>%s]+)%s*>",function(name)
@@ -985,19 +985,26 @@ local function ReWrapText(originalMessage,bareRate)
     originalMessage=string.gsub(originalMessage,"[\r\n]+"," ")
     local newMessage=""
     local tmpLine=""
+    local tmpWidth=0
+    local actualWidth=0
     for utfChar in string.gmatch(originalMessage,"[%z\1-\127\194-\244][\128-\191]*") do
+        local charWidth=#utfChar>=3 and 2 or 1
         tmpLine=tmpLine..utfChar
-        if #tmpLine>maxwidth and (utfChar==" " or RewarpOnNonSpace) then
+        tmpWidth=tmpWidth+charWidth
+        if tmpWidth>=maxwidth and (utfChar==" " or RewarpOnNonSpace and charWidth==2) then
             if newMessage~="" then newMessage=newMessage.."\r\n" end
             newMessage=newMessage..tmpLine
+            actualWidth=math.max(actualWidth,tmpWidth)
             tmpLine=""
+            tmpWidth=0
         end
     end
     if tmpLine~="" then
         if newMessage~="" then newMessage=newMessage.."\r\n" end
         newMessage=newMessage..tmpLine
+        actualWidth=math.max(actualWidth,tmpWidth)
     end
-    return newMessage
+    return newMessage,actualWidth
 end
 
 local function GetItemDetail(itemCommonParam,ability,enhance)
@@ -1023,7 +1030,7 @@ local function GetItemDetail(itemCommonParam,ability,enhance)
         ret=Join(ret,TranslateItemBuff(itemCommonParam))
     end
     
-    return ReWrapText(ret,1.05)
+    return ReWrapText(ret)
 end
 
 local function GetOrAddItemDesc(originalMessage,storageData)
@@ -1036,7 +1043,7 @@ local function GetOrAddItemDesc(originalMessage,storageData)
     local text=nil
     if not uncached then text=ItemDescCache[Id] end
     if text==nil then
-        local appendtext=GetItemDetail(itemCommonParam,uncached and ability or nil,enhance)
+        local appendtext,width=GetItemDetail(itemCommonParam,uncached and ability or nil,enhance)
         if config.removeOriginalText then
             if appendtext~="" then
                 text=appendtext
@@ -1045,7 +1052,7 @@ local function GetOrAddItemDesc(originalMessage,storageData)
             end
         else
             if appendtext~="" and config.newlinewidthaffectoriginaltext then
-                originalMessage=ReWrapText(originalMessage)
+                originalMessage=ReWrapText(originalMessage,math.max(config.newlinewidth,width))
             end
             text=string.format("%s\n%s",originalMessage,appendtext)
         end
@@ -1166,6 +1173,7 @@ local function GetOrAddEquipmentSkillDesc(originalMessage,Id,isBoost)
     if cache==nil or cache[isBoost]==nil then
         local appendtext=GetEquipmentAbilityDetail(Id,isBoost)
         if appendtext=="" then return sdk.create_managed_string(originalMessage) end
+        appendtext=string.gsub(appendtext,"[^\r\n]+",function(line) return ReWrapText(line) end)
         if cache==nil then
             cache={}
             EquipmentSkillDescCache[Id]=cache
