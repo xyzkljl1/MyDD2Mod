@@ -120,8 +120,8 @@ local FieldFormat={
     _StrikeRate=nil,
     _StrikeStore="%s Unconsicious Store",
     _MagicAttack="%s MagATK",
-    _Element=nil,
-    _ElementStore="%s%% Element Enchant",
+    _Element={enable=true,type="Enum",format="+%s%% %s Enchant",map={[1]="Fire",[2]="Ice",[3]="Lightning",[4]="Holy"}},
+    _ElementStore="%s Element Buildup",
     _Shake=nil,
     _Blow="%s Knockdown",
     _StaminaReduce=nil,
@@ -741,7 +741,13 @@ local function TranslateFields(param,paramtype,equipFields)
                 elseif format.type=="Enum" and format.enable then
                     local enumstr=format.map[tonumber(data)]
                     if enumstr~=nil then
-                        fieldMsg=fieldMsg..string.format(format.format,enumstr)
+                        if fieldname=="_Element" then
+                            local enchantParam=characterManager:get_HumanParam().JobParam.Job03Parameter.EnchantParam
+                            local baseData=enchantParam:getBaseData(tonumber(data))
+                            fieldMsg=fieldMsg..string.format(format.format,float2stringEX(baseData.PhysicalFactor*100),enumstr)
+                        else
+                            fieldMsg=fieldMsg..string.format(format.format,enumstr)
+                        end
                     end
                 end
             end
