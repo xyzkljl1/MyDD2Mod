@@ -4,7 +4,7 @@ log.info("["..modname.."]".."Start")
 --settings
 local dataFileInfo={type="author",name="Data file: Built-in"}
 local _config={
-    {type="author",version="1.9"},
+    {type="author",version="2.0"},
     dataFileInfo,
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
 }
