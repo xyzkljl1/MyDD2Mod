@@ -645,7 +645,7 @@ local noEnhance=sdk.find_type_definition("app.ItemDefine.EnhanceParam"):get_fiel
 local equipParams={}
 local plainAbility=ValueType.new(sdk.find_type_definition("app.ItemDefine.EquipmentAbilityParam"))
 local abilityFields={"Slot1","Slot2","Slot3","Slot4","IsAppraised","PhysicalParameter","MagicParameter","BlowParameter","WeightParameter"}
-local function GetEquipFields(param,ability,enhance)
+local function GetEquipFields(param,ability,enhance,numbers)
     if equipParams[1]==nil then
         for i=1,4 do
             equipParams[i]=equipParamType:create_instance()
@@ -688,6 +688,7 @@ local function GetEquipFields(param,ability,enhance)
             if upgrade~=0 then details[#details+1]=string.format("%+d",upgrade)..unit end
             local number=tostring(value)..unit
             if #details>0 then number=number.."("..table.concat(details,",")..")" end
+            if numbers~=nil then numbers[field]=number end
             ret[field]=string.format(format:gsub("%%s%%%%","%%s"),number)
         end
     end
@@ -697,8 +698,8 @@ local function GetEquipFields(param,ability,enhance)
     stat(weapon and "_MagicAttack" or "_MagicDefence",weapon and "MagicAttack" or "MagicDefence","MagicParameter")
     stat(weapon and "_Blow" or "_BlowResistRate",weapon and (shield and "ShieldBlow" or "Blow") or "BlowResistRate","BlowParameter")
     if enhanced and weapon then stat("_BlowGuard","BlowGuard") end
-    if bonus==2048 then stat("_SlashDefenceRate","SlashDefenceRate") end
-    if bonus==4096 then stat("_StrikeDefenceRate","StrikeDefenceRate") end
+    if bonus==2048 or numbers~=nil and not weapon then stat("_SlashDefenceRate","SlashDefenceRate") end
+    if bonus==4096 or numbers~=nil and not weapon then stat("_StrikeDefenceRate","StrikeDefenceRate") end
     if bonus==16 or bonus==32 or bonus==64 or bonus==128 then stat("_ElementStore","ElementStore") end
     return ret
 end
@@ -1007,12 +1008,12 @@ local function ReWrapText(originalMessage,maxwidth)
     return newMessage,actualWidth
 end
 
-local function GetItemDetail(itemCommonParam,ability,enhance)
+local function GetItemDetail(itemCommonParam,ability,enhance,equipFields)
     local ret=""
     local itemParam=itemCommonParam:get_ItemParam()
     local bRingOrItem=isRingOrItem(itemCommonParam)
     if bRingOrItem or not config.ignoreArmorAndWeapon then
-        local equipFields=ability and GetEquipFields(itemCommonParam,ability,enhance)
+        equipFields=equipFields or ability and GetEquipFields(itemCommonParam,ability,enhance)
         for _,type in pairs(ItemParamTypes) do
             if itemCommonParam:get_type_definition():is_a(type) then
                 ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type),equipFields)
@@ -1033,17 +1034,17 @@ local function GetItemDetail(itemCommonParam,ability,enhance)
     return ReWrapText(ret)
 end
 
-local function GetOrAddItemDesc(originalMessage,storageData)
+local function GetOrAddItemDesc(originalMessage,storageData,equipFields)
     local itemCommonParam=storageData._ItemData
     local ability=storageData._Ability
     local enhance=storageData._Enhance
-    local uncached=itemCommonParam:get_IsEquip() and (ability.PhysicalParameter~=0 or ability.MagicParameter~=0
+    local uncached=equipFields~=nil or itemCommonParam:get_IsEquip() and (ability.PhysicalParameter~=0 or ability.MagicParameter~=0
         or ability.BlowParameter~=0 or ability.WeightParameter~=0 or ability.Bonus~=0 or enhance._Num~=0)
     local Id=itemCommonParam._Id
     local text=nil
     if not uncached then text=ItemDescCache[Id] end
     if text==nil then
-        local appendtext,width=GetItemDetail(itemCommonParam,uncached and ability or nil,enhance)
+        local appendtext,width=GetItemDetail(itemCommonParam,uncached and ability or nil,enhance,equipFields)
         if config.removeOriginalText then
             if appendtext~="" then
                 text=appendtext
@@ -1209,6 +1210,12 @@ sdk.hook(
     end
 )
 
+local tmpEquipWindow=nil
+local tmpEquipNumbers=nil
+local equipStatusFields={
+    [0]="_PhysicalAttack",[1]="_PhysicalDefence",[2]="_MagicAttack",[3]="_MagicDefence",
+    [4]="_Blow",[5]="_BlowResistRate",[12]="_SlashDefenceRate",[13]="_StrikeDefenceRate",
+}
 local tmpItemWindow=nil
 local tmpItem=nil
 sdk.hook(
@@ -1224,13 +1231,84 @@ sdk.hook(
     function ()
         if tmpItemWindow~=nil and tmpItem~=nil then
             --print(tmpItemWindow._TxtInfo:get_Message():ToString())
-            local message=GetOrAddItemDesc(tmpItemWindow._TxtInfo:get_Message(),tmpItem)
+            local equipFields=nil
+            if tmpEquipWindow~=nil and tmpEquipWindow.ItemWindow==tmpItemWindow and tmpItem._ItemData:get_IsEquip() and not isRing(tmpItem._ItemData) and not config.ignoreArmorAndWeapon then
+                tmpEquipNumbers={}
+                equipFields=GetEquipFields(tmpItem._ItemData,tmpItem._Ability,tmpItem._Enhance,tmpEquipNumbers)
+                for _,field in pairs(equipStatusFields) do equipFields[field]="" end
+                if tmpItem._ItemData:get_type_definition():is_a("app.ItemArmorParam") then
+                    for _,field in pairs({"_FireDefence","_IceDefence","_ThunderDefence","_LightDefence","_DarkDefence",
+                        "_FireResist","_IceResist","_ThunderResist","_PoisonResist","_SleepResist","_SilentResist",
+                        "_StoneResist","_WaterResist","_OilResist","_FaintResist","_ColdResist"}) do equipFields[field]="" end
+                elseif isWeapon(tmpItem._ItemData) then
+                    for _,field in pairs({"_PoisonStore","_SleepStore","_SilentStore","_StoneStore","_WaterStore","_OilStore"}) do equipFields[field]="" end
+                end
+            end
+            local message=GetOrAddItemDesc(tmpItemWindow._TxtInfo:get_Message(),tmpItem,equipFields)
             tmpItemWindow._TxtInfo:set_Message(message)
             tmpItemWindow=nil
             tmpItem=nil
         end
     end
 )
+
+local function GetCompareArrow(item)
+    local child=item.CompareControl:get_Child()
+    while child~=nil do
+        if child:get_Name()=="PNL_RArrow_01S" then return child end
+        child=child:get_Next()
+    end
+end
+
+local getStatusName=sdk.find_type_definition("app.GUIBase"):get_method("getStatusName")
+for _,type in pairs({"app.ui060301_00","app.ui060401_00"}) do
+    sdk.hook(
+        sdk.find_type_definition(type):get_method("updateItemInfoDisp"),
+        function (args)
+            if not initialized then return end
+            tmpEquipWindow=sdk.to_managed_object(args[2])
+            tmpEquipNumbers=nil
+        end,
+        function ()
+            if tmpEquipWindow~=nil then
+                local numbers={}
+                for id,field in pairs(equipStatusFields) do
+                    numbers[getStatusName:call(nil,id)]=tmpEquipNumbers and tmpEquipNumbers[field]
+                end
+                local list=tmpEquipWindow.ItemDetail._StatusList
+                local count=list.InfoList:get_Count()
+                for i=0,count-1 do
+                    local number=numbers[list.InfoList:get_Item(i).Name]
+                    local item=list:call("getItem(System.Int32)",i)
+                    if item~=nil then
+                        local text=item.TxtVal
+                        local size=text:get_RegionSize()
+                        local width=56
+                        local extra=tmpEquipNumbers~=nil and width*3 or 0
+                        size.w=width+extra
+                        text:set_RegionSize(size)
+                        -- Native ui01350901 positions. Right-anchored text expands left as its region widens.
+                        local position=text:get_Position()
+                        text:set_Position(Vector3f.new(478,position.y,position.z))
+                        local compare=item.CompareControl:get_Position()
+                        item.CompareControl:set_Position(Vector3f.new(0,compare.y,compare.z))
+                        local left=item.TxtVal0:get_Position()
+                        item.TxtVal0:set_Position(Vector3f.new(384-extra,left.y,left.z))
+                        local arrow=GetCompareArrow(item)
+                        if arrow~=nil then
+                            local position=arrow:get_Position()
+                            arrow:set_Position(Vector3f.new(406-extra,position.y,position.z))
+                        end
+                        text:set_AutoRegionFit(sdk.find_type_definition("via.gui.RegionFitType"):get_field(number~=nil and "Both" or "Horizontal"):get_data())
+                        if number~=nil then text:set_Message(text:get_Message().."["..number.."]") end
+                    end
+                end
+            end
+            tmpEquipWindow=nil
+            tmpEquipNumbers=nil
+        end
+    )
+end
 
 local function LogTypeMethods(game_object)
     x=game_object:get_type_definition():get_methods()
