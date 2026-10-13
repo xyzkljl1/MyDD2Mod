@@ -2,11 +2,10 @@
 local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
+local dataFileInfo={type="author",name="Data file: Built-in"}
 local _config={
     {type="author",version="1.9"},
-    {name="newlinewidth",type="int",default=20,min=1,max=250},
-    {name="newlinewidthaffectoriginaltext",type="bool",default=true,label="NewLineWidthAlsoAffectOriginalText"},
-    {name="removeOriginalText",type="bool",default=true},
+    dataFileInfo,
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
 }
 --merge config file to default config
@@ -34,7 +33,6 @@ local SkillDescCache={}
 local EquipmentSkillDescCache={}
 local WeaponCharaMsgCache={}
 local SkillName2Id={}
-local RewarpOnNonSpace=true
 
 local guiManager=nil
 local characterManager=nil
@@ -542,11 +540,6 @@ local function Init()
     local optionItem=om._OptionItems:get_Item(optionID)
     local lng=optionItem:get_FixedValueModel():get_StringValue()
 
-    if lng=="Japanese" or lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Vietnamese" or lng=="Korean" then
-        RewarpOnNonSpace=true
-    else
-        RewarpOnNonSpace=false
-    end
     if lng==prevInitLanguage then
         Log("Ignore dup init")
         return
@@ -580,6 +573,7 @@ local function Init()
             EquipmentAbilityFormat[tonumber(k)]=v
         end
         Log("Load From",filename)
+        dataFileInfo.name="Data file: "..filename
     else
         Log("Invalid File,Use default")
     end
@@ -969,8 +963,7 @@ local function isRing(param)
 end
 
 local getMessageGuid=sdk.find_type_definition("via.gui.message"):get_method("getGuidByName(System.String)")
-local function ReWrapText(originalMessage,maxwidth)
-    maxwidth=maxwidth or config.newlinewidth
+local function RemoveLineBreaks(originalMessage)
     for _=1,4 do
         local replaced
         originalMessage,replaced=string.gsub(originalMessage,"<REF%s+([^<>%s]+)%s*>",function(name)
@@ -979,28 +972,7 @@ local function ReWrapText(originalMessage,maxwidth)
         if replaced==0 then break end
     end
     originalMessage=string.gsub(originalMessage,"[\r\n]+"," ")
-    local newMessage=""
-    local tmpLine=""
-    local tmpWidth=0
-    local actualWidth=0
-    for utfChar in string.gmatch(originalMessage,"[%z\1-\127\194-\244][\128-\191]*") do
-        local charWidth=#utfChar>=3 and 2 or 1
-        tmpLine=tmpLine..utfChar
-        tmpWidth=tmpWidth+charWidth
-        if tmpWidth>=maxwidth and (utfChar==" " or RewarpOnNonSpace and charWidth==2) then
-            if newMessage~="" then newMessage=newMessage.."\r\n" end
-            newMessage=newMessage..tmpLine
-            actualWidth=math.max(actualWidth,tmpWidth)
-            tmpLine=""
-            tmpWidth=0
-        end
-    end
-    if tmpLine~="" then
-        if newMessage~="" then newMessage=newMessage.."\r\n" end
-        newMessage=newMessage..tmpLine
-        actualWidth=math.max(actualWidth,tmpWidth)
-    end
-    return newMessage,actualWidth
+    return originalMessage
 end
 
 local function GetItemDetail(itemCommonParam,ability,enhance,equipFields)
@@ -1023,7 +995,7 @@ local function GetItemDetail(itemCommonParam,ability,enhance,equipFields)
         ret=Join(ret,TranslateItemBuff(itemCommonParam))
     end
     
-    return ReWrapText(ret)
+    return RemoveLineBreaks(ret)
 end
 
 local function GetOrAddItemDesc(originalMessage,storageData,equipFields)
@@ -1036,19 +1008,8 @@ local function GetOrAddItemDesc(originalMessage,storageData,equipFields)
     local text=nil
     if not uncached then text=ItemDescCache[Id] end
     if text==nil then
-        local appendtext,width=GetItemDetail(itemCommonParam,uncached and ability or nil,enhance,equipFields)
-        if config.removeOriginalText then
-            if appendtext~="" then
-                text=appendtext
-            else
-                text=originalMessage
-            end
-        else
-            if appendtext~="" and config.newlinewidthaffectoriginaltext then
-                originalMessage=ReWrapText(originalMessage,math.max(config.newlinewidth,width))
-            end
-            text=string.format("%s\n%s",originalMessage,appendtext)
-        end
+        local appendtext=GetItemDetail(itemCommonParam,uncached and ability or nil,enhance,equipFields)
+        text=string.format("%s\n%s",RemoveLineBreaks(originalMessage),appendtext)
         if not uncached then
             ItemDescCache[Id]=text
             Log("Add Item Desc To Cache")
@@ -1237,6 +1198,8 @@ sdk.hook(
                 end
             end
             local message=GetOrAddItemDesc(tmpItemWindow._TxtInfo:get_Message(),tmpItem,equipFields)
+            tmpItemWindow._TxtInfo:set_AutoWrap(true)
+            tmpItemWindow._TxtInfo:set_AutoRegionFit(sdk.find_type_definition("via.gui.RegionFitType"):get_field("Both"):get_data())
             tmpItemWindow._TxtInfo:set_Message(message)
             tmpItemWindow=nil
             tmpItem=nil
@@ -1279,6 +1242,10 @@ for _,type in pairs({"app.ui060301_00","app.ui060401_00"}) do
                         local extra=tmpEquipNumbers~=nil and width*3 or 0
                         size.w=width+extra
                         text:set_RegionSize(size)
+                        local nameSize=item.TxtName:get_RegionSize()
+                        nameSize.w=318-extra
+                        item.TxtName:set_RegionSize(nameSize)
+                        item.TxtName:set_AutoRegionFit(sdk.find_type_definition("via.gui.RegionFitType"):get_field(extra~=0 and "Both" or "Horizontal"):get_data())
                         -- Native ui01350901 positions. Right-anchored text expands left as its region widens.
                         local position=text:get_Position()
                         text:set_Position(Vector3f.new(478,position.y,position.z))
