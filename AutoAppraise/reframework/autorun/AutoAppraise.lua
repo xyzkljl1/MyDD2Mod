@@ -1,4 +1,4 @@
-local myapi = require("_XYZApi/_XYZApi")
+local hasApi, myapi = pcall(require, "_XYZApi/_XYZApi")
 local config = {enabled=true}
 local TAG = "[AutoAppraise] "
 local ready, processing, failed = false, false, false
@@ -309,13 +309,15 @@ sdk.hook(
     end
 )
 
+if not hasApi then return end
+
 local controls = {
     {name="enabled", type="bool", label="Automatic appraisal", default=true},
     {name="appraiseAll", type="button", label="Appraise all relics now", onClick=function()
         if failed then return end
         needsAppraisal = true
     end},
-    {type="author", version="1.2"},
+    {type="author", version="1.2.1"},
 }
 local configfile = "AutoAppraise.json"
 config = myapi.InitFromFile(controls, configfile, true)
