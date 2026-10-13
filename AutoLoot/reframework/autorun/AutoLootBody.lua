@@ -2,7 +2,7 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
-    {type="author",version="1.4.10"},
+    {type="author",version="1.4.11"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
@@ -224,6 +224,8 @@ local function LootBodyOrBodyPart(controller)
     end
 end
 
+local pendingGatherEnds={}
+local gatherEndFrames=0
 local function LootGm82_009(gimmick)
     if gimmick:isInteractEnable(0)==true and gimmick:get_IsEndGather()==false then
         --gimmick:get_DistanceXZSqFromPlayer and FarDistanceSq/NearDistanceSq for some gimmick are fix value 
@@ -235,9 +237,11 @@ local function LootGm82_009(gimmick)
             --call StartInteract only causes pickup action
             Log("Loot Gimmick82_009:"..tostring(gimmick.IsGivedItem).."/"..tostring(gimmick.TurnOn).."/"..tostring(gimmick.IsEnd))
             -- at somepoint, if you don't end it ,it will still be interactable
-            --gimmick:onStartInteractBase(0, playerManager:get_ManualPlayer())
+            -- startInteractSub会将编号加入nolist而不触发采集动作。
+            gimmick:startInteractSub(0, playerManager:get_ManualPlayer())
+            pendingGatherEnds[gimmick]=playerManager:get_ManualPlayer()
+            gatherEndFrames=1
             gimmick:onExecuteInteractBase(0, playerManager:get_ManualPlayer())
-            gimmick:onEndInteractBase(0, playerManager:get_ManualPlayer())
             AddMessage("Loot 1 ", gimmick:get_GameObject():get_Transform():get_Position())
         end
     end
@@ -406,6 +410,17 @@ local interval2=0
 sdk.hook(
     sdk.find_type_definition("app.GimmickManager"):get_method("update()"),
     function()
+        -- gimmick开始交互时会将编号写入`GimmickBase.InteractNoList` ，必须停留一帧后再移除任务才能检测到机关被触发。
+        if gatherEndFrames>0 then
+            gatherEndFrames=gatherEndFrames-1
+            if gatherEndFrames==0 then
+                for gimmick,player in pairs(pendingGatherEnds) do
+                    pendingGatherEnds[gimmick]=nil
+                    local ok,err=pcall(function() gimmick:onEndInteractBase(0,player) end)
+                    if not ok then Log("Failed to end gathering interaction: "..tostring(err)) end
+                end
+            end
+        end
         --Log(battleManager:get_IsBattleMode())
         if config.disableOnBattle and battleManager:get_IsBattleMode() then return end
 
