@@ -9,7 +9,15 @@ sdk.hook(
         --local x=sdk.to_int64(retval)&0xffffffff
         --print("Hook ",x)
         --return retval
-         return sdk.to_ptr(999999)
+         return sdk.to_ptr(32767)
+    end
+)
+-- chest
+sdk.hook(
+    sdk.find_type_definition("app.ItemManager"):get_method("isGetEnableAll"),
+    nil,
+    function(retval)
+        return sdk.to_ptr(true)
     end
 )
 -- warehouse
@@ -48,6 +56,6 @@ local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()
 iter:MoveNext()
 while iter._current.value~=nil do
     local itemCommonParam=iter._current.value
-    itemCommonParam._StackNum=math.floor(999999)
+    itemCommonParam._StackNum=math.floor(32767)
     iter:MoveNext()
 end
