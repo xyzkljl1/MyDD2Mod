@@ -6,8 +6,6 @@ local _config={
     {type="author",version="1.9"},
     {name="newlinewidth",type="int",default=20,min=1,max=250},
     {name="newlinewidthaffectoriginaltext",type="bool",default=true,label="NewLineWidthAlsoAffectOriginalText"},
-    {name="ignoreArmorAndWeapon",type="bool",default=false,label="Ignore Status of Armor&Weapon"},
-    {name="ignoreArmorAndWeaponSpecialEffect",type="bool",default=false,label="Ignore Special Effect of Armor&Weapon"},
     {name="removeOriginalText",type="bool",default=true},
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
 }
@@ -969,9 +967,6 @@ local function isRing(param)
     end
     return false
 end
-local function isRingOrItem(param)
-    return (isRing(param)==true or isItem(param)==true)
-end
 
 local getMessageGuid=sdk.find_type_definition("via.gui.message"):get_method("getGuidByName(System.String)")
 local function ReWrapText(originalMessage,maxwidth)
@@ -1011,17 +1006,14 @@ end
 local function GetItemDetail(itemCommonParam,ability,enhance,equipFields)
     local ret=""
     local itemParam=itemCommonParam:get_ItemParam()
-    local bRingOrItem=isRingOrItem(itemCommonParam)
-    if bRingOrItem or not config.ignoreArmorAndWeapon then
-        equipFields=equipFields or ability and GetEquipFields(itemCommonParam,ability,enhance)
-        for _,type in pairs(ItemParamTypes) do
-            if itemCommonParam:get_type_definition():is_a(type) then
-                ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type),equipFields)
-            end
+    equipFields=equipFields or ability and GetEquipFields(itemCommonParam,ability,enhance)
+    for _,type in pairs(ItemParamTypes) do
+        if itemCommonParam:get_type_definition():is_a(type) then
+            ret=ret..TranslateFields(itemCommonParam,sdk.find_type_definition(type),equipFields)
         end
-        for _,fieldMsg in pairs(equipFields or {}) do ret=Join(ret,fieldMsg) end
     end
-    if isWeapon(itemCommonParam) and not config.ignoreArmorAndWeaponSpecialEffect then
+    for _,fieldMsg in pairs(equipFields or {}) do ret=Join(ret,fieldMsg) end
+    if isWeapon(itemCommonParam) then
         ret=Join(ret,TranslateWeaponSP(itemCommonParam))
     end
     if isRing(itemCommonParam) then
@@ -1232,7 +1224,7 @@ sdk.hook(
         if tmpItemWindow~=nil and tmpItem~=nil then
             --print(tmpItemWindow._TxtInfo:get_Message():ToString())
             local equipFields=nil
-            if tmpEquipWindow~=nil and tmpEquipWindow.ItemWindow==tmpItemWindow and tmpItem._ItemData:get_IsEquip() and not isRing(tmpItem._ItemData) and not config.ignoreArmorAndWeapon then
+            if tmpEquipWindow~=nil and tmpEquipWindow.ItemWindow==tmpItemWindow and tmpItem._ItemData:get_IsEquip() and not isRing(tmpItem._ItemData) then
                 tmpEquipNumbers={}
                 equipFields=GetEquipFields(tmpItem._ItemData,tmpItem._Ability,tmpItem._Enhance,tmpEquipNumbers)
                 for _,field in pairs(equipStatusFields) do equipFields[field]="" end
