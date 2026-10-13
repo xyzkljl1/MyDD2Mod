@@ -1,0 +1,7 @@
+{
+  "_XYZApi.title": "角色数量控制（NoNPC）",
+  "NPCLimit": "NPC 数量上限",
+  "RemoveNearbyNPC": "移除附近 NPC",
+  "EnemyLimit": "敌人数量上限",
+  "RemoveNearbyEnemy": "移除附近敌人"
+}

@@ -1,0 +1,18 @@
+{
+  "_XYZApi.title": "取得物品（GainItem）",
+  "item": "物品",
+  "count": "數量",
+  "RelicSource": "戰遺物：來源變體",
+  "RelicJob": "戰遺物：職業",
+  "Add or Remove Item": "新增或移除物品",
+  "SendToPlayer": "給予玩家",
+  "SendToStorage": "放入倉庫",
+  "SendToPawn1": "給予追隨者 1",
+  "SendToPawn2": "給予追隨者 2",
+  "SendToPawn3": "給予追隨者 3",
+  "RemoveFromPlayer": "從玩家背包移除",
+  "Favourite List": "收藏清單",
+  "AddToFavList": "加入收藏",
+  "RemoveFromFavList": "移除收藏",
+  "FavList": "收藏物品"
+}

@@ -1,5 +1,5 @@
 ﻿local modname="_XYZAPI"
-local version="1.9.7"
+local version="1.10"
 local vecNames={
     ".x",
     ".y",
@@ -194,8 +194,97 @@ function DeepCopyTable(t)
   return setmetatable(ret, getmetatable(t))
 end
 
+local languageSettingsFile="_XYZApi.Localization.json"
+local function loadLanguageTable(path)
+    local ok,value=pcall(json.load_file,path)
+    if ok and type(value)=="table" then return value end
+    if not ok or value~=nil then log.warn("[_XYZApi] Invalid JSON: "..path) end
+    return {}
+end
+local languageSettings=loadLanguageTable(languageSettingsFile)
+local languagePacks={}
+local gameLanguage
+
+local function readGameLanguage()
+    local manager=sdk.get_managed_singleton("app.OptionManager")
+    local definition=sdk.find_type_definition("app.OptionID")
+    local field=definition and definition:get_field("TextLanguage")
+    local id=field and field:get_data()
+    if manager and id and manager._OptionItems and manager._OptionItems:ContainsKey(id) then
+        return manager._OptionItems:get_Item(id):get_FixedValueModel():get_StringValue()
+    end
+end
+
+local function currentGameLanguage()
+    if gameLanguage==nil then
+        local ok,value=pcall(readGameLanguage)
+        if ok and value then gameLanguage=value end
+    end
+    return gameLanguage or "English"
+end
+
+local function loadLanguagePack(name,language)
+    local path="lang/"..name.."."..language..".json"
+    if not languagePacks[path] then languagePacks[path]=loadLanguageTable(path) end
+    return languagePacks[path]
+end
+
+local function initLanguageChoices(state)
+    local found={}
+    local ok,paths=pcall(fs.glob,[[lang[\\/][^\\/]+\.json]])
+    if ok then
+        for _,path in ipairs(paths) do
+            local name,language=path:gsub("\\","/"):match("^lang/(.+)%.([%w%-]+)%.json$")
+            if name=="_XYZApi" or name==state.name then found[language]=true end
+        end
+    end
+    local selected=languageSettings[state.name]
+    if type(selected)=="string" and selected~="auto"
+        and selected:match("^[%w%-]+$") then found[selected]=true end
+    found.English=nil
+    local sorted={}
+    for code in pairs(found) do sorted[#sorted+1]=code end
+    table.sort(sorted)
+    state.codes={"auto","English"}
+    for _,code in ipairs(sorted) do state.codes[#state.codes+1]=code end
+end
+
+local function getUiText(state)
+    local language=languageSettings[state.name]
+    if language==nil or language=="auto" then language=currentGameLanguage() end
+    if type(language)~="string" or not language:match("^[%w%-]+$") then language="English" end
+    if language~=state.language then
+        state.language=language
+        state.text={["_XYZApi.title"]=state.name}
+        -- English defaults, shared translations, then mod overrides.
+        for _,source in ipairs({loadLanguagePack("_XYZApi","English"),
+            loadLanguagePack("_XYZApi",language),loadLanguagePack(state.name,language)}) do
+            for key,value in pairs(source) do
+                if type(value)=="string" then state.text[key]=value end
+            end
+        end
+    end
+    return state.text
+end
+
+local function drawLanguageMenu(state,text)
+    local labels={text["_XYZApi.followGame"]}
+    local selected=1
+    for i,code in ipairs(state.codes) do
+        if i>1 then labels[i]=code end
+        if code==languageSettings[state.name] then selected=i end
+    end
+    imgui.push_item_width(160)
+    local changed,index=imgui.combo(text["_XYZApi.uiLanguage"],selected,labels)
+    imgui.pop_item_width()
+    if changed then
+        languageSettings[state.name]=state.codes[index]
+        json.dump_file(languageSettingsFile,languageSettings)
+    end
+end
+
 --Chinese font need pass CJK_GLYPH_RANGES as [ranges] when load and the lua file need to be unicode
-local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,font)
+local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,font,disableLocalization)
     configfile=configfile or (modname..".json")
     Log("CAll DrawIt")
     if dontInitHotkey~=true then
@@ -206,7 +295,17 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
         DD2_InitItemId()
     end
 
+    local languageState={name=modname}
+    if disableLocalization==true then
+        languageState.text=DeepCopyTable(loadLanguagePack("_XYZApi","English"))
+        languageState.text["_XYZApi.title"]=modname
+    else
+        initLanguageChoices(languageState)
+    end
+    local function tr(key,fallback) return languageState.text[key] or fallback end
     re.on_draw_ui(function()
+        local uiText=languageState.text
+        if disableLocalization~=true then uiText=getUiText(languageState) end
         local changed=false--tmp
         local _changed=false--final
 
@@ -224,28 +323,30 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
             end
         end
         local triggeredButtons={}
-	    if imgui.tree_node(modname) then
+	    if imgui.tree_node(tr("_XYZApi.title")) then
 		    --imgui.same_line()
 		    --imgui.text("*Right click on most options to reset them")
+            if disableLocalization~=true then drawLanguageMenu(languageState,uiText) end
             local isInMutualBox=false
 		    imgui.begin_rect()
-            for _,para in ipairs (_config) do
+            for optionIndex,para in ipairs (_config) do
                 if para.hide~=true then
+                    imgui.push_id(para.name or optionIndex)
                     local key = para.name
                     local actionName = para.actionName or key
                     local title_postfix=""
                     local pushed_item_width=false
                     if para.needrestart==true or para.type=="fontsize" or para.type=="font" then
-                        title_postfix=" (Need Restart To Apply)"
+                        title_postfix=tr("_XYZApi.needRestart")
                     elseif para.needreentry==true then
-                        title_postfix=" (Need Return to Title to Apply)"
+                        title_postfix=tr("_XYZApi.needReentry")
                     end
                     if para.widthscale~=nil then
                         imgui.push_item_width(imgui.calc_item_width()*para.widthscale)
                         pushed_item_width=true
                     end
 
-                    local label=para.label or key
+                    local label=tr(key,para.label or key)
 
                     if para.type=="int" then
                         changed , config[key]= imgui.drag_int(label .. title_postfix,
@@ -287,7 +388,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         imgui.push_item_width(width)
                         for _k,_ in pairs (config[key]) do
                             local vname=vecNames[_k] or ".".._k
-                            changed , config[key][_k] = imgui.drag_int(key..vname .. title_postfix,
+                            changed , config[key][_k] = imgui.drag_int(label..vname .. title_postfix,
                                                                  config[key][_k] or para.default or para.min or 0,
                                                                  para.step or 1 , para.min or 0, para.max or 100)
                             _changed=changed or _changed
@@ -310,7 +411,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         imgui.pop_item_width()
                         imgui.new_line()
                     elseif para.type=="boolList" then
-                        if imgui.tree_node(para.name..title_postfix) then
+                        if imgui.tree_node(label .. title_postfix) then
                             if para.tmp_list==nil and para.default~=nil then
                                 para.tmp_list=DeepCopyTable(para.default)
                             end
@@ -323,7 +424,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             end
 
                             imgui.push_item_width(imgui.calc_item_width()*0.5)
-                            local clicked=imgui.button("UncheckAll")
+                            local clicked=imgui.button(tr("_XYZApi.uncheckAll"))
                             if clicked==true then
                                 for _,_k in pairs(para.tmp_sortListKey) do
                                     config[key][_k]=false
@@ -331,7 +432,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                                 _changed=true
                             end
                             imgui.same_line()
-                            clicked =imgui.button("CheckAll")
+                            clicked =imgui.button(tr("_XYZApi.checkAll"))
                             if clicked==true then
                                 config[key]=DeepCopyTable(para.tmp_list)
                                 _changed=true
@@ -347,18 +448,19 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                                 --nil won't be saved,has to be false
                                 else config[key][_k]=false  end
                             end
+                            imgui.tree_pop()
                         end
                     elseif para.type=="font" or para.type=="string" then
                         changed , config[key]= imgui.input_text(label .. title_postfix, config[key] or para.default)
                         _changed=changed or _changed
                     elseif para.type=="hotkey" then
                         if hk~=nil then
-                            changed = hk.hotkey_setter(actionName, nil, nil, label);
+                            changed = hk.hotkey_setter(actionName, nil, tr(key,nil), para.label or key);
                             config[key]=hk.hotkeys[actionName]
                             _changed=changed or _changed
                         else
                             --this shouldn't happen,because if a mod need hotkey setting then itself will require hotkeys.lua
-                            imgui.text("Can't Modify "..label.." because lack of _ScriptCore")
+                            imgui.text(tr("_XYZApi.missingHotkeys"):gsub("%%s",function() return label end))
                         end
                     elseif para.type=="bool" then
                         --don't use "config[key] or default"
@@ -379,7 +481,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         imgui.push_item_width(width)
                         for _k,_ in pairs (config[key]) do
                             local vname=vecNames[_k] or ".".._k
-                            changed , config[key][_k] = imgui.drag_float(key..vname .. title_postfix,
+                            changed , config[key][_k] = imgui.drag_float(label..vname .. title_postfix,
                                                                  config[key][_k] or para.default or para.min or 0,
                                                                  para.step or 0.1 , para.min or 0, para.max)
                             _changed=changed or _changed
@@ -409,7 +511,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                         if para.enableSearch==true or para.enableSearch==nil then
                             imgui.push_item_width(imgui.calc_item_width()*0.2)
                             --Two input_text with same label will share data
-                            changed, para.tmp_SearchText = imgui.input_text("<-searh "..key .."(not sup IME) ", para.tmp_SearchText)
+                            changed, para.tmp_SearchText = imgui.input_text(tr("_XYZApi.search")..label..tr("_XYZApi.searchSuffix"), para.tmp_SearchText)
                             imgui.pop_item_width()
                             imgui.same_line()
 
@@ -477,7 +579,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             isInMutualBox=false
                         end
                         imgui.begin_rect()
-                        imgui.text_colored(para.name,para.color or 0xff11aa33)
+                        imgui.text_colored(label,para.color or 0xff11aa33)
                         isInMutualBox=true
                     elseif para.type=="mutualboxend" then
                         if isInMutualBox then
@@ -487,7 +589,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     elseif para.type=="buttonN" then
                         if #config[key]~=0 then
                             imgui.begin_rect()
-                            imgui.text_colored(para.name..title_postfix,para.color or 0xff885533)
+                            imgui.text_colored(label..title_postfix,para.color or 0xff885533)
                             for _,buttonpara in pairs(config[key]) do
                                 local clicked=imgui.button(buttonpara.name)
                                 --use para.OnClick,because buttonparas need to be saved into configfile
@@ -500,8 +602,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             imgui.end_rect()
                         end
                     elseif para.type=="author" then
-                        local text=para.name or "\tAuthor: xyzkljl1"
-                        if para.version~=nil then text=text.."  Version: "..tostring(para.version) end
+                        local text=label or ("\t"..tr("_XYZApi.author")..": xyzkljl1")
+                        if para.version~=nil then text=text.."  "..tr("_XYZApi.version")..": "..tostring(para.version) end
                         imgui.text_colored(text,para.color or 0xffffffff)
                     end
                     if para.sameline==true then
@@ -515,6 +617,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                     if pushed_item_width then
                         imgui.pop_item_width()
                     end
+                    imgui.pop_id()
                 end
             end
             --Add an empty line to prevent the last setting ui's last line is not shown properly
@@ -565,19 +668,11 @@ local function LoadFontIfCJK(fontname,fontsize,fontrange)
     --    or lng==sdk.find_type_definition("via.Language"):get_field("Korean"):get_data()
     --    or lng==sdk.find_type_definition("via.Language"):get_field("Japanese"):get_data()
     --    then
-    local om=sdk.get_managed_singleton("app.OptionManager")
-    local optionID=sdk.find_type_definition("app.OptionID"):get_field("TextLanguage"):get_data()
-    if optionID==nil then
-        --for certain user,scripts are load too early that this func can't get optionID
-        Log("Can't find optionID.Use Default Font")
+    local lng=readGameLanguage()
+    if lng==nil then
+        Log("Can't read game language.Use Default Font")
         return font
-    end    
-    if not om._OptionItems:ContainsKey(optionID) then
-        Log("Can't find _OptionItems[optionID].Use Default Font")
-        return font        
     end
-    local optionItem=om._OptionItems:get_Item(optionID)
-    local lng=optionItem:get_FixedValueModel():get_StringValue()
     --these are capcom's typo
     if lng=="TransitionalChinese" or lng=="SimplelifiedChinese" or lng=="Korean" or lng=="Japanese"
         --or lng=="Russian" or lng == "Ukrainian" 

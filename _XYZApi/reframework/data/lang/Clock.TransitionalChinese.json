@@ -1,0 +1,18 @@
+{
+  "_XYZApi.title": "遊戲時鐘（Clock）",
+  "Style": "樣式",
+  "fontsize": "字型大小",
+  "offset": "位置偏移",
+  "color": "文字顏色",
+  "backgroundcolor": "背景顏色",
+  "Format": "格式",
+  "zerofill": "數字補零",
+  "showbackground": "顯示背景",
+  "showtimeslot": "顯示時段",
+  "useAMPM": "使用十二小時制",
+  "customFormat": "自訂格式",
+  "Enable": "啟用設定",
+  "disableInMenu": "選單中隱藏",
+  "enable": "啟用",
+  "enableHotkey": "開關快捷鍵"
+}

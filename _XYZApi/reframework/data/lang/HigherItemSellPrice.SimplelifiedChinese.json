@@ -1,0 +1,5 @@
+{
+  "_XYZApi.title": "提高物品售价（HigherItemSellPrice）",
+  "ratio": "售价倍率",
+  "baseOnSellPrice": "以原售价为基准（关闭时以买价为基准）"
+}

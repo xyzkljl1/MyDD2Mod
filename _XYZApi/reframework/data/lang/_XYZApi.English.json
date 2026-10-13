@@ -1,0 +1,14 @@
+{
+  "_XYZApi.uiLanguage": "UI language",
+  "_XYZApi.followGame": "Follow game",
+  "_XYZApi.english": "English",
+  "_XYZApi.needRestart": " (Need Restart To Apply)",
+  "_XYZApi.needReentry": " (Need Return to Title to Apply)",
+  "_XYZApi.checkAll": "CheckAll",
+  "_XYZApi.uncheckAll": "UncheckAll",
+  "_XYZApi.search": "<-searh ",
+  "_XYZApi.searchSuffix": "(not sup IME) ",
+  "_XYZApi.missingHotkeys": "Can't Modify %s because lack of _ScriptCore",
+  "_XYZApi.author": "Author",
+  "_XYZApi.version": "Version"
+}

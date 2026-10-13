@@ -1,0 +1,5 @@
+{
+  "_XYZApi.title": "详细技能描述（SkillDescription）",
+  "removeOriginalText": "移除原始描述",
+  "specifyTransFile": "强制使用此描述语言（需重载脚本）"
+}

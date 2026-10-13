@@ -1,0 +1,18 @@
+{
+  "_XYZApi.uiLanguage": "界面语言",
+  "_XYZApi.followGame": "跟随游戏",
+  "_XYZApi.english": "英文",
+  "_XYZApi.needRestart": "（重启后生效）",
+  "_XYZApi.needReentry": "（返回标题后生效）",
+  "_XYZApi.checkAll": "全选",
+  "_XYZApi.uncheckAll": "取消全选",
+  "_XYZApi.search": "搜索",
+  "_XYZApi.searchSuffix": "（不支持输入法）",
+  "_XYZApi.missingHotkeys": "无法修改 %s：缺少 _ScriptCore",
+  "_XYZApi.author": "作者",
+  "_XYZApi.version": "版本",
+  "fontsize": "字号",
+  "font": "字体",
+  "count": "数量",
+  "item": "物品"
+}

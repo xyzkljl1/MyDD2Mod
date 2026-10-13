@@ -1,0 +1,13 @@
+{
+  "_XYZApi.title": "頭頂名稱（NameOnHead）",
+  "font": "字型",
+  "fontsize": "字型大小",
+  "shining": "顯示文字光暈",
+  "color": "文字顏色",
+  "offsetX": "X 軸偏移",
+  "offsetY": "Y 軸偏移",
+  "offsetZ": "Z 軸偏移",
+  "keyboardKey": "鍵盤切換鍵",
+  "controllerKeyShoulder": "控制器組合鍵：肩鍵",
+  "controllerKeyNotShoulder": "控制器組合鍵：另一按鍵"
+}

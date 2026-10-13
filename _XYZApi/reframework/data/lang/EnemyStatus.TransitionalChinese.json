@@ -1,0 +1,23 @@
+{
+  "_XYZApi.title": "敵人狀態（EnemyStatus）",
+  "Style": "樣式",
+  "fontsize": "字型大小",
+  "font": "字型",
+  "color": "文字顏色",
+  "backgroundcolor": "背景顏色",
+  "Display": "顯示設定",
+  "enable": "啟用",
+  "position": "顯示位置",
+  "Filter": "篩選",
+  "onlyboss": "僅顯示首領",
+  "Format": "顯示內容",
+  "showWeakpoint": "顯示弱點",
+  "showBodyParts": "顯示身體部位",
+  "showDebuff": "顯示異常狀態",
+  "showATKDEF": "顯示攻擊力與防禦力",
+  "showDamageAbsorption": "顯示傷害吸收率",
+  "showKnockdownAbsorption": "顯示擊倒傷害吸收率",
+  "showDamageReactionData": "顯示傷害反應資料",
+  "Hotkey": "快捷鍵",
+  "switchEnable": "切換顯示快捷鍵"
+}

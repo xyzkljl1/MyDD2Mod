@@ -1,0 +1,23 @@
+{
+  "_XYZApi.title": "敌人状态（EnemyStatus）",
+  "Style": "样式",
+  "fontsize": "字号",
+  "font": "字体",
+  "color": "文字颜色",
+  "backgroundcolor": "背景颜色",
+  "Display": "显示设置",
+  "enable": "启用",
+  "position": "显示位置",
+  "Filter": "筛选",
+  "onlyboss": "仅显示首领",
+  "Format": "显示内容",
+  "showWeakpoint": "显示弱点",
+  "showBodyParts": "显示身体部位",
+  "showDebuff": "显示异常状态",
+  "showATKDEF": "显示攻击力与防御力",
+  "showDamageAbsorption": "显示伤害吸收率",
+  "showKnockdownAbsorption": "显示击倒伤害吸收率",
+  "showDamageReactionData": "显示伤害反应数据",
+  "Hotkey": "快捷键",
+  "switchEnable": "切换显示快捷键"
+}

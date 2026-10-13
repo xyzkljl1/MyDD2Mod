@@ -1,0 +1,21 @@
+{
+  "_XYZApi.title": "掉落替換（EnemyDropFerryStone）",
+  "AffectGatherSpot": "影響採集點",
+  "IgnoreBossDrop": "不替換首領掉落",
+  "IgnoreQuestItem": "不替換任務物品",
+  "item1": "物品 1",
+  "count1": "數量 1",
+  "rate1": "機率 1（%）",
+  "item2": "物品 2",
+  "count2": "數量 2",
+  "rate2": "機率 2（%）",
+  "item3": "物品 3",
+  "count3": "數量 3",
+  "rate3": "機率 3（%）",
+  "item4": "物品 4",
+  "count4": "數量 4",
+  "rate4": "機率 4（%）",
+  "item5": "物品 5",
+  "count5": "數量 5",
+  "rate5": "機率 5（%）"
+}

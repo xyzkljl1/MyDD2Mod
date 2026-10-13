@@ -1,0 +1,9 @@
+{
+  "_XYZApi.title": "超級提燈（SuperLantern）",
+  "range": "照明範圍",
+  "light": "亮度",
+  "blink": "閃爍",
+  "cone": "聚光角度",
+  "spotLightColor": "聚光顏色",
+  "pointLightColor": "點光顏色"
+}

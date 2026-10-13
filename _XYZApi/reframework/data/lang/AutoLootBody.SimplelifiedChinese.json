@@ -1,0 +1,17 @@
+{
+  "_XYZApi.title": "自动搜刮（AutoLootBody）",
+  "Loot Settings": "搜刮设置",
+  "range": "搜刮范围",
+  "lootBody": "搜刮尸体",
+  "lootBodyPart": "搜刮怪物部位",
+  "lootDropItem": "搜刮掉落物品",
+  "lootDirectItem": "搜刮地面物品",
+  "lootGatherSpot": "搜刮采集点",
+  "lootSeekerToken": "搜刮探求心之证",
+  "lootNorganDucat": "搜刮诺根古币",
+  "lootChest": "搜刮宝箱",
+  "disableOnBattle": "战斗中禁用",
+  "Loot Message Settings": "搜刮提示设置",
+  "showLootMessage": "显示搜刮提示",
+  "messageFontsize": "提示字号"
+}
