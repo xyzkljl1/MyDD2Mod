@@ -3,11 +3,16 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
 local _config={
-    {name="Speed1",type="float",default=9.0,min=0.1,max=1000.0},
-    {name="Speed2",type="float",default=24.0,min=0.1,max=1000.0},
-    {name="Speed3",type="float",default=30.0,min=0.1,max=1000.0},
-    {name="Speed4",type="float",default=39.0,min=0.1,max=1000.0},
-    {name="Speed5",type="float",default=24.0,min=0.1,max=1000.0},
+    {type="author",version="1.3"},
+    {name="Climbing",type="mutualbox"},
+    {name="LadderSpeed",label="Rope / ladder climbing speed multiplier [base 1]",type="float",default=2.0,min=0.5,max=15.0},
+    {name="General movement",type="mutualbox"},
+    {name="Speed1",label="Speed (slow walk) [base ~6]",type="float",default=9.0,min=0.1,max=1000.0},
+    {name="Speed2",label="Speed (walk not in battle) [base ~18]",type="float",default=24.0,min=0.1,max=1000.0},
+    {name="Speed4",label="Speed (dash not holding weapon) [base ~27]",type="float",default=39.0,min=0.1,max=1000.0},
+    {name="Weapon drawn / In battle",type="mutualbox"},
+    {name="Speed3",label="Speed (dash holding weapon) [base ~23]",type="float",default=30.0,min=0.1,max=1000.0},
+    {name="Speed5",label="Speed (walk in battle) [base ~16]",type="float",default=24.0,min=0.1,max=1000.0},
 }
 
 --merge config file to default config
@@ -25,7 +30,7 @@ local function recurse_def_settings(tbl, new_tbl)
 end
 local config = {} 
 for key,para in pairs(_config) do
-    config[para.name]=para.default
+    if para.name~=nil then config[para.name]=para.default end
 end
 config= recurse_def_settings(config, json.load_file(configfile) or {})
 --end
@@ -73,6 +78,39 @@ local function Init()
 end
 
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
+
+local ladderLayer=nil
+local ladderSpeed=nil
+local function ResetLadderSpeed()
+    if ladderLayer~=nil then
+        pcall(function() ladderLayer:set_Speed(ladderSpeed) end)
+        ladderLayer=nil
+        ladderSpeed=nil
+    end
+end
+
+local frame=0
+re.on_application_entry("UpdateBehavior",function()
+    frame=(frame+1)%10
+    if frame~=0 then return end
+    local player_man=sdk.get_managed_singleton("app.CharacterManager")
+    local player=player_man and player_man:get_ManualPlayer()
+    local human=player and player:get_Human()
+    local rope=human and human:get_ClimbRopeCtrl()
+    local ladder=player and player:get_ClimbLadderCtrl()
+    local layer=rope and rope:get_IsActive() and rope.Layer or nil
+    if layer==nil and ladder and ladder:get_IsActive() then layer=player.FullBodyLayer end
+    if config.LadderSpeed==1 then layer=nil end
+    if layer~=ladderLayer then
+        ResetLadderSpeed()
+        if layer~=nil then
+            ladderLayer=layer
+            ladderSpeed=layer:get_Speed()
+        end
+    end
+    if ladderLayer~=nil then ladderLayer:set_Speed(ladderSpeed*config.LadderSpeed) end
+end)
+re.on_script_reset(ResetLadderSpeed)
 
 --try load api and draw ui
 local function prequire(...)

@@ -1,0 +1,12 @@
+{
+  "_XYZApi.title": "快速移动 FasterRun",
+  "Climbing": "攀爬",
+  "LadderSpeed": "攀绳 / 爬梯速度倍率 [原速 1]",
+  "General movement": "一般移动",
+  "Speed1": "速度（慢走）[原速约 6]",
+  "Speed2": "速度（非战斗行走）[原速约 18]",
+  "Speed4": "速度（收刀冲刺）[原速约 27]",
+  "Weapon drawn / In battle": "持刀 / 战斗中",
+  "Speed3": "速度（持刀冲刺）[原速约 23]",
+  "Speed5": "速度（战斗中行走）[原速约 16]"
+}
