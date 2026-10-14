@@ -2,12 +2,13 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
-    {type="author",version="1.4.11"},
+    {type="author",version="1.4.12"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
     {name="lootBodyPart",type="bool",default=true,label="Loot Body Part"},
-    {name="lootDropItem",type="bool",default=true,label="Loot Drop Item"},
+    {name="lootPlayerDropItem",type="bool",default=false,label="Player Drop Item"},
+    {name="lootDropItem",type="bool",default=true,label="Other Drop Item"},
     {name="lootDirectItem",type="bool",default=true,label="Loot Non-Drop Item"},
     {name="lootGatherSpot",type="bool",default=true,label="Loot Gather Point"},
     {name="lootSeekerToken",type="bool",default=false,label="Loot Seeker's Token"},
@@ -250,6 +251,11 @@ end
 --丢弃的物品和怪物掉落的物品
 local function LootGm82_000_001(gimmick)
     if gimmick:isInteractEnable(0)==true then
+        if gimmick.MyContext:get_IsPLDumped() then
+            if not config.lootPlayerDropItem then return end
+        elseif not config.lootDropItem then
+            return
+        end
         local distance= DistanceSqGimmick(gimmick) --gimmick.InteractiveObject:getDistanceSqFromPlayer(0)
         --treat 0.0 disatance as invalid
         if distance~=0.0 and distance<rangeSq then
@@ -435,7 +441,7 @@ sdk.hook(
                     LootGm82_009(gimmicks[i])
                 end
             end
-            if config.lootDropItem then
+            if config.lootPlayerDropItem or config.lootDropItem then
                 --iterate gimmick82_000_001
                 local gimmicks=gimmickManager:get_DropItemGimmicks()
                 local g_ct=gimmicks:get_Count()-1
