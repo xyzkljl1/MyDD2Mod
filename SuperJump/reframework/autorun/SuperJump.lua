@@ -3,8 +3,10 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
 local _config={
-    {name="para1",type="float",default=3,min=0.1,max=1000.0,needreentry=true,tip="Affect the height"},
-    {name="para2",type="float",default=0.93,min=0.1,max=1.2,step=0.001,tip="Affect the airborne time"},
+    {type="author",version="1.3"},
+    {name="para1",label="Jump height multiplier",type="float",default=4,min=0.1,max=1000.0,needreentry=true,tip="Affect the height"},
+    {name="para2",label="Airborne time factor",type="float",default=0.966,min=0.1,max=1.2,step=0.001,tip="Affect the airborne time"},
+    {name="HorizontalSpeed",label="Jump distance multiplier",type="float",default=4,min=0.1,max=10.0,tip="Affect the distance"},
 }
 
 --merge config file to default config
@@ -22,7 +24,7 @@ local function recurse_def_settings(tbl, new_tbl)
 end
 local config = {} 
 for key,para in pairs(_config) do
-    config[para.name]=para.default
+    if para.name~=nil then config[para.name]=para.default end
 end
 config= recurse_def_settings(config, json.load_file(configfile) or {})
 --end
@@ -60,6 +62,19 @@ sdk.hook(
         end
     end,
     nil
+)
+
+sdk.hook(
+    sdk.find_type_definition("app.Human"):get_method("setRateHorizontalSpeedForJump"),
+    function(args)
+        thread.get_hook_storage()["isPlayer"]=currentHuman~=nil and sdk.to_managed_object(args[2])==currentHuman
+    end,
+    function(retval)
+        if thread.get_hook_storage()["isPlayer"] then
+            currentHuman:set_BaseHorizontalSpeedForJump(currentHuman:get_BaseHorizontalSpeedForJump()*config.HorizontalSpeed)
+        end
+        return retval
+    end
 )
 
 sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,Init)
