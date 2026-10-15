@@ -280,6 +280,11 @@
             "efficacy": true,
             "format": "+{v1}% ضرر ضد أعداء معينين"
         },
+        "10227": {
+            "enable": true,
+            "efficacy": true,
+            "format": "+{v1}% ضرر ضد أعداء معينين"
+        },
         "31": {
             "enable": true,
             "format": "الأجسام +{v1}%، القنابل +{v2}%، الشخصيات +{v3}%"

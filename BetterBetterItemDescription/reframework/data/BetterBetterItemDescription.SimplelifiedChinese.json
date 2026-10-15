@@ -173,6 +173,11 @@
       "efficacy": true,
       "format": "对特定敌人+{v1}%伤害倍率"
     },
+    "10227": {
+      "enable": true,
+      "efficacy": true,
+      "format": "对特定敌人+{v1}%伤害倍率"
+    },
     "31": {
       "enable": true,
       "format": "物体 +{v1}%，炸弹 +{v2}%，角色 +{v3}%"

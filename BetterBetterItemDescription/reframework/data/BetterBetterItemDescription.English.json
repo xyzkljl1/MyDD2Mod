@@ -1344,6 +1344,11 @@
       "efficacy": true,
       "format": "+{v1}% Damage Rate to certain enemies"
     },
+    "10227": {
+      "enable": true,
+      "efficacy": true,
+      "format": "+{v1}% Damage Rate to certain enemies"
+    },
     "31": {
       "enable": true,
       "format": "objects +{v1}%, bombs +{v2}%, characters +{v3}%"

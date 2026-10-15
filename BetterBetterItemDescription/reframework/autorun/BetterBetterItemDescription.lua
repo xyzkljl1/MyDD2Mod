@@ -4,7 +4,7 @@ log.info("["..modname.."]".."Start")
 --settings
 local dataFileInfo={type="author",name="Data file: Built-in"}
 local _config={
-    {type="author",version="2.0"},
+    {type="author",version="2.0.1"},
     dataFileInfo,
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
 }
@@ -185,6 +185,7 @@ local WeaponSpecialFormat={
 local RingSpecialFormat={
     [10201]={enable=true,efficacy=true,format="+{v1}% Damage Rate to certain enemies"},
     [10202]={enable=true,efficacy=true,format="+{v1}% Damage Rate to certain enemies"},
+    [10227]={enable=true,efficacy=true,format="+{v1}% Damage Rate to certain enemies"},
     [31]={enable=true,format="objects +{v1}%, bombs +{v2}%, characters +{v3}%"},
     [35]={enable=true,format="-{v1} HP/s"},
     [36]={enable=true,format="Day -{v1} HP/s, night +{v2} HP/s"},
