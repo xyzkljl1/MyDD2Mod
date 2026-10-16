@@ -4,7 +4,7 @@ log.info("["..modname.."]".."Start")
 --settings
 local dataFileInfo={type="author",name="Data file: Built-in"}
 local _config={
-    {type="author",version="2.0.1"},
+    {type="author",version="2.0.2"},
     dataFileInfo,
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
 }
@@ -1284,6 +1284,7 @@ local tmpSkillInfo=nil
 --Job NormalSkill CustomSkill Ability other
 local MainContentsInfoKindAbility=sdk.find_type_definition("app.ui040101_00.MainContentsInfo.Kind"):get_field("Ability"):get_data()
 local MainContentsInfoKindOther=sdk.find_type_definition("app.ui040101_00.MainContentsInfo.Kind"):get_field("Other"):get_data()
+local FlowIdEqAbilityMenu=sdk.find_type_definition("app.ui040101_00.FlowId"):get_field("EqAbilityMenu"):get_data()
 
 --in Augments tab
 sdk.hook(
@@ -1300,7 +1301,7 @@ sdk.hook(
             local cursor=tmpJobWindow._Main_ContentsListCtrl:get_SelectedInfo()
             local rcursor=tmpJobWindow._Ability_EqListCtrl:get_SelectedInfo()
 
-            if tmpJobWindow._IsSelectEquipContents then
+            if tmpJobWindow._FlowNow==FlowIdEqAbilityMenu then
                 abilityId=rcursor and rcursor.AbilityID
             elseif cursor and cursor.ContenstsType==MainContentsInfoKindAbility and cursor.Ability then
                 abilityId=cursor.Ability.AbilityID
