@@ -260,7 +260,14 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         if attackHitController~=nil then
             local rate=attackHitController:get_AttackRateCalc()
             if rate~=1 then
-                msg=msg.." (Tension x"..f2s2(rate)..")"
+                msg=msg.." (Deal x"..f2s2(rate)..")"
+            end
+        end
+        local damageHitController=damageInfo["<DamageHitController>k__BackingField"]
+        if damageHitController~=nil then
+            local rate=damageHitController:get_DamageRateCalc()
+            if rate~=1 then
+                msg=msg.." (Taken x"..f2s2(rate)..")"
             end
         end
         local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
