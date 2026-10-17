@@ -3,6 +3,7 @@ local configfile=modname..".json"
 log.info("["..modname.."]".."Start")
 --settings
 local _config={
+    {type="author",version="2.5"},
     {name="Style",type="mutualbox"},
     {name="fontsize",type="fontsize",default=60,min=1,max=250,needrestart=true,widthscale=0.4,label="Font Size"},
     {name="",type="sameline"},
@@ -29,6 +30,7 @@ local _config={
     {name="Damage Format",type="mutualbox"},
     {name="showlefthp",type="bool",default=false,label="Show Left HP"},{name="",type="sameline"},
     {name="showmultiplier",type="bool",default=true,label="Show Multiplier"},{name="",type="sameline"},
+    {name="showMoreMultiplier",type="bool",default=false,label="Show More Multiplier"},{name="",type="sameline"},
     {name="showActionRate",type="bool",default=false,label="Show Action Rate"},
     {name="showDamageType",type="bool",default=false,label="Show Damage Type Flag"},{name="",type="sameline"},
     {name="showDamageComposition",type="bool",default=false,label="Show Original Damage Composition"},{name="",type="sameline"},
@@ -68,7 +70,7 @@ local function recurse_def_settings(tbl, new_tbl)
 end
 local config = {} 
 for key,para in pairs(_config) do
-    config[para.name]=para.default
+    if para.name~=nil then config[para.name]=para.default end
 end
 config= recurse_def_settings(config, json.load_file(configfile) or {})
 --On setting Change
@@ -259,7 +261,7 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         msg=msg.." (x"..f2s2(damageInfo.DamageRate) ..")"
     end
 
-    if config.showmultiplier and not damageInfo.IsDirectDamage then
+    if config.showMoreMultiplier and not damageInfo.IsDirectDamage then
         local attackHitController=damageInfo["<AttackHitController>k__BackingField"]
         if attackHitController~=nil then
             local rate=attackHitController:get_AttackRateCalc()
@@ -273,6 +275,9 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
             if rate~=1 then
                 msg=msg.." (Taken x"..f2s2(rate)..")"
             end
+        end
+        if damageInfo.DamageRateIgnoreMaxHpDamage~=1 then
+            msg=msg.." (Posion x"..f2s2(damageInfo.DamageRateIgnoreMaxHpDamage)..")"
         end
         local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
         if damageTmpInfo~=nil and damageTmpInfo.HardModeDamageRate~=nil and damageTmpInfo.HardModeDamageRate~=1 then
@@ -638,7 +643,7 @@ local tmpDamageInfoArg=nil
 sdk.hook(
     sdk.find_type_definition("app.ExceptPlayerDamageCalculator"):get_method("calcDamageValueDefence(app.HitController.DamageInfo)"),
     function(args)
-        if (config.showDamageAtkDefAbsorption or config.showmultiplier) and config.showDamage then
+        if (config.showDamageAtkDefAbsorption or config.showMoreMultiplier) and config.showDamage then
             local damageInfo =sdk.to_managed_object(args[3])
             AddDamageTmpInfoBeforeCalcDef(damageInfo,sdk.to_managed_object(args[2])._HardModeDamageRate)
             tmpDamageInfoArg=damageInfo

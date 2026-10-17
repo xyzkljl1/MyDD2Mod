@@ -19,6 +19,7 @@
   "Damage Format": "伤害格式",
   "showlefthp": "显示剩余生命",
   "showmultiplier": "显示伤害倍率",
+  "showMoreMultiplier": "显示更多倍率",
   "showActionRate": "显示动作值",
   "showDamageType": "显示伤害类型标记",
   "showDamageComposition": "显示原始伤害构成",
