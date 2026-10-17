@@ -247,7 +247,11 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
     end
 
     if config.showActionRate and AttackUserData~=nil then
-        msg=string.format("%s [%s]",msg, f2s2(AttackUserData.ActionRate))
+        local rate=f2s2(AttackUserData.ActionRate)
+        if not damageInfo.IsDirectDamage and damageInfo.DamageRateAction~=1 then
+            rate=rate.."x"..f2s2(damageInfo.DamageRateAction)
+        end
+        msg=string.format("%s [%s]",msg, rate)
     end
 
     -- compare float to 1 seems to be okay?
@@ -272,7 +276,7 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         end
         local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
         if damageTmpInfo~=nil and damageTmpInfo.HardModeDamageRate~=nil and damageTmpInfo.HardModeDamageRate~=1 then
-            msg=msg..string.format(" (Hard x%.3f)",damageTmpInfo.HardModeDamageRate)
+            msg=msg.." (Hard x"..f2s2(damageTmpInfo.HardModeDamageRate)..")"
         end
         if AttackUserData~=nil then
             local ch2=character.EnemyCtrl and character.EnemyCtrl.Ch2
