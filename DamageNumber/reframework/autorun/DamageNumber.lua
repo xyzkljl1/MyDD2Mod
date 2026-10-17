@@ -239,7 +239,7 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         if damageInfo.ShootDamage > 0 then _msg=_msg.." Shoot:"..f2s(damageInfo.ShootDamage) end
         if damageInfo.MagicDamage > 0 then _msg=_msg.." Magic:"..f2s(damageInfo.MagicDamage) end
         if damageInfo.EnchantDamage > 0 then _msg=_msg.." Enchant:"..f2s(damageInfo.EnchantDamage).."*"..f2s2(damageInfo.EnchantRate) end
-        if damageInfo.NonMagicElementDamage > 0 then _msg=_msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage) end
+        if damageInfo.NonMagicElementDamage > 0 then _msg=_msg.." NonMagicElement:"..f2s(damageInfo.NonMagicElementDamage).."*"..f2s2(AttackUserData~=nil and AttackUserData.NonMagicElementRate or 1) end
         if damageInfo.FixedDamage > 0 then _msg=_msg.." Fixed:"..f2s(damageInfo.FixedDamage) end
         if _msg  ~=nil then
             msg=msg.."/".._msg
@@ -259,6 +259,16 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
         if damageTmpInfo~=nil and damageTmpInfo.HardModeDamageRate~=nil and damageTmpInfo.HardModeDamageRate~=1 then
             msg=msg..string.format(" (Hard x%.3f)",damageTmpInfo.HardModeDamageRate)
+        end
+        if AttackUserData~=nil then
+            local ch2=character.EnemyCtrl and character.EnemyCtrl.Ch2
+            local calculator=ch2 and ch2._AttackNameToDamageCoefCalculator
+            if calculator~=nil then
+                local rate=calculator:getDamageCoef(AttackUserData:get_NameHash()).Item1
+                if rate~=1 then
+                    msg=msg.." (DLC x"..f2s2(rate)..")"
+                end
+            end
         end
     end
 
