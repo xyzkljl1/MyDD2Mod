@@ -1,5 +1,5 @@
 ﻿local modname="_XYZAPI"
-local version="1.10"
+local version="1.10.1"
 local vecNames={
     ".x",
     ".y",
@@ -587,7 +587,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             isInMutualBox=false
                         end
                     elseif para.type=="buttonN" then
-                        if #config[key]~=0 then
+                        if next(config[key])~=nil then
                             imgui.begin_rect()
                             imgui.text_colored(label..title_postfix,para.color or 0xff885533)
                             for _,buttonpara in pairs(config[key]) do
