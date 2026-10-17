@@ -255,6 +255,13 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
         msg=msg.." (x"..f2s2(damageInfo.DamageRate) ..")"
     end
 
+    if config.showmultiplier and not damageInfo.IsDirectDamage then
+        local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
+        if damageTmpInfo~=nil and damageTmpInfo.HardModeDamageRate~=nil and damageTmpInfo.HardModeDamageRate~=1 then
+            msg=msg..string.format(" (Hard x%.3f)",damageTmpInfo.HardModeDamageRate)
+        end
+    end
+
     if config.showDamageAtkDefAbsorption and isPlayerAttackHit then
         local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
         if damageTmpInfo~=nil then
@@ -459,10 +466,11 @@ local function AddDamageNumberPost(damageNumber,damageInfo)
     end
 end
 
-local function AddDamageTmpInfoBeforeCalcDef(damageInfo)
+local function AddDamageTmpInfoBeforeCalcDef(damageInfo,rate)
     local address=damageInfo:get_address()
     local damageTmpInfo=damageTmpInfos[address] or {lifetime=3}
     damageTmpInfos[address]=damageTmpInfo
+    damageTmpInfo.HardModeDamageRate=rate
     for name,field in pairs(damageFieldsInDamageInfo) do
         damageTmpInfo[name]=damageInfo[field]
     end
@@ -602,9 +610,9 @@ local tmpDamageInfoArg=nil
 sdk.hook(
     sdk.find_type_definition("app.ExceptPlayerDamageCalculator"):get_method("calcDamageValueDefence(app.HitController.DamageInfo)"),
     function(args)
-        if config.showDamageAtkDefAbsorption and config.showDamage then
+        if (config.showDamageAtkDefAbsorption or config.showmultiplier) and config.showDamage then
             local damageInfo =sdk.to_managed_object(args[3])
-            AddDamageTmpInfoBeforeCalcDef(damageInfo)
+            AddDamageTmpInfoBeforeCalcDef(damageInfo,sdk.to_managed_object(args[2])._HardModeDamageRate)
             tmpDamageInfoArg=damageInfo
         end
     end,
