@@ -256,6 +256,13 @@ local function DamageNumber2Message(character,damageInfo,AttackUserData,isPlayer
     end
 
     if config.showmultiplier and not damageInfo.IsDirectDamage then
+        local attackHitController=damageInfo["<AttackHitController>k__BackingField"]
+        if attackHitController~=nil then
+            local rate=attackHitController:get_AttackRateCalc()
+            if rate~=1 then
+                msg=msg.." (Tension x"..f2s2(rate)..")"
+            end
+        end
         local damageTmpInfo=damageTmpInfos[damageInfo:get_address()]
         if damageTmpInfo~=nil and damageTmpInfo.HardModeDamageRate~=nil and damageTmpInfo.HardModeDamageRate~=1 then
             msg=msg..string.format(" (Hard x%.3f)",damageTmpInfo.HardModeDamageRate)
