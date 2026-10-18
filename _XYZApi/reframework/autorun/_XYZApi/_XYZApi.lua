@@ -1,5 +1,5 @@
 ﻿local modname="_XYZAPI"
-local version="1.10.1"
+local version="1.10.2"
 local vecNames={
     ".x",
     ".y",
@@ -24,6 +24,7 @@ local itemIds=nil
 local itemSearchOptions={}
 local itemIndex2itemId={}
 local itemId2itemIndex={}
+local mergedItemIds
 
 --local defaultCNFont=nil
 local function Log(...)
@@ -106,6 +107,19 @@ end
 local function DD2_InitItemId()
     if isDD2()==false then return end
 
+    if mergedItemIds==nil then
+        local sceneManager=sdk.get_native_singleton("via.SceneManager")
+        local scene=sdk.call_native_func(sceneManager,sdk.find_type_definition("via.SceneManager"),"get_CurrentScene")
+        local components=scene and scene:call("findComponents(System.Type)",sdk.typeof("app.GuiManagerBehavior"))
+        local behavior=components and components[0]
+        local data=behavior and behavior:get_field("ItemMergedStorageSettingData")
+        if data==nil or data._Params==nil or data._Params:get_size()==0 then return end
+        mergedItemIds={}
+        for _,param in ipairs(data._Params:get_elements()) do
+            mergedItemIds[param._FakeItemID]=true
+        end
+    end
+
     -- imgui.combo seems not to sort by number index when there are many items.Use continuous index to force it sort
     itemNames=itemNames or {}
     local id2Name={}
@@ -159,7 +173,7 @@ local function DD2_InitItemId()
             end):gsub("<EQABI%s+[^>]*>","")
         end
         if name ~="Invalid" and name~=nil and name~="" and not name:find("#Rejected#",1,true)
-            and (validRelics[id] or id<50000 or id>=60000) then
+            and (validRelics[id] or not mergedItemIds[id]) then
             id2Name[itemCommonParam._Id]= string.format("%5d /%s",itemCommonParam._Id,name)
             table.insert(itemIds,itemCommonParam._Id)
         end
