@@ -1,5 +1,5 @@
 ﻿local modname="_XYZAPI"
-local version="1.10.2"
+local version="1.10.3"
 local vecNames={
     ".x",
     ".y",
@@ -22,6 +22,7 @@ local hk = prequire("Hotkeys/Hotkeys")
 local itemNames=nil
 local itemIds=nil
 local itemSearchOptions={}
+local refreshItems=true
 local itemIndex2itemId={}
 local itemId2itemIndex={}
 local mergedItemIds
@@ -159,6 +160,9 @@ local function DD2_InitItemId()
     end
 ]]--
 
+    local getItemName=sdk.find_type_definition("app.GUIBase"):get_method("getItemName(System.Int32)")
+    local getGuidByName=sdk.find_type_definition("via.gui.message"):get_method("getGuidByName(System.String)")
+    local getMessage=sdk.find_type_definition("app.MessageManager"):get_method("getMessage(System.Guid)")
     -- for some mysterious reason ,directly GetEnumerator not working,iter:get_Current():get_Value() not working too.
     local iter=im._ItemDataDict:call('System.Collections.IEnumerable.GetEnumerator()')
     iter:MoveNext()
@@ -166,10 +170,14 @@ local function DD2_InitItemId()
         local itemCommonParam=iter._current.value
         local id=itemCommonParam._Id
         local name=itemCommonParam:get_Name()
+        if name==nil or name=="" or name=="Invalid" then
+            -- for compatible issue. content-editor hooks only this method.
+            name=getItemName:call(nil,id)
+        end
         if name~=nil then
             name=name:gsub("<REF%s+([^<>%s]+)%s*>",function(key)
-                local guid=sdk.find_type_definition("via.gui.message"):get_method("getGuidByName(System.String)"):call(nil,key)
-                return sdk.find_type_definition("app.MessageManager"):get_method("getMessage(System.Guid)"):call(nil,guid)
+                local guid=getGuidByName:call(nil,key)
+                return getMessage:call(nil,guid)
             end):gsub("<EQABI%s+[^>]*>","")
         end
         if name ~="Invalid" and name~=nil and name~="" and not name:find("#Rejected#",1,true)
@@ -521,6 +529,8 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             _changed=true
                         end
                     elseif para.type=="item" then
+                        -- Refresh item list upon drawing ui first time. Because content-editor mod adds invalid items first and hook gui getItemName method later. It creates a window in which valid items are invalid. The only solution is to delay the init.
+                        if refreshItems then DD2_InitItemId(); refreshItems=false end
                         itemSearchOptions[para]=true
                         if para.enableSearch==true or para.enableSearch==nil then
                             imgui.push_item_width(imgui.calc_item_width()*0.2)
