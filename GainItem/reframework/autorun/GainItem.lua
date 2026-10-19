@@ -26,11 +26,26 @@ local _config={
     {name="RemoveFromFavList",type="button",onClick=function() onRemoveFromFavList() end},
     {name="FavList",type="buttonN",onClick=function(...) onFavListClick(...) end,default={}},
     {type="mutualboxend"},
-    {type="author",version="1.4.5"}
+    {type="author",version="1.4.6"}
 }
 
 local myapi = require("_XYZApi/_XYZApi")
 local config=myapi.InitFromFile(_config,configfile)
+local favKeys=nil
+setmetatable(config.FavList,{__pairs=function(list)
+    if favKeys==nil then
+        favKeys={}
+        for key in next,list do favKeys[#favKeys+1]=key end
+        table.sort(favKeys,function(a,b) return list[a].index<list[b].index end)
+    end
+    local keys=favKeys
+    local i=0
+    return function()
+        i=i+1
+        local key=keys[i]
+        if key~=nil then return key,list[key] end
+    end
+end})
 
 local function Log(msg)
     print(msg)
@@ -272,7 +287,8 @@ onAddToFavList=function()
             name=config.item.." / "..item:get_Name()
         }
         config.FavList=config.FavList or {}
-        table.insert(config.FavList,favitem)
+        config.FavList["item_"..config.item]=favitem
+        favKeys=nil
     end
 end
 
@@ -281,6 +297,7 @@ onRemoveFromFavList=function()
     for k,v in pairs(config.FavList) do
         if v.index==config.item then
             config.FavList[k]=nil
+            favKeys=nil
         end
     end
 end
