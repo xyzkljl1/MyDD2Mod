@@ -1572,6 +1572,7 @@
     "StaminaRecoverFactor": "%s%% Stamina Recover ",
     "Sec": "for %s seconds",
     "MaxHpDamageFactor":"-%s%% MaxHP Loss",
-    "Camp":"Camp:"
+    "Camp":"Camp:",
+    "SpecialCamp": "Camp (Orienteer):"
   }
 }

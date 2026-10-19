@@ -1575,6 +1575,7 @@
     "StaminaRecoverFactor": "%s%% 耐力恢复",
     "Sec": ",持续%s秒",
     "MaxHpDamageFactor": "-%s%% 最大血量损失",
-    "Camp": "露营:"
+    "Camp": "露营:",
+    "SpecialCamp": "露营(野营知识）:"
   }
 }
