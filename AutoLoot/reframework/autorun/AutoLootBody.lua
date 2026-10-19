@@ -2,7 +2,7 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
-    {type="author",version="1.4.12"},
+    {type="author",version="1.4.13"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
@@ -149,6 +149,7 @@ end
 
 
 
+local executeBodyPartInteract=sdk.find_type_definition("app.DropPartsController"):get_method("executeInteract")
 local function LootBodyPart(dropPartsController)
     --don't use dropPartsController:get_DropWork():get_IsInteractEnable() 
     if dropPartsController==nil 
@@ -194,7 +195,11 @@ local function LootBodyPart(dropPartsController)
         Log("Start Loot Body Part",maxNum)
         --interObject:isInteractEnable(0) returns false
 	    while ct<20 and ct<maxNum do
-    		    dropPartsController:executeInteract(0, playerManager:get_ManualPlayer())
+            executeBodyPartInteract:call(dropPartsController,0,playerManager:get_ManualPlayer())
+            if not dropPartsController:get__DropPartsContext():get_IsInteracted() then
+                waitingBodyControllerList[dropPartsController]=nil
+                return
+            end
 		    ct=ct+1
             --break
 	    end
