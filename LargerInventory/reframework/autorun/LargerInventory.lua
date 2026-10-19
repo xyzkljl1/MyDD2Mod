@@ -38,6 +38,14 @@ sdk.hook(
         return sdk.to_ptr(true)
     end
 )
+-- coin shop
+sdk.hook(
+    sdk.find_type_definition("app.ui041802"):get_method("checkCanTrade"),
+    nil,
+    function(retval)
+        return sdk.to_ptr(true)
+    end
+)
 -- fake shop
 sdk.hook(
     sdk.find_type_definition("app.ui041002"):get_method("checkCanTradeWareHouse"),
