@@ -4,7 +4,7 @@ log.info("["..modname.."]".."Start")
 --settings
 local dataFileInfo={type="author",name="Data file: Built-in"}
 local _config={
-    {type="author",version="2.0.2"},
+    {type="author",version="2.0.3"},
     dataFileInfo,
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
 }
@@ -795,7 +795,7 @@ local function TranslateItemBuff(param)
         local getBuffMethod=sdk.find_type_definition("app.CampDefine"):get_method("tryGetBuff(app.ItemIDEnum, app.HumanSpecialBuffDefine.Camp)")
         local success=getBuffMethod(nil,param._Id,mycampBuffParam)
         if success then
-            local campBuff=buffParam:getCampParam(mycampBuffParam.value__)
+            local campBuff=buffParam:call("getCampParam(app.HumanSpecialBuffDefine.Camp, System.Boolean)",mycampBuffParam.value__,false)
             if campBuff then
                 msg=msg..format.Camp
                 if campBuff.AttackFactor~=0 then
