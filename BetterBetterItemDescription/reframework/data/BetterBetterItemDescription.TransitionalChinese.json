@@ -7,12 +7,12 @@
     },
     "1010": {
       "enable": true,
-      "format": "每次攻擊獲得+{v1}%可疊加的基礎攻擊力，不超過+{v2}%",
+      "format": "每次攻擊獲得+{v1}%可疊加的基礎物攻，不超過+{v2}%",
       "hint": "wp00_007_00,龙之信条,每次攻击获得基础攻击倍率"
     },
     "1207": {
       "enable": true,
-      "format": "**高於25%血量時獲得+0~10%基礎攻擊力.低於25%血量時獲得+300%基礎攻擊力",
+      "format": "**高於25%體力時獲得+0~10%基礎物攻.低於25%體力時獲得+300%基礎物攻",
       "hint": "龙之信条大剑,根据(1-ReducedHpRatio)获得基础攻击倍率，参数是1/1实在找不到规律，代码也看不懂，实测是损失(0,75%)血量时获得约(0,0.1),损失75%以上时跃升至4.0"
     },
     "1413": {
@@ -22,7 +22,7 @@
     "1610": {
       "enable": true,
       "curve": true,
-      "format": "低於{t1}%血量時獲得{v0}~{v1}%基礎魔攻，高於{t2}%血量時獲得+{v2}%基礎魔攻",
+      "format": "低於{t1}%體力時獲得{v0}~{v1}%基礎魔攻，高於{t2}%體力時獲得+{v2}%基礎魔攻",
       "hint": "封魔大杖，(5，100)"
     },
     "1804": {
@@ -32,17 +32,17 @@
     },
     "1906": {
       "enable": true,
-      "format": "敵人獲得額外x{v2}傷害倍率/每秒恢復{v1}HP",
+      "format": "敵人獲得額外x{v2}傷害倍率/每秒回復{v1}體力",
       "hint": "圣木魔弓，固定回血，给敌人加DamageRate"
     },
     "2010": {
       "enable": true,
-      "format": "每次攻擊獲得+{v1}%可疊加的基礎攻擊力，不超過+{v2}%",
+      "format": "每次攻擊獲得+{v1}%可疊加的基礎物攻，不超過+{v2}%",
       "hint": "林德蠕龙的尖牙"
     },
     "2103": {
       "enable": true,
-      "format": "**每次攻擊獲得10金幣，上限3000，另有小概率獲得100/1000/50000金幣(不計入上限)",
+      "format": "**每次攻擊獲得10金幣，上限3000，另有小機率獲得100/1000/50000金幣(不計入上限)",
       "wp10_003": true,
       "hint": "梦想路，50/50,攻击加金钱,不知道什么意思"
     },
@@ -52,7 +52,7 @@
     }
   },
   "FieldFormat": {
-    "_BlowResistRate": "+%s 擊退抗性",
+    "_BlowResistRate": "+%s 擊飛抗性",
     "_BuyPrice": {
       "enable": false,
       "format": "BuyPrice %s.",
@@ -88,8 +88,8 @@
       "type": "Enum"
     },
     "_ElementStore": "%s元素異常附魔",
-    "_Blow": "%s 擊飛",
-    "_BlowGuard": "%s 擊飛防御",
+    "_Blow": "%s 擊飛力",
+    "_BlowGuard": "%s 擊飛防禦",
     "_PoisonStore": "%s 毒附魔",
     "_StrikeStore": "%s 昏厥附魔",
     "_SleepStore": "%s 睡眠附魔",
@@ -112,7 +112,7 @@
       "format": "Id %s.",
       "type": "String"
     },
-    "_LightDefence": "%s%% 抗光",
+    "_LightDefence": "%s%% 抗聖",
     "_MagicAttack": "%s 魔攻",
     "_MagicDefence": "%s 魔防",
     "_OilResist": "%s%% 抗浸油",
@@ -141,7 +141,7 @@
         "書籍",
         "箭",
         "技能",
-        "追隨者技能",
+        "隨從技能",
         "魔法書",
         "綫上遊戲"
       ],
@@ -191,11 +191,11 @@
     },
     "41": {
       "enable": true,
-      "format": "恢復已消耗耐力的{v1}%"
+      "format": "回復已消耗耐力的{v1}%"
     },
     "42": {
       "enable": true,
-      "format": "耐力耗盡時恢復速度 +{v1}%"
+      "format": "耐力耗盡時回復速度 +{v1}%"
     },
     "43": {
       "enable": true,
@@ -231,11 +231,11 @@
     },
     "51": {
       "enable": true,
-      "format": "擊退力+{v1}%"
+      "format": "擊飛力+{v1}%"
     },
     "58": {
       "enable": true,
-      "format": "恢復等於係數×動作值的耐力，係數：戰士{sr1}/弓箭手{sr2}/法師{sr3}/盜賊{sr4}/鬥士{sr5}/巫師{sr6}/魔劍士{sr7}/魔弓手{sr8}/幻術師{sr9}，不超過{sm4}（魔弓手、盜賊）/{sm1}（其它）"
+      "format": "回復等於係數×動作值的耐力，係數：戰士{sr1}/弓箭手{sr2}/法師{sr3}/盜賊{sr4}/鬥士{sr5}/巫師{sr6}/魔劍士{sr7}/魔弓手{sr8}/幻術師{sr9}，不超過{sm4}（魔弓手、盜賊）/{sm1}（其它）"
     },
     "38": {
       "enable": true,
@@ -262,7 +262,7 @@
     },
     "12": {
       "enable": true,
-      "format": "+{v1} 抗擊飛",
+      "format": "+{v1} 擊飛抗性",
       "hint": "(3535,Ring of Resolution,100,0,0)"
     },
     "13": {
@@ -277,7 +277,7 @@
     },
     "15": {
       "enable": true,
-      "format": "低於{t3}負重時獲得{v3}%基礎攻擊力，低於{t1}負重時獲得+{v1}%基礎攻擊力，低於0負重時無效",
+      "format": "低於{t3}負重時獲得{v3}%基礎物攻，低於{t1}負重時獲得+{v1}%基礎物攻，低於0負重時無效",
       "hint": "(3538,Ring of Brawn,0,0,0)",
       "curve": true
     },
@@ -288,12 +288,12 @@
     },
     "17": {
       "enable": true,
-      "format": "低於{v1}%體力上限時獲得+{v2}%基礎攻擊力",
+      "format": "低於{v1}%體力上限時獲得+{v2}%基礎物攻",
       "hint": "(3540,Ring of Recompense,25,100,0)"
     },
     "18": {
       "enable": true,
-      "format": "滿血時獲得+{v1}%基礎攻擊力",
+      "format": "體力全滿時獲得+{v1}%基礎物攻",
       "hint": "(3541,Ring of Predominance,100,10,0)"
     },
     "2": {
@@ -308,12 +308,12 @@
     },
     "21": {
       "enable": true,
-      "format": "+{v1} 耐力恢復",
+      "format": "+{v1} 耐力回復",
       "hint": "(3544,Ring of Quickening,10,0,0)"
     },
     "22": {
       "enable": true,
-      "format": "+{v1} 擊飛能力",
+      "format": "+{v1} 擊飛力",
       "hint": "(3545,Ring of Vehemence,100,0,0)"
     },
     "23": {
@@ -334,12 +334,12 @@
     },
     "26": {
       "enable": true,
-      "format": "追随者在{v2}秒內獲得{v1} 防御",
+      "format": "隨從在{v2}秒內獲得{v1} 防禦",
       "hint": "(3551,Ring of Reassurance,50,20,0)"
     },
     "27": {
       "enable": true,
-      "format": "+{v1}% 恢復量",
+      "format": "+{v1}% 回復量",
       "hint": "(3552,Ring of Amplification,10,0,0)"
     },
     "28": {
@@ -389,7 +389,7 @@
     },
     "9": {
       "enable": true,
-      "format": "殺敵恢復{v1} 體力",
+      "format": "殺敵回復{v1} 體力",
       "hint": "(3532,Ring of Regeneration,50,0,0)"
     }
   },
@@ -400,7 +400,7 @@
       "hint": "Frosted Edge"
     },
     "48": {
-      "format": "{ex1}%機率按造成傷害的{ex2}%恢復體力（大劍×{ex3}／匕首×{ex4}／弓×{ex5}／魔道弓×{ex6}／香爐×{ex7}）",
+      "format": "{ex1}%機率按造成傷害的{ex2}%回復體力（大劍×{ex3}／匕首×{ex4}／弓×{ex5}／魔道弓×{ex6}／香爐×{ex7}）",
       "hint": "Aggressive Recovery",
       "ex1": [
         "RecoverOnAttackHitParam",
@@ -654,7 +654,7 @@
       "hint": "Ice Elemental"
     },
     "80": {
-      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "format": "-{ex1}%受到的傷害，+{ex2}%機率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -680,7 +680,7 @@
       ]
     },
     "81": {
-      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "format": "-{ex1}%受到的傷害，+{ex2}%機率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -706,7 +706,7 @@
       ]
     },
     "82": {
-      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "format": "-{ex1}%受到的傷害，+{ex2}%機率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -732,7 +732,7 @@
       ]
     },
     "83": {
-      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "format": "-{ex1}%受到的傷害，+{ex2}%機率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -758,7 +758,7 @@
       ]
     },
     "84": {
-      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "format": "-{ex1}%受到的傷害，+{ex2}%機率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -784,7 +784,7 @@
       ]
     },
     "85": {
-      "format": "-{ex1}%受到的傷害，+{ex2}%概率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
+      "format": "-{ex1}%受到的傷害，+{ex2}%機率免疫傷害，+{ex5}%反擊傷害，反彈傷害的{ex3}%作為冰異常累積（至少{ex4}）",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -987,7 +987,7 @@
       "hint": "Bolstered Outset"
     },
     "104": {
-      "format": "+{ex1}%概率額外掉落",
+      "format": "+{ex1}%機率額外掉落",
       "hint": "Relic Hunter",
       "ex1": [
         "RelicDropRateUpParam",
@@ -1000,7 +1000,7 @@
       "hint": "Carnivore"
     },
     "107": {
-      "format": "{v1}% 概率+{v2}% 傷害",
+      "format": "{v1}% 機率+{v2}% 傷害",
       "hint": "Arcane Wisdom"
     },
     "108": {
@@ -1016,7 +1016,7 @@
       "hint": "Prone Defense"
     },
     "111": {
-      "format": "{v2}% 概率提前 {v1}% 恢復行動",
+      "format": "{v2}% 機率提前 {v1}% 恢復行動",
       "hint": "Imperiled Reflexes"
     },
     "112": {
@@ -1086,7 +1086,7 @@
       "hint": "Animated Recovery"
     },
     "121": {
-      "format": "-{v1}% 上坡耐力消耗與恢復懲罰",
+      "format": "-{v1}% 上坡耐力消耗與回復懲罰",
       "hint": "Hill Strider"
     },
     "122": {
@@ -1212,7 +1212,7 @@
       ]
     },
     "144": {
-      "format": "{v1}% 概率+{v2}% 傷害",
+      "format": "{v1}% 機率+{v2}% 傷害",
       "hint": "Riotous Magick"
     },
     "145": {
@@ -1256,7 +1256,7 @@
       "hint": "Full Bend"
     },
     "155": {
-      "format": "-{v1}% 受到的傷害；+{v2}% 擊退抗性",
+      "format": "-{v1}% 受到的傷害；+{v2}% 擊飛抗性",
       "hint": "Fortified Invocation"
     },
     "156": {
@@ -1324,7 +1324,7 @@
       ]
     },
     "168": {
-      "format": "瀕死(HP＜200或HP＜25%)時{ex1}秒內：+{ex2}% 物攻／魔攻；+{ex3}% 物防／魔防\n+{ex4}% 擊退力；-{ex5}% 受到的后仰／擊飛強度",
+      "format": "瀕死(HP＜200或HP＜25%)時{ex1}秒內：+{ex2}% 物攻／魔攻；+{ex3}% 物防／魔防\n+{ex4}% 擊飛力；-{ex5}% 受到的后仰／擊飛強度",
       "hint": "Moribund Frenzy",
       "ex1": [
         "StatusUpOnLowHealthParam",
@@ -1369,7 +1369,7 @@
       "hint": "Airborne Reflexes"
     },
     "175": {
-      "format": "+{ex1}擊退力",
+      "format": "+{ex1}擊飛力",
       "hint": "Forceful Strikes",
       "ex1": [
         "BlowUpParam",
@@ -1399,7 +1399,7 @@
       "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
     },
     "15": {
-      "format": "+{v1}% 恢復量",
+      "format": "+{v1}% 回復量",
       "hint": "増加回復量(％)(10.000000,0.000000)"
     },
     "16": {
@@ -1419,7 +1419,7 @@
       "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
     },
     "20": {
-      "format": "恢復體力上限{v1}%~{v2}%的體力",
+      "format": "回復體力上限{v1}%~{v2}%的體力",
       "hint": "トドメを指したとき、自身の體力の(Value～Value2)%回復(4.000000,4.000000)"
     },
     "21": {
@@ -1431,7 +1431,7 @@
       "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
     },
     "23": {
-      "format": "獲得{v2}%+{v1}基礎攻撃",
+      "format": "獲得{v2}%+{v1}基礎物攻",
       "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "24": {
@@ -1447,7 +1447,7 @@
       "hint": "ガード削り攻撃力 + Value%(30.000000,0.000000)"
     },
     "27": {
-      "format": "+{v1}% 擊飛能力",
+      "format": "+{v1}% 擊飛力",
       "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
     },
     "28": {
@@ -1455,7 +1455,7 @@
       "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
     },
     "29": {
-      "format": "+{v1}% 異常積蓄",
+      "format": "+{v1}% 異常累積",
       "hint": "狀態異常與蓄積値 + Value%(20.000000,0.000000)"
     },
     "30": {
@@ -1463,7 +1463,7 @@
       "hint": "(75.000000,90.000000)"
     },
     "31": {
-      "format": "+{v1}% 抗擊飛",
+      "format": "+{v1}% 擊飛抗性",
       "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
     },
     "32": {
@@ -1503,11 +1503,11 @@
       "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
     },
     "40": {
-      "format": "恢復{v1}% 耐力",
+      "format": "回復{v1}% 耐力",
       "hint": "敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"
     },
     "41": {
-      "format": "x{v1} 幾率",
+      "format": "x{v1} 機率",
       "hint": "(1.200000,0.000000)"
     },
     "42": {
@@ -1527,7 +1527,7 @@
       "hint": "調合時にアイテム作成個數+1個になる確率Value％(15.000000,0.000000)"
     },
     "46": {
-      "format": "x{v1}被襲擊槪率",
+      "format": "x{v1}被襲擊機率",
       "hint": "襲撃確率 * Value(0.350000,0.000000)"
     },
     "47": {
@@ -1543,7 +1543,7 @@
       "hint": "カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"
     },
     "5": {
-      "format": "獲得{v2}%+{v1}防御",
+      "format": "獲得{v2}%+{v1}防禦",
       "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
     },
     "50": {
@@ -1571,9 +1571,9 @@
     "AttackFactor": "+%s%% 攻擊 ",
     "DefenceFactor": "+%s%% 防禦 ",
     "StatusConditionResistFactor": "+%s%% 抗異常",
-    "StaminaRecoverFactor": "%s%% 耐力恢複",
+    "StaminaRecoverFactor": "%s%% 耐力回復",
     "Sec": ",持續%s秒",
-    "MaxHpDamageFactor": "-%s%% 最大血量損失",
+    "MaxHpDamageFactor": "-%s%% 體力上限損失",
     "Camp": "露營:",
     "SpecialCamp": "露營(野營知識）:"
   }

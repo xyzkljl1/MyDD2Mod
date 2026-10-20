@@ -27,7 +27,7 @@
     "1610": {
       "enable": true,
       "curve": true,
-      "format": "+{v0}~{v1}% BaseMagicATK under {t1}% HP.+{v2}% BaseMagicATK over {t2}% HP",
+      "format": "+{v0}~{v1}% BaseMagATK under {t1}% HP.+{v2}% BaseMagATK over {t2}% HP",
       "hint": "封魔大杖，(5，100)"
     },
     "1906": {
@@ -271,7 +271,7 @@
       "hint": "Spirit Counter II"
     },
     "75": {
-      "format": "+{v1}% Base Max Stamina, -{v2}% Magick/Magick Defense",
+      "format": "+{v1}% Base MaxSt, -{v2}% MagATK/MagDEF",
       "hint": "Gigantus's Vim"
     },
     "76": {
@@ -303,11 +303,11 @@
       ]
     },
     "77": {
-      "format": "Max HP becomes {v2}%, {v1}% chance to nullify damage",
+      "format": "MaxHP becomes {v2}%, {v1}% chance to nullify damage",
       "hint": "Spectral Feint"
     },
     "79": {
-      "format": "+{v2}% Ice Magick Damage, +{v1} Defense/Magick Defense",
+      "format": "+{v2}% Ice Magick Damage, +{v1} DEF/MagDEF",
       "hint": "Ice Elemental"
     },
     "80": {
@@ -640,7 +640,7 @@
       "hint": "Improved Efficacy"
     },
     "103": {
-      "format": "+{v2}% Defense/Magick Defense for {v1} s",
+      "format": "+{v2}% DEF/MagDEF for {v1} s",
       "hint": "Bolstered Outset"
     },
     "104": {
@@ -723,7 +723,7 @@
       ]
     },
     "113": {
-      "format": "+{v2}% Defense/Magick Defense for {v1} s",
+      "format": "+{v2}% DEF/MagDEF for {v1} s",
       "hint": "Siege Hardened"
     },
     "116": {
@@ -731,11 +731,11 @@
       "hint": "Intact Fortitude"
     },
     "117": {
-      "format": "-{v1}% Stamina consumption",
+      "format": "-{v1}% Stamina Cost",
       "hint": "Climber's Agility"
     },
     "118": {
-      "format": "+{v1}/-{v2} Defense/Magick Defense",
+      "format": "+{v1}/-{v2} DEF/MagDEF",
       "hint": "Shadowbound"
     },
     "120": {
@@ -743,11 +743,11 @@
       "hint": "Animated Recovery"
     },
     "121": {
-      "format": "-{v1}% Uphill stamina consumption/recovery penalties",
+      "format": "-{v1}% Uphill stamina cost/recovery penalties",
       "hint": "Hill Strider"
     },
     "122": {
-      "format": "-{v1}% Stamina consumption",
+      "format": "-{v1}% Stamina Cost",
       "hint": "Enduring Grip"
     },
     "123": {
@@ -759,27 +759,27 @@
       "hint": "Leaping Strike"
     },
     "126": {
-      "format": "+{v1}% base max HP",
+      "format": "+{v1}% base MaxHP",
       "hint": "Health Boost I"
     },
     "127": {
-      "format": "+{v1}% base max HP",
+      "format": "+{v1}% base MaxHP",
       "hint": "Health Boost II"
     },
     "128": {
-      "format": "+{v1}% base max HP",
+      "format": "+{v1}% base MaxHP",
       "hint": "Health Boost III"
     },
     "129": {
-      "format": "+{v1}% base max stamina",
+      "format": "+{v1}% base MaxSt",
       "hint": "Stamina Boost I"
     },
     "130": {
-      "format": "+{v1}% base max stamina",
+      "format": "+{v1}% base MaxSt",
       "hint": "Stamina Boost II"
     },
     "131": {
-      "format": "+{v1}% base max stamina",
+      "format": "+{v1}% base MaxSt",
       "hint": "Stamina Boost III"
     },
     "132": {
@@ -823,7 +823,7 @@
       "hint": "Ice Resistance II"
     },
     "142": {
-      "format": "-{v1}% Stamina consumption",
+      "format": "-{v1}% Stamina Cost",
       "hint": "Extended Dash"
     },
     "143": {
@@ -913,7 +913,7 @@
       "hint": "Full Bend"
     },
     "155": {
-      "format": "-{v1}% damage taken; +{v2}% Knockdown Resistance",
+      "format": "-{v1}% damage taken; +{v2}% Knockdown Resist",
       "hint": "Fortified Invocation"
     },
     "156": {
@@ -953,7 +953,7 @@
       "hint": "Phantasmal Tome"
     },
     "166": {
-      "format": "+{v1}% Simulacrum max HP",
+      "format": "+{v1}% Simulacrum MaxHP",
       "hint": "Perdurable Illusion"
     },
     "167": {
@@ -981,7 +981,7 @@
       ]
     },
     "168": {
-      "format": "When near death (HP＜200 or HP＜25%), for {ex1} s: +{ex2}% Strength/Magick; +{ex3}% Defense/Magick Defense\n+{ex4}% Knockdown Power; -{ex5}% stagger/knockdown force taken",
+      "format": "When near death (HP＜200 or HP＜25%), for {ex1} s: +{ex2}% ATK/MagATK; +{ex3}% DEF/MagDEF\n+{ex4}% Knockdown Power; -{ex5}% stagger/knockdown force taken",
       "hint": "Moribund Frenzy",
       "ex1": [
         "StatusUpOnLowHealthParam",
@@ -1018,7 +1018,7 @@
       "hint": "Breath Resistance"
     },
     "172": {
-      "format": "+{v2}% Defense/Magick Defense",
+      "format": "+{v2}% DEF/MagDEF",
       "hint": "Improved Odds"
     },
     "173": {
@@ -1036,7 +1036,7 @@
   },
   "AbilityFormat": {
     "10": {
-      "format": "+{v1} Max Stamina",
+      "format": "+{v1} MaxSt",
       "hint": "固定値(150.000000,0.000000)"
     },
     "11": {
@@ -1056,7 +1056,7 @@
       "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
     },
     "15": {
-      "format": "+{v1}% Recover Amount",
+      "format": "+{v1}% Recovery",
       "hint": "増加回復量(％)(10.000000,0.000000)"
     },
     "16": {
@@ -1072,19 +1072,19 @@
       "hint": "加算倍率を入力(0.100000,0.000000)"
     },
     "19": {
-      "format": "x{v1} Hate Mutliplier",
+      "format": "x{v1} Hate Multiplier",
       "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
     },
     "20": {
-      "format": "Recover {v1}%~{v2}% of Max HP",
+      "format": "Recover {v1}%~{v2}% of MaxHP",
       "hint": "トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"
     },
     "21": {
-      "format": "x{v1} Stamina Cost Mutliplier",
+      "format": "x{v1} Stamina Cost Multiplier",
       "hint": "(0.800000,0.000000)"
     },
     "22": {
-      "format": "x{v1} Stamina Cost Mutliplier",
+      "format": "x{v1} Stamina Cost Multiplier",
       "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
     },
     "23": {
@@ -1096,7 +1096,7 @@
       "hint": "HPの上限値 + Value(200.000000,0.000000)"
     },
     "25": {
-      "format": "x{v1} Mutliplier",
+      "format": "x{v1} Multiplier",
       "hint": "組み付き時の押し引き力 * Value(1.500000,0.000000)"
     },
     "26": {
@@ -1104,7 +1104,7 @@
       "hint": "ガード削り攻撃力 + Value%(30.000000,0.000000)"
     },
     "27": {
-      "format": "+{v1}% Knockdown power",
+      "format": "+{v1}% Knockdown Power",
       "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
     },
     "28": {
@@ -1156,7 +1156,7 @@
       "hint": "ポーンの物理防御力/魔法防御力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "4": {
-      "format": "x{v1} Mutliplier",
+      "format": "x{v1} Multiplier",
       "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
     },
     "40": {
@@ -1233,7 +1233,7 @@
       ],
       "type": "Enum"
     },
-    "_Blow": "%s Knockdown",
+    "_Blow": "%s Knockdown Power",
     "_BlowGuard": "%s Knockdown Guard",
     "_BlowResistRate": "+%s Knockdown Resist",
     "_BuyPrice": {
@@ -1266,9 +1266,9 @@
     "_ElementStore": "%s Element Buildup Enchantment",
     "_FireDefence": "%s%% Fire Damage Reduce",
     "_FireResist": "%s%% Fire Debuff Resist",
-    "_HealBlackHp": "Heal %s MAXHP.",
+    "_HealBlackHp": "Heal %s MaxHP.",
     "_HealStamina": "Recover %s Stamina",
-    "_HealBlackStamina": "Recover %s MAX Stamina",
+    "_HealBlackStamina": "Recover %s MaxSt",
     "_HealWhiteHp": "Heal %s HP.",
     "_IceDefence": "%s%% Ice Damage Reduce",
     "_IceResist": "%s%% Ice Debuff Resist",
@@ -1277,14 +1277,14 @@
       "format": "Id %s.",
       "type": "String"
     },
-    "_LightDefence": "%s%% Light Damage Reduce",
+    "_LightDefence": "%s%% Holy Damage Reduce",
     "_MagicAttack": "%s MagATK",
     "_MagicDefence": "%s MagDEF",
     "_OilResist": "%s%% Oil Resist",
     "_ColdResist": "%s%% Cold Resist",
     "_OilStore": "%s Oil Store",
     "_PhysicalAttack": "%s ATK",
-    "_PhysicalDefence": "%s PhyDEF",
+    "_PhysicalDefence": "%s DEF",
     "_PoisonResist": "%s%% Poison Resist",
     "_PoisonStore": "%s PoisonStore",
     "_SellPrice": {
@@ -1300,7 +1300,7 @@
     "_StoneResist": "%s%% Stone Resist",
     "_StoneStore": "%s Stone Store",
     "_StrikeDefenceRate": "%s%% Strike Reduce",
-    "_StrikeStore": "%s Unconsicious Store",
+    "_StrikeStore": "%s Unconsciousness Buildup",
     "_SubCategory": {
       "enable": false,
       "format": "Cat %s",
@@ -1318,8 +1318,8 @@
       ],
       "type": "Enum"
     },
-    "_ThunderDefence": "%s%% Thunder Damage Reduce",
-    "_ThunderResist": "%s%% Thunder Debuff Resist",
+    "_ThunderDefence": "%s%% Lightning Damage Reduce",
+    "_ThunderResist": "%s%% Lightning Debuff Resist",
     "_UseEffect": {
       "enable": false,
       "format": "Effect %s",
@@ -1375,11 +1375,11 @@
     },
     "44": {
       "enable": true,
-      "format": "Base physical attack +{v1}%"
+      "format": "BaseATK +{v1}%"
     },
     "45": {
       "enable": true,
-      "format": "Base magick attack +{v1}%"
+      "format": "BaseMagATK +{v1}%"
     },
     "46": {
       "enable": true,
@@ -1387,7 +1387,7 @@
     },
     "47": {
       "enable": true,
-      "format": "Physical and magick defense +{v1}%"
+      "format": "DEF/MagDEF +{v1}%"
     },
     "48": {
       "enable": true,
@@ -1399,11 +1399,11 @@
     },
     "50": {
       "enable": true,
-      "format": "Base physical attack +{v1}%"
+      "format": "BaseATK +{v1}%"
     },
     "51": {
       "enable": true,
-      "format": "Knockdown power +{v1}%"
+      "format": "Knockdown Power +{v1}%"
     },
     "58": {
       "enable": true,
@@ -1429,7 +1429,7 @@
     },
     "11": {
       "enable": true,
-      "format": "{v1}% Faster Cast but lose {v2}% Max HP",
+      "format": "{v1}% Faster Cast but lose {v2}% MaxHP",
       "hint": "(3534,Ring of Recitation,25,20,0)"
     },
     "12": {
@@ -1449,7 +1449,7 @@
     },
     "15": {
       "enable": true,
-      "format": "Gain +{v1}% BaseAtk under {t1} weight or +{v3}% BaseAtk under {t3} weight.(No effect under 0.0 weight)",
+      "format": "Gain +{v1}% BaseATK under {t1} weight or +{v3}% BaseATK under {t3} weight.(No effect under 0.0 weight)",
       "hint": "(3538,Ring of Brawn,0,0,0)",
       "curve": true
     },
@@ -1470,7 +1470,7 @@
     },
     "2": {
       "enable": true,
-      "format": "+{v1} Max Stamina",
+      "format": "+{v1} MaxSt",
       "hint": "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"
     },
     "20": {
@@ -1480,7 +1480,7 @@
     },
     "21": {
       "enable": true,
-      "format": "+{v1} Stamina Recover",
+      "format": "+{v1} Stamina Recovery",
       "hint": "(3544,Ring of Quickening,10,0,0)"
     },
     "22": {
@@ -1490,7 +1490,7 @@
     },
     "23": {
       "enable": true,
-      "format": "+{v1}% WeaponAtk in {t1} distance.+{v3}% WeaponAtk in {t3} distance.+{v5}% WeaponAtk in {t5} distance.",
+      "format": "+{v1}% WeaponATK in {t1} distance.+{v3}% WeaponATK in {t3} distance.+{v5}% WeaponATK in {t5} distance.",
       "hint": "(3548,Ring of Proximity,0,0,0)",
       "curve": true
     },
@@ -1511,7 +1511,7 @@
     },
     "27": {
       "enable": true,
-      "format": "+{v1}% recover amount",
+      "format": "+{v1}% Recovery",
       "hint": "(3552,Ring of Amplification,10,0,0)"
     },
     "28": {
@@ -1536,7 +1536,7 @@
     },
     "4": {
       "enable": true,
-      "format": "+{v1}/{v2}/{v3} Max HP/Max Stamina/Max Weight",
+      "format": "+{v1}/{v2}/{v3} MaxHP/MaxSt/Max Weight",
       "hint": "(3507,Ring of Triumph,100,100,5)"
     },
     "5": {
@@ -1546,7 +1546,7 @@
     },
     "6": {
       "enable": true,
-      "format": "+{v1} Magic ATK",
+      "format": "+{v1} MagATK",
       "hint": "(3510,Ring of Percipience,30,0,0)"
     },
     "7": {
@@ -1567,9 +1567,9 @@
   },
   "ItemBuffFormat": {
     "AttackFactor": "+%s%% Attack ",
-    "DefenceFactor": "+%s%% Defense ",
+    "DefenceFactor": "+%s%% DEF ",
     "StatusConditionResistFactor": "+%s%% Status Resist ",
-    "StaminaRecoverFactor": "%s%% Stamina Recover ",
+    "StaminaRecoverFactor": "%s%% Stamina Recovery ",
     "Sec": "for %s seconds",
     "MaxHpDamageFactor":"-%s%% MaxHP Loss",
     "Camp":"Camp:",
