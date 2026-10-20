@@ -21,7 +21,7 @@
     },
     "1804": {
       "enable": true,
-      "format": "+{v1}%经验值,+{v2}%耐力消耗",
+      "format": "+{v1}%经验值,+{v2}%体力消耗",
       "hint": "美杜莎魔弓箭，(300,400)"
     },
     "1906": {
@@ -1572,7 +1572,7 @@
     "AttackFactor": "+%s%% 攻击 ",
     "DefenceFactor": "+%s%% 防御 ",
     "StatusConditionResistFactor": "+%s%% 抗异常",
-    "StaminaRecoverFactor": "%s%% 耐力恢复",
+    "StaminaRecoverFactor": "%s%% 体力恢复",
     "Sec": ",持续%s秒",
     "MaxHpDamageFactor": "-%s%% 最大血量损失",
     "Camp": "露营:",

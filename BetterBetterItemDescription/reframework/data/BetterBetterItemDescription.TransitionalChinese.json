@@ -101,10 +101,10 @@
     "_DarkDefence": "%s%% 抗暗",
     "_FireDefence": "%s%% 抗火",
     "_FireResist": "%s%% 抗火異常",
-    "_HealBlackHp": "回復 %s 生命上限.",
-    "_HealStamina": "回復 %s 體力",
-    "_HealBlackStamina": "回復 %s 體力上限",
-    "_HealWhiteHp": "回復 %s 生命.",
+    "_HealBlackHp": "回復 %s 體力上限.",
+    "_HealStamina": "回復 %s 耐力",
+    "_HealBlackStamina": "回復 %s 耐力上限",
+    "_HealWhiteHp": "回復 %s 體力.",
     "_IceDefence": "%s%% 抗冰",
     "_IceResist": "%s%% 抗冰異常",
     "_Id": {
@@ -191,11 +191,11 @@
     },
     "41": {
       "enable": true,
-      "format": "恢復已消耗體力的{v1}%"
+      "format": "恢復已消耗耐力的{v1}%"
     },
     "42": {
       "enable": true,
-      "format": "體力耗盡時恢復速度 +{v1}%"
+      "format": "耐力耗盡時恢復速度 +{v1}%"
     },
     "43": {
       "enable": true,
@@ -211,7 +211,7 @@
     },
     "46": {
       "enable": true,
-      "format": "衝刺體力消耗 -{v1}%"
+      "format": "衝刺耐力消耗 -{v1}%"
     },
     "47": {
       "enable": true,
@@ -235,7 +235,7 @@
     },
     "58": {
       "enable": true,
-      "format": "恢復等於係數×動作值的體力，係數：戰士{sr1}/弓箭手{sr2}/法師{sr3}/盜賊{sr4}/鬥士{sr5}/巫師{sr6}/魔劍士{sr7}/魔弓手{sr8}/幻術師{sr9}，不超過{sm4}（魔弓手、盜賊）/{sm1}（其它）"
+      "format": "恢復等於係數×動作值的耐力，係數：戰士{sr1}/弓箭手{sr2}/法師{sr3}/盜賊{sr4}/鬥士{sr5}/巫師{sr6}/魔劍士{sr7}/魔弓手{sr8}/幻術師{sr9}，不超過{sm4}（魔弓手、盜賊）/{sm1}（其它）"
     },
     "38": {
       "enable": true,
@@ -247,7 +247,7 @@
     },
     "1": {
       "enable": true,
-      "format": "+{v1} 生命上限",
+      "format": "+{v1} 體力上限",
       "hint": "(3502,Ring of Acclamation,200,0,0)(3501,Ring of Exultation,100,0,0)"
     },
     "10": {
@@ -257,7 +257,7 @@
     },
     "11": {
       "enable": true,
-      "format": "{v1}%快速施法/降低{v2}%生命上限",
+      "format": "{v1}%快速施法/降低{v2}%體力上限",
       "hint": "(3534,Ring of Recitation,25,20,0)"
     },
     "12": {
@@ -267,7 +267,7 @@
     },
     "13": {
       "enable": true,
-      "format": "-{v1}% 體力消耗",
+      "format": "-{v1}% 耐力消耗",
       "hint": "(3536,Ring of Grit,25,0,0)"
     },
     "14": {
@@ -283,12 +283,12 @@
     },
     "16": {
       "enable": true,
-      "format": "低於{v1}%生命上限時獲得持續治療",
+      "format": "低於{v1}%體力上限時獲得持續治療",
       "hint": "(3539,Ring of Benevolence,25,3,0)"
     },
     "17": {
       "enable": true,
-      "format": "低於{v1}%生命上限時獲得+{v2}%基礎攻擊力",
+      "format": "低於{v1}%體力上限時獲得+{v2}%基礎攻擊力",
       "hint": "(3540,Ring of Recompense,25,100,0)"
     },
     "18": {
@@ -298,7 +298,7 @@
     },
     "2": {
       "enable": true,
-      "format": "+{v1} 最大體力",
+      "format": "+{v1} 最大耐力",
       "hint": "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"
     },
     "20": {
@@ -308,7 +308,7 @@
     },
     "21": {
       "enable": true,
-      "format": "+{v1} 體力恢復",
+      "format": "+{v1} 耐力恢復",
       "hint": "(3544,Ring of Quickening,10,0,0)"
     },
     "22": {
@@ -364,7 +364,7 @@
     },
     "4": {
       "enable": true,
-      "format": "+{v1}/{v2}/{v3} 生命上限/體力上限/負重上限",
+      "format": "+{v1}/{v2}/{v3} 體力上限/耐力上限/負重上限",
       "hint": "(3507,Ring of Triumph,100,100,5)"
     },
     "5": {
@@ -389,7 +389,7 @@
     },
     "9": {
       "enable": true,
-      "format": "殺敵恢復{v1} 生命",
+      "format": "殺敵恢復{v1} 體力",
       "hint": "(3532,Ring of Regeneration,50,0,0)"
     }
   },
@@ -400,7 +400,7 @@
       "hint": "Frosted Edge"
     },
     "48": {
-      "format": "{ex1}%機率按造成傷害的{ex2}%恢復生命（大劍×{ex3}／匕首×{ex4}／弓×{ex5}／魔道弓×{ex6}／香爐×{ex7}）",
+      "format": "{ex1}%機率按造成傷害的{ex2}%恢復體力（大劍×{ex3}／匕首×{ex4}／弓×{ex5}／魔道弓×{ex6}／香爐×{ex7}）",
       "hint": "Aggressive Recovery",
       "ex1": [
         "RecoverOnAttackHitParam",
@@ -538,7 +538,7 @@
       ]
     },
     "55": {
-      "format": "-{v1}% 體力消耗",
+      "format": "-{v1}% 耐力消耗",
       "hint": "Enduring Defense"
     },
     "56": {
@@ -614,7 +614,7 @@
       "hint": "Spirit Counter II"
     },
     "75": {
-      "format": "+{v1}% 基礎體力上限，-{v2}% 魔攻/魔防",
+      "format": "+{v1}% 基礎耐力上限，-{v2}% 魔攻/魔防",
       "hint": "Gigantus's Vim"
     },
     "76": {
@@ -646,7 +646,7 @@
       ]
     },
     "77": {
-      "format": "生命上限變為{v2}%，{v1}%免疫傷害",
+      "format": "體力上限變為{v2}%，{v1}%免疫傷害",
       "hint": "Spectral Feint"
     },
     "79": {
@@ -963,7 +963,7 @@
       "hint": "Cushioned Fall"
     },
     "98": {
-      "format": "回復等于{v1}%售價的生命(至少{v2})，同伴受到{v3}%的效果",
+      "format": "回復等于{v1}%售價的體力(至少{v2})，同伴受到{v3}%的效果",
       "hint": "Adventurous Appetite"
     },
     "99": {
@@ -1074,7 +1074,7 @@
       "hint": "Intact Fortitude"
     },
     "117": {
-      "format": "-{v1}% 體力消耗",
+      "format": "-{v1}% 耐力消耗",
       "hint": "Climber's Agility"
     },
     "118": {
@@ -1086,11 +1086,11 @@
       "hint": "Animated Recovery"
     },
     "121": {
-      "format": "-{v1}% 上坡體力消耗與恢復懲罰",
+      "format": "-{v1}% 上坡耐力消耗與恢復懲罰",
       "hint": "Hill Strider"
     },
     "122": {
-      "format": "-{v1}% 體力消耗",
+      "format": "-{v1}% 耐力消耗",
       "hint": "Enduring Grip"
     },
     "123": {
@@ -1102,27 +1102,27 @@
       "hint": "Leaping Strike"
     },
     "126": {
-      "format": "+{v1}% 基礎生命上限",
+      "format": "+{v1}% 基礎體力上限",
       "hint": "Health Boost I"
     },
     "127": {
-      "format": "+{v1}% 基礎生命上限",
+      "format": "+{v1}% 基礎體力上限",
       "hint": "Health Boost II"
     },
     "128": {
-      "format": "+{v1}% 基礎生命上限",
+      "format": "+{v1}% 基礎體力上限",
       "hint": "Health Boost III"
     },
     "129": {
-      "format": "+{v1}% 基礎體力上限",
+      "format": "+{v1}% 基礎耐力上限",
       "hint": "Stamina Boost I"
     },
     "130": {
-      "format": "+{v1}% 基礎體力上限",
+      "format": "+{v1}% 基礎耐力上限",
       "hint": "Stamina Boost II"
     },
     "131": {
-      "format": "+{v1}% 基礎體力上限",
+      "format": "+{v1}% 基礎耐力上限",
       "hint": "Stamina Boost III"
     },
     "132": {
@@ -1166,7 +1166,7 @@
       "hint": "Ice Resistance II"
     },
     "142": {
-      "format": "-{v1}% 體力消耗",
+      "format": "-{v1}% 耐力消耗",
       "hint": "Extended Dash"
     },
     "143": {
@@ -1296,7 +1296,7 @@
       "hint": "Phantasmal Tome"
     },
     "166": {
-      "format": "+{v1}% 幻影生命上限",
+      "format": "+{v1}% 幻影體力上限",
       "hint": "Perdurable Illusion"
     },
     "167": {
@@ -1379,7 +1379,7 @@
   },
   "AbilityFormat": {
     "10": {
-      "format": "+{v1} 最大體力",
+      "format": "+{v1} 最大耐力",
       "hint": "固定値(150.000000,0.000000)"
     },
     "11": {
@@ -1419,15 +1419,15 @@
       "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
     },
     "20": {
-      "format": "恢復生命上限{v1}%~{v2}%的生命",
+      "format": "恢復體力上限{v1}%~{v2}%的體力",
       "hint": "トドメを指したとき、自身の體力の(Value～Value2)%回復(4.000000,4.000000)"
     },
     "21": {
-      "format": "x{v1}體力消耗",
+      "format": "x{v1}耐力消耗",
       "hint": "(0.800000,0.000000)"
     },
     "22": {
-      "format": "x{v1}體力消耗",
+      "format": "x{v1}耐力消耗",
       "hint": "しがみつき＆押さえ付け中のスタミナ持続消費量 * Value(0.850000,0.000000)"
     },
     "23": {
@@ -1435,7 +1435,7 @@
       "hint": "１：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "24": {
-      "format": "獲得 {v2}%+{v1} 生命上限",
+      "format": "獲得 {v2}%+{v1} 體力上限",
       "hint": "HPの上限値 + Value(200.000000,0.000000)"
     },
     "25": {
@@ -1451,7 +1451,7 @@
       "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
     },
     "28": {
-      "format": "x{v1} 生命上限損失",
+      "format": "x{v1} 體力上限損失",
       "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
     },
     "29": {
@@ -1491,7 +1491,7 @@
       "hint": "リム決勝を入手したときのリム獲得量xValue(1.050000,0.000000)"
     },
     "38": {
-      "format": "x{v1} 體力消耗",
+      "format": "x{v1} 耐力消耗",
       "hint": "ダッシュ中のスタミナ消費量×Value(0.900000,0.000000)"
     },
     "39": {
@@ -1503,7 +1503,7 @@
       "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
     },
     "40": {
-      "format": "恢復{v1}% 體力",
+      "format": "恢復{v1}% 耐力",
       "hint": "敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"
     },
     "41": {
@@ -1539,7 +1539,7 @@
       "hint": "NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"
     },
     "49": {
-      "format": "x{v1} 體力消耗",
+      "format": "x{v1} 耐力消耗",
       "hint": "カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"
     },
     "5": {
