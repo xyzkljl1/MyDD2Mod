@@ -4,9 +4,10 @@ log.info("["..modname.."]".."Start")
 --settings
 local dataFileInfo={type="author",name="Data file: Built-in"}
 local _config={
-    {type="author",version="2.0.3"},
+    {type="author",version="2.1"},
     dataFileInfo,
     {name="specifyTransFile",type="string",default="",label="Force using this language(Need reset script)"},
+    {name="ShowEquipmentStatusBonus",type="bool",default=true},
 }
 --merge config file to default config
 local function recurse_def_settings(tbl, new_tbl)
@@ -681,7 +682,7 @@ local function GetEquipFields(param,ability,enhance,numbers)
             if extra~=0 then details[#details+1]=string.format("%+d",extra)..unit end
             if upgrade~=0 then details[#details+1]=string.format("%+d",upgrade)..unit end
             local number=tostring(value)..unit
-            if #details>0 then number=number.."("..table.concat(details,",")..")" end
+            if config.ShowEquipmentStatusBonus and #details>0 then number=number.."("..table.concat(details,",")..")" end
             if numbers~=nil then numbers[field]=number end
             ret[field]=string.format(format:gsub("%%s%%%%","%%s"),number)
         end
