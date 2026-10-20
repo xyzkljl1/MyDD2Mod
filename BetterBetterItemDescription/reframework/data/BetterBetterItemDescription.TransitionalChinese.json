@@ -42,7 +42,7 @@
     },
     "2103": {
       "enable": true,
-      "format": "**每次攻擊獲得10金幣，上限3000，另有小機率獲得100/1000/50000金幣(不計入上限)",
+      "format": "**每次攻擊獲得10金錢，上限3000，另有小機率獲得100/1000/50000金錢(不計入上限)",
       "wp10_003": true,
       "hint": "梦想路，50/50,攻击加金钱,不知道什么意思"
     },
@@ -55,7 +55,7 @@
     "_BlowResistRate": "+%s 擊飛抗性",
     "_BuyPrice": {
       "enable": false,
-      "format": "BuyPrice %s.",
+      "format": "買價 %s.",
       "type": "String"
     },
     "_Category": {
@@ -90,7 +90,7 @@
     "_ElementStore": "%s元素異常附魔",
     "_Blow": "%s 擊飛力",
     "_BlowGuard": "%s 擊飛防禦",
-    "_PoisonStore": "%s 毒附魔",
+    "_PoisonStore": "%s 追毒附魔",
     "_StrikeStore": "%s 昏厥附魔",
     "_SleepStore": "%s 睡眠附魔",
     "_SilentStore": "%s 沉默附魔",
@@ -109,7 +109,7 @@
     "_IceResist": "%s%% 抗冰異常",
     "_Id": {
       "enable": false,
-      "format": "Id %s.",
+      "format": "ID %s.",
       "type": "String"
     },
     "_LightDefence": "%s%% 抗聖",
@@ -134,7 +134,7 @@
       "enable": false,
       "format": "子類 %s",
       "map": [
-        "Buff",
+        "增益",
         "材料",
         "特殊",
         "任務",
@@ -143,7 +143,7 @@
         "技能",
         "隨從技能",
         "魔法書",
-        "綫上遊戲"
+        "線上遊戲"
       ],
       "type": "Enum"
     },
@@ -203,11 +203,11 @@
     },
     "44": {
       "enable": true,
-      "format": "基礎物理攻擊力 +{v1}%"
+      "format": "基礎物攻 +{v1}%"
     },
     "45": {
       "enable": true,
-      "format": "基礎魔法攻擊力 +{v1}%"
+      "format": "基礎魔攻 +{v1}%"
     },
     "46": {
       "enable": true,
@@ -215,11 +215,11 @@
     },
     "47": {
       "enable": true,
-      "format": "物理防禦力、魔法防禦力 +{v1}%"
+      "format": "物防、魔防 +{v1}%"
     },
     "48": {
       "enable": true,
-      "format": "金錢掉落+{v1}%，經驗-{v2}%"
+      "format": "金錢掉落+{v1}%，經驗值-{v2}%"
     },
     "49": {
       "enable": true,
@@ -227,7 +227,7 @@
     },
     "50": {
       "enable": true,
-      "format": "基礎物理攻擊力 +{v1}%"
+      "format": "基礎物攻 +{v1}%"
     },
     "51": {
       "enable": true,
@@ -272,7 +272,7 @@
     },
     "14": {
       "enable": true,
-      "format": "{v2}秒內獲得+{v1}% ATK",
+      "format": "{v2}秒內獲得+{v1}% 物攻",
       "hint": "(3537,Ring of Requital,15,10,0)"
     },
     "15": {
@@ -298,7 +298,7 @@
     },
     "2": {
       "enable": true,
-      "format": "+{v1} 最大耐力",
+      "format": "+{v1} 耐力上限",
       "hint": "(3504,Ring of Momentum,150,0,0)(3503,Ring of Tenacity,90,0,0)"
     },
     "20": {
@@ -318,7 +318,7 @@
     },
     "23": {
       "enable": true,
-      "format": "{t1}距離內獲得+{v1}%武器攻擊力，{t3}距離內獲得+{v3}%武器攻擊力，{t5}距離內獲得+{v5}%武器攻擊力",
+      "format": "{t1}距離內獲得+{v1}%武器攻擊力，{t3}距離內獲得+{v3}%武器攻擊力，{t5}距離內獲得+{v5}%武器攻擊力",
       "hint": "(3548,Ring of Proximity,0,0,0)",
       "curve": true
     },
@@ -329,12 +329,12 @@
     },
     "25": {
       "enable": true,
-      "format": "+{v1}% 背面攻击的傷害",
+      "format": "+{v1}% 背面攻擊的傷害倍率",
       "hint": "(3550,Ring of Skullduggery,20,0,0)"
     },
     "26": {
       "enable": true,
-      "format": "隨從在{v2}秒內獲得{v1} 防禦",
+      "format": "隨從在{v2}秒內獲得{v1} 物防",
       "hint": "(3551,Ring of Reassurance,50,20,0)"
     },
     "27": {
@@ -359,7 +359,7 @@
     },
     "30": {
       "enable": true,
-      "format": "獲得+{v1}% 好感",
+      "format": "獲得+{v1}% 好感度",
       "hint": "(3555,Eternal Bond,10,0,0)"
     },
     "4": {
@@ -379,7 +379,7 @@
     },
     "7": {
       "enable": true,
-      "format": "+{v1}% 額外經驗値",
+      "format": "+{v1}% 經驗值",
       "hint": "(3530,Ring of Ambition,50,0,0)"
     },
     "8": {
@@ -546,71 +546,71 @@
       "hint": "Deflected Impact"
     },
     "58": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Battering Shield"
     },
     "59": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Demon Counter I"
     },
     "60": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Demon Counter II"
     },
     "61": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Demon Counter III"
     },
     "62": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Abomination Counter I"
     },
     "63": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Abomination Counter II"
     },
     "64": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Abomination Counter III"
     },
     "65": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Humanoid Counter I"
     },
     "66": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Humanoid Counter II"
     },
     "67": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Beast Counter I"
     },
     "68": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Beast Counter II"
     },
     "69": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Winged Beast Counter I"
     },
     "70": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Winged Beast Counter II"
     },
     "71": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Saurian Counter I"
     },
     "72": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Saurian Counter II"
     },
     "73": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Spirit Counter I"
     },
     "74": {
-      "format": "+{v1}%傷害",
+      "format": "+{v1}%傷害倍率",
       "hint": "Spirit Counter II"
     },
     "75": {
@@ -618,7 +618,7 @@
       "hint": "Gigantus's Vim"
     },
     "76": {
-      "format": "+{ex1}% 跳躍高度；遠程攻擊{ex4}%機率+{ex5}%傷害，空中攻擊{ex2}%機率+{ex3}%傷害",
+      "format": "+{ex1}% 跳躍高度；遠程攻擊{ex4}%機率+{ex5}%傷害倍率，空中攻擊{ex2}%機率+{ex3}%傷害倍率",
       "hint": "Enhanced Jump",
       "ex1": [
         "JumpHeightAndJumpAttackUpParam",
@@ -650,7 +650,7 @@
       "hint": "Spectral Feint"
     },
     "79": {
-      "format": "+{v2}%冰屬性魔法傷害，+{v1} 物防/魔防",
+      "format": "+{v2}%冰屬性魔法傷害倍率，+{v1} 物防/魔防",
       "hint": "Ice Elemental"
     },
     "80": {
@@ -940,7 +940,7 @@
     "94": {
       "format": "-{ex1}%蓄力時間，-{ex2}%受到的傷害",
       "hint": "Wicked Knight",
-      "bonusFormat": "-{ex1}%蓄力時間，+{ex3}%蓄力攻擊傷害，-{ex2}%受到的傷害",
+      "bonusFormat": "-{ex1}%蓄力時間，+{ex3}%蓄力攻擊傷害倍率，-{ex2}%受到的傷害",
       "ex1": [
         "ChargeSpeedUpAndReduceDeamonDamageParam",
         "ChargeSpeedFactorL"
@@ -963,7 +963,7 @@
       "hint": "Cushioned Fall"
     },
     "98": {
-      "format": "回復等于{v1}%售價的體力(至少{v2})，同伴受到{v3}%的效果",
+      "format": "回復等於{v1}%售價的體力(至少{v2})，同伴受到{v3}%的效果",
       "hint": "Adventurous Appetite"
     },
     "99": {
@@ -1000,7 +1000,7 @@
       "hint": "Carnivore"
     },
     "107": {
-      "format": "{v1}% 機率+{v2}% 傷害",
+      "format": "{v1}% 機率+{v2}% 傷害倍率",
       "hint": "Arcane Wisdom"
     },
     "108": {
@@ -1094,11 +1094,11 @@
       "hint": "Enduring Grip"
     },
     "123": {
-      "format": "+{v2}% 傷害",
+      "format": "+{v2}% 傷害倍率",
       "hint": "Wind Rider"
     },
     "125": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Leaping Strike"
     },
     "126": {
@@ -1212,7 +1212,7 @@
       ]
     },
     "144": {
-      "format": "{v1}% 機率+{v2}% 傷害",
+      "format": "{v1}% 機率+{v2}% 傷害倍率",
       "hint": "Riotous Magick"
     },
     "145": {
@@ -1224,35 +1224,35 @@
       "hint": "Swift Strike II"
     },
     "147": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Corrupted Foe Counter I"
     },
     "148": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Corrupted Foe Counter II"
     },
     "149": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Corrupted Foe Counter III"
     },
     "150": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Deflect Strike"
     },
     "151": {
-      "format": "-{v1} 秒 蓄力時間；+{v2}% 傷害",
+      "format": "-{v1} 秒 蓄力時間；+{v2}% 傷害倍率",
       "hint": "Breakneck Toss"
     },
     "152": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Improved Empale"
     },
     "153": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Critical Shot"
     },
     "154": {
-      "format": "蓄滿時，+{v1}% 傷害",
+      "format": "蓄滿時，+{v1}% 傷害倍率",
       "hint": "Full Bend"
     },
     "155": {
@@ -1268,19 +1268,19 @@
       "hint": "Nimble Tread"
     },
     "159": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Piercing Escalade"
     },
     "160": {
-      "format": "+{v1}幀判定窗口，+{v3}%連擊傷害",
+      "format": "+{v1}幀判定窗口，+{v3}%連擊傷害倍率",
       "hint": "Mighty Chain"
     },
     "161": {
-      "format": "+{v1}% 傷害；+{v2} 米 射程",
+      "format": "+{v1}% 傷害倍率；+{v2} 米 射程",
       "hint": "Extended Burst"
     },
     "162": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "Vertiginous Strike"
     },
     "163": {
@@ -1324,7 +1324,7 @@
       ]
     },
     "168": {
-      "format": "瀕死(HP＜200或HP＜25%)時{ex1}秒內：+{ex2}% 物攻／魔攻；+{ex3}% 物防／魔防\n+{ex4}% 擊飛力；-{ex5}% 受到的后仰／擊飛強度",
+      "format": "瀕死(HP＜200或HP＜25%)時{ex1}秒內：+{ex2}% 物攻／魔攻；+{ex3}% 物防／魔防\n+{ex4}% 擊飛力；-{ex5}% 受到的後仰／擊飛強度",
       "hint": "Moribund Frenzy",
       "ex1": [
         "StatusUpOnLowHealthParam",
@@ -1349,7 +1349,7 @@
       ]
     },
     "169": {
-      "format": "-{v1}% 損傷槽增加量",
+      "format": "-{v1}% 體力上限損失累積",
       "hint": "Survival Instinct"
     },
     "170": {
@@ -1379,7 +1379,7 @@
   },
   "AbilityFormat": {
     "10": {
-      "format": "+{v1} 最大耐力",
+      "format": "+{v1} 耐力上限",
       "hint": "固定値(150.000000,0.000000)"
     },
     "11": {
@@ -1411,7 +1411,7 @@
       "hint": "効果時間倍率(1.200000,0.000000)"
     },
     "18": {
-      "format": "+{v1} 倍率",
+      "format": "+{v1} 回復倍率",
       "hint": "加算倍率を入力(0.100000,0.000000)"
     },
     "19": {
@@ -1467,7 +1467,7 @@
       "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
     },
     "32": {
-      "format": "+{v1}% 傷害",
+      "format": "+{v1}% 傷害倍率",
       "hint": "弱點屬性による與ダメージ + Value%(5.000000,0.000000)"
     },
     "33": {
@@ -1479,7 +1479,7 @@
       "hint": "持ち上げ、擔ぎ上げ時の移動速度xValue(1.100000,0.000000)"
     },
     "35": {
-      "format": "x{v1} 金幣獲取",
+      "format": "x{v1} 金錢獲取",
       "hint": "金貨袋取得時、ゴールド獲得量xValue(1.050000,0.000000)"
     },
     "36": {
@@ -1523,7 +1523,7 @@
       "hint": "(1.500000,0.000000)"
     },
     "45": {
-      "format": "{v1}% 獲得額外一个物品",
+      "format": "{v1}% 獲得額外一個物品",
       "hint": "調合時にアイテム作成個數+1個になる確率Value％(15.000000,0.000000)"
     },
     "46": {
@@ -1535,7 +1535,7 @@
       "hint": "敵の視界センサー * Value(0.850000,0.000000)"
     },
     "48": {
-      "format": "x{v1}好感上昇量",
+      "format": "x{v1}好感度上升量",
       "hint": "NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"
     },
     "49": {
@@ -1543,7 +1543,7 @@
       "hint": "カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"
     },
     "5": {
-      "format": "獲得{v2}%+{v1}防禦",
+      "format": "獲得{v2}%+{v1}物防",
       "hint": "１：固定値　２：割合値(%)(45.000000,30.000000)"
     },
     "50": {

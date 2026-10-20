@@ -32,7 +32,7 @@
     },
     "1906": {
       "enable": true,
-      "format": "Give enemies extra x{v2} Damage Rate. Heal {v1} HP per second",
+      "format": "Give enemies extra x{v2} Damage Rate. Restore {v1} HP/s",
       "hint": "圣木魔弓，固定回血，给敌人加DamageRate"
     },
     "2010": {
@@ -53,11 +53,11 @@
   },
   "EquipmentAbilityFormat": {
     "47": {
-      "format": "+{iceenc}% ice enchantment, +{v1} ice buildup (greatsword ×{sfenc5}/daggers ×{sfenc4}/bow ×{sfenc2}/duospear ×{sfenc7})",
+      "format": "+{iceenc}% Ice Enchantment, +{v1} Ice Buildup (greatsword ×{sfenc5}/daggers ×{sfenc4}/bow ×{sfenc2}/duospear ×{sfenc7})",
       "hint": "Frosted Edge"
     },
     "48": {
-      "format": "{ex1}% chance to heal a base {ex2}% of damage dealt (greatsword ×{ex3}/daggers ×{ex4}/bow ×{ex5}/magick bow ×{ex6}/censer ×{ex7})",
+      "format": "{ex1}% chance to Restore HP equal to {ex2}% of Damage Dealt (greatsword ×{ex3}/daggers ×{ex4}/bow ×{ex5}/magick bow ×{ex6}/censer ×{ex7})",
       "hint": "Aggressive Recovery",
       "ex1": [
         "RecoverOnAttackHitParam",
@@ -91,7 +91,7 @@
       ]
     },
     "49": {
-      "format": "Damage dealt +{v1}%; damage taken +{v2}%",
+      "format": "Damage Dealt +{v1}%; Damage taken +{v2}%",
       "hint": "Battle Frenzy I"
     },
     "50": {
@@ -107,7 +107,7 @@
       "hint": "Battle Frenzy IV"
     },
     "53": {
-      "format": "{ex1} poison buildup (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/staff ×{ex7}/archistaff ×{ex8}/magick bow ×{ex9}/censer ×{ex10}); {ex2} s cooldown, up to {ex3} activations per target",
+      "format": "{ex1} Poison Buildup (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/staff ×{ex7}/archistaff ×{ex8}/magick bow ×{ex9}/censer ×{ex10}); {ex2} s cooldown, up to {ex3} activations per target",
       "hint": "Blighting Strike",
       "ex1": [
         "PoisonAttackParameter",
@@ -153,7 +153,7 @@
       ]
     },
     "54": {
-      "format": "{ex1}% unconsciousness chance (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/duospear ×{ex7}/magick bow ×{ex8}/censer ×{ex9}); {ex2} s cooldown, up to {ex3} activations per target",
+      "format": "{ex1}% Unconsciousness chance (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/duospear ×{ex7}/magick bow ×{ex8}/censer ×{ex9}); {ex2} s cooldown, up to {ex3} activations per target",
       "hint": "Knockout Strike",
       "ex1": [
         "FaintAttackParameter",
@@ -203,71 +203,71 @@
       "hint": "Deflected Impact"
     },
     "58": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Battering Shield"
     },
     "59": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Demon Counter I"
     },
     "60": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Demon Counter II"
     },
     "61": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Demon Counter III"
     },
     "62": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Abomination Counter I"
     },
     "63": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Abomination Counter II"
     },
     "64": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Abomination Counter III"
     },
     "65": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Humanoid Counter I"
     },
     "66": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Humanoid Counter II"
     },
     "67": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Beast Counter I"
     },
     "68": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Beast Counter II"
     },
     "69": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Winged Beast Counter I"
     },
     "70": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Winged Beast Counter II"
     },
     "71": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Saurian Counter I"
     },
     "72": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Saurian Counter II"
     },
     "73": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Spirit Counter I"
     },
     "74": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Spirit Counter II"
     },
     "75": {
@@ -275,7 +275,7 @@
       "hint": "Gigantus's Vim"
     },
     "76": {
-      "format": "+{ex1}% Jump Height; ranged attacks: {ex4}% chance of +{ex5}% damage, airborne attacks: {ex2}% chance of +{ex3}% damage",
+      "format": "+{ex1}% Jump Height; ranged attacks: {ex4}% chance of +{ex5}% Damage Rate, airborne attacks: {ex2}% chance of +{ex3}% Damage Rate",
       "hint": "Enhanced Jump",
       "ex1": [
         "JumpHeightAndJumpAttackUpParam",
@@ -303,15 +303,15 @@
       ]
     },
     "77": {
-      "format": "MaxHP becomes {v2}%, {v1}% chance to nullify damage",
+      "format": "MaxHP becomes {v2}%, {v1}% chance to nullify Damage",
       "hint": "Spectral Feint"
     },
     "79": {
-      "format": "+{v2}% Ice Magick Damage, +{v1} DEF/MagDEF",
+      "format": "+{v2}% Ice Magick Damage Rate, +{v1} DEF/MagDEF",
       "hint": "Ice Elemental"
     },
     "80": {
-      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify Damage, +{ex5}% Counter Damage; reflect {ex3}% of damage taken as Ice Buildup (minimum {ex4})",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -337,7 +337,7 @@
       ]
     },
     "81": {
-      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify Damage, +{ex5}% Counter Damage; reflect {ex3}% of damage taken as Ice Buildup (minimum {ex4})",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -363,7 +363,7 @@
       ]
     },
     "82": {
-      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify Damage, +{ex5}% Counter Damage; reflect {ex3}% of damage taken as Ice Buildup (minimum {ex4})",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -389,7 +389,7 @@
       ]
     },
     "83": {
-      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify Damage, +{ex5}% Counter Damage; reflect {ex3}% of damage taken as Ice Buildup (minimum {ex4})",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -415,7 +415,7 @@
       ]
     },
     "84": {
-      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify Damage, +{ex5}% Counter Damage; reflect {ex3}% of damage taken as Ice Buildup (minimum {ex4})",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -441,7 +441,7 @@
       ]
     },
     "85": {
-      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify damage, +{ex5}% counterattack damage; reflect {ex3}% of damage taken as ice buildup (minimum {ex4})",
+      "format": "-{ex1}% damage taken, +{ex2}% chance to nullify Damage, +{ex5}% Counter Damage; reflect {ex3}% of damage taken as Ice Buildup (minimum {ex4})",
       "hint": "Frozen Soul",
       "ex1": [
         "IceCounterReduceDragonDamageNullifyMagicParam",
@@ -597,7 +597,7 @@
     "94": {
       "format": "-{ex1}% charge time, -{ex2}% damage taken",
       "hint": "Wicked Knight",
-      "bonusFormat": "-{ex1}% charge time, +{ex3}% charged attack damage, -{ex2}% damage taken",
+      "bonusFormat": "-{ex1}% charge time, +{ex3}% charged attack Damage Rate, -{ex2}% damage taken",
       "ex1": [
         "ChargeSpeedUpAndReduceDeamonDamageParam",
         "ChargeSpeedFactorL"
@@ -616,27 +616,27 @@
       "hint": "Molten Spirit"
     },
     "96": {
-      "format": "-{v1}% Fall damage",
+      "format": "-{v1}% Fall Damage",
       "hint": "Cushioned Fall"
     },
     "98": {
-      "format": "Heal for {v1}% of sell price (minimum {v2}); allies receive {v3}% of the effect",
+      "format": "Restore HP equal to {v1}% of Sell Price (minimum {v2}); allies receive {v3}% of the effect",
       "hint": "Adventurous Appetite"
     },
     "99": {
-      "format": "-{v1}% magick damage taken",
+      "format": "-{v1}% Magick damage taken",
       "hint": "Fiendish Ward I"
     },
     "100": {
-      "format": "-{v1}% magick damage taken",
+      "format": "-{v1}% Magick damage taken",
       "hint": "Fiendish Ward II"
     },
     "101": {
-      "format": "-{v1}% magick damage taken",
+      "format": "-{v1}% Magick damage taken",
       "hint": "Fiendish Ward III"
     },
     "102": {
-      "format": "+{v1}% recovery",
+      "format": "+{v1}% Recovery",
       "hint": "Improved Efficacy"
     },
     "103": {
@@ -657,11 +657,11 @@
       "hint": "Carnivore"
     },
     "107": {
-      "format": "{v1}% chance of +{v2}% damage",
+      "format": "{v1}% chance of +{v2}% Damage Rate",
       "hint": "Arcane Wisdom"
     },
     "108": {
-      "format": "At critical HP: -{v1}% prone/crawling recovery delay",
+      "format": "At critical HP: -{v1}% prone/crawling Recovery delay",
       "hint": "Moribund Recovery"
     },
     "109": {
@@ -677,7 +677,7 @@
       "hint": "Imperiled Reflexes"
     },
     "112": {
-      "format": "{ex1} poison buildup (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/staff ×{ex7}/archistaff ×{ex8}/magick bow ×{ex9}/censer ×{ex10}); {ex2} s cooldown, up to {ex3} activations per target",
+      "format": "{ex1} Poison Buildup (greatsword ×{ex4}/daggers ×{ex5}/bow ×{ex6}/staff ×{ex7}/archistaff ×{ex8}/magick bow ×{ex9}/censer ×{ex10}); {ex2} s cooldown, up to {ex3} activations per target",
       "hint": "Blighted Retort",
       "ex1": [
         "PoisonAttackParameter",
@@ -727,7 +727,7 @@
       "hint": "Siege Hardened"
     },
     "116": {
-      "format": "-{v1}% Damage taken",
+      "format": "-{v1}% damage taken",
       "hint": "Intact Fortitude"
     },
     "117": {
@@ -739,11 +739,11 @@
       "hint": "Shadowbound"
     },
     "120": {
-      "format": "-{v1}% Natural sleep/frozen/unconsciousness duration",
+      "format": "-{v1}% Natural Sleep/Frozen/Unconsciousness duration",
       "hint": "Animated Recovery"
     },
     "121": {
-      "format": "-{v1}% Uphill stamina cost/recovery penalties",
+      "format": "-{v1}% Uphill Stamina Cost/Recovery penalties",
       "hint": "Hill Strider"
     },
     "122": {
@@ -751,35 +751,35 @@
       "hint": "Enduring Grip"
     },
     "123": {
-      "format": "+{v2}% Damage",
+      "format": "+{v2}% Damage Rate",
       "hint": "Wind Rider"
     },
     "125": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Leaping Strike"
     },
     "126": {
-      "format": "+{v1}% base MaxHP",
+      "format": "+{v1}% Base MaxHP",
       "hint": "Health Boost I"
     },
     "127": {
-      "format": "+{v1}% base MaxHP",
+      "format": "+{v1}% Base MaxHP",
       "hint": "Health Boost II"
     },
     "128": {
-      "format": "+{v1}% base MaxHP",
+      "format": "+{v1}% Base MaxHP",
       "hint": "Health Boost III"
     },
     "129": {
-      "format": "+{v1}% base MaxSt",
+      "format": "+{v1}% Base MaxSt",
       "hint": "Stamina Boost I"
     },
     "130": {
-      "format": "+{v1}% base MaxSt",
+      "format": "+{v1}% Base MaxSt",
       "hint": "Stamina Boost II"
     },
     "131": {
-      "format": "+{v1}% base MaxSt",
+      "format": "+{v1}% Base MaxSt",
       "hint": "Stamina Boost III"
     },
     "132": {
@@ -869,7 +869,7 @@
       ]
     },
     "144": {
-      "format": "{v1}% chance of +{v2}% damage",
+      "format": "{v1}% chance of +{v2}% Damage Rate",
       "hint": "Riotous Magick"
     },
     "145": {
@@ -881,35 +881,35 @@
       "hint": "Swift Strike II"
     },
     "147": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Corrupted Foe Counter I"
     },
     "148": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Corrupted Foe Counter II"
     },
     "149": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Corrupted Foe Counter III"
     },
     "150": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Deflect Strike"
     },
     "151": {
-      "format": "-{v1} s charge time; +{v2}% damage",
+      "format": "-{v1} s charge time; +{v2}% Damage Rate",
       "hint": "Breakneck Toss"
     },
     "152": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Improved Empale"
     },
     "153": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Critical Shot"
     },
     "154": {
-      "format": "When fully charged: +{v1}% damage",
+      "format": "When fully charged: +{v1}% Damage Rate",
       "hint": "Full Bend"
     },
     "155": {
@@ -925,19 +925,19 @@
       "hint": "Nimble Tread"
     },
     "159": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Piercing Escalade"
     },
     "160": {
-      "format": "+{v1} frames input window, +{v3}% combo damage",
+      "format": "+{v1} frames input window, +{v3}% combo Damage Rate",
       "hint": "Mighty Chain"
     },
     "161": {
-      "format": "+{v1}% damage; +{v2} m range",
+      "format": "+{v1}% Damage Rate; +{v2} m range",
       "hint": "Extended Burst"
     },
     "162": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "Vertiginous Strike"
     },
     "163": {
@@ -945,7 +945,7 @@
       "hint": "Restorative Bolts"
     },
     "164": {
-      "format": "+{v1}% Torched/frozen/unconsciousness buildup",
+      "format": "+{v1}% Torched/Frozen/Unconsciousness Buildup",
       "hint": "Debilitating Bolts"
     },
     "165": {
@@ -957,7 +957,7 @@
       "hint": "Perdurable Illusion"
     },
     "167": {
-      "format": "Consecutive hits reduce damage by {ex1}%/{ex2}%/{ex3}%/{ex4}%/{ex5}% in sequence",
+      "format": "Consecutive hits reduce Damage by {ex1}%/{ex2}%/{ex3}%/{ex4}%/{ex5}% in sequence",
       "hint": "Equanimity",
       "ex1": [
         "ReduceDamageOnConsecutiveAttacksParam",
@@ -1006,7 +1006,7 @@
       ]
     },
     "169": {
-      "format": "-{v1}% Loss-gauge buildup",
+      "format": "-{v1}% MaxHP Loss Buildup",
       "hint": "Survival Instinct"
     },
     "170": {
@@ -1014,7 +1014,7 @@
       "hint": "Elusive"
     },
     "171": {
-      "format": "-{v1}% Damage taken; -{v2}% status buildup taken",
+      "format": "-{v1}% damage taken; -{v2}% status buildup taken",
       "hint": "Breath Resistance"
     },
     "172": {
@@ -1022,7 +1022,7 @@
       "hint": "Improved Odds"
     },
     "173": {
-      "format": "-{v1}% Damage taken",
+      "format": "-{v1}% damage taken",
       "hint": "Airborne Reflexes"
     },
     "175": {
@@ -1068,7 +1068,7 @@
       "hint": "効果時間倍率(1.200000,0.000000)"
     },
     "18": {
-      "format": "+{v1} Recover Rate",
+      "format": "+{v1} Recovery Multiplier",
       "hint": "加算倍率を入力(0.100000,0.000000)"
     },
     "19": {
@@ -1076,7 +1076,7 @@
       "hint": "固定ヘイト値 * Value(0.850000,0.000000)"
     },
     "20": {
-      "format": "Recover {v1}%~{v2}% of MaxHP",
+      "format": "Restore {v1}%~{v2}% of MaxHP",
       "hint": "トドメを指したとき、自身の体力の(Value～Value2)%回復(4.000000,4.000000)"
     },
     "21": {
@@ -1108,7 +1108,7 @@
       "hint": "吹き飛ばし力 + Value%(15.000000,0.000000)"
     },
     "28": {
-      "format": "x{v1} MaxHP loss",
+      "format": "x{v1} MaxHP Loss",
       "hint": "黒ゲージ蓄積量×Value(0.950000,0.000000)"
     },
     "29": {
@@ -1124,7 +1124,7 @@
       "hint": "吹き飛ばし耐性 + Value%(30.000000,0.000000)"
     },
     "32": {
-      "format": "+{v1}% Damage",
+      "format": "+{v1}% Damage Rate",
       "hint": "弱点属性による与ダメージ + Value%(5.000000,0.000000)"
     },
     "33": {
@@ -1160,7 +1160,7 @@
       "hint": "固定ヘイト値 * Value(2.000000,0.000000)"
     },
     "40": {
-      "format": "Recover {v1}% Stamina",
+      "format": "Restore {v1}% Stamina",
       "hint": "敵にトドメを指したとき、スタミナValue%回復(10.000000,0.000000)"
     },
     "41": {
@@ -1172,7 +1172,7 @@
       "hint": "ポーンの物理攻撃力/魔法攻撃力+ １：固定値　２：割合値(%)(30.000000,0.000000)"
     },
     "43": {
-      "format": "-{v1} seconds",
+      "format": "-{v1} s",
       "hint": "ポーン蘇生にかかる時間 -Value(秒)(1.000000,0.000000)"
     },
     "44": {
@@ -1212,11 +1212,11 @@
       "hint": "最大重量加算値(10.000000,0.000000)"
     },
     "7": {
-      "format": "Lift up +{v1} seconds.Pin Down +{v2} seconds",
+      "format": "Lift up +{v1} s.Pin Down +{v2} s",
       "hint": "1：担ぎ上げ、2：押さえつけ。単位は秒(2.000000,2.000000)"
     },
     "8": {
-      "format": "{v1} seconds faster from Down.{v2} seconds faster from Crawling",
+      "format": "{v1} s faster from Down.{v2} s faster from Crawling",
       "hint": "1：ダウン、2：這いずり。単位は秒(0.300000,1.000000)"
     },
     "9": {
@@ -1229,7 +1229,7 @@
       "enable": true,
       "format": "Add %s Status",
       "map": [
-        "Posion"
+        "Poison"
       ],
       "type": "Enum"
     },
@@ -1238,12 +1238,12 @@
     "_BlowResistRate": "+%s Knockdown Resist",
     "_BuyPrice": {
       "enable": false,
-      "format": "BuyPrice %s.",
+      "format": "Buy Price %s.",
       "type": "String"
     },
     "_Category": {
       "enable": false,
-      "format": "Cat %s",
+      "format": "Category %s",
       "map": [
         "Material",
         "Other",
@@ -1254,7 +1254,7 @@
     "_DarkDefence": "%s%% Dark Debuff Resist",
     "_Element": {
       "enable": true,
-      "format": "+%s%% %s Enchant",
+      "format": "+%s%% %s Enchantment",
       "map": [
         "Fire",
         "Ice",
@@ -1264,46 +1264,46 @@
       "type": "Enum"
     },
     "_ElementStore": "%s Element Buildup Enchantment",
-    "_FireDefence": "%s%% Fire Damage Reduce",
+    "_FireDefence": "%s%% Fire Damage Reduction",
     "_FireResist": "%s%% Fire Debuff Resist",
-    "_HealBlackHp": "Heal %s MaxHP.",
-    "_HealStamina": "Recover %s Stamina",
-    "_HealBlackStamina": "Recover %s MaxSt",
-    "_HealWhiteHp": "Heal %s HP.",
-    "_IceDefence": "%s%% Ice Damage Reduce",
+    "_HealBlackHp": "Restore %s MaxHP.",
+    "_HealStamina": "Restore %s Stamina",
+    "_HealBlackStamina": "Restore %s MaxSt",
+    "_HealWhiteHp": "Restore %s HP.",
+    "_IceDefence": "%s%% Ice Damage Reduction",
     "_IceResist": "%s%% Ice Debuff Resist",
     "_Id": {
       "enable": false,
-      "format": "Id %s.",
+      "format": "ID %s.",
       "type": "String"
     },
-    "_LightDefence": "%s%% Holy Damage Reduce",
+    "_LightDefence": "%s%% Holy Damage Reduction",
     "_MagicAttack": "%s MagATK",
     "_MagicDefence": "%s MagDEF",
     "_OilResist": "%s%% Oil Resist",
     "_ColdResist": "%s%% Cold Resist",
-    "_OilStore": "%s Oil Store",
+    "_OilStore": "%s Oil Buildup",
     "_PhysicalAttack": "%s ATK",
     "_PhysicalDefence": "%s DEF",
     "_PoisonResist": "%s%% Poison Resist",
-    "_PoisonStore": "%s PoisonStore",
+    "_PoisonStore": "%s Poison Buildup",
     "_SellPrice": {
       "enable": false,
-      "format": "SellPrice %s.",
+      "format": "Sell Price %s.",
       "type": "String"
     },
-    "_SilentResist": "%s%% Silent Resist",
-    "_SilentStore": "%s Silent Store",
-    "_SlashDefenceRate": "%s%% Slash Reduce",
+    "_SilentResist": "%s%% Silence Resist",
+    "_SilentStore": "%s Silence Buildup",
+    "_SlashDefenceRate": "%s%% Slash Damage Reduction",
     "_SleepResist": "%s%% Sleep Resist",
-    "_SleepStore": "%s Sleep Store",
+    "_SleepStore": "%s Sleep Buildup",
     "_StoneResist": "%s%% Stone Resist",
-    "_StoneStore": "%s Stone Store",
-    "_StrikeDefenceRate": "%s%% Strike Reduce",
+    "_StoneStore": "%s Stone Buildup",
+    "_StrikeDefenceRate": "%s%% Strike Damage Reduction",
     "_StrikeStore": "%s Unconsciousness Buildup",
     "_SubCategory": {
       "enable": false,
-      "format": "Cat %s",
+      "format": "Subcategory %s",
       "map": [
         "Buff",
         "Material",
@@ -1318,7 +1318,7 @@
       ],
       "type": "Enum"
     },
-    "_ThunderDefence": "%s%% Lightning Damage Reduce",
+    "_ThunderDefence": "%s%% Lightning Damage Reduction",
     "_ThunderResist": "%s%% Lightning Debuff Resist",
     "_UseEffect": {
       "enable": false,
@@ -1331,7 +1331,7 @@
       "type": "Enum"
     },
     "_WaterResist": "%s%% Water Resist",
-    "_WaterStore": "%s Water Store"
+    "_WaterStore": "%s Water Buildup"
   },
   "RingSpecialFormat": {
     "10201": {
@@ -1363,15 +1363,15 @@
     },
     "41": {
       "enable": true,
-      "format": "Restore {v1}% of stamina consumed"
+      "format": "Restore {v1}% of Stamina consumed"
     },
     "42": {
       "enable": true,
-      "format": "Stamina recovery when exhausted +{v1}%"
+      "format": "Stamina Recovery when exhausted +{v1}%"
     },
     "43": {
       "enable": true,
-      "format": "Incantation speed +{v1}%"
+      "format": "Cast Speed +{v1}%"
     },
     "44": {
       "enable": true,
@@ -1383,7 +1383,7 @@
     },
     "46": {
       "enable": true,
-      "format": "Dashing stamina cost -{v1}%"
+      "format": "Dashing Stamina Cost -{v1}%"
     },
     "47": {
       "enable": true,
@@ -1407,7 +1407,7 @@
     },
     "58": {
       "enable": true,
-      "format": "Restore stamina equal to factor * motion value. Factor: Fighter{sr1}/Archer{sr2}/Mage{sr3}/Thief{sr4}/Warrior{sr5}/Sorcerer{sr6}/Mystic Spearhand{sr7}/Magick Archer{sr8}/Trickster{sr9}. Cap: {sm4} (Magick Archer/Thief)/{sm1} (others)"
+      "format": "Restore Stamina equal to factor * motion value. Factor: Fighter{sr1}/Archer{sr2}/Mage{sr3}/Thief{sr4}/Warrior{sr5}/Sorcerer{sr6}/Mystic Spearhand{sr7}/Magick Archer{sr8}/Trickster{sr9}. Cap: {sm4} (Magick Archer/Thief)/{sm1} (others)"
     },
     "38": {
       "enable": true,
@@ -1424,12 +1424,12 @@
     },
     "10": {
       "enable": true,
-      "format": "{v1}% Faster Cast",
+      "format": "Cast Speed +{v1}%",
       "hint": "(3533,Ring of Articulacy,15,0,0)"
     },
     "11": {
       "enable": true,
-      "format": "{v1}% Faster Cast but lose {v2}% MaxHP",
+      "format": "Cast Speed +{v1}%; MaxHP -{v2}%",
       "hint": "(3534,Ring of Recitation,25,20,0)"
     },
     "12": {
@@ -1444,7 +1444,7 @@
     },
     "14": {
       "enable": true,
-      "format": "Gain +{v1}% ATK in {v2} seconds",
+      "format": "Gain +{v1}% ATK in {v2} s",
       "hint": "(3537,Ring of Requital,15,10,0)"
     },
     "15": {
@@ -1455,7 +1455,7 @@
     },
     "16": {
       "enable": true,
-      "format": "Continuous Heal under {v1}% MaxHP",
+      "format": "Continuous HP Recovery under {v1}% MaxHP",
       "hint": "(3539,Ring of Benevolence,25,3,0)"
     },
     "17": {
@@ -1496,17 +1496,17 @@
     },
     "24": {
       "enable": true,
-      "format": "+{v1}%/{v2}% Deal/Taken Damage",
+      "format": "+{v1}%/{v2}% Damage Dealt/Taken",
       "hint": "(3549,Ring of Gallantry,25,25,0)"
     },
     "25": {
       "enable": true,
-      "format": "+{v1}% Damage from behind",
+      "format": "+{v1}% Damage Rate from behind",
       "hint": "(3550,Ring of Skullduggery,20,0,0)"
     },
     "26": {
       "enable": true,
-      "format": "Pawn gains {v1} DEF in {v2} seconds",
+      "format": "pawn gains {v1} DEF in {v2} s",
       "hint": "(3551,Ring of Reassurance,50,20,0)"
     },
     "27": {
@@ -1561,7 +1561,7 @@
     },
     "9": {
       "enable": true,
-      "format": "Heal {v1} HP On Kill",
+      "format": "Restore {v1} HP On Kill",
       "hint": "(3532,Ring of Regeneration,50,0,0)"
     }
   },
@@ -1570,7 +1570,7 @@
     "DefenceFactor": "+%s%% DEF ",
     "StatusConditionResistFactor": "+%s%% Status Resist ",
     "StaminaRecoverFactor": "%s%% Stamina Recovery ",
-    "Sec": "for %s seconds",
+    "Sec": "for %s s",
     "MaxHpDamageFactor":"-%s%% MaxHP Loss",
     "Camp":"Camp:",
     "SpecialCamp": "Camp (Orienteer):"
