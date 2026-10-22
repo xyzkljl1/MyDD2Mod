@@ -26,7 +26,7 @@ local _config={
     {name="RemoveFromFavList",type="button",onClick=function() onRemoveFromFavList() end},
     {name="FavList",type="buttonN",onClick=function(...) onFavListClick(...) end,default={}},
     {type="mutualboxend"},
-    {type="author",version="1.4.6"}
+    {type="author",version="1.4.7"}
 }
 
 local myapi = require("_XYZApi/_XYZApi")
@@ -164,7 +164,6 @@ local function BlockTutorial(args)
 	-- 113 is Tome tutorial
 	-- when tome is gained, requestTutorial will be called twice,id will be 113 and x(eg.115).The second call doesn't matter.
 	local tutorialId=sdk.to_int64(args[3]) & 0xffffffff
-	Log("Request tutorial "..tutorialId)
 	if tutorialId == 113 or tutorialId == 194 or tutorialId == 218 or tutorialId == 212 or tutorialId == 203 or tutorialId == 208 or tutorialId == 220 or tutorialId == 221 or tutorialId == 231 then
 		storage["skip"] = true
 		return sdk.PreHookResult.SKIP_ORIGINAL
@@ -172,7 +171,6 @@ local function BlockTutorial(args)
 end
 local function BlockTutorialPost(retval)
 	if thread.get_hook_storage()["skip"] then
-		Log("Skip tutorial")
 		return sdk.to_ptr(true)
 	end
 end
