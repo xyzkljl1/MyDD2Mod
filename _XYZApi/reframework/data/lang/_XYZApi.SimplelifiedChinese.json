@@ -1,4 +1,6 @@
 {
+  "_XYZApi.resetConfig": "恢复默认设置",
+  "_XYZApi.resetPending": "配置已清空。请点击 REFramework > ScriptRunner > Reset scripts，重载后恢复默认设置。",
   "_XYZApi.uiLanguage": "界面语言",
   "_XYZApi.followGame": "跟随游戏",
   "_XYZApi.english": "英文",

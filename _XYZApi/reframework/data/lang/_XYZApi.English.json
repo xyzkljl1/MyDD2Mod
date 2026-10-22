@@ -1,4 +1,6 @@
 {
+  "_XYZApi.resetConfig": "Reset to Defaults",
+  "_XYZApi.resetPending": "Config cleared. Click REFramework > ScriptRunner > Reset scripts to restore defaults.",
   "_XYZApi.uiLanguage": "UI language",
   "_XYZApi.followGame": "Follow game",
   "_XYZApi.english": "English",

@@ -1,5 +1,5 @@
 ﻿local modname="_XYZAPI"
-local version="1.10.3"
+local version="1.10.4"
 local vecNames={
     ".x",
     ".y",
@@ -84,6 +84,12 @@ local function Enum2Map(typeName,from)
         end
     end
     return id2name,name2id
+end
+
+local function DeepCopyTable(t)
+  local ret = { }
+  for k,v in pairs(t) do ret[k] = v end
+  return setmetatable(ret, getmetatable(t))
 end
 
 local function InitFromFile(_config,configfile,dontInitHotkey)
@@ -210,12 +216,6 @@ if isDD2()==true then
     nil,DD2_InitItemId)
 end
 
-function DeepCopyTable(t)
-  local ret = { }
-  for k,v in pairs(t) do ret[k] = v end
-  return setmetatable(ret, getmetatable(t))
-end
-
 local languageSettingsFile="_XYZApi.Localization.json"
 local function loadLanguageTable(path)
     local ok,value=pcall(json.load_file,path)
@@ -317,6 +317,7 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
         DD2_InitItemId()
     end
 
+    local resetPending=false
     local languageState={name=modname}
     if disableLocalization==true then
         languageState.text=DeepCopyTable(loadLanguagePack("_XYZApi","English"))
@@ -349,6 +350,17 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
 		    --imgui.same_line()
 		    --imgui.text("*Right click on most options to reset them")
             if disableLocalization~=true then drawLanguageMenu(languageState,uiText) end
+            if not resetPending and imgui.button(tr("_XYZApi.resetConfig","Reset to Defaults")) then
+                fs.write(configfile,"{}")
+                resetPending=fs.read(configfile)=="{}"
+                if not resetPending then Log("Failed to reset config: "..configfile) end
+            end
+            if resetPending then
+                imgui.text(tr("_XYZApi.resetPending","Config cleared. Click REFramework > ScriptRunner > Reset scripts to restore defaults."))
+                imgui.tree_pop()
+                if isFontChanged then imgui.pop_font() end
+                return
+            end
             local isInMutualBox=false
 		    imgui.begin_rect()
             for optionIndex,para in ipairs (_config) do
