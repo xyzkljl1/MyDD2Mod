@@ -3,6 +3,7 @@ local TAG, OUTPUT = "[stargaze] ", "stargaze_predictions.txt"
 local api, config, controls = {}, {}, {}
 local ready, failed, requested = false, false, false
 local overrideSeed
+local selectionDirty, selectedVariant = true, nil
 
 local function count(list) return list and list:call("get_Count()") or 0 end
 local function signed(seed) return seed >= 2147483648 and seed - 4294967296 or seed end
@@ -161,14 +162,22 @@ local function appendResults(rows, results, source, number, im, gm, names)
     end
 end
 
-local function exportResults(am, im, gm)
+local function exportResults(am, im, gm, single)
     local started = os.clock()
-    local predictionCount = config.predictionCount
+    local predictionCount = single and config.singlePredictionCount or config.predictionCount
     local seed = am:get_field("RandomUint")
     local effective = config.enabled and assert(overrideSeed, "Enter a valid uint32 seed") or seed
     local calculationSeed = signed(effective)
     local normal = dictionary(am:get_field("ItemSettingDict"))
     local fixed = dictionary(am:get_field("FixedItemSettingDict"))
+    if single then
+        local source, job = config.variant, config.job
+        assert(normal[source] and not fixed[source], "Invalid random appraisal variant: " .. source)
+        assert((source ~= 654 and source ~= 655) or job == 0, "Discarded supplies require job 0")
+        local data = assert(normal[source]:get_field("data"), "Missing variant data")
+        assert(count(data:call("getJobDataList(app.Character.JobEnum)", job)) > 0,
+            "No appraisal candidates for variant=" .. source .. " job=" .. job)
+    end
     local counters = dictionary(am:get_field("ExecuteIndexDict"))
     local shadow = create(api.managerType)
     assert(shadow ~= am and shadow:get_field("_Random") ~= am:get_field("_Random"), "Prediction RNG is not isolated")
@@ -183,7 +192,7 @@ local function exportResults(am, im, gm)
     -- Fixed mappings are excluded even if also present in the normal table.
     local ids = {}
     for id in pairs(normal) do
-        if not fixed[id] then ids[#ids + 1] = id end
+        if not fixed[id] and (not single or id == config.variant) then ids[#ids + 1] = id end
     end
     table.sort(ids)
     assert(#ids > 0, "No appraisal settings loaded")
@@ -199,7 +208,9 @@ local function exportResults(am, im, gm)
         if display <= 0 then display = source end
         local data = assert(normal[source]:get_field("data"), "Missing variant data")
         -- Discarded supplies use job 0 rather than enumerating job variants.
-        for job = 0, (source == 654 or source == 655) and 0 or 10 do
+        local firstJob = single and config.job or 0
+        local lastJob = single and config.job or ((source == 654 or source == 655) and 0 or 10)
+        for job = firstJob, lastJob do
             local candidates = data:call("getJobDataList(app.Character.JobEnum)", job)
             if count(candidates) == 0 then goto continue end
             local key, rows = source * 100 + job, {}
@@ -280,6 +291,8 @@ local function initialize()
     api.skillName = bind("app.GuiManager", "getEquipmentAbilityNameMsgData(app.EquipmentAbilityID)")
     api.guid = bind("via.gui.message", "getGuidByName(System.String)")
     api.message = bind("app.MessageManager", "getMessage(System.Guid)")
+    api.messageInLanguage = bind("via.gui.message", "get(System.Guid, via.Language)")
+    api.japanese = sdk.find_type_definition("via.Language"):get_field("Japanese"):get_data()
     local load = bind("app.ItemAppraisalManager", "loadGameSaveData(app.SaveDataBase)")
     local scene = bind("app.GuiManager", "OnChangeSceneType")
     sdk.hook(api.calculate, function(args)
@@ -290,9 +303,11 @@ local function initialize()
     end, function(retval) return retval end)
     sdk.hook(load, function()
         requested = false
+        selectionDirty = true
     end, function(retval) return retval end)
     sdk.hook(scene, function()
         requested = false
+        selectionDirty = true
     end, function(retval) return retval end)
     ready = true
 end
@@ -302,23 +317,95 @@ local seedToggle = {name="enabled", type="bool", label="Override appraisal seed"
 local seedControl = {name="seed", type="uint32", label="Seed", default=1, min=1, max=4294967295}
 local predictionControl = {name="predictionCount", type="int", label="Prediction count", default=10, min=1, max=50,
     tip="Number of upcoming appraisals to predict for each relic and job combination."}
+local variantControl = {name="variant", type="stringComboBox", label="Source variant", default=854, list={}, hide=true}
+local jobControl = {name="job", type="stringComboBox", label="Vocation", default=8, list={}, hide=true}
+local singlePredictionControl = {name="singlePredictionCount", type="int", label="Prediction count", default=10, min=1, max=100000}
 controls = {
     {name="Appraisal seed", type="mutualbox"},
     seedToggle,
     seedControl,
-    {name="Export", type="mutualbox"},
+    {name="Export", label="Predict all possible combinations", type="mutualbox"},
     predictionControl,
-    {name="export", type="button", label="Export Stargazing Results",
-        tip="Runs continuously in one game update. Rendering waits until calculation and file writing finish.", onClick=function()
+    {name="export", type="button", label="Export Stargazing Results", onClick=function()
         if failed then return end
-        requested=true
+        requested="all"
+    end},
+    {name="Single combination", label="Predict a single combination", type="mutualbox"},
+    variantControl,
+    jobControl,
+    singlePredictionControl,
+    {name="exportSingle", type="button", label="Export Selected Combination", onClick=function()
+        if failed then return end
+        requested="single"
     end},
     {type="mutualboxend"},
-    {type="author", version="1.0"},
+    {type="author", version="1.1"},
 }
+local function refreshSelection(am)
+    local settings = am:get_field("ItemSettingDict")
+    if count(settings) == 0 then
+        variantControl.hide, jobControl.hide = true, true
+        selectionDirty = true
+        return
+    end
+    if selectionDirty then
+        local variants, ids = {}, {}
+        local fixed = dictionary(am:get_field("FixedItemSettingDict"))
+        for source in pairs(dictionary(settings)) do
+            if not fixed[source] then
+                local display = api.fakeId:call(nil, source)
+                if display <= 0 then display = source end
+                local label = clean(localized(api.itemName:call(nil, display)))
+                local original = api.messageInLanguage:call(nil, api.guid:call(nil, "item_name_" .. source), api.japanese)
+                if display ~= source then
+                    -- Match GainItem: intermediate variant names use the Japanese originals.
+                    if original and original ~= "" then label = label .. " / " .. clean(localized(original)) end
+                end
+                if not label:find("#Rejected#", 1, true)
+                    and not (original and original:find("#Rejected#", 1, true)) then
+                    variants[source] = label
+                    ids[#ids + 1] = source
+                end
+            end
+        end
+        table.sort(ids)
+        -- XYZApi enumerates stringComboBox options with pairs; preserve numeric ID order.
+        setmetatable(variants, {__pairs=function(list)
+            local index = 0
+            return function()
+                index = index + 1
+                local id = ids[index]
+                if id then return id, list[id] end
+            end
+        end})
+        variantControl.list, variantControl.tmp_List = variants, nil
+        if not variants[config.variant] then config.variant = ids[1] end
+        selectedVariant, selectionDirty = nil, false
+    end
+    variantControl.hide = next(variantControl.list) == nil
+    if variantControl.hide then jobControl.hide = true; return end
+    if selectedVariant ~= config.variant then
+        local data = settings:call("get_Item", config.variant):get_field("data")
+        local jobs, first = {}, nil
+        for job = 0, (config.variant == 654 or config.variant == 655) and 0 or 10 do
+            if count(data:call("getJobDataList(app.Character.JobEnum)", job)) > 0 then
+                jobs[job] = job == 0 and "Default (no vocation)" or clean(localized(api.jobName:call(nil, job)))
+                first = first or job
+            end
+        end
+        jobControl.list, jobControl.tmp_List = jobs, nil
+        if not jobs[config.job] then config.job = first end
+        jobControl.hide = first == nil
+        selectedVariant = config.variant
+    end
+end
 local function normalizeConfig()
-    local n = math.tointeger(tonumber(config.predictionCount)) or predictionControl.default
-    config.predictionCount = math.max(predictionControl.min, math.min(predictionControl.max, n))
+    for _, control in ipairs({predictionControl, singlePredictionControl}) do
+        local n = math.tointeger(tonumber(config[control.name])) or control.default
+        config[control.name] = math.max(control.min, math.min(control.max, n))
+    end
+    config.variant = math.tointeger(tonumber(config.variant)) or variantControl.default
+    config.job = math.tointeger(tonumber(config.job)) or jobControl.default
     -- Migrate the old string seed and clamp persisted values before the first draw.
     local seed = tonumber(config.seed) or seedControl.default
     if seed ~= seed then seed = seedControl.default end
@@ -341,6 +428,7 @@ re.on_application_entry("UpdateBehavior", function()
             return
         end
         if not ready then initialize() end
+        refreshSelection(am)
         local seed = am:get_field("RandomUint")
         seedToggle.label = "Override appraisal seed | Save seed: " .. tostring(seed)
             .. " | Effective: " .. tostring(config.enabled and (overrideSeed or "INVALID; using saved seed") or seed)
@@ -355,7 +443,7 @@ re.on_application_entry("UpdateBehavior", function()
             log.error(TAG .. "Export unavailable: load a save and close the native appraisal menu, then try again")
             return
         end
-        exportResults(am, im, gm)
+        exportResults(am, im, gm, run == "single")
     end)
     if not ok then
         log.error(TAG .. tostring(err))
