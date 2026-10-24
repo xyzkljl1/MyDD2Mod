@@ -1,5 +1,5 @@
 ﻿local modname="_XYZAPI"
-local version="1.10.4"
+local version="1.10.5"
 local vecNames={
     ".x",
     ".y",
