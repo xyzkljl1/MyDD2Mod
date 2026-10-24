@@ -23,6 +23,7 @@ local itemNames=nil
 local itemIds=nil
 local itemSearchOptions={}
 local refreshItems=true
+local lastItemRefresh=-1
 local itemIndex2itemId={}
 local itemId2itemIndex={}
 local mergedItemIds
@@ -206,14 +207,19 @@ local function DD2_InitItemId()
 --    print("}")
     for para in pairs(itemSearchOptions) do para.tmp_Items=nil end
     Log("Init Item List")
+    return true
+end
+
+local function DD2_InitItemIdNoReturn()
+    DD2_InitItemId()
 end
 
 if isDD2()==true then
     --dlc item is not in items at the first,need retry
-    sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,DD2_InitItemId)
+    sdk.hook(sdk.find_type_definition("app.GuiManager"):get_method("OnChangeSceneType"),nil,DD2_InitItemIdNoReturn)
     --get_Message return is decided by current language, so need to fetch item messages when option loaded
     sdk.hook(sdk.find_type_definition("app.OptionManager"):get_method("app.ISystemSaveData.loadSystemSaveData(app.SaveDataBase)"),
-    nil,DD2_InitItemId)
+    nil,DD2_InitItemIdNoReturn)
 end
 
 local languageSettingsFile="_XYZApi.Localization.json"
@@ -540,9 +546,13 @@ local function DrawIt(modname,configfile,_config,config,OnChange,dontInitHotkey,
                             triggeredButtons[key]={func=para.onClick,para=nil}
                             _changed=true
                         end
-                    elseif para.type=="item" then
+                    elseif para.type=="item" and refreshItems then
                         -- Refresh item list upon drawing ui first time. Because content-editor mod adds invalid items first and hook gui getItemName method later. It creates a window in which valid items are invalid. The only solution is to delay the init.
-                        if refreshItems then DD2_InitItemId(); refreshItems=false end
+                        if os.clock()>lastItemRefresh+1 then
+                            refreshItems=not DD2_InitItemId()
+                            lastItemRefresh=os.clock()
+                        end
+                    elseif para.type=="item" then
                         itemSearchOptions[para]=true
                         if para.enableSearch==true or para.enableSearch==nil then
                             imgui.push_item_width(imgui.calc_item_width()*0.2)
