@@ -224,6 +224,12 @@ end
 
 local languageSettingsFile="_XYZApi.Localization.json"
 local function loadLanguageTable(path)
+    if path:match("%.English%.json$") then
+        -- English is default lang. No lang pack is normal.
+        local file=io.open(path,"r")
+        if file==nil then return {} end
+        file:close()
+    end
     local ok,value=pcall(json.load_file,path)
     if ok and type(value)=="table" then return value end
     if not ok or value~=nil then log.warn("[_XYZApi] Invalid JSON: "..path) end
