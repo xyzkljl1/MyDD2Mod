@@ -2,7 +2,7 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
-    {type="author",version="1.4.13"},
+    {type="author",version="1.4.14beta"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
@@ -116,7 +116,11 @@ local function LootBody(deadBodyController)
     -- havn't found a way to calc x-y-z distance
     -- local p = deadBodyController.InteractiveObject.Works._items[0].ParentJoint:get_Position()
     if distance~=0.0 and distance<rangeSq then
-        local pos=getCharacterPos(deadBodyController.Chara)
+        local success,pos=pcall(getCharacterPos,deadBodyController.Chara)
+        if not success or pos==nil then
+            waitingBodyControllerList[deadBodyController]=nil
+            return
+        end
         local ct=0
 
         --限制最大尝试次数，防止超过堆叠上限时不停冒无法获得道具的提示
@@ -346,6 +350,10 @@ sdk.hook(
 )
 
 local function LootGm80_001(gimmick)
+    -- Leave chests requiring keys to manual interaction.
+    if gimmick.UnlockItem~=0 then
+        return false
+    end
     -- Leave the Sunken Spire event chest to the player for its native cutscene sequence.
     if gimmick.GimmickParamId==301001 then
         return false
@@ -389,6 +397,7 @@ sdk.hook(
         if config.disableOnBattle and battleManager:get_IsBattleMode() then return end
         interval = interval+1
         if interval >30 then
+            interval=0
             --Log("startFrameN")
             --iterate body controller
             for k,v in pairs(waitingBodyControllerList) do
@@ -400,7 +409,6 @@ sdk.hook(
             end
             
             --Log("endFrameN")
-            interval=0
         end
     end,
     nil
