@@ -172,6 +172,30 @@
             "format": "-{v1} مستوى الوزن عند التحرك",
             "hint": "移動時の重量ランクをValue段階下げる(1.000000,0.000000)"
         },
+        "52": {
+          "format": "فرصة ذهب إضافي {v1}% ({ex1}/{ex2}/{ex3}/{ex4}/{ex5}); فرصة لحم إضافي {v2}%",
+          "hint": "Fortuity",
+          "v1": ["AdditionalItemParam", "CashProbability"],
+          "v2": ["AdditionalItemParam", "MeatProbability"],
+          "ex1": ["AdditionalItemParam", "LotteryCashInfos.0.Num"],
+          "ex2": ["AdditionalItemParam", "LotteryCashInfos.1.Num"],
+          "ex3": ["AdditionalItemParam", "LotteryCashInfos.2.Num"],
+          "ex4": ["AdditionalItemParam", "LotteryCashInfos.3.Num"],
+          "ex5": ["AdditionalItemParam", "LotteryCashInfos.4.Num"]
+        },
+        "53": {
+          "format": "استهلاك التحمل للركض/القفز x{v1}",
+          "hint": "1: スタミナ消費量の倍率"
+        },
+        "54": {
+          "format": "{v1} م؛ مقدار الاسترداد المشترك x{v2}",
+          "hint": "1: 範囲(m)、2:効果の倍率"
+        },
+        "55": {
+          "format": "استهلاك التحمل {v1:per}؛ Zeal: {v3:per}",
+          "hint": "1: スタミナ消費量の倍率",
+          "v3": [49, "Value"]
+        },
         "6": {
             "format": "اكتساب {v2}٪+{v1} الحد الأقصى للوزن",
             "hint": "最大重量加算値(10.000000,0.000000)"

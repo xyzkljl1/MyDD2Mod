@@ -1550,6 +1550,30 @@
       "format": "移动时负重等级下降-{v1}级",
       "hint": "移動時の重量ランクをValue段階下げる(1.000000,0.000000)"
     },
+    "52": {
+      "format": "{v1}%概率额外获得金钱（{ex1}/{ex2}/{ex3}/{ex4}/{ex5}）；{v2}%概率额外获得肉类",
+      "hint": "Fortuity",
+      "v1": ["AdditionalItemParam", "CashProbability"],
+      "v2": ["AdditionalItemParam", "MeatProbability"],
+      "ex1": ["AdditionalItemParam", "LotteryCashInfos.0.Num"],
+      "ex2": ["AdditionalItemParam", "LotteryCashInfos.1.Num"],
+      "ex3": ["AdditionalItemParam", "LotteryCashInfos.2.Num"],
+      "ex4": ["AdditionalItemParam", "LotteryCashInfos.3.Num"],
+      "ex5": ["AdditionalItemParam", "LotteryCashInfos.4.Num"]
+    },
+    "53": {
+      "format": "体力消耗x{v1}",
+      "hint": "1: スタミナ消費量の倍率"
+    },
+    "54": {
+      "format": "{v1}米内共享x{v2}回复量",
+      "hint": "1: 範囲(m)、2:効果の倍率"
+    },
+    "55": {
+      "format": "体力消耗{v1:per} 身轻如燕: {v3:per}",
+      "hint": "1: スタミナ消費量の倍率",
+      "v3": [49, "Value"]
+    },
     "6": {
       "format": "获得 {v2}%+{v1} 负重上限",
       "hint": "最大重量加算値(10.000000,0.000000)"
