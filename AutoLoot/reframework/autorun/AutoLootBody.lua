@@ -2,7 +2,7 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
-    {type="author",version="1.4.14beta"},
+    {type="author",version="1.4.14"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
@@ -134,6 +134,10 @@ local function LootBody(deadBodyController)
                     end
                 end
             end
+        end
+        local additionalItem=deadBodyController.Chara:get_ExtendedGatherContext().HasAdditionalItemByAbility
+        if additionalItem._HasValue and additionalItem._Value then
+            maxNum=maxNum+1
         end
         Log("Start Loot",maxNum)
         --Log("--",deadBodyController.GatherContext._Num,distance,deadBodyController:get_IsDropItemPickuped(),deadBodyController:get_IsDisableInteract(),deadBodyController:isDead(),deadBodyController:isInteractEnable(0),deadBodyController.Chara:get_CharaIDString())
