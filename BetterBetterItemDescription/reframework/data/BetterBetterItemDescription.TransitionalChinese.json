@@ -1550,6 +1550,25 @@
       "format": "移動時負重等級下降-{v1}級",
       "hint": "移動時の重量ランクをValue段階下げる(1.000000,0.000000)"
     },
+    "52": {
+      "format": "{v1}%機率額外獲得金錢；{v2}%機率額外獲得肉類",
+      "hint": "Fortuity",
+      "v1": ["AdditionalItemParam", "CashProbability"],
+      "v2": ["AdditionalItemParam", "MeatProbability"]
+    },
+    "53": {
+      "format": "耐力消耗x{v1}",
+      "hint": "1: スタミナ消費量の倍率"
+    },
+    "54": {
+      "format": "{v1}公尺內共享x{v2}回復量",
+      "hint": "1: 範囲(m)、2:効果の倍率"
+    },
+    "55": {
+      "format": "耐力消耗{v1:per} 身輕如燕: {v3:per}",
+      "hint": "1: スタミナ消費量の倍率",
+      "v3": [49, "Value"]
+    },
     "6": {
       "format": "獲得 {v2}%+{v1} 負重上限",
       "hint": "最大重量加算値(10.000000,0.000000)"

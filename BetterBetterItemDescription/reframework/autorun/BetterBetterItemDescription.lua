@@ -300,6 +300,10 @@ local AbilityFormat={
     [48]={format="Gain x{v1} Favorability",hint="NPCの好感度が上がるとき、上昇値 * Value(1.100000,0.000000)"},
     [49]={format="x{v1} Cost",hint="カスタムスキルのスタミナ消費量xValue(0.950000,0.000000)"},
     [50]={format="-{v1} Weight Level When Moving",hint="移動時の重量ランクをValue段階下げる(1.000000,0.000000)"},
+    [52]={format="{v1}% Extra Gold Chance; {v2}% Extra Meat Chance",hint="Fortuity",v1={"AdditionalItemParam","CashProbability"},v2={"AdditionalItemParam","MeatProbability"}},
+    [53]={format="Dash/Jump Stamina Cost x{v1}",hint="1: スタミナ消費量の倍率"},
+    [54]={format="{v1} m; Shared Recovery x{v2}",hint="1: 範囲(m)、2:効果の倍率"},
+    [55]={format="Stamina Cost {v1:per}; Zeal: {v3:per}",hint="1: スタミナ消費量の倍率",v3={49,"Value"}},
 }
 
 local EquipmentAbilityFormat={
@@ -1029,16 +1033,48 @@ local function GetOrAddItemDesc(originalMessage,storageData,equipFields)
     return sdk.create_managed_string(text)
 end
 
+local function GetEquipmentAbilityParamValue(para,field)
+    for key in string.gmatch(field,"[^.]+") do
+        if para==nil then return nil end
+        local index=tonumber(key)
+        if index~=nil then
+            para=para:get_element(index)
+        else
+            para=para:get_field(key)
+        end
+    end
+    return para
+end
+
 local function GetAbilityDetail(player,Id)
+    local format=AbilityFormat[Id]
+    if format==nil then return "" end
     local abilityParam=player:get_Human().Parameter.AbilityParam
-    local para=abilityParam:getParam(Id)
-    --return tostring(para.value).."/"..tostring(value2)
-    --para.Comment is comment from dev, thanks devs!
-    if AbilityFormat[Id]==nil then return "" end
-    local ret=AbilityFormat[Id].format
-    ret=string.gsub(ret,"{v1}",float2stringEX(para.Value))
-    ret=string.gsub(ret,"{v2}",float2stringEX(para.Value2))
-    --return tostring(Id).."/"..ret
+    local missingParam=false
+    local ret=string.gsub(format.format,"{(v%d+):?(%a*)}",function(key,style)
+        local fields=format[key]
+        local para=nil
+        local value=nil
+        if fields~=nil then
+            if type(fields[1])=="number" then
+                para=abilityParam:getParam(fields[1])
+            else
+                para=GetEquipmentAbilityParamValue(abilityParam,fields[1])
+            end
+            value=GetEquipmentAbilityParamValue(para,fields[2])
+        else
+            para=abilityParam:getParam(Id)
+            if para~=nil then value=para:get_field(key=="v1" and "Value" or "Value"..key:sub(2)) end
+        end
+        if value==nil then missingParam=true; return "" end
+        if style=="per" then
+            local percent=string.format("%.2f",(value-1)*100):gsub("0+$",""):gsub("%.$","")
+            if tonumber(percent)==0 then percent="0" end
+            return (tonumber(percent)>0 and "+" or "")..percent.."%"
+        end
+        return float2stringEX(value)
+    end)
+    if missingParam then return "" end
     return ret
 end
 
@@ -1060,19 +1096,6 @@ local function GetOrAddSkillDesc(originalMessage,Id)
     --can't cache managed_string ,causes crash
     --Log(SkillDescCache[Id])
     return sdk.create_managed_string(SkillDescCache[Id])
-end
-
-local function GetEquipmentAbilityParamValue(para,field)
-    for key in string.gmatch(field,"[^.]+") do
-        if para==nil then return nil end
-        local index=tonumber(key)
-        if index~=nil then
-            para=para:get_element(index)
-        else
-            para=para:get_field(key)
-        end
-    end
-    return para
 end
 
 local function GetEquipmentAbilityDetail(Id,isBoost)
