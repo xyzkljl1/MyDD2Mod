@@ -91,7 +91,7 @@
       ]
     },
     "49": {
-      "format": "Damage Dealt +{v1}%; Damage taken +{v2}%",
+      "format": "Damage Dealt and taken +{v1}%; Pawn Damage Dealt to foes possessed by a simulacrum +{v2}%",
       "hint": "Battle Frenzy I"
     },
     "50": {
@@ -207,67 +207,67 @@
       "hint": "Battering Shield"
     },
     "59": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Demon Counter I"
     },
     "60": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Demon Counter II"
     },
     "61": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Demon Counter III"
     },
     "62": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Abomination Counter I"
     },
     "63": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Abomination Counter II"
     },
     "64": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Abomination Counter III"
     },
     "65": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Humanoid Counter I"
     },
     "66": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Humanoid Counter II"
     },
     "67": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Beast Counter I"
     },
     "68": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Beast Counter II"
     },
     "69": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Winged Beast Counter I"
     },
     "70": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Winged Beast Counter II"
     },
     "71": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Saurian Counter I"
     },
     "72": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Saurian Counter II"
     },
     "73": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Spirit Counter I"
     },
     "74": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Spirit Counter II"
     },
     "75": {
@@ -628,11 +628,11 @@
       "hint": "Fiendish Ward I"
     },
     "100": {
-      "format": "-{v1}% Magick damage taken",
+      "format": "{r99}",
       "hint": "Fiendish Ward II"
     },
     "101": {
-      "format": "-{v1}% Magick damage taken",
+      "format": "{r99}",
       "hint": "Fiendish Ward III"
     },
     "102": {
@@ -723,15 +723,15 @@
       ]
     },
     "113": {
-      "format": "+{v2}% DEF/MagDEF for {v1} s",
+      "format": "{r103}",
       "hint": "Siege Hardened"
     },
     "116": {
-      "format": "-{v1}% damage taken",
+      "format": "{r110}",
       "hint": "Intact Fortitude"
     },
     "117": {
-      "format": "-{v1}% Stamina Cost",
+      "format": "{r55}",
       "hint": "Climber's Agility"
     },
     "118": {
@@ -747,7 +747,7 @@
       "hint": "Hill Strider"
     },
     "122": {
-      "format": "-{v1}% Stamina Cost",
+      "format": "{r55}",
       "hint": "Enduring Grip"
     },
     "123": {
@@ -755,7 +755,7 @@
       "hint": "Wind Rider"
     },
     "125": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Leaping Strike"
     },
     "126": {
@@ -763,11 +763,11 @@
       "hint": "Health Boost I"
     },
     "127": {
-      "format": "+{v1}% Base MaxHP",
+      "format": "{r126}",
       "hint": "Health Boost II"
     },
     "128": {
-      "format": "+{v1}% Base MaxHP",
+      "format": "{r126}",
       "hint": "Health Boost III"
     },
     "129": {
@@ -775,11 +775,11 @@
       "hint": "Stamina Boost I"
     },
     "130": {
-      "format": "+{v1}% Base MaxSt",
+      "format": "{r129}",
       "hint": "Stamina Boost II"
     },
     "131": {
-      "format": "+{v1}% Base MaxSt",
+      "format": "{r129}",
       "hint": "Stamina Boost III"
     },
     "132": {
@@ -787,43 +787,43 @@
       "hint": "Slashing Resistance I"
     },
     "133": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Slashing Resistance II"
     },
     "134": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Striking Resistance I"
     },
     "135": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Striking Resistance II"
     },
     "136": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Fire Resistance I"
     },
     "137": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Fire Resistance II"
     },
     "138": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Lightning Resistance I"
     },
     "139": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Lightning Resistance II"
     },
     "140": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Ice Resistance I"
     },
     "141": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Ice Resistance II"
     },
     "142": {
-      "format": "-{v1}% Stamina Cost",
+      "format": "{r55}",
       "hint": "Extended Dash"
     },
     "143": {
@@ -869,7 +869,7 @@
       ]
     },
     "144": {
-      "format": "{v1}% chance of +{v2}% Damage Rate",
+      "format": "{r107}",
       "hint": "Riotous Magick"
     },
     "145": {
@@ -877,23 +877,23 @@
       "hint": "Swift Strike I"
     },
     "146": {
-      "format": "-{v1}% Melee charge time",
+      "format": "{r145}",
       "hint": "Swift Strike II"
     },
     "147": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Corrupted Foe Counter I"
     },
     "148": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Corrupted Foe Counter II"
     },
     "149": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Corrupted Foe Counter III"
     },
     "150": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Deflect Strike"
     },
     "151": {
@@ -901,11 +901,11 @@
       "hint": "Breakneck Toss"
     },
     "152": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Improved Empale"
     },
     "153": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Critical Shot"
     },
     "154": {
@@ -925,7 +925,7 @@
       "hint": "Nimble Tread"
     },
     "159": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Piercing Escalade"
     },
     "160": {
@@ -937,11 +937,11 @@
       "hint": "Extended Burst"
     },
     "162": {
-      "format": "+{v1}% Damage Rate",
+      "format": "{r58}",
       "hint": "Vertiginous Strike"
     },
     "163": {
-      "format": "+{v1}% Recovery",
+      "format": "{r102}",
       "hint": "Restorative Bolts"
     },
     "164": {
@@ -949,7 +949,7 @@
       "hint": "Debilitating Bolts"
     },
     "165": {
-      "format": "+{v1}%",
+      "format": "{r132}",
       "hint": "Phantasmal Tome"
     },
     "166": {
@@ -1022,7 +1022,7 @@
       "hint": "Improved Odds"
     },
     "173": {
-      "format": "-{v1}% damage taken",
+      "format": "{r110}",
       "hint": "Airborne Reflexes"
     },
     "175": {
