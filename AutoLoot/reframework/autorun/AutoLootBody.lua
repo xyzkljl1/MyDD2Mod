@@ -2,7 +2,7 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
-    {type="author",version="1.4.14"},
+    {type="author",version="1.4.15"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
@@ -354,6 +354,9 @@ sdk.hook(
 )
 
 local function LootGm80_001(gimmick)
+    if gimmick:get_type_definition():is_a("app.gm80_097") and gimmick._IsSeal then
+        return false
+    end
     -- Leave chests requiring keys to manual interaction.
     if gimmick.UnlockItem~=0 then
         return false
