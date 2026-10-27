@@ -2,7 +2,7 @@ local modname="AutoLootBody"
 local configfile=modname..".json"
 local myapi = require("_XYZApi/_XYZApi")
 local _config={
-    {type="author",version="1.4.15"},
+    {type="author",version="1.4.16"},
     {name="Loot Settings",type="mutualbox"},
     {name="range",type="int",default=30,label="Loot Range"},
     {name="lootBody",type="bool",default=true,label="Loot Body"},
@@ -161,20 +161,21 @@ local executeBodyPartInteract=sdk.find_type_definition("app.DropPartsController"
 local function LootBodyPart(dropPartsController)
     --don't use dropPartsController:get_DropWork():get_IsInteractEnable() 
     if dropPartsController==nil 
-        or (not sdk.is_managed_object(dropPartsController)) 
-        -- interactiveObject could be nil
-        or (not dropPartsController:get_DropObject()) 
-        or (not dropPartsController:get__DropPartsContext()) then
+        or (not sdk.is_managed_object(dropPartsController)) then
         waitingBodyControllerList[dropPartsController]=nil
         return
     end
-    
-    local interObject=dropPartsController:get_DropObject()
 
-    if dropPartsController.PartsRoot==nil then
+    local context=dropPartsController:get__DropPartsContext()
+    if context==nil then return end
+    if context:get_IsInteracted() or context:get_IsDestroyed() then
         waitingBodyControllerList[dropPartsController]=nil
         return
     end
+
+    local interObject=dropPartsController:get_DropObject()
+    if interObject==nil or dropPartsController.PartsRoot==nil then return end
+    if context:get_ItemId()<=0 or context:get_ItemNum()<=0 then return end
 
     --getDistanceSqFromPlayer for some tails is 0,why?
     --local context=dropPartsController:get__DropPartsContext()
@@ -193,30 +194,12 @@ local function LootBodyPart(dropPartsController)
         --    interObject:getInteractPointPosition(0).x,interObject:getInteractPointPosition(0).y,interObject:getInteractPointPosition(0).z,
         --    interObject:get_NumInteractPoints())
         local pos=interObject:getInteractPointPosition(0)
-        local ct=0
-
-        --DropItemData：<id,num>
-        local maxNum=dropPartsController:getDropItemData().Item2
-        --local dropItems=dropPartsController.DropPartsData:get_DropItems()
-        --local maxNum=context:get_ItemNum()
-
+        local maxNum=context:get_ItemNum()
         Log("Start Loot Body Part",maxNum)
-        --interObject:isInteractEnable(0) returns false
-	    while ct<20 and ct<maxNum do
-            executeBodyPartInteract:call(dropPartsController,0,playerManager:get_ManualPlayer())
-            if not dropPartsController:get__DropPartsContext():get_IsInteracted() then
-                waitingBodyControllerList[dropPartsController]=nil
-                return
-            end
-		    ct=ct+1
-            --break
-	    end
-        --executeInteract不会让尾巴变为不可loot状态，不管调用多少次，每次都会获得一个物品，最后尾巴还可以正常loot一次才消失
-        --需要调用unregisterInteractiveObject才能让尾巴结束可loot状态，但是如果一次都没调用executeInteract，unregisterInteractiveObject不会生效？
-        if maxNum>0 then
-            dropPartsController:unregisterInteractiveObject()
-        end
-        AddMessage("Loot "..ct,pos)
+        executeBodyPartInteract:call(dropPartsController,0,playerManager:get_ManualPlayer())
+        if not context:get_IsInteracted() then return end
+        dropPartsController:unregisterInteractiveObject()
+        AddMessage("Loot "..maxNum,pos)
         waitingBodyControllerList[dropPartsController]=nil
     end
 end
@@ -544,7 +527,7 @@ sdk.hook(
         local this=sdk.to_managed_object(args[2])
         --get_Gimmick returns nil for tail
         --DropItemData: <id,num>
-        if config.lootBodyPart and this:getDropItemData().Item2>=0 then
+        if config.lootBodyPart and waitingBodyControllerList[this]==nil then
             Log("Setup BodyPart")
             waitingBodyControllerList[this] = 1 -- wait 1*30 frame
         end
@@ -557,7 +540,7 @@ sdk.hook(
         local this=sdk.to_managed_object(args[2])
         --get_Gimmick returns nil for tail
         --DropItemData: <id,num>
-        if config.lootBodyPart and this:getDropItemData().Item2>=0 then
+        if config.lootBodyPart and waitingBodyControllerList[this]==nil then
             Log("Setup BodyPart2")
             waitingBodyControllerList[this] = 1 -- wait 1*30 frame
         end
