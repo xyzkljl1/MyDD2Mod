@@ -9,7 +9,8 @@ sdk.hook(
         --local x=sdk.to_int64(retval)&0xffffffff
         --print("Hook ",x)
         --return retval
-         return sdk.to_ptr(32767)
+        if (sdk.to_int64(retval)&0xffffffff)>32767 then return retval end
+        return sdk.to_ptr(32767)
     end
 )
 -- chest
